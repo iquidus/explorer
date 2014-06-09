@@ -1,0 +1,78 @@
+extends layout
+
+block content
+  - var t_sent = 0;
+  .row(style='margin-top:5px;')
+    .col-xs-12.col-md-9
+      img.pull-left(src='/images/logo.png' style='width:80px;')
+      h2 Block Explorer
+  .row
+    .col-md-4.col-md-offset-4
+      if typeof error !== 'undefined'        
+        .alert.alert-danger
+          button.close(type='button', data-dismiss='alert') ×
+          center
+            | Error! : #{error}
+  .col-md-7
+    .panel.panel-defaulty(style='border-color:#CCC;color:#333')
+      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;') 
+        strong Search
+      .panel-body
+        p(style="margin-bottom:15px;")
+          i
+            | You may enter a block height, block hash or transaction hash.
+        form.form-inline(method='post', action='/search')
+          .input-group
+            input.form-control(type="text", name="search")
+            span.input-group-btn
+              button.btn.btn-success(type='submit') Search
+    .panel.panel-default(style='border-color:#CCC;color:#333')
+      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;') 
+        strong Latest Transactions
+      .panel-body 
+        if stats.tx_count > 0
+          if typeof stats.transactions[0].vout !== 'undefined'
+            each e in stats.transactions
+              - var total = 0;
+              each r in e.vout
+                - total = total + r.value;
+              - var total_r = total.toFixed(8);
+              - t_sent = t_sent + total;
+              a(href="/tx/#{e.txid}") 
+                button.btn.btn-success #{total_r} #{symbol}
+              a.pull-right(href="/tx/#{e.txid}") 
+                h5
+                  .label.label-default #{e.txid}
+              hr(style='margin: 7px 0px;')
+      .panel-footer(style='background:#222;border-color:#CCC;color:#fff;') 
+  .col-md-5(style='margin-top:-8px')
+    ul.nav
+      li
+        h4
+          .label.label-iquidus Difficulty
+          .label.label-default(style='margin-left:5px;') #{stats.difficulty}   
+      li
+        h4
+          .label.label-iquidus Network
+          .label.label-default(style='margin-left:5px;') #{stats.hashrate} gh/s      
+      li
+        h4
+          .label.label-iquidus Height
+          .label.label-success(style='margin-left:5px;') #{stats.count}    
+      li
+        h4
+          .label.label-iquidus Timestamp
+          .label.label-success(style='margin-left:5px;') #{stats.timestamp}   
+      li
+        h4
+          .label.label-iquidus Size
+          .label.label-success(style='margin-left:5px;') #{stats.size} kB
+      li
+        h4
+          .label.label-iquidus Transactions
+          .label.label-success(style='margin-left:5px;') #{stats.tx_count}             
+      li
+        h4
+          .label.label-iquidus Total Sent
+          .label.label-success(style='margin-left:5px;') #{t_sent} #{symbol} 
+              

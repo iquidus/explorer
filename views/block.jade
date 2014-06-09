@@ -1,0 +1,86 @@
+extends layout
+
+block content
+  .row(style='margin-top:5px;')
+    .col-xs-12.col-md-12
+      img.pull-left(src='/images/logo.png' style='width:80px;')
+      h2 Block Details
+
+     
+  .col-md-7
+    .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
+      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
+        .row
+          strong #{block.hash}
+        if block.previousblockhash != null
+          .row
+            .label.label-success
+              | Previous
+            .label.label-default(style="margin-left:5px;")
+              a(href="/block/#{block.previousblockhash}") #{block.previousblockhash}
+        if block.nextblockhash != null
+          .row(style='margin-top:5px;')
+            .label.label-success
+              | Next
+            .label.label-default(style="margin-left:5px;")
+              a(href="/block/#{block.nextblockhash}") #{block.nextblockhash}
+        
+
+    .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
+      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') Transactions
+      .panel-body(style='padding-left:30px;padding-right:30px;')    
+        each txn in block.tx
+          h4
+            if block.confirmations < 3
+              .label.label-danger
+                a(href="/tx/#{txn}") #{txn}
+            else
+              if block.confirmations < 6
+                .label.label-warning
+                  a(href="/tx/#{txn}") #{txn}
+              else
+                .label.label-success
+                  a(href="/tx/#{txn}") #{txn}
+            
+          hr(style='margin: 7px 0px;')
+      .panel-footer(style='background:#222;border-color:#CCC;')
+  .col-md-3
+    .row
+      .btn-group(style='margin-top:15px;')
+        button.btn.btn-iquidus Confirmations
+        if block.confirmations < 3
+          button.btn.btn-danger
+            =block.confirmations
+        else
+          if block.confirmations < 6
+            button.btn.btn-warning
+              =block.confirmations
+          else
+            button.btn.btn-success
+              =block.confirmations
+      ul.nav
+        li
+          h4
+            .label.label-iquidus Height
+            .label.label-default(style='margin-left:5px;') #{block.height}
+        li
+          h4
+            .label.label-iquidus Time
+            .label.label-default(style='margin-left:5px;') #{block.time}
+        li
+          h4  
+            .label.label-iquidus Size (kB)
+            - var block_size = block.size/1024
+            .label.label-default(style='margin-left:5px;') #{block_size}
+        li
+          h4
+            .label.label-iquidus Difficulty
+            .label.label-default(style='margin-left:5px;') #{block.difficulty}
+        li
+          h4  
+            .label.label-iquidus Bits
+            .label.label-default(style='margin-left:5px;') #{block.bits}
+        li
+          h4
+            .label.label-iquidus Nonce
+            .label.label-default(style='margin-left:5px;') #{block.nonce}

@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  .row(style='margin-top:5px;')
+    .col-xs-12.col-md-12
+      img.pull-left(src='/images/logo.png' style='width:80px;')
+      h2 Transaction Details
+      
+  .col-md-7
+    .panel.panel-default.hidden-xs(style='border-color:#CCC;color:#333;margin-top:15px;')
+      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
+        .row
+          strong #{tx.txid}
+        .row
+          .label.label-default
+            | Block Hash
+          .label.label-success(style="margin-left:5px;")
+            a(href="/block/#{tx.blockhash}") #{tx.blockhash}
+
+    .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
+      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
+        strong Recipients
+      .panel-body(style='padding-left:30px;padding-right:30px;') 
+        - var total = 0;
+        each r in tx.vout 
+          - total = total + r.value;
+          h4(style="padding:0px;margin:0px;")
+            .label.label-default
+              =r.scriptPubKey.addresses 
+            if tx.confirmations < 3
+              .label.label-danger(style='margin-left:5px') #{r.value} #{symbol}
+            else
+              if tx.confirmations < 6
+                .label.label-warning(style='margin-left:5px') #{r.value} #{symbol}
+              else
+                .label.label-success(style='margin-left:5px') #{r.value} #{symbol}
+            
+          hr(style='margin: 7px 0px;')      
+  .col-md-5      
+    - var r_total = total.toFixed(8); 
+    .row(style='margin-top:15px;')      
+      .btn-group
+        button.btn.btn-iquidus Confirmations
+        if tx.confirmations < 3
+          button.btn.btn-danger
+            =tx.confirmations
+        else
+          if tx.confirmations < 6
+            button.btn.btn-warning
+              =tx.confirmations
+          else
+            button.btn.btn-success
+              =tx.confirmations
+    .row(style='margin-top:5px;')
+      .btn-group  
+        button.btn.btn-iquidus
+          | Total
+        button.btn.btn-success
+          | #{r_total} #{symbol}

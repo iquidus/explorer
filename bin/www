@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+var debug = require('debug')('explorer');
+var settings = require('../lib/settings');
+var db = require('../lib/database');
+var app = require('../app');
+
+app.set('port', process.env.PORT || settings.port);
+
+var dbString = "mongodb://" + settings.dbsettings.address;
+dbString = dbString + ":" + settings.dbsettings.port;
+dbString = dbString + "/" + settings.dbsettings.database;
+
+db.connect(dbString, function() {
+  db.check_stats(settings.coin, function(exists) {
+    if (exists == false) {
+      console.log('no stats entry found, creating now..');
+      db.create_stats(settings.coin, function(){
+        console.log('stats entry created successfully.');
+      });
+    } else {
+      db.get_stats(settings.coin, function (stats) {
+        app.locals.stats = stats;
+      });
+    }
+  });
+  var server = app.listen(app.get('port'), function() {
+    debug('Express server listening on port ' + server.address().port);
+  });
+});

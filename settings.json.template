@@ -1,0 +1,37 @@
+/*
+  This file must be valid JSON. But comments are allowed
+
+  Please edit settings.json, not settings.json.template
+*/
+{
+  // name your instance!
+  "title": "Iquidus Explorer",
+  
+  "address": "http://kiwicoin.iquidus.co.nz",
+  // coin name
+  "coin": "KiwiCoin",
+
+  // coin symbol
+  "symbol": "KIWI",
+
+  // favicon
+  "favicon": "public/favicon.ico",
+  
+  // port to listen for requests on.
+  "port" : 3001,
+
+  // database settings (MongoDB)
+  "dbsettings": {
+    "database": "kiwicoin",
+    "address": "localhost",
+    "port": 27017
+  },
+
+  // wallet settings
+  "wallet": {
+    "host": "localhost",
+    "port": 35333,
+    "user": "kiwicoinrpc",
+    "pass": "password"
+  }
+}

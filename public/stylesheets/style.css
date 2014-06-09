@@ -1,0 +1,46 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.data {
+	display: block;
+	overflow: hidden;
+	width: 100%;
+}
+
+.txid {
+	width: 100%;
+	display:block;
+	overflow: hidden;
+}
+
+.btn-iquidus {
+	background-color: #222;
+	color: #fff;
+}
+
+button.btn-iquidus:hover{
+	color: #CCC;
+}
+
+.label-iquidus {
+	background-color: #222;
+	color: #fff;	
+}
+
+.label a:link {
+  color:#fff;
+}
+
+.label a:visited {
+  color:#fff;
+}
+
+.label a:hover {
+  color:#CCC;
+}
+
+.label a:active {
+  color:#fff;
+}
