@@ -5,7 +5,7 @@
 */
 {
   // name your instance!
-  "title": "Iquidus Explorer",
+  "title": "Iquidus",
   
   "address": "http://kiwicoin.iquidus.co.nz",
   // coin name
@@ -28,6 +28,7 @@
   },
 
   // wallet settings
+  // these need to match whatever you have set in *coind.conf
   "wallet": {
     "host": "localhost",
     "port": 35333,

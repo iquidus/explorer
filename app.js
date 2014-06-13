@@ -8,9 +8,7 @@ var bodyParser = require('body-parser');
 var settings = require('./lib/settings');
 var routes = require('./routes/index');
 
-
 var app = express();
-
 
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);
@@ -30,10 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', bitcoinapi.app);
 
 app.use('/', routes);
-//app.use('/info', routes);
-//app.use('/tx/:txid', routes);
-
-
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,6 +59,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

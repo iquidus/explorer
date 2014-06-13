@@ -6,6 +6,7 @@ var fs = require('fs');
 // timeout (in ms) before closing db connection.
 var TIMEOUT = 15000;
 
+
 function create_lock(cb) {
   fs.appendFile('./tmp/blocknotify.pid', process.pid, function (err) {
     if (err) {
