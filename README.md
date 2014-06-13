@@ -51,7 +51,6 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 Current version: 1.1.0  
 Next planned: 1.2.0 
 
-*  Plugin/module support allowing for the injection of menu times (layout.jade), routes and plugin specific settings.
 *  MintPal module (market page using mintpaljs)
 
 ### License
