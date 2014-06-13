@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var settings = require('./lib/settings');
 var routes = require('./routes/index');
+var locale = require('./lib/locale');
 
 var app = express();
 
@@ -25,18 +26,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/api', bitcoinapi.app);
 
+// routes
+app.use('/api', bitcoinapi.app);
 app.use('/', routes);
 
-/// catch 404 and forward to error handler
+// locals
+app.set('title', settings.title);
+app.set('symbol', settings.symbol);
+app.set('coin', settings.coin);
+app.set('locale', locale);
+app.set('display', settings.display);
+// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-
-/// error handlers
 
 // development error handler
 // will print stacktrace

@@ -4,7 +4,7 @@ block content
   .row(style='margin-top:5px;')
     .col-xs-12.col-md-12
       img.pull-left(src='/images/logo.png' style='width:80px;margin-right:15px;')
-      h2 Transaction Details
+      h2 #{settings.locale.tx_title}
       
   .col-md-7
     .panel.panel-default.hidden-xs(style='border-color:#CCC;color:#333;margin-top:15px;')
@@ -13,13 +13,13 @@ block content
           strong #{tx.txid}
         .row
           .label.label-default
-            | Block Hash
+            | #{settings.locale.tx_block_hash}
           .label.label-success(style="margin-left:5px;")
             a(href="/block/#{tx.blockhash}") #{tx.blockhash}
 
     .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
       .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
-        strong Recipients
+        strong #{settings.locale.tx_recipients}
       .panel-body(style='padding-left:30px;padding-right:30px;') 
         - var total = 0;
         each r in tx.vout 
@@ -28,19 +28,19 @@ block content
             .label.label-default
               =r.scriptPubKey.addresses 
             if tx.confirmations < 3
-              .label.label-danger(style='margin-left:5px') #{r.value} #{symbol}
+              .label.label-danger(style='margin-left:5px') #{r.value} #{settings.symbol}
             else
               if tx.confirmations < 6
-                .label.label-warning(style='margin-left:5px') #{r.value} #{symbol}
+                .label.label-warning(style='margin-left:5px') #{r.value} #{settings.symbol}
               else
-                .label.label-success(style='margin-left:5px') #{r.value} #{symbol}
+                .label.label-success(style='margin-left:5px') #{r.value} #{settings.symbol}
             
           hr(style='margin: 7px 0px;')      
   .col-md-5      
     - var r_total = total.toFixed(8); 
     .row(style='margin-top:15px;')      
       .btn-group
-        button.btn.btn-iquidus Confirmations
+        button.btn.btn-iquidus #{settings.locale.confirmations}
         if tx.confirmations < 3
           button.btn.btn-danger
             =tx.confirmations
@@ -54,6 +54,6 @@ block content
     .row(style='margin-top:5px;')
       .btn-group  
         button.btn.btn-iquidus
-          | Total
+          | #{settings.locale.total}
         button.btn.btn-success
-          | #{r_total} #{symbol}
+          | #{r_total} #{settings.symbol}

@@ -1,0 +1,9 @@
+1.1.0
+
+* fixed navbar title (was not reading from settings)
+* added locale support (and updated views)
+* new display setting to toggle menu items (api)
+
+1.0.0
+
+* initial release

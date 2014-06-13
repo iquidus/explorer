@@ -34,5 +34,8 @@
     "port": 35333,
     "user": "kiwicoinrpc",
     "pass": "password"
-  }
+  },
+
+  // language settings
+  "locale": "locale/en.json"
 }

@@ -4,9 +4,7 @@ block content
   .row(style='margin-top:5px;')
     .col-xs-12.col-md-12
       img.pull-left(src='/images/logo.png' style='width:80px;margin-right:15px;')
-      h2 Block Details
-
-     
+      h2 #{settings.locale.block_title}
   .col-md-7
     .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
       .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
@@ -15,19 +13,19 @@ block content
         if block.previousblockhash != null
           .row
             .label.label-success
-              | Previous
+              | #{settings.locale.block_previous}
             .label.label-default(style="margin-left:5px;")
               a(href="/block/#{block.previousblockhash}") #{block.previousblockhash}
         if block.nextblockhash != null
           .row(style='margin-top:5px;')
             .label.label-success
-              | Next
+              | #{settings.locale.block_next}
             .label.label-default(style="margin-left:5px;")
               a(href="/block/#{block.nextblockhash}") #{block.nextblockhash}
         
 
     .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
-      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') Transactions
+      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') #{settings.locale.transactions}
       .panel-body(style='padding-left:30px;padding-right:30px;')    
         each txn in block.tx
           h4
@@ -47,7 +45,7 @@ block content
   .col-md-3
     .row
       .btn-group(style='margin-top:15px;')
-        button.btn.btn-iquidus Confirmations
+        button.btn.btn-iquidus #{settings.locale.confirmations}
         if block.confirmations < 3
           button.btn.btn-danger
             =block.confirmations
@@ -61,26 +59,26 @@ block content
       ul.nav
         li
           h4
-            .label.label-iquidus Height
+            .label.label-iquidus #{settings.locale.height}
             .label.label-default(style='margin-left:5px;') #{block.height}
         li
           h4
-            .label.label-iquidus Time
+            .label.label-iquidus #{settings.locale.timestamp}
             .label.label-default(style='margin-left:5px;') #{block.time}
         li
           h4  
-            .label.label-iquidus Size (kB)
+            .label.label-iquidus #{settings.locale.size}
             - var block_size = block.size/1024
-            .label.label-default(style='margin-left:5px;') #{block_size}
+            .label.label-default(style='margin-left:5px;') #{block_size} (kB)
         li
           h4
-            .label.label-iquidus Difficulty
+            .label.label-iquidus #{settings.locale.difficulty}
             .label.label-default(style='margin-left:5px;') #{block.difficulty}
         li
           h4  
-            .label.label-iquidus Bits
+            .label.label-iquidus #{settings.locale.bits}
             .label.label-default(style='margin-left:5px;') #{block.bits}
         li
           h4
-            .label.label-iquidus Nonce
+            .label.label-iquidus #{settings.locale.nonce}
             .label.label-default(style='margin-left:5px;') #{block.nonce}

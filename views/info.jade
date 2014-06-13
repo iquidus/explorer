@@ -5,55 +5,55 @@ block content
     .col-md-10.col-md-offset-1.col-xs-12
       .panel.panel-defaulty(style='border-color:#CCC;color:#333;margin-top:15px;margin-bottom:70px;')
         .panel-heading(style='background:#222;border-color:#CCC;color:#fff;') 
-          strong API Documentation
+          strong #{settings.locale.api_title}
         .panel-body
           :markdown
-            The block explorer provides an API allowing users and/or applications to retrieve information from the #{settings.coin} network without the need for a local wallet.
-
-            Currently we are only allowing restricted API access (security..), only requests currently used by the block explorer are accessible. API calls should be sent to #{settings.address}/api/[apicall]. Results will be returned in JSON.
-
+            *#{settings.locale.api_message}*
+            
             ------
 
-            ### API Calls
+            ### #{settings.locale.api_calls}
 
             *  **getnetworkhashps**  
-               *Returns the current network hashrate. (hash/s)*  
-               [#{settings.address}/api/getnetworkhashps](#{settings.address}/api/getnetworkhashps)
+               *#{settings.locale.api_getnetworkhashps}*  
+               [#{address}/api/getnetworkhashps](#{address}/api/getnetworkhashps)
 
             *  **getdifficulty**  
-               *Returns the current difficulty.*  
-               [#{settings.address}/api/getdifficulty](#{settings.address}/api/getdifficulty)   
+               *#{settings.locale.api_getdifficulty}*  
+               [#{address}/api/getdifficulty](#{address}/api/getdifficulty)   
 
             *  **getconnectioncount**  
-               *Returns the number of connections the block explorer has to other nodes.*  
-               [#{settings.address}/api/getconnectioncount](#{settings.address}/api/getconnectioncount) 
+               *#{settings.locale.api_getconnectioncount}*  
+               [#{address}/api/getconnectioncount](#{address}/api/getconnectioncount) 
 
             *  **getblockcount**  
-               *Returns the number of blocks currently in the block chain.*  
-               [#{settings.address}/api/getblockcount](#{settings.address}/api/getblockcount)
+               *#{settings.locale.api_getblockcount}*  
+               [#{address}/api/getblockcount](#{address}/api/getblockcount)
 
             *  **getblockhash [index]**  
-               *Returns the hash of the block at ; index 0 is the genesis block.*  
-               [#{settings.address}/api/getblockhash?index=1337](#{settings.address}/api/getblockhash?index=1337)
+               *#{settings.locale.api_getblockhash}*  
+               [#{address}/api/getblockhash?index=1337](#{address}/api/getblockhash?index=1337)
 
             *  **getblock [hash]**  
-               *Returns information about the block with the given hash.*  
-               [#{settings.address}/api/getblock?hash=00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7](#{settings.address}/api/getblock?hash=00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7)
+               *#{settings.locale.api_getblock}*  
+               [#{address}/api/getblock?hash=00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7](#{address}/api/getblock?hash=00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7)
 
             *  **getrawtransaction [txid] [decrypt]**  
-               *Returns raw transaction representation for given transaction id. decrypt can be set to 0(false) or 1(true).*  
-               [#{settings.address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=0](#{settings.address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=0)  
-               [#{settings.address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=1](#{settings.address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=1)
+               *#{settings.locale.api_getrawtransaction}*  
+               [#{address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=0](#{address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=0)  
+               [#{address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=1](#{address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=1)
+            
+            ------
 
             ### GET
 
             *  **transaction (/tx/txid)**
 
-               [#{settings.address}/tx/c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae](#{settings.address}/tx/c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae)
+               [#{address}/tx/c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae](#{address}/tx/c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae)
 
             *  **block (/block/hash)**
 
-               [#{settings.address}/block/c00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7](#{settings.address}/block/00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7)
+               [#{address}/block/c00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7](#{address}/block/00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7)
 
 
 

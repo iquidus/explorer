@@ -15,21 +15,22 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='http://getkiwicoin.com') KIWICOIN
+          a.navbar-brand(href='/') #{settings.title}
         .collapse.navbar-collapse(id='navbar-collapse')
           ul.nav.navbar-nav
             if active == 'home'
               li.active
-                a.navbar-link(href='/') Explorer
+                a.navbar-link(href='/') #{settings.locale.menu_explorer}
             else
               li
-                a.navbar-link(href='/') Explorer
-            if active == 'info'
-              li.active
-                a.navbar-link(href='/info') API
-            else
-              li
-                a.navbar-link(href='/info') API
+                a.navbar-link(href='/') #{settings.locale.menu_explorer}
+            if settings.display.api == true
+              if active == 'info'
+                li.active
+                  a.navbar-link(href='/info') #{settings.locale.menu_api}
+              else
+                li
+                  a.navbar-link(href='/info') #{settings.locale.menu_api}
 
     block content
     .navbar.navbar-default.navbar-fixed-bottom

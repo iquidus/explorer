@@ -5,30 +5,30 @@ block content
   .row(style='margin-top:5px;')
     .col-xs-12.col-md-9
       img.pull-left(src='/images/logo.png' style='width:80px;margin-right:15px;')
-      h2 Block Explorer
+      h2 #{settings.locale.ex_title}
   .row
     .col-md-4.col-md-offset-4
       if typeof error !== 'undefined'        
         .alert.alert-danger
           button.close(type='button', data-dismiss='alert') ×
           center
-            | Error! : #{error}
+            | #{settings.locale.ex_error} : #{error}
   .col-md-7
     .panel.panel-defaulty(style='border-color:#CCC;color:#333')
       .panel-heading(style='background:#222;border-color:#CCC;color:#fff;') 
-        strong Search
+        strong #{settings.locale.ex_search_title}
       .panel-body
         p(style="margin-bottom:15px;")
           i
-            | You may enter a block height, block hash or transaction hash.
+            | #{settings.locale.ex_search_message}
         form.form-inline(method='post', action='/search')
           .input-group
             input.form-control(type="text", name="search")
             span.input-group-btn
-              button.btn.btn-success(type='submit') Search
+              button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
     .panel.panel-default(style='border-color:#CCC;color:#333')
       .panel-heading(style='background:#222;border-color:#CCC;color:#fff;') 
-        strong Latest Transactions
+        strong #{settings.locale.ex_latest_transactions}
       .panel-body 
         if stats.tx_count > 0
           if typeof stats.transactions[0].vout !== 'undefined'
@@ -39,7 +39,7 @@ block content
               - var total_r = total.toFixed(8);
               - t_sent = t_sent + total;
               a(href="/tx/#{e.txid}") 
-                button.btn.btn-success #{total_r} #{symbol}
+                button.btn.btn-success #{total_r} #{settings.symbol}
               a.pull-right(href="/tx/#{e.txid}") 
                 h5
                   .label.label-default #{e.txid}
@@ -49,30 +49,30 @@ block content
     ul.nav
       li
         h4
-          .label.label-iquidus Difficulty
+          .label.label-iquidus #{settings.locale.difficulty}
           .label.label-default(style='margin-left:5px;') #{stats.difficulty}   
       li
         h4
-          .label.label-iquidus Network
+          .label.label-iquidus #{settings.locale.network}
           .label.label-default(style='margin-left:5px;') #{stats.hashrate} gh/s      
       li
         h4
-          .label.label-iquidus Height
-          .label.label-success(style='margin-left:5px;') #{stats.count}    
+          .label.label-iquidus #{settings.locale.height}
+          .label.label-default(style='margin-left:5px;') #{stats.count}    
       li
         h4
-          .label.label-iquidus Timestamp
-          .label.label-success(style='margin-left:5px;') #{stats.timestamp}   
+          .label.label-iquidus #{settings.locale.timestamp}
+          .label.label-default(style='margin-left:5px;') #{stats.timestamp}   
       li
         h4
-          .label.label-iquidus Size
-          .label.label-success(style='margin-left:5px;') #{stats.size} kB
+          .label.label-iquidus #{settings.locale.size}
+          .label.label-default(style='margin-left:5px;') #{stats.size} kB
       li
         h4
-          .label.label-iquidus Transactions
-          .label.label-success(style='margin-left:5px;') #{stats.tx_count}             
+          .label.label-iquidus #{settings.locale.transactions}
+          .label.label-default(style='margin-left:5px;') #{stats.tx_count}             
       li
         h4
-          .label.label-iquidus Total Sent
-          .label.label-success(style='margin-left:5px;') #{t_sent} #{symbol} 
+          .label.label-iquidus #{settings.locale.total_sent}
+          .label.label-default(style='margin-left:5px;') #{t_sent} #{settings.symbol} 
               

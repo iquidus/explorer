@@ -1,0 +1,55 @@
+/*
+  This file must be valid JSON. But comments are allowed
+
+  Please edit en.json, not en.json.template
+*/
+{
+    // menu items
+    "menu_explorer": "Explorer",
+    "menu_api": "API",
+
+    // explorer view
+    "ex_title": "Block Explorer",
+    "ex_search_title": "Search",
+    "ex_search_button": "Search",
+    "ex_search_message": "You may enter a block height, block hash or transaction hash.",
+    "ex_error": "Error!",
+    "ex_search_error": "Search found no results.",
+    "ex_latest_transactions": "Latest Transactions",
+    
+    // transaction view
+    "tx_title": "Transaction Details",
+    "tx_block_hash": "Block Hash",
+    "tx_recipients": "Recipients",
+
+    // block view
+    "block_previous": "Previous",
+    "block_next": "Next",
+    "block_title": "Block Details",
+
+    // global
+    "difficulty": "Difficulty",
+    "network": "Network",
+    "height": "Height",
+    "timestamp": "Timestamp",
+    "size": "Size",
+    "transactions": "Transactions",
+    "total_sent": "Total Sent",
+    "confirmations": "Confirmations",
+    "total": "Total",
+    "bits": "Bits",
+    "nonce": "Nonce",
+
+    // api view
+    "api_title": "API Documentation",
+    "api_message": "The block explorer provides an API allowing users and/or applications to retrieve information from the network without the need for a local wallet.",
+    "api_calls": "API Calls",
+    "api_getnetworkhashps": "Returns the current network hashrate. (hash/s)",
+    "api_getdifficulty": "Returns the current difficulty.",
+    "api_getconnectioncount": "Returns the number of connections the block explorer has to other nodes.",
+    "api_getblockcount": "Returns the number of blocks currently in the block chain.",
+    "api_getblockhash": "Returns the hash of the block at ; index 0 is the genesis block.",
+    "api_getblock": "Returns information about the block with the given hash.",
+    "api_getrawtransaction": "Returns raw transaction representation for given transaction id. decrypt can be set to 0(false) or 1(true).",
+
+}
