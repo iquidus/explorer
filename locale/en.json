@@ -7,6 +7,7 @@
     // menu items
     "menu_explorer": "Explorer",
     "menu_api": "API",
+    "menu_markets": "Markets",
 
     // explorer view
     "ex_title": "Block Explorer",

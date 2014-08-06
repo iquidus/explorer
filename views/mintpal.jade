@@ -1,0 +1,186 @@
+extends markets
+
+block market_view
+  script.
+    var change_up = false;
+    $(document).ready(function(){
+      $('#summary-panel').hide();
+      var ohlc = !{marketdata.mintpal.chartdata}
+      var plot2 = $.jqplot('chart',[ohlc],{
+        seriesDefaults:{yaxis:'y2axis'},
+        axes: {
+          xaxis: {
+            renderer:$.jqplot.DateAxisRenderer,
+            tickOptions:{formatString:'%R'},
+            tickInterval: "1 hours",
+            
+          },
+          y2axis: {
+            tickOptions:{formatString:'%.8f'},
+          }
+        },
+        // To make a candle stick chart, set the "candleStick" option to true.
+        series: [
+          {
+            renderer:$.jqplot.OHLCRenderer,
+            rendererOptions:{ candleStick:true }
+          }
+        ],
+        highlighter: {
+          show: true,
+          showMarker:false,
+          tooltipAxes: 'xy',
+          yvalues: 4,
+          formatString:'<table class="jqplot-highlighter"> \
+          <tr><td>time:</td><td>%s</td></tr> \
+          <tr><td>open:</td><td>%s</td></tr> \
+          <tr><td>hi:</td><td>%s</td></tr> \
+          <tr><td>low:</td><td>%s</td></tr> \
+          <tr><td>close:</td><td>%s</td></tr></table>'
+        }
+      }); 
+      $(window).resize(function () { 
+        plot2.replot( { resetAxes: false } );
+      });
+      if (!{marketdata.mintpal.summary.change}.substring(0, 1) == '+') {
+        change_up = true;
+      }
+    });        
+  .row
+    .hidden-xs.col-md-12  
+      #chart-panel.panel.panel-default.panel-iquidus
+        .panel-heading
+          strong MintPal - #{marketdata.coin}/#{marketdata.exchange} - 24 hours
+          span.glyphicon.glyphicon-th-list.pull-right.view-summary.market-toggle(data-toggle='tooltip', data-placement='bottom', title='View 24 hour summary') 
+        .panel-body
+          div#chart(style="width:100%;height:300px;")
+      #summary-panel.panel.panel-default.panel-iquidus
+        .panel-heading
+          strong MintPal - #{marketdata.coin}/#{marketdata.exchange} - 24 hours
+          span.glyphicon.glyphicon-stats.pull-right.view-chart.market-toggle(data-toggle='tooltip', data-placement='bottom', title='View 24 hour chart') 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th High
+              th Low
+              th Volume
+              th.hidden-xs Top Bid
+              th.hidden-xs Top Ask
+              th.hidden-xs Last
+              th.hidden-xs Yesterday
+              th Change
+          tbody
+            tr
+              td #{marketdata.mintpal.summary['24hhigh']}
+              td #{marketdata.mintpal.summary['24hlow']}
+              td #{marketdata.mintpal.summary['24hvol']}
+              td.hidden-xs #{marketdata.mintpal.summary.top_bid}
+              td.hidden-xs #{marketdata.mintpal.summary.top_ask}
+              td.hidden-xs #{marketdata.mintpal.summary.last_price}
+              td.hidden-xs #{marketdata.mintpal.summary.yesterday_price}
+              if change_up == true
+                td.success #{marketdata.mintpal.summary.change} %
+              else
+                td.danger #{marketdata.mintpal.summary.change} %
+    .hidden-md.hidden-lg.col-xs-12
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          strong MintPal - #{marketdata.coin}/#{marketdata.exchange} - 24 hours
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th High
+              th Low
+              th Volume
+              th.hidden-xs Top Bid
+              th.hidden-xs Top Ask
+              th.hidden-xs Last
+              th.hidden-xs Yesterday
+              th Change
+          tbody
+            tr
+              td #{marketdata.mintpal.summary['24hhigh']}
+              td #{marketdata.mintpal.summary['24hlow']}
+              td #{marketdata.mintpal.summary['24hvol']}
+              td.hidden-xs #{marketdata.mintpal.summary.top_bid}
+              td.hidden-xs #{marketdata.mintpal.summary.top_ask}
+              td.hidden-xs #{marketdata.mintpal.summary.last_price}
+              td.hidden-xs #{marketdata.mintpal.summary.yesterday_price}
+              td #{marketdata.mintpal.summary.change} %
+  .row
+    .col-md-6
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Sell Orders
+        table.table.table-striped.table-bordered.responsive.order-table
+          thead
+            tr
+              th Price (#{marketdata.exchange})
+              th Amount (#{marketdata.coin})
+              th.hidden-xs Total (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.mintpal.sells
+              tr
+                td
+                  =sell.price
+                td
+                  =sell.amount
+                td.hidden-xs
+                  =sell.total
+    .col-md-6
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Buy Orders
+        table.table.table-striped.table-bordered.responsive.order-table
+          thead
+            tr
+              th Price (#{marketdata.exchange})
+              th Amount (#{marketdata.coin})
+              th.hidden-xs Total (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.mintpal.buys
+              tr
+                td
+                  =buy.price
+                td
+                  =buy.amount
+                td.hidden-xs
+                  =buy.total
+  .row   
+    .col-md-12
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Trade History
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.hidden-xs Type
+              th Quantity (#{marketdata.coin})
+              th Price (#{marketdata.exchange})
+              th.hidden-xs Total (#{marketdata.exchange})
+              th.hidden-xs Time Stamp
+          tbody
+            each trade in marketdata.mintpal.history
+              if trade.type == '0'
+                tr.success
+                  td.hidden-xs BUY
+                  td
+                    =trade.amount
+                  td
+                    =trade.price
+                  td.hidden-xs
+                    =trade.total
+                  td.hidden-xs
+                    =trade.time
+              else
+                tr.danger 
+                  td.hidden-xs SELL
+                  td
+                    =trade.amount
+                  td
+                    =trade.price
+                  td.hidden-xs
+                    =trade.total
+                  td.hidden-xs
+                    =trade.time
+      .footer-padding

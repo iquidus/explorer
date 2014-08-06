@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 60px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -43,4 +43,74 @@ button.btn-iquidus:hover{
 
 .label a:active {
   color:#fff;
+}
+
+.panel-iquidus {
+	border-color:#CCC;
+	color:#333;
+}
+
+.panel-iquidus .panel-heading, .panel-iquidus .panel-footer {
+	background:#222;
+	border-color:#CCC;
+	color:#fff;
+}
+
+/* datatable tweaks */
+table {
+	width: 100% !important;
+}
+.dataTables_info, .dataTables_length {
+	padding-left: 10px;
+}
+
+.dataTables_length {
+	padding-top: 10px;
+}
+
+.dataTables_paginate {
+	padding-right: 5px;
+}
+
+.tab-pane {
+	margin-top: 5px;
+}
+
+tr {
+	width: 100%;
+}
+
+.footer-padding {
+	height: 50px;
+	width: 100%;
+}
+
+#loading-icon {
+	width: 30px;
+    margin: 10px 10px;
+}
+
+.menu-text {
+	margin-left:5px;
+}
+
+#twitter-icon {
+	padding: 0;
+	margin: 0;
+}
+
+#twitter-icon img{
+	width: 40px;
+	margin: 5px 5px;
+}
+
+#market_menu {
+	margin-bottom: 5px;
+}
+
+@media(max-width:767px){
+	body {
+		padding: 0px;
+		padding-top:60px;
+	}
 }

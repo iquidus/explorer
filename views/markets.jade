@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  script.
+    $(document).ready(function(){     
+      $('.order-table').dataTable( {
+        info: false,
+        paging: false,
+        searching: false,
+        ordering: false,
+        scrollY: '250px',
+        autowidth: true,
+        responsive: true
+      });
+      $('.history-table').dataTable( {        
+        searching: false,
+        ordering: false,
+        responsive: true
+      });
+      $(window).resize(function () { 
+        $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
+      });
+      $('.market-toggle').tooltip({
+        animation: true,
+        delay: { hide: 500 },   
+      });
+      $('.view-summary').on('click', function(){
+        $('#chart-panel').hide();
+        $('#summary-panel').show();
+      });
+      $('.view-chart').on('click', function(){
+        $('#summary-panel').hide();
+        $('#chart-panel').show();
+      });
+    });
+  .col-xs-12.col-md-12
+    .hidden-xs.nav.navbar.navbar-inverse(role='navigation' id='market_menu')
+      .container-fluid
+        .collapse.navbar-collapse(id='navbar-collapse')
+          ul.nav.navbar-nav
+          
+            if market == 'mintpal'
+              li.active
+                a.navbar-link.loading(href='/mintpal') MintPal
+            else
+              li
+                a.navbar-link.loading(href='/mintpal') MintPal
+          
+            if market == 'bittrex'
+              li.active
+                a.navbar-link.loading(href='/bittrex') Bittrex
+            else
+              li
+                a.navbar-link.loading(href='/bittrex') Bittrex
+    block market_view

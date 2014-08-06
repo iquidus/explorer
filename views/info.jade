@@ -2,9 +2,9 @@ extends layout
 
 block content
   .row
-    .col-md-10.col-md-offset-1.col-xs-12
-      .panel.panel-defaulty(style='border-color:#CCC;color:#333;margin-top:15px;margin-bottom:70px;')
-        .panel-heading(style='background:#222;border-color:#CCC;color:#fff;') 
+    .col-md-12.col-xs-12
+      .panel.panel-default.panel-iquidus
+        .panel-heading
           strong #{settings.locale.api_title}
         .panel-body
           :markdown
@@ -32,16 +32,16 @@ block content
 
             *  **getblockhash [index]**  
                *#{settings.locale.api_getblockhash}*  
-               [#{address}/api/getblockhash?index=1337](#{address}/api/getblockhash?index=1337)
+               [#{address}/api/getblockhash?index=#{hashes.blockindex}](#{address}/api/getblockhash?index=#{hashes.blockindex})
 
             *  **getblock [hash]**  
                *#{settings.locale.api_getblock}*  
-               [#{address}/api/getblock?hash=00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7](#{address}/api/getblock?hash=00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7)
+               [#{address}/api/getblock?hash=#{hashes.blockhash}](#{address}/api/getblock?hash=#{hashes.blockhash})
 
             *  **getrawtransaction [txid] [decrypt]**  
                *#{settings.locale.api_getrawtransaction}*  
-               [#{address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=0](#{address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=0)  
-               [#{address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=1](#{address}/api/getrawtransaction?txid=c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae&decrypt=1)
+               [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0](#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0)  
+               [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1](#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1)
             
             ------
 
@@ -49,11 +49,11 @@ block content
 
             *  **transaction (/tx/txid)**
 
-               [#{address}/tx/c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae](#{address}/tx/c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae)
+               [#{address}/tx/#{hashes.txhash}](#{address}/tx/#{hashes.txhash})
 
             *  **block (/block/hash)**
 
-               [#{address}/block/c00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7](#{address}/block/00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7)
+               [#{address}/block/#{hashes.blockhash}](#{address}/block/#{hashes.blockhash})
 
 
 

@@ -5,14 +5,14 @@
 */
 {
   // name your instance!
-  "title": "Iquidus",
+  "title": "IQUIDUS",
   
-  "address": "http://kiwicoin.iquidus.co.nz",
+  "address": "http://explorer.iquidus.co.nz",
   // coin name
-  "coin": "KiwiCoin",
+  "coin": "VeriCoin",
 
   // coin symbol
-  "symbol": "KIWI",
+  "symbol": "VRC",
 
   // favicon
   "favicon": "public/favicon.ico",
@@ -22,20 +22,45 @@
 
   // database settings (MongoDB)
   "dbsettings": {
-    "database": "kiwicoin",
+    "database": "explorer",
     "address": "localhost",
     "port": 27017
   },
 
   // wallet settings
-  // these need to match whatever you have set in *coind.conf
   "wallet": {
     "host": "localhost",
     "port": 35333,
-    "user": "kiwicoinrpc",
-    "pass": "password"
+    "user": "coinrpc",
+    "pass": "$P4ssw0rd+"
   },
 
   // language settings
-  "locale": "locale/en.json"
+  "locale": "locale/en.json",
+
+  // menu settings
+  "display": {
+    "api": true,
+    "markets": true,
+    "twitter": true
+  },
+  
+  // ensure links on API page are valid
+  "api": {
+    "blockindex": 1337,
+    "blockhash": "00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7",
+    "txhash": "c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae",
+  },
+  
+  // market settings
+  "markets": {
+    "coin": "VRC",
+    "exchange": "BTC",
+    "mintpal": true,
+    "bittrex": true,
+    "default": "mintpal"
+  },
+
+    // twitter
+  "twitter": "iquidus"
 }

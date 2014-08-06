@@ -14,8 +14,8 @@ block content
           center
             | #{settings.locale.ex_error} : #{error}
   .col-md-7
-    .panel.panel-defaulty(style='border-color:#CCC;color:#333')
-      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;') 
+    .panel.panel-default.panel-iquidus
+      .panel-heading
         strong #{settings.locale.ex_search_title}
       .panel-body
         p(style="margin-bottom:15px;")
@@ -26,8 +26,8 @@ block content
             input.form-control(type="text", name="search")
             span.input-group-btn
               button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
-    .panel.panel-default(style='border-color:#CCC;color:#333')
-      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;') 
+    .panel.panel-default.panel-iquidus
+      .panel-heading
         strong #{settings.locale.ex_latest_transactions}
       .panel-body 
         if stats.tx_count > 0
@@ -44,7 +44,7 @@ block content
                 h5
                   .label.label-default #{e.txid}
               hr(style='margin: 7px 0px;')
-      .panel-footer(style='background:#222;border-color:#CCC;color:#fff;') 
+      .panel-footer
   .col-md-5(style='margin-top:-8px')
     ul.nav
       li

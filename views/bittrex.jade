@@ -1,0 +1,118 @@
+extends markets
+
+block market_view
+  .row
+    .col-md-12  
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          strong Bittrex - #{marketdata.coin}/#{marketdata.exchange} - 24 hours
+          span.glyphicon.glyphicon-stats.pull-right.view-chart-disabled.market-toggle(data-toggle='tooltip', data-placement='bottom', title='Chart data is not available via markets API.') 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th High
+              th Low
+              th Volume
+              th.hidden-xs Bid
+              th.hidden-xs Ask
+              th.hidden-xs Yesterday
+              th.hidden-xs Last
+              th Change
+          tbody
+            tr
+              td #{marketdata.bittrex.summary.High}
+              td #{marketdata.bittrex.summary.Low}
+              td #{marketdata.bittrex.summary.Volume}
+              td.hidden-xs #{marketdata.bittrex.summary.Bid}
+              td.hidden-xs #{marketdata.bittrex.summary.Ask}
+              td.hidden-xs #{marketdata.bittrex.summary.PrevDay}
+              td.hidden-xs #{marketdata.bittrex.summary.Last}
+              - var bittrex_change = (100 - ((parseFloat(marketdata.bittrex.summary.PrevDay)/parseFloat(marketdata.bittrex.summary.Last))*100)).toFixed(2);
+              if bittrex_change >= 0
+                td.success +#{bittrex_change} %
+              else
+                td.danger #{bittrex_change} %
+  .row
+    .col-md-6
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Sell Orders
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th Price (#{marketdata.exchange})
+              th Amount (#{marketdata.coin})
+              th.hidden-xs Total (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.bittrex.sells
+              tr
+                td
+                  =sell.price
+                td
+                  =sell.amount
+                td.hidden-xs
+                  =sell.total
+    .col-md-6
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Buy Orders
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th Price (#{marketdata.exchange})
+              th Amount (#{marketdata.coin})
+              th.hidden-xs Total (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.bittrex.buys
+              tr
+                td
+                  =buy.price
+                td
+                  =buy.amount
+                td.hidden-xs
+                  =buy.total
+  .row   
+    .col-md-12
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Trade History
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.hidden-xs Type
+              th Quantity (#{marketdata.coin})
+              th Price (#{marketdata.exchange})
+              th Total (#{marketdata.exchange})
+              th.hidden-xs Fill
+              th.hidden-xs Time
+          tbody
+            each order in marketdata.bittrex.history
+              if order.OrderType == 'BUY'
+                tr.success
+                  td.hidden-xs
+                    =order.OrderType
+                  td
+                    =order.Quantity
+                  td
+                    =order.Price
+                  td
+                    =order.Total
+                  td.hidden-xs
+                    =order.FillType
+                  td.hidden-xs
+                    =order.TimeStamp
+              else
+                tr.danger 
+                  td.hidden-xs
+                    =order.OrderType
+                  td
+                    =order.Quantity
+                  td
+                    =order.Price
+                  td
+                    =order.Total
+                  td.hidden-xs
+                    =order.FillType
+                  td.hidden-xs
+                    =order.TimeStamp
+      .footer-padding

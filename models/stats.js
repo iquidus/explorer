@@ -1,5 +1,5 @@
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+  , Schema = mongoose.Schema;
  
 var StatsSchema = new Schema({
   coin: { type: String },

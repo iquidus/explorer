@@ -1,3 +1,15 @@
+1.2.0
+
+* added jqplot and datatables
+* new markets page 
+* added mintpal support (markets)
+* added bittrex support (markets)
+* new display setting (markets, twitter) 
+* new locale entries (markets) 
+* new settings (markets, api)
+* added icons to nav (explorer, markets, api, loading, twitter)
+* new twitter setting
+
 1.1.0
 
 * fixed navbar title (was not reading from settings)

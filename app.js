@@ -1,13 +1,13 @@
-var express = require('express');
-var path = require('path');
-var bitcoinapi = require('bitcoin-node-api');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var settings = require('./lib/settings');
-var routes = require('./routes/index');
-var locale = require('./lib/locale');
+var express = require('express')
+  , path = require('path')
+  , bitcoinapi = require('bitcoin-node-api')
+  , favicon = require('static-favicon')
+  , logger = require('morgan')
+  , cookieParser = require('cookie-parser')
+  , bodyParser = require('body-parser')
+  , settings = require('./lib/settings')
+  , routes = require('./routes/index')
+  , locale = require('./lib/locale');
 
 var app = express();
 
@@ -37,6 +37,8 @@ app.set('symbol', settings.symbol);
 app.set('coin', settings.coin);
 app.set('locale', locale);
 app.set('display', settings.display);
+app.set('markets', settings.markets);
+app.set('twitter', settings.twitter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

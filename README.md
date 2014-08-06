@@ -29,29 +29,39 @@ An open source block explorer.
 
 *note: mongod must be running to start the explorer*
 
-### Syncing database with the blockchain
+### Syncing databases with the blockchain
 
-    node blocknotify.js
+**block explorer db**  
+    node scripts/blocknotify.js
 
-*It is recommend to have this script launched via a cronjob at block-time intervals. Or using the wallets blocknotify flag.*
+*It is recommended to have this script launched via a cronjob at block-time intervals. Or using the wallets blocknotify flag.*
+
+**markets db**  
+    node scripts/markets.js
+
+*It is recommended to have this script launched via a cronjob at 1+ min intervals.*
 
 ### Wallet
 
-Iquidus Explorer is intended to be generic so it can be used with any wallet following the usual standards. The wallet must running with atleast the following flags
+Iquidus Explorer is intended to be generic so it can be used with any wallet following the usual standards. The wallet must be running with atleast the following flags
 
     -daemon -txindex
 
 ### Donate
 
     BTC: 168hdKA3fkccPtkxnX8hBrsxNubvk4udJi
-    DRK: XukjQSNUneDpeqLDtgpBtQnVwTAusSuacw
 
 ### Development
 
-Current version: 1.1.0  
-Next planned: 1.2.0 
+Current version: 1.2.0  
+Next planned: 1.2.1 
 
-*  MintPal module (market page using mintpaljs)
+*  UI updates (explorer)
+*  Performance optimizations
+
+1.3.0
+
+*  Search by address
 
 ### License
 

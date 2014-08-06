@@ -4,8 +4,7 @@ block content
   .row(style='margin-top:5px;')
     .col-xs-12.col-md-12
       img.pull-left(src='/images/logo.png' style='width:80px;margin-right:15px;')
-      h2 #{settings.locale.tx_title}
-      
+      h2 #{settings.locale.tx_title} 
   .col-md-7
     .panel.panel-default.hidden-xs(style='border-color:#CCC;color:#333;margin-top:15px;')
       .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
@@ -34,7 +33,6 @@ block content
                 .label.label-warning(style='margin-left:5px') #{r.value} #{settings.symbol}
               else
                 .label.label-success(style='margin-left:5px') #{r.value} #{settings.symbol}
-            
           hr(style='margin: 7px 0px;')      
   .col-md-5      
     - var r_total = total.toFixed(8); 
