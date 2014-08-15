@@ -5,19 +5,19 @@ block market_view
     .col-md-12  
       .panel.panel-default.panel-iquidus
         .panel-heading
-          strong Bittrex - #{marketdata.coin}/#{marketdata.exchange} - 24 hours
-          span.glyphicon.glyphicon-stats.pull-right.view-chart-disabled.market-toggle(data-toggle='tooltip', data-placement='bottom', title='Chart data is not available via markets API.') 
+          strong Bittrex - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          span.glyphicon.glyphicon-stats.pull-right.view-chart-disabled.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
         table.table.table-bordered.summary-table 
           thead
             tr
-              th High
-              th Low
-              th Volume
-              th.hidden-xs Bid
-              th.hidden-xs Ask
-              th.hidden-xs Yesterday
-              th.hidden-xs Last
-              th Change
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th.hidden-xs #{settings.locale.mkt_top_bid}
+              th.hidden-xs #{settings.locale.mkt_top_ask}
+              th.hidden-xs #{settings.locale.mkt_yesturday}
+              th.hidden-xs #{settings.locale.mkt_last}
+              th #{settings.locale.mkt_change}
           tbody
             tr
               td #{marketdata.bittrex.summary.High}
@@ -36,13 +36,13 @@ block market_view
     .col-md-6
       .panel.panel-default.panel-iquidus
         .panel-heading
-          h3.panel-title Sell Orders
+          h3.panel-title #{settings.locale.mkt_sell_orders}
         table.table.table-striped.table-bordered.order-table
           thead
             tr
-              th Price (#{marketdata.exchange})
-              th Amount (#{marketdata.coin})
-              th.hidden-xs Total (#{marketdata.exchange})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
             each sell in marketdata.bittrex.sells
               tr
@@ -55,13 +55,13 @@ block market_view
     .col-md-6
       .panel.panel-default.panel-iquidus
         .panel-heading
-          h3.panel-title Buy Orders
+          h3.panel-title #{settings.locale.mkt_buy_orders}
         table.table.table-striped.table-bordered.order-table
           thead
             tr
-              th Price (#{marketdata.exchange})
-              th Amount (#{marketdata.coin})
-              th.hidden-xs Total (#{marketdata.exchange})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
             each buy in marketdata.bittrex.buys
               tr
@@ -75,16 +75,15 @@ block market_view
     .col-md-12
       .panel.panel-default.panel-iquidus
         .panel-heading
-          h3.panel-title Trade History
+          h3.panel-title #{settings.locale.mkt_trade_history}
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
-              th.hidden-xs Type
-              th Quantity (#{marketdata.coin})
-              th Price (#{marketdata.exchange})
-              th Total (#{marketdata.exchange})
-              th.hidden-xs Fill
-              th.hidden-xs Time
+              th.hidden-xs #{settings.locale.mkt_type}
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
             each order in marketdata.bittrex.history
               if order.OrderType == 'BUY'
@@ -98,8 +97,6 @@ block market_view
                   td
                     =order.Total
                   td.hidden-xs
-                    =order.FillType
-                  td.hidden-xs
                     =order.TimeStamp
               else
                 tr.danger 
@@ -111,8 +108,6 @@ block market_view
                     =order.Price
                   td
                     =order.Total
-                  td.hidden-xs
-                    =order.FillType
                   td.hidden-xs
                     =order.TimeStamp
       .footer-padding
