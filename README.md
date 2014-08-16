@@ -53,11 +53,10 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.2.0  
-Next planned: 1.2.1 
+Current version: 1.2.1  
+Next planned: 1.2.2 
 
-*  UI updates (explorer)
-*  Performance optimizations
+*  tidy up/optimize code
 
 1.3.0
 

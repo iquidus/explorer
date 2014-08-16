@@ -101,7 +101,7 @@ router.get('/tx/:txid', function(req, res) {
   lib.get_rawtransaction(req.param('txid'), function (tx){
     if (tx != 'There was an error. Check your console.') {
       db.get_stats(settings.coin, function(stats){
-        res.render('tx', { active: 'tx', tx: tx, stats: stats});
+        res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations});
       });
     } 
     else {
@@ -116,7 +116,7 @@ router.post('/tx', function(req, res) {
   var txid = req.body.submit;
   lib.get_rawtransaction(txid, function (tx){
     db.get_stats(settings.coin, function(stats){
-      res.render('tx', { active: 'tx', tx: tx, stats: stats});
+      res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations});
     });
   });
 });
@@ -124,7 +124,7 @@ router.post('/tx', function(req, res) {
 router.get('/block/:hash', function(req, res) {
   lib.get_block(req.param('hash'), function (block) {
     db.get_stats(settings.coin, function(stats){
-      res.render('block', { active: 'block', block: block, stats: stats});
+      res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations});
     });
   });
 });

@@ -2,83 +2,77 @@ extends layout
 
 block content
   .row(style='margin-top:5px;')
-    .col-xs-12.col-md-12
-      img.pull-left(src='/images/logo.png' style='width:80px;margin-right:15px;')
-      h2 #{settings.locale.block_title}
-  .col-md-7
-    .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
-      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
-        .row
-          strong #{block.hash}
-        if block.previousblockhash != null
-          .row
-            .label.label-success
-              | #{settings.locale.block_previous}
-            .label.label-default(style="margin-left:5px;")
-              a(href="/block/#{block.previousblockhash}") #{block.previousblockhash}
-        if block.nextblockhash != null
-          .row(style='margin-top:5px;')
-            .label.label-success
-              | #{settings.locale.block_next}
-            .label.label-default(style="margin-left:5px;")
-              a(href="/block/#{block.nextblockhash}") #{block.nextblockhash}
-        
-
-    .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
-      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') #{settings.locale.transactions}
-      .panel-body(style='padding-left:30px;padding-right:30px;')    
-        each txn in block.tx
-          h4
-            if block.confirmations < 3
-              .label.label-danger
-                a(href="/tx/#{txn}") #{txn}
-            else
-              if block.confirmations < 6
-                .label.label-warning
-                  a(href="/tx/#{txn}") #{txn}
-              else
-                .label.label-success
-                  a(href="/tx/#{txn}") #{txn}
-            
-          hr(style='margin: 7px 0px;')
-      .panel-footer(style='background:#222;border-color:#CCC;')
-  .col-md-3
-    .row
-      .btn-group(style='margin-top:15px;')
-        button.btn.btn-iquidus #{settings.locale.confirmations}
-        if block.confirmations < 3
-          button.btn.btn-danger
-            =block.confirmations
-        else
-          if block.confirmations < 6
-            button.btn.btn-warning
-              =block.confirmations
+    .col-md-12(style='text-align:center;')
+      img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
+  .col-xs-12.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
+    .panel.panel-default.panel-iquidus
+      .panel-heading       
+        .row           
+          if block.previousblockhash != null
+            a(href='/block/#{block.previousblockhash}')
+              span.glyphicon.glyphicon-chevron-left.block-last-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_previous}')  
+          strong #{settings.symbol} block: #{block.hash}
+          if block.nextblockhash != null 
+            a(href='/block/#{block.nextblockhash}')
+              span.glyphicon.glyphicon-chevron-right.pull-right.block-last-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_next}')       
+      table.table.table-bordered.summary-table 
+        thead
+          tr
+            th #{settings.locale.height}
+            th #{settings.locale.difficulty}
+            th #{settings.locale.confirmations}
+            th.hidden-xs #{settings.locale.size} (kB)
+            th.hidden-xs #{settings.locale.bits}
+            th.hidden-xs #{settings.locale.nonce}
+            th.hidden-xs #{settings.locale.timestamp}
+        tbody
+          if block.confirmations >= confirmations                
+            tr.success
+              - var block_size = block.size/1024
+              td #{block.height}
+              td #{block.difficulty.toFixed(4)}
+              td #{block.confirmations}
+              td.hidden-xs #{block_size.toFixed(2)}
+              td.hidden-xs #{block.bits}
+              td.hidden-xs #{block.nonce}
+              td.hidden-xs #{block.time}
           else
-            button.btn.btn-success
-              =block.confirmations
-      ul.nav
-        li
-          h4
-            .label.label-iquidus #{settings.locale.height}
-            .label.label-default(style='margin-left:5px;') #{block.height}
-        li
-          h4
-            .label.label-iquidus #{settings.locale.timestamp}
-            .label.label-default(style='margin-left:5px;') #{block.time}
-        li
-          h4  
-            .label.label-iquidus #{settings.locale.size}
-            - var block_size = block.size/1024
-            .label.label-default(style='margin-left:5px;') #{block_size} (kB)
-        li
-          h4
-            .label.label-iquidus #{settings.locale.difficulty}
-            .label.label-default(style='margin-left:5px;') #{block.difficulty}
-        li
-          h4  
-            .label.label-iquidus #{settings.locale.bits}
-            .label.label-default(style='margin-left:5px;') #{block.bits}
-        li
-          h4
-            .label.label-iquidus #{settings.locale.nonce}
-            .label.label-default(style='margin-left:5px;') #{block.nonce}
+            if block.confirmations < (confirmations / 2)
+              tr.danger
+                - var block_size = block.size/1024
+                td #{block.height}
+                td #{block.difficulty.toFixed(4)}
+                td #{block.confirmations}
+                td.hidden-xs #{block_size.toFixed(2)}
+                td.hidden-xs #{block.bits}
+                td.hidden-xs #{block.nonce}
+                td.hidden-xs #{block.time}
+            else
+              tr.warning
+                - var block_size = block.size/1024
+                td #{block.height}
+                td #{block.difficulty.toFixed(4)}
+                td #{block.confirmations}
+                td.hidden-xs #{block_size.toFixed(2)}
+                td.hidden-xs #{block.bits}
+                td.hidden-xs #{block.nonce}
+                td.hidden-xs #{block.time}
+
+
+    .panel.panel-default.panel-iquidus
+      .panel-heading
+        strong #{settings.locale.ex_latest_transactions}
+      table.table.table-bordered.table-striped.summary-table 
+        thead
+          tr
+            th #{settings.locale.tx_hash}
+            th
+        tbody
+          each txn in block.tx
+            tr
+              td #{txn}
+              td.view_tx 
+                a(href='/tx/#{txn}')
+                  span.glyphicon.glyphicon-eye-open.glow
+      .panel-footer
+  .footer-padding  

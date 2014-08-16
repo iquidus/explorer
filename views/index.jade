@@ -2,10 +2,13 @@ extends layout
 
 block content
   - var t_sent = 0;
-  .row(style='margin-top:5px;')
-    .col-xs-12.col-md-9
-      img.pull-left(src='/images/logo.png' style='width:80px;margin-right:15px;')
-      h2 #{settings.locale.ex_title}
+  if stats.tx_count > 0
+    if typeof stats.transactions[0].vout !== 'undefined'
+      each e in stats.transactions
+        - var total = 0;
+        each r in e.vout
+          - total = total + r.value;
+        - t_sent =  (parseFloat(t_sent) + parseFloat(total)).toFixed(8);    
   .row
     .col-md-4.col-md-offset-4
       if typeof error !== 'undefined'        
@@ -13,66 +16,70 @@ block content
           button.close(type='button', data-dismiss='alert') ×
           center
             | #{settings.locale.ex_error} : #{error}
-  .col-md-7
+  .col-md-12
     .panel.panel-default.panel-iquidus
       .panel-heading
-        strong #{settings.locale.ex_search_title}
+        strong #{settings.locale.ex_title} - #{settings.coin} 
       .panel-body
-        p(style="margin-bottom:15px;")
-          i
-            | #{settings.locale.ex_search_message}
         form.form-inline(method='post', action='/search')
-          .input-group
-            input.form-control(type="text", name="search")
-            span.input-group-btn
-              button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
+          img.pull-left(src='/images/logo.png' style='width:80px;margin-right:15px;')
+          div
+            p(style="margin-bottom:15px;")
+              i
+                | #{settings.locale.ex_search_message}
+            .input-group
+              input.form-control(type='text', name='search')
+              span.input-group-btn
+                button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
+        .hidden-md.hidden-lg.col-xs-12
+    .panel.panel-default.panel-iquidus
+      .panel-heading
+        strong #{settings.locale.ex_summary}
+      table.table.table-bordered.summary-table 
+        thead
+          tr
+            th #{settings.locale.height}
+            th #{settings.locale.difficulty}
+            th #{settings.locale.network} (gh/s)
+            th.hidden-xs #{settings.locale.size} (kB)
+            th.hidden-xs #{settings.locale.transactions}
+            th #{settings.locale.total_sent} (#{settings.symbol})
+            th.hidden-xs #{settings.locale.timestamp}
+        tbody
+          tr
+            td #{stats.count}
+            td #{stats.difficulty} 
+            td #{stats.hashrate} 
+            td.hidden-xs #{stats.size} 
+            td.hidden-xs #{stats.tx_count}
+            td #{t_sent} 
+            td.hidden-xs #{stats.timestamp}
     .panel.panel-default.panel-iquidus
       .panel-heading
         strong #{settings.locale.ex_latest_transactions}
-      .panel-body 
-        if stats.tx_count > 0
-          if typeof stats.transactions[0].vout !== 'undefined'
-            each e in stats.transactions
-              - var total = 0;
-              each r in e.vout
-                - total = total + r.value;
-              - var total_r = total.toFixed(8);
-              - t_sent = t_sent + total;
-              a(href="/tx/#{e.txid}") 
-                button.btn.btn-success #{total_r} #{settings.symbol}
-              a.pull-right(href="/tx/#{e.txid}") 
-                h5
-                  .label.label-default #{e.txid}
-              hr(style='margin: 7px 0px;')
+      table.table.table-bordered.table-striped.summary-table 
+        thead
+          tr
+            th #{settings.locale.mkt_amount} (#{settings.symbol})
+            th #{settings.locale.tx_recipients}
+            th #{settings.locale.tx_hash}
+            th
+        tbody
+          if stats.tx_count > 0
+            if typeof stats.transactions[0].vout !== 'undefined'
+              each e in stats.transactions
+                - var total = 0;
+                - var rcpt = 0;
+                each r in e.vout
+                  - total = total + r.value;
+                  - rcpt = rcpt + 1;
+                - var total_r = total.toFixed(8); 
+                tr
+                  td #{total_r}
+                  td #{rcpt}
+                  td #{e.txid}
+                  td.view_tx 
+                    a(href='/tx/#{e.txid}')
+                      span.glyphicon.glyphicon-eye-open.glow
       .panel-footer
-  .col-md-5(style='margin-top:-8px')
-    ul.nav
-      li
-        h4
-          .label.label-iquidus #{settings.locale.difficulty}
-          .label.label-default(style='margin-left:5px;') #{stats.difficulty}   
-      li
-        h4
-          .label.label-iquidus #{settings.locale.network}
-          .label.label-default(style='margin-left:5px;') #{stats.hashrate} gh/s      
-      li
-        h4
-          .label.label-iquidus #{settings.locale.height}
-          .label.label-default(style='margin-left:5px;') #{stats.count}    
-      li
-        h4
-          .label.label-iquidus #{settings.locale.timestamp}
-          .label.label-default(style='margin-left:5px;') #{stats.timestamp}   
-      li
-        h4
-          .label.label-iquidus #{settings.locale.size}
-          .label.label-default(style='margin-left:5px;') #{stats.size} kB
-      li
-        h4
-          .label.label-iquidus #{settings.locale.transactions}
-          .label.label-default(style='margin-left:5px;') #{stats.tx_count}             
-      li
-        h4
-          .label.label-iquidus #{settings.locale.total_sent}
-          .label.label-default(style='margin-left:5px;') #{t_sent} #{settings.symbol} 
               

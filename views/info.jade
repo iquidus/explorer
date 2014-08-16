@@ -1,59 +1,58 @@
 extends layout
 
 block content
-  .row
-    .col-md-12.col-xs-12
-      .panel.panel-default.panel-iquidus
-        .panel-heading
-          strong #{settings.locale.api_title}
-        .panel-body
-          :markdown
-            *#{settings.locale.api_message}*
-            
-            ------
+  .col-md-12.col-xs-12
+    .panel.panel-default.panel-iquidus
+      .panel-heading
+        strong #{settings.locale.api_title}
+      .panel-body
+        :markdown
+          *#{settings.locale.api_message}*
+          
+          ------
 
-            ### #{settings.locale.api_calls}
+          ### #{settings.locale.api_calls}
 
-            *  **getnetworkhashps**  
-               *#{settings.locale.api_getnetworkhashps}*  
-               [#{address}/api/getnetworkhashps](#{address}/api/getnetworkhashps)
+          *  **getnetworkhashps**  
+             *#{settings.locale.api_getnetworkhashps}*  
+             [#{address}/api/getnetworkhashps](#{address}/api/getnetworkhashps)
 
-            *  **getdifficulty**  
-               *#{settings.locale.api_getdifficulty}*  
-               [#{address}/api/getdifficulty](#{address}/api/getdifficulty)   
+          *  **getdifficulty**  
+             *#{settings.locale.api_getdifficulty}*  
+             [#{address}/api/getdifficulty](#{address}/api/getdifficulty)   
 
-            *  **getconnectioncount**  
-               *#{settings.locale.api_getconnectioncount}*  
-               [#{address}/api/getconnectioncount](#{address}/api/getconnectioncount) 
+          *  **getconnectioncount**  
+             *#{settings.locale.api_getconnectioncount}*  
+             [#{address}/api/getconnectioncount](#{address}/api/getconnectioncount) 
 
-            *  **getblockcount**  
-               *#{settings.locale.api_getblockcount}*  
-               [#{address}/api/getblockcount](#{address}/api/getblockcount)
+          *  **getblockcount**  
+             *#{settings.locale.api_getblockcount}*  
+             [#{address}/api/getblockcount](#{address}/api/getblockcount)
 
-            *  **getblockhash [index]**  
-               *#{settings.locale.api_getblockhash}*  
-               [#{address}/api/getblockhash?index=#{hashes.blockindex}](#{address}/api/getblockhash?index=#{hashes.blockindex})
+          *  **getblockhash [index]**  
+             *#{settings.locale.api_getblockhash}*  
+             [#{address}/api/getblockhash?index=#{hashes.blockindex}](#{address}/api/getblockhash?index=#{hashes.blockindex})
 
-            *  **getblock [hash]**  
-               *#{settings.locale.api_getblock}*  
-               [#{address}/api/getblock?hash=#{hashes.blockhash}](#{address}/api/getblock?hash=#{hashes.blockhash})
+          *  **getblock [hash]**  
+             *#{settings.locale.api_getblock}*  
+             [#{address}/api/getblock?hash=#{hashes.blockhash}](#{address}/api/getblock?hash=#{hashes.blockhash})
 
-            *  **getrawtransaction [txid] [decrypt]**  
-               *#{settings.locale.api_getrawtransaction}*  
-               [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0](#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0)  
-               [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1](#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1)
-            
-            ------
+          *  **getrawtransaction [txid] [decrypt]**  
+             *#{settings.locale.api_getrawtransaction}*  
+             [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0](#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0)  
+             [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1](#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1)
+          
+          ------
 
-            ### GET
+          ### GET
 
-            *  **transaction (/tx/txid)**
+          *  **transaction (/tx/txid)**
 
-               [#{address}/tx/#{hashes.txhash}](#{address}/tx/#{hashes.txhash})
+             [#{address}/tx/#{hashes.txhash}](#{address}/tx/#{hashes.txhash})
 
-            *  **block (/block/hash)**
+          *  **block (/block/hash)**
 
-               [#{address}/block/#{hashes.blockhash}](#{address}/block/#{hashes.blockhash})
-
-
+             [#{address}/block/#{hashes.blockhash}](#{address}/block/#{hashes.blockhash})
+    
+    .footer-padding
 

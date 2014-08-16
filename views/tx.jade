@@ -2,56 +2,64 @@ extends layout
 
 block content
   .row(style='margin-top:5px;')
-    .col-xs-12.col-md-12
-      img.pull-left(src='/images/logo.png' style='width:80px;margin-right:15px;')
-      h2 #{settings.locale.tx_title} 
-  .col-md-7
-    .panel.panel-default.hidden-xs(style='border-color:#CCC;color:#333;margin-top:15px;')
-      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
-        .row
-          strong #{tx.txid}
-        .row
-          .label.label-default
-            | #{settings.locale.tx_block_hash}
-          .label.label-success(style="margin-left:5px;")
-            a(href="/block/#{tx.blockhash}") #{tx.blockhash}
-
-    .panel.panel-default(style='border-color:#CCC;color:#333;margin-top:15px;')
-      .panel-heading(style='background:#222;border-color:#CCC;color:#fff;padding-left:30px;') 
-        strong #{settings.locale.tx_recipients}
-      .panel-body(style='padding-left:30px;padding-right:30px;') 
-        - var total = 0;
-        each r in tx.vout 
-          - total = total + r.value;
-          h4(style="padding:0px;margin:0px;")
-            .label.label-default
-              =r.scriptPubKey.addresses 
-            if tx.confirmations < 3
-              .label.label-danger(style='margin-left:5px') #{r.value} #{settings.symbol}
-            else
-              if tx.confirmations < 6
-                .label.label-warning(style='margin-left:5px') #{r.value} #{settings.symbol}
-              else
-                .label.label-success(style='margin-left:5px') #{r.value} #{settings.symbol}
-          hr(style='margin: 7px 0px;')      
-  .col-md-5      
-    - var r_total = total.toFixed(8); 
-    .row(style='margin-top:15px;')      
-      .btn-group
-        button.btn.btn-iquidus #{settings.locale.confirmations}
-        if tx.confirmations < 3
-          button.btn.btn-danger
-            =tx.confirmations
-        else
-          if tx.confirmations < 6
-            button.btn.btn-warning
-              =tx.confirmations
+    .col-md-12(style='text-align:center;')
+      img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
+  .col-xs-12.col-md-8.col-md-offset-2
+    .panel.panel-default.panel-iquidus
+      .panel-heading
+        strong #{settings.symbol} tx: #{tx.txid}
+      table.table.table-bordered.table-striped.summary-table 
+        thead
+          tr
+            th #{settings.locale.mkt_total} (#{settings.symbol})
+            th #{settings.locale.confirmations}
+            th #{settings.locale.tx_block_hash}
+            th
+        tbody
+          - var total = 0;
+          each r in tx.vout 
+            - total = total + r.value;
+          if tx.confirmations >= confirmations                
+            tr.success
+                td #{total.toFixed(8)}
+                td #{tx.confirmations}
+                td 
+                  =tx.blockhash
+                td.view_tx  
+                  a(href='/block/#{tx.blockhash}')
+                    span.glyphicon.glyphicon-eye-open.glow 
           else
-            button.btn.btn-success
-              =tx.confirmations
-    .row(style='margin-top:5px;')
-      .btn-group  
-        button.btn.btn-iquidus
-          | #{settings.locale.total}
-        button.btn.btn-success
-          | #{r_total} #{settings.symbol}
+            if tx.confirmations < (confirmations / 2)
+              tr.danger
+                td #{total.toFixed(8)}
+                td #{tx.confirmations}
+                td 
+                  =tx.blockhash
+                td.view_tx  
+                  a(href='/block/#{tx.blockhash}')
+                    span.glyphicon.glyphicon-eye-open.glow 
+            else
+              tr.warning
+                td #{total.toFixed(8)}
+                td #{tx.confirmations}
+                td 
+                  =tx.blockhash
+                td.view_tx  
+                  a(href='/block/#{tx.blockhash}')
+                    span.glyphicon.glyphicon-eye-open.glow  
+    .panel.panel-default.panel-iquidus
+      .panel-heading
+        strong #{settings.locale.tx_recipients}
+      table.table.table-bordered.table-striped.summary-table 
+        thead
+          tr
+            th #{settings.locale.tx_address}
+            th #{settings.locale.mkt_amount} (#{settings.symbol})
+        tbody
+          each r in tx.vout 
+            tr
+              td 
+                =r.scriptPubKey.addresses 
+              td  #{r.value.toFixed(8)}
+  .footer-padding
+

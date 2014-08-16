@@ -8,7 +8,7 @@ var TIMEOUT = 15000;
 
 
 function create_lock(cb) {
-  fs.appendFile('../tmp/blocknotify.pid', process.pid, function (err) {
+  fs.appendFile('./tmp/blocknotify.pid', process.pid, function (err) {
     if (err) {
       console.log("Unable to create blocknotify.pid..");
       process.exit(1);
@@ -19,7 +19,7 @@ function create_lock(cb) {
 }
 
 function remove_lock(cb) {
-  fs.unlink('../tmp/blocknotify.pid', function (err){
+  fs.unlink('./tmp/blocknotify.pid', function (err){
     if(err) {
       console.log("unable to remove lock..");
       process.exit(1);
@@ -30,7 +30,7 @@ function remove_lock(cb) {
 }
 
 function is_locked(cb) {
-  fs.exists('../tmp/blocknotify.pid', function (exists){
+  fs.exists('./tmp/blocknotify.pid', function (exists){
     if(exists) {
       return cb(true);
     } else {

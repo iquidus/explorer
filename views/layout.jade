@@ -22,6 +22,10 @@ html
         $('.loading').on('click', function() {
           $('#twitter-icon').hide();
           $('#loading-icon').show();
+        }); 
+        $('.block-last-next').tooltip({
+          animation: true,
+          delay: { hide: 500 },   
         });
       });
   body
@@ -79,6 +83,13 @@ html
                     span.glyphicon.glyphicon-info-sign
                     span.menu-text #{settings.locale.menu_api}
           ul.hidden-xs.nav.navbar-nav.pull-right
+            if settings.display.search == true
+              if active != 'home'
+                li.hidden-xs
+                  form.navbar-form(role='search', method='post', action='/search')
+                    .form-group.nav-search
+                      input.form-control(type='text', name='search')
+                    button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
             li
               img#loading-icon(src='/images/loading.gif')
               if settings.display.twitter

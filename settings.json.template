@@ -1,4 +1,4 @@
-/*
+//*
   This file must be valid JSON. But comments are allowed
 
   Please edit settings.json, not settings.json.template
@@ -9,10 +9,10 @@
   
   "address": "http://explorer.iquidus.co.nz",
   // coin name
-  "coin": "VeriCoin",
+  "coin": "Razor",
 
   // coin symbol
-  "symbol": "VRC",
+  "symbol": "RZR",
 
   // favicon
   "favicon": "public/favicon.ico",
@@ -30,10 +30,13 @@
   // wallet settings
   "wallet": {
     "host": "localhost",
-    "port": 35333,
-    "user": "coinrpc",
-    "pass": "$P4ssw0rd+"
+    "port": 9393,
+    "user": "razorrpc",
+    "pass": "123gfjk3R3pCCVjHtbRde2s123135kzdf233sa"
   },
+  
+  // confirmations (>= : green, < & >= 1/2 : yellow, < 1/2 : red)
+  "confirmations": 6,
 
   // language settings
   "locale": "locale/en.json",
@@ -42,19 +45,20 @@
   "display": {
     "api": true,
     "markets": true,
-    "twitter": true
+    "twitter": true,
+    "search": true
   },
   
   // ensure links on API page are valid
   "api": {
     "blockindex": 1337,
-    "blockhash": "00000000002db22bd47bd7440fcad99b4af5f3261b7e6bd23b7be911e98724f7",
-    "txhash": "c251b0f894193dd55664037cbf4a11fcd018ae3796697b79f5097570d7de95ae",
+    "blockhash": "1733320247b15ca2262be646397d1ffd6be953fa638ebb8f5dcbb4c2b91b34f1",
+    "txhash": "f270cd3813254c9922a2e222a56ba745842d9112223a1394062e460b33d27b7e",
   },
   
   // market settings
   "markets": {
-    "coin": "VRC",
+    "coin": "RZR",
     "exchange": "BTC",
     "mintpal": true,
     "bittrex": true,
@@ -63,4 +67,5 @@
 
     // twitter
   "twitter": "iquidus"
+
 }

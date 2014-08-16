@@ -1,3 +1,13 @@
+1.2.1
+
+* updated locale (markets)
+* updated index view
+* updated tx view
+* updated block view
+* added optional seach to navbar
+* added confirmations setting
+* added screenshots
+
 1.2.0
 
 * added jqplot and datatables
