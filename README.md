@@ -61,6 +61,7 @@ Next planned: 1.2.2
 1.3.0
 
 *  Search by address
+*  Input addresses
 
 ### License
 
