@@ -1,7 +1,12 @@
 Iquidus Explorer
 ================
 
-An open source block explorer.
+An open source block explorer written in node.js.
+
+### Links
+
+*  [Demo](http://explorer.iquidus.co.nz/) - Currently running with razord, and all features enabled.
+*  [Issue Tracker](http://dev.iquidus.co.nz/projects/iquidus-explorer/) - Submit bug reports and feature requests
 
 ### Requires
 
