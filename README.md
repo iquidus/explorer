@@ -36,15 +36,34 @@ An open source block explorer written in node.js.
 
 ### Syncing databases with the blockchain
 
-**block explorer db**  
-    node scripts/blocknotify.js
+sync.js (located in scripts/) is used for updating the local databases. This script must be called from the explorers root directory.
 
-*It is recommended to have this script launched via a cronjob at block-time intervals. Or using the wallets blocknotify flag.*
+    Usage: node scripts/sync.js [database] [mode]
+    
+    database: (required)
+    index [mode] Main index: coin info/stats, transactions & addresses
+    market       Market data: summaries, orderbooks, trade history & chartdata
+    
+    mode: (required for index database only)
+    update       Updates index from last sync to current block
+    check        checks index for (and adds) any missing transactions/addresses
+    reindex      Clears index then resyncs from genesis to current block
+    
+    notes:
+    * 'current block' is the latest created block when script is executed.
+    * The market database only supports (& defaults to) reindex mode.
+    * If check mode finds missing data(ignoring new data since last sync),
+      index_timeout in settings.json is set too low.
 
-**markets db**  
-    node scripts/markets.js
 
 *It is recommended to have this script launched via a cronjob at 1+ min intervals.*
+
+**crontab**
+
+*Example crontab; update index every minute and market data every 2 minutes*
+
+    */1 * * * * cd /path/to/explorer && /usr/bin/node scripts/sync.js index update
+    */2 * * * * cd /path/to/explorer && /usr/bin/node scripts/sync.js market
 
 ### Wallet
 
