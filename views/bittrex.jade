@@ -15,18 +15,18 @@ block market_view
               th #{settings.locale.mkt_volume}
               th.hidden-xs #{settings.locale.mkt_top_bid}
               th.hidden-xs #{settings.locale.mkt_top_ask}
-              th.hidden-xs #{settings.locale.mkt_yesturday}
+              th.hidden-xs #{settings.locale.mkt_yesterday}
               th.hidden-xs #{settings.locale.mkt_last}
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.bittrex.summary.High}
-              td #{marketdata.bittrex.summary.Low}
-              td #{marketdata.bittrex.summary.Volume}
-              td.hidden-xs #{marketdata.bittrex.summary.Bid}
-              td.hidden-xs #{marketdata.bittrex.summary.Ask}
-              td.hidden-xs #{marketdata.bittrex.summary.PrevDay}
-              td.hidden-xs #{marketdata.bittrex.summary.Last}
+              td #{marketdata.bittrex.summary.High.toFixed(8)}
+              td #{marketdata.bittrex.summary.Low.toFixed(8)}
+              td #{marketdata.bittrex.summary.Volume.toFixed(8)}
+              td.hidden-xs #{marketdata.bittrex.summary.Bid.toFixed(8)}
+              td.hidden-xs #{marketdata.bittrex.summary.Ask.toFixed(8)}
+              td.hidden-xs #{marketdata.bittrex.summary.PrevDay.toFixed(8)}
+              td.hidden-xs #{marketdata.bittrex.summary.Last.toFixed(8)}
               - var bittrex_change = (100 - ((parseFloat(marketdata.bittrex.summary.PrevDay)/parseFloat(marketdata.bittrex.summary.Last))*100)).toFixed(2);
               if bittrex_change >= 0
                 td.success +#{bittrex_change} %
@@ -47,9 +47,9 @@ block market_view
             each sell in marketdata.bittrex.sells
               tr
                 td
-                  =sell.price
+                  =sell.price.toFixed(8)
                 td
-                  =sell.amount
+                  =sell.amount.toFixed(8)
                 td.hidden-xs
                   =sell.total
     .col-md-6
@@ -66,9 +66,9 @@ block market_view
             each buy in marketdata.bittrex.buys
               tr
                 td
-                  =buy.price
+                  =buy.price.toFixed(8)
                 td
-                  =buy.amount
+                  =buy.amount.toFixed(8)
                 td.hidden-xs
                   =buy.total
   .row   
@@ -91,11 +91,11 @@ block market_view
                   td.hidden-xs
                     =order.OrderType
                   td
-                    =order.Quantity
+                    =order.Quantity.toFixed(8)
                   td
-                    =order.Price
+                    =order.Price.toFixed(8)
                   td
-                    =order.Total
+                    =order.Total.toFixed(8)
                   td.hidden-xs
                     =order.TimeStamp
               else
@@ -103,11 +103,11 @@ block market_view
                   td.hidden-xs
                     =order.OrderType
                   td
-                    =order.Quantity
+                    =order.Quantity.toFixed(8)
                   td
-                    =order.Price
+                    =order.Price.toFixed(8)
                   td
-                    =order.Total
+                    =order.Total.toFixed(8)
                   td.hidden-xs
                     =order.TimeStamp
       .footer-padding

@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  - var time = format_unixtime(block.time)
   .row(style='margin-top:5px;')
     .col-md-12(style='text-align:center;')
       img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
@@ -35,7 +36,7 @@ block content
               td.hidden-xs #{block_size.toFixed(2)}
               td.hidden-xs #{block.bits}
               td.hidden-xs #{block.nonce}
-              td.hidden-xs #{block.time}
+              td.hidden-xs #{time}
           else
             if block.confirmations < (confirmations / 2)
               tr.danger
@@ -46,7 +47,7 @@ block content
                 td.hidden-xs #{block_size.toFixed(2)}
                 td.hidden-xs #{block.bits}
                 td.hidden-xs #{block.nonce}
-                td.hidden-xs #{block.time}
+                td.hidden-xs #{time}
             else
               tr.warning
                 - var block_size = block.size/1024
@@ -56,7 +57,7 @@ block content
                 td.hidden-xs #{block_size.toFixed(2)}
                 td.hidden-xs #{block.bits}
                 td.hidden-xs #{block.nonce}
-                td.hidden-xs #{block.time}
+                td.hidden-xs #{time}
 
 
     .panel.panel-default.panel-iquidus
@@ -66,13 +67,17 @@ block content
         thead
           tr
             th #{settings.locale.tx_hash}
+            th #{settings.locale.tx_recipients}
+            th #{settings.locale.mkt_amount} (#{settings.symbol})
             th
         tbody
-          each txn in block.tx
+          each txn in txs
             tr
-              td #{txn}
+              td #{txn.txid}
+              td #{txn.vout.length}
+              td #{txn.total.toFixed(8)} 
               td.view_tx 
-                a(href='/tx/#{txn}')
+                a(href='/tx/#{txn.txid}')
                   span.glyphicon.glyphicon-eye-open.glow
       .panel-footer
   .footer-padding  

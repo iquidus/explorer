@@ -2,20 +2,16 @@ extends layout
 
 block content
   - var t_sent = 0;
-  if stats.tx_count > 0
-    if typeof stats.transactions[0].vout !== 'undefined'
-      each e in stats.transactions
-        - var total = 0;
-        each r in e.vout
-          - total = total + r.value;
-        - t_sent =  (parseFloat(t_sent) + parseFloat(total)).toFixed(8);    
+  if txs.length > 0
+    each e in txs
+      - t_sent = (parseFloat(t_sent) + parseFloat(e.total)).toFixed(8);
+  - var time = format_unixtime(stats.timestamp)
   .row
-    .col-md-4.col-md-offset-4
-      if typeof error !== 'undefined'        
-        .alert.alert-danger
+    .col-md-10.col-md-offset-1
+      if error !== null        
+        .alert.alert-danger.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×
-          center
-            | #{settings.locale.ex_error} : #{error}
+          strong #{settings.locale.ex_error} : #{error}
   .col-md-12
     .panel.panel-default.panel-iquidus
       .panel-heading
@@ -53,33 +49,25 @@ block content
             td.hidden-xs #{stats.size} 
             td.hidden-xs #{stats.tx_count}
             td #{t_sent} 
-            td.hidden-xs #{stats.timestamp}
+            td.hidden-xs #{time}
     .panel.panel-default.panel-iquidus
       .panel-heading
         strong #{settings.locale.ex_latest_transactions}
       table.table.table-bordered.table-striped.summary-table 
         thead
           tr
-            th #{settings.locale.mkt_amount} (#{settings.symbol})
-            th #{settings.locale.tx_recipients}
             th #{settings.locale.tx_hash}
+            th #{settings.locale.tx_recipients}
+            th #{settings.locale.mkt_amount} (#{settings.symbol})
             th
         tbody
-          if stats.tx_count > 0
-            if typeof stats.transactions[0].vout !== 'undefined'
-              each e in stats.transactions
-                - var total = 0;
-                - var rcpt = 0;
-                each r in e.vout
-                  - total = total + r.value;
-                  - rcpt = rcpt + 1;
-                - var total_r = total.toFixed(8); 
-                tr
-                  td #{total_r}
-                  td #{rcpt}
-                  td #{e.txid}
-                  td.view_tx 
-                    a(href='/tx/#{e.txid}')
-                      span.glyphicon.glyphicon-eye-open.glow
+          each txn in txs
+            tr
+              td #{txn.txid}
+              td #{txn.vout.length}
+              td #{txn.total.toFixed(8)} 
+              td.view_tx 
+                a(href='/tx/#{txn.txid}')
+                  span.glyphicon.glyphicon-eye-open.glow
       .panel-footer
               

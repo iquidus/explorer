@@ -4,10 +4,10 @@
   Please edit settings.json, not settings.json.template
 */
 {
-  // name your instance!
+    // name your instance!
   "title": "IQUIDUS",
   
-  "address": "http://explorer.iquidus.co.nz",
+  "address": "127.0.0.1:3001",
   // coin name
   "coin": "Razor",
 
@@ -22,21 +22,25 @@
 
   // database settings (MongoDB)
   "dbsettings": {
-    "database": "explorer",
+    "database": "explorer-razor8",
     "address": "localhost",
     "port": 27017
   },
+  
+  //update script settings
+  "update_timeout": 10,
+  "check_timeout": 250,
 
   // wallet settings
   "wallet": {
     "host": "localhost",
     "port": 9393,
-    "user": "razorrpc",
-    "pass": "123gfjk3R3pCCVjHtbRde2s123135kzdf233sa"
+    "user": "vericoinrpc",
+    "pass": "123gfjk3R3pCCVjHtbRde2s5k123213zdf233sa"
   },
   
-  // confirmations (>= : green, < & >= 1/2 : yellow, < 1/2 : red)
-  "confirmations": 6,
+  // confirmations
+  "confirmations": 40,
 
   // language settings
   "locale": "locale/en.json",

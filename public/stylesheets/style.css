@@ -32,7 +32,20 @@ body {
 	outline: 0 none;
 }
 
-.glow:hover, .glow:focus
+.glow-inverse, .glow-inverse:hover, .glow-inverse:focus
+{
+	text-decoration: none;
+	color: #fff;
+	text-shadow: none;
+	-webkit-transition: 300ms linear 0s;
+	-moz-transition: 300ms linear 0s;
+	-o-transition: 300ms linear 0s;
+	transition: 300ms linear 0s;
+	outline: 0 none;
+}
+
+
+.glow:hover, .glow:focus, .glow-inverse:hover, .glow-inverse:focus
 {
 	color: #555;
 }
