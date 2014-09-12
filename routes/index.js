@@ -45,26 +45,32 @@ function prepare_bittrex_data(cb){
 function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
     if (block != 'There was an error. Check your console.') {
-      console.log(block);
-      db.get_txs(block, function(txs) {
-        if (txs.length > 0) {
-          db.get_stats(settings.coin, function(stats) {
-            res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: txs});
-          });
-        } else {
-          db.create_txs(block, function(){
-            db.get_txs(block, function(ntxs) {
-              if (ntxs.length > 0) {
-                db.get_stats(settings.coin, function(stats) {
-                  res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: ntxs});
-                });
-              } else {
-                route_get_index(res, 'Block not found: ' + blockhash);
-              }
+      if (blockhash == settings.genesis_block) {
+        db.get_stats(settings.coin, function(stats) {
+          res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: 'GENESIS'});
+        });
+      } else {
+        console.log(block);
+        db.get_txs(block, function(txs) {
+          if (txs.length > 0) {
+            db.get_stats(settings.coin, function(stats) {
+              res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: txs});
             });
-          });
-        }
-      });
+          } else {
+            db.create_txs(block, function(){
+              db.get_txs(block, function(ntxs) {
+                if (ntxs.length > 0) {
+                  db.get_stats(settings.coin, function(stats) {
+                    res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: ntxs});
+                  });
+                } else {
+                  route_get_index(res, 'Block not found: ' + blockhash);
+                }
+              });
+            });
+          }
+        });
+      }
     } else {
       route_get_index(res, 'Block not found: ' + blockhash);
     }
@@ -73,34 +79,38 @@ function route_get_block(res, blockhash) {
 /* GET functions */
 
 function route_get_tx(res, txid) {
-  db.get_tx(txid, function(tx) {
-    if (tx) {
-      db.get_stats(settings.coin, function(stats){
-        lib.get_blockcount(function(blockcount) {
-          res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations, blockcount: blockcount});
-        });
-      });
-    } 
-    else {
-      lib.get_rawtransaction(txid, function(rtx) {
-        if (rtx.txid) {
-          db.create_tx(txid, function(err) {
-            if (err) {
-              route_get_index(res);
-            } else {
-              db.get_tx(txid, function(newtx) {
-                db.get_stats(settings.coin, function(stats){
-                  res.render('tx', { active: 'tx', tx: newtx, stats: stats, confirmations: settings.confirmations});
-                });
-              });
-            }
+  if (txid == settings.genesis_tx) {
+    route_get_block(res, settings.genesis_block);
+  } else {
+    db.get_tx(txid, function(tx) {
+      if (tx) {
+        db.get_stats(settings.coin, function(stats){
+          lib.get_blockcount(function(blockcount) {
+            res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations, blockcount: blockcount});
           });
-        } else {
-          route_get_index(res, null);
-        }
-      });  
-    }
-  });
+        });
+      } 
+      else {
+        lib.get_rawtransaction(txid, function(rtx) {
+          if (rtx.txid) {
+            db.create_tx(txid, function(err) {
+              if (err) {
+                route_get_index(res);
+              } else {
+                db.get_tx(txid, function(newtx) {
+                  db.get_stats(settings.coin, function(stats){
+                    res.render('tx', { active: 'tx', tx: newtx, stats: stats, confirmations: settings.confirmations});
+                  });
+                });
+              }
+            });
+          } else {
+            route_get_index(res, null);
+          }
+        });  
+      }
+    });
+  }
 }
 
 function route_get_index(res, error) {
@@ -175,21 +185,25 @@ router.get('/block/:hash', function(req, res) {
 router.post('/search', function(req, res) {
   var query = req.body.search;
   if (query.length == 64) {
-    db.get_tx(query, function(tx) {      
-      if (tx) {
-        db.get_stats(settings.coin, function(stats){
-          res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations});
-        });
-      } else {
-        lib.get_block(query, function(block) {
-          if (block != 'There was an error. Check your console.') {
-            route_get_block(res, query);
-          } else {
-            route_get_index(res, locale.ex_search_error + query );
-          }
-        });
-      }
-    });
+    if (query == settings.genesis_tx) {
+      route_get_block(res, settings.genesis_block);
+    } else {
+      db.get_tx(query, function(tx) {      
+        if (tx) {
+          db.get_stats(settings.coin, function(stats){
+            res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations});
+          });
+        } else {
+          lib.get_block(query, function(block) {
+            if (block != 'There was an error. Check your console.') {
+              route_get_block(res, query);
+            } else {
+              route_get_index(res, locale.ex_search_error + query );
+            }
+          });
+        }
+      });
+    }
   } else {
     lib.get_blockhash(query, function(hash) {
       if (hash != 'There was an error. Check your console.') {

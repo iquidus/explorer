@@ -12,10 +12,14 @@ block content
           if block.previousblockhash != null
             a(href='/block/#{block.previousblockhash}')
               span.glyphicon.glyphicon-chevron-left.block-last-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_previous}')  
-          strong #{settings.symbol} block: #{block.hash}
+            strong #{settings.symbol} block: #{block.hash}
+          else
+            strong(style='margin-left:10px;') #{settings.symbol} block: #{block.hash}
           if block.nextblockhash != null 
             a(href='/block/#{block.nextblockhash}')
               span.glyphicon.glyphicon-chevron-right.pull-right.block-last-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_next}')       
+          a(href='/api/getblock?hash=#{block.hash}')
+            span.glyphicon.glyphicon-info-sign.pull-right.glow-inverse
       table.table.table-bordered.summary-table 
         thead
           tr
@@ -59,25 +63,28 @@ block content
                 td.hidden-xs #{block.nonce}
                 td.hidden-xs #{time}
 
-
-    .panel.panel-default.panel-iquidus
-      .panel-heading
-        strong #{settings.locale.ex_latest_transactions}
-      table.table.table-bordered.table-striped.summary-table 
-        thead
-          tr
-            th #{settings.locale.tx_hash}
-            th #{settings.locale.tx_recipients}
-            th #{settings.locale.mkt_amount} (#{settings.symbol})
-            th
-        tbody
-          each txn in txs
+    if block.hash == settings.genesis_block
+      .alert.alert-info(role='alert', style='text-align:center;')   
+        strong GENESIS
+    else
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          strong #{settings.locale.ex_latest_transactions}
+        table.table.table-bordered.table-striped.summary-table 
+          thead
             tr
-              td #{txn.txid}
-              td #{txn.vout.length}
-              td #{txn.total.toFixed(8)} 
-              td.view_tx 
-                a(href='/tx/#{txn.txid}')
-                  span.glyphicon.glyphicon-eye-open.glow
+              th #{settings.locale.tx_hash}
+              th #{settings.locale.tx_recipients}
+              th #{settings.locale.mkt_amount} (#{settings.symbol})
+              th
+          tbody
+            each txn in txs
+              tr
+                td #{txn.txid}
+                td #{txn.vout.length}
+                td #{txn.total.toFixed(8)} 
+                td.view_tx 
+                  a(href='/tx/#{txn.txid}')
+                    span.glyphicon.glyphicon-eye-open.glow
       .panel-footer
   .footer-padding  
