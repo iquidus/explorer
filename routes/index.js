@@ -245,7 +245,7 @@ router.post('/search', function(req, res) {
   } else {
     db.get_address(query, function(address) {
       if (address) {
-        route_get_address(res, address.a_id);
+        route_get_address(res, address.a_id, 5);
       } else {
         lib.get_blockhash(query, function(hash) {
           if (hash != 'There was an error. Check your console.') {
