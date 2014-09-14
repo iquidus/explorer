@@ -67,7 +67,7 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
 
 ### Wallet
 
-Iquidus Explorer is intended to be generic so it can be used with any wallet following the usual standards. The wallet must be running with atleast the following flags
+Iquidus Explorer is intended to be generic so it can be used with any wallet following the usual standards(PoW). The wallet must be running with atleast the following flags
 
     -daemon -txindex
 
@@ -77,15 +77,31 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.2.1  
-Next planned: 1.2.2 
+Current version: 1.3.0
+Next planned: 1.3.1
 
-*  tidy up/optimize code
+*  Rich List
+*  Cryptsy (markets)
 
-1.3.0
+### Known Issues
 
-*  Search by address
-*  Input addresses
+**exceeding stack size**
+
+    RangeError: Maximum call stack size exceeded
+
+Nodes default stack size may be too small to index addresses with many tx's. If you experience the above error while running sync.js the stack size needs to be increased.
+
+To determine the default setting run
+
+    node --v8-options | grep -B0 -A1 stack_size
+
+To run sync.js with a larger stack size launch with
+
+    node --stack-size=[SIZE] scripts/sync.js index update
+
+Where [SIZE] is an integer higher than the default. 
+
+*note: SIZE will depend on which blockchain you are using, you may need to play around a bit to find an optimal setting*
 
 ### License
 

@@ -9,9 +9,9 @@ var StatsSchema = new Schema({
   hashrate: { type: String, default: 'N/A' },
   timestamp: { type: Number, default: 0 },
   size: { type: Number, default: 0 },
-  transactions: { type: Array },
-  tx_count: { type: Number, default: 0 },
-  sent: { type: String, default: 'N/A' },
+//  transactions: { type: Array },
+//  tx_count: { type: Number, default: 0 },
+//  sent: { type: String, default: 'N/A' },
   connections: { type: Number, default: 0 },
 });
 

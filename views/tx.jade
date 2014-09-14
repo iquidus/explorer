@@ -73,7 +73,8 @@ block content
                 else
                   tr
                     td 
-                      =r.addresses
+                      a.loading(href='/address/#{r.addresses}') 
+                        =r.addresses
                     td.danger #{r.amount.toFixed(8)}
       .col-md-6
         .panel.panel-default.panel-iquidus
@@ -88,7 +89,8 @@ block content
               each r in tx.vout 
                 tr
                   td 
-                    =r.addresses 
+                    a.loading(href='/address/#{r.addresses}') 
+                      =r.addresses 
                   td.success  #{r.amount.toFixed(8)} 
     .footer-padding
 

@@ -1,0 +1,104 @@
+extends layout
+
+block content
+  - var balance = address.received - address.sent;
+  .row(style='margin-top:5px;')
+    .col-md-12(style='text-align:center;')
+      img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
+  .col-xs-12.col-md-10.col-md-offset-1
+    .panel.panel-default.panel-iquidus.panel-address-summary
+      .panel-heading(style='position:relative;')        
+        strong #{settings.symbol} Address: #{address.a_id}
+      table.table.table-bordered.table-striped.summary-table 
+        thead
+          tr
+            th Transactions
+            th Total Sent (#{settings.symbol})
+            th Total Received (#{settings.symbol})
+            th Balance (#{settings.symbol})
+        tbody             
+          tr
+            td #{address.txs.length}
+            td #{address.sent.toFixed(8)}
+            td #{address.received.toFixed(8)}
+            td #{balance.toFixed(8)}
+    .row(style='text-align:center;')
+      div.btn-group(style='margin-bottom:15px;')
+        .dropdown       
+          button.btn.btn-default.dropdown-toggle(data-toggle='dropdown', style='color:#222;') Showing #{txs.length}/#{address.txs.length} transactions 
+            span.caret
+          ul.dropdown-menu.dropdown-menu-right(role='menu', aria-labelledby='displayMenu', style='text-align:center')
+            if address.txs.length > 5
+              li(role='presentation')
+                a(href='/address/#{address.a_id}/5', role='menuitem', tabindex='-1') 5
+            if address.txs.length > 10
+              li(role='presentation')
+                a(href='/address/#{address.a_id}/10', role='menuitem', tabindex='-1') 10
+            if address.txs.length > 25
+              li(role='presentation')
+                a(href='/address/#{address.a_id}/25', role='menuitem', tabindex='-1') 25
+            if address.txs.length > 50
+              li(role='presentation')
+                a(href='/address/#{address.a_id}/50', role='menuitem', tabindex='-1') 50 
+            if address.txs.length > 100
+              li(role='presentation')
+                a(href='/address/#{address.a_id}/100', role='menuitem', tabindex='-1') 100
+            if address.txs.length > 5
+              li.divider(role='presentation')
+            li(role='presentation')
+              a(href='/address/#{address.a_id}/#{address.txs.length}', role='menuitem', tabindex='-1') All       
+    each tx in txs 
+      - var time = format_unixtime(tx.timestamp)      
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          strong txid: #{tx.txid}
+          a(href='/tx/#{tx.txid}')
+            span.glyphicon.glyphicon-eye-open.pull-right.glow-inverse
+          strong.pull-right(style='padding-right:10px;') #{time}
+        .panel-body(style='padding:0px;')
+          .col-md-6(style='padding:0px;')
+            table.table.table-bordered.table-striped.summary-table 
+              thead
+                tr
+                  th #{settings.locale.tx_contributors}
+                  if tx.vin[0].addresses != 'BLOCK REWARD'
+                    th #{settings.locale.mkt_amount} (#{settings.symbol})
+              tbody
+                each r in tx.vin
+                  if r.addresses == 'BLOCK REWARD' 
+                    tr(style='text-align:center')
+                      td 
+                        =r.addresses
+                  else
+                    if r.addresses == address.a_id
+                      tr.danger
+                        td 
+                          =r.addresses
+                        td #{r.amount.toFixed(8)}
+                    else
+                      tr
+                        td
+                          a.loading(href='/address/#{r.addresses}') 
+                            =r.addresses
+                        td #{r.amount.toFixed(8)}
+          .col-md-6(style='padding:0px;')
+            table.table.table-bordered.table-striped.summary-table 
+              thead
+                tr
+                  th #{settings.locale.tx_recipients}
+                  th #{settings.locale.mkt_amount} (#{settings.symbol})
+              tbody
+                each r in tx.vout 
+                  if r.addresses == address.a_id
+                    tr.success
+                      td 
+                        =r.addresses
+                      td #{r.amount.toFixed(8)}
+                  else
+                    tr
+                      td
+                        a.loading(href='/address/#{r.addresses}') 
+                          =r.addresses
+                      td #{r.amount.toFixed(8)} 
+    .footer-padding
+            

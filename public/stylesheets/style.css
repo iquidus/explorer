@@ -92,6 +92,10 @@ button.btn-iquidus:hover{
   color:#fff;
 }
 
+.panel-address-summary {
+ margin-bottom: 5px;
+}
+
 .panel-iquidus {
 	border-color:#CCC;
 	color:#333;

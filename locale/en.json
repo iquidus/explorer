@@ -13,7 +13,7 @@
     "ex_title": "Block Explorer",
     "ex_search_title": "Search",
     "ex_search_button": "Search",
-    "ex_search_message": "You may enter a block height, block hash or transaction hash.",
+    "ex_search_message": "You may enter a block height, block hash, tx hash or address.",
     "ex_error": "Error!",
     "ex_search_error": "Search found no results for: ",
     "ex_latest_transactions": "Block Transactions",

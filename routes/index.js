@@ -125,6 +125,36 @@ function route_get_index(res, error) {
   });
 }
 
+function route_get_address(res, hash, count) {
+  db.get_stats(settings.coin, function(stats) {
+    db.get_address(hash, function(address) {
+      if (address) {
+        var txs = [];
+        var hashes = address.txs.reverse();
+        if (address.txs.length < count) {
+          count = address.txs.length;
+        }
+        lib.syncLoop(count, function (loop) {
+          var i = loop.iteration();
+          db.get_tx(hashes[i], function(tx) {
+            if (tx) {
+              txs.push(tx);
+              loop.next();
+            } else {
+              loop.next();
+            }
+          });
+        }, function(){
+          res.render('address', { active: 'address', stats: stats, address: address, txs: txs});
+        });
+        
+      } else {
+        route_get_index(res, hash + ' not found');
+      }
+    });
+  });
+}
+
 /* GET home page. */
 router.get('/', function(req, res) {
   route_get_index(res, null);
@@ -182,6 +212,14 @@ router.get('/block/:hash', function(req, res) {
   route_get_block(res, req.param('hash'));
 });
 
+router.get('/address/:hash', function(req, res) {
+  route_get_address(res, req.param('hash'), 5);
+});
+
+router.get('/address/:hash/:count', function(req, res) {
+  route_get_address(res, req.param('hash'), req.param('count'));
+});
+
 router.post('/search', function(req, res) {
   var query = req.body.search;
   if (query.length == 64) {
@@ -205,11 +243,17 @@ router.post('/search', function(req, res) {
       });
     }
   } else {
-    lib.get_blockhash(query, function(hash) {
-      if (hash != 'There was an error. Check your console.') {
-        route_get_block(res, hash);
+    db.get_address(query, function(address) {
+      if (address) {
+        route_get_address(res, address.a_id);
       } else {
-        route_get_index(res, locale.ex_search_error + query );
+        lib.get_blockhash(query, function(hash) {
+          if (hash != 'There was an error. Check your console.') {
+            route_get_block(res, hash);
+          } else {
+            route_get_index(res, locale.ex_search_error + query );
+          }
+        });
       }
     });
   }

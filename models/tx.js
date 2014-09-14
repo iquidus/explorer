@@ -12,8 +12,3 @@ var TxSchema = new Schema({
 });
 
 module.exports = mongoose.model('Tx', TxSchema);
-
-/*
-vin = [ 'RLUaYda3MHp862W4ftLbYAkXEAGyqChymX', ... , ...]
-vout = [ { 'addresses': ['RLUaYda3MHp862W4ftLbYAkXEAGyqChymX',...], 'amount': '0.390625', 'index': 0}, ... , ...]
-*/

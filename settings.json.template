@@ -4,7 +4,7 @@
   Please edit settings.json, not settings.json.template
 */
 {
-    // name your instance!
+  // name your instance!
   "title": "IQUIDUS",
   
   "address": "127.0.0.1:3001",
@@ -22,7 +22,7 @@
 
   // database settings (MongoDB)
   "dbsettings": {
-    "database": "explorer-razor8",
+    "database": "explorer-razor",
     "address": "localhost",
     "port": 27017
   },
@@ -36,7 +36,7 @@
     "host": "localhost",
     "port": 9393,
     "user": "vericoinrpc",
-    "pass": "123gfjk3R3pCCVjHtbRde2s5k123213zdf233sa"
+    "pass": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
   },
   
   // confirmations
@@ -58,6 +58,7 @@
     "blockindex": 1337,
     "blockhash": "1733320247b15ca2262be646397d1ffd6be953fa638ebb8f5dcbb4c2b91b34f1",
     "txhash": "f270cd3813254c9922a2e222a56ba745842d9112223a1394062e460b33d27b7e",
+    "address": "RBiXWscC63Jdn1GfDtRj8hgv4Q6Zppvpwb"
   },
   
   // market settings
@@ -69,11 +70,12 @@
     "default": "mintpal"
   },
 
-    // twitter
+  // twitter
   "twitter": "iquidus",
 
-    //genesis
+  //genesis
   "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
   "genesis_block": "b2926a56ca64e0cd2430347e383f63ad7092f406088b9b86d6d68c2a34baef51"  
+
 
 }
