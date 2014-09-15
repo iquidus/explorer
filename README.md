@@ -62,8 +62,8 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
 
 *Example crontab; update index every minute and market data every 2 minutes*
 
-    */1 * * * * cd /path/to/explorer && /usr/bin/node scripts/sync.js index update
-    */2 * * * * cd /path/to/explorer && /usr/bin/node scripts/sync.js market
+    */1 * * * * cd /path/to/explorer && /usr/bin/node scripts/sync.js index update > /dev/null 2>&1
+    */2 * * * * cd /path/to/explorer && /usr/bin/node scripts/sync.js market > /dev/null 2>&1
 
 ### Wallet
 
