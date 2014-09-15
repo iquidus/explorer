@@ -3,7 +3,7 @@
   "version": "1.3.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node --stack-size=5000 ./bin/www"
   },
   "dependencies": {
     "express": "~4.2.0",
