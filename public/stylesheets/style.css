@@ -12,12 +12,19 @@ body {
 	text-align: center;
 }
 
-.block-last-next {
-	margin: 0 10px;
+.block-last {
+	margin: 0;
+	margin-right: 10px;
 	color: #FFF;
 }
 
-.block-last-next:hover {
+.block-next {
+	margin: 0;
+	margin-left: 10px;
+	color: #FFF;
+}
+
+.block-last:hover, .block-next:hover {
 	color: #CCC;
 }
 .glow, .glow:hover, .glow:focus

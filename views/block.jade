@@ -7,17 +7,17 @@ block content
       img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
   .col-xs-12.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
     .panel.panel-default.panel-iquidus
-      .panel-heading       
+      .panel-heading(style='padding-left:25px;padding-right:25px;')       
         .row           
           if block.previousblockhash != null
             a(href='/block/#{block.previousblockhash}')
-              span.glyphicon.glyphicon-chevron-left.block-last-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_previous}')  
+              span.glyphicon.glyphicon-chevron-left.block-last(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_previous}')  
             strong #{settings.symbol} block: #{block.hash}
           else
             strong(style='margin-left:10px;') #{settings.symbol} block: #{block.hash}
           if block.nextblockhash != null 
             a(href='/block/#{block.nextblockhash}')
-              span.glyphicon.glyphicon-chevron-right.pull-right.block-last-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_next}')       
+              span.glyphicon.glyphicon-chevron-right.pull-right.block-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_next}')       
           a(href='/api/getblock?hash=#{block.hash}')
             span.glyphicon.glyphicon-info-sign.pull-right.glow-inverse
       table.table.table-bordered.summary-table 
