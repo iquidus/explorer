@@ -61,35 +61,18 @@ block content
               thead
                 tr
                   th #{settings.locale.tx_contributors}
-                  if tx.vin[0].addresses != 'coinbase'
+                  if tx.vin[0].addresses != 'coinbase' && tx.vin[0].addresses != tx.vout[0].addresses
                     th #{settings.locale.mkt_amount} (#{settings.symbol})
               tbody
                 each r in tx.vin
                   if r.addresses == 'coinbase' 
                     tr(style='text-align:center')
                       td #{settings.locale.new_coins}
-                  else
-                    if r.addresses == address.a_id
-                      tr.danger
-                        td 
-                          =r.addresses
-                        td #{r.amount.toFixed(8)}
-                    else
-                      tr
-                        td
-                          a.loading(href='/address/#{r.addresses}') 
-                            =r.addresses
-                        td #{r.amount.toFixed(8)}
-          .col-md-6(style='padding:0px;')
-            table.table.table-bordered.table-striped.summary-table 
-              thead
-                tr
-                  th #{settings.locale.tx_recipients}
-                  th #{settings.locale.mkt_amount} (#{settings.symbol})
-              tbody
-                each r in tx.vout 
-                  if r.addresses == address.a_id
-                    tr.success
+                  else if r.addresses == tx.vout[0].addresses
+                    tr(style='text-align:center')
+                      td #{settings.locale.proof_of_stake}
+                  else if r.addresses == address.a_id
+                    tr.danger
                       td 
                         =r.addresses
                       td #{r.amount.toFixed(8)}
@@ -98,6 +81,33 @@ block content
                       td
                         a.loading(href='/address/#{r.addresses}') 
                           =r.addresses
-                      td #{r.amount.toFixed(8)} 
+                      td #{r.amount.toFixed(8)}
+          .col-md-6(style='padding:0px;')
+            table.table.table-bordered.table-striped.summary-table 
+              thead
+                tr
+                  th #{settings.locale.tx_recipients}
+                  th #{settings.locale.mkt_amount} (#{settings.symbol})
+              tbody
+                each r in tx.vout 
+                  if tx.vin[0].addresses != tx.vout[0].addresses
+                    if r.addresses == address.a_id
+                      tr.success
+                        td 
+                          =r.addresses
+                        td #{r.amount.toFixed(8)}
+                    else
+                      tr
+                        td
+                          a.loading(href='/address/#{r.addresses}') 
+                            =r.addresses
+                        td #{r.amount.toFixed(8)} 
+                  else
+                    - var amount = r.amount - tx.vin[0].amount
+                    tr.success
+                        td 
+                          =r.addresses
+                        td #{amount.toFixed(8)}
+
     .footer-padding
             
