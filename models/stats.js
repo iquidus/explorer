@@ -5,7 +5,7 @@ var StatsSchema = new Schema({
   coin: { type: String },
   count: { type: Number, default: 1 },
   last: { type: Number, default: 1 },
-  difficulty: { type: String, default: 'N/A' },
+  difficulty: { type: Object, default: {} },
   hashrate: { type: String, default: 'N/A' },
   timestamp: { type: Number, default: 0 },
   size: { type: Number, default: 0 },

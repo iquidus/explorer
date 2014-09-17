@@ -52,6 +52,12 @@
     "twitter": true,
     "search": true
   },
+
+  // index page (valid options for difficulty are POW or POS)
+  "index": {
+    "show_hashrate": true,
+    "difficulty": "POW",
+  },
   
   // ensure links on API page are valid
   "api": {

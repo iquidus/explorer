@@ -35,8 +35,13 @@ block content
         thead
           tr
             th #{settings.locale.height}
-            th #{settings.locale.difficulty}
-            th #{settings.locale.network} (gh/s)
+            if (settings.index.difficulty == 'POW')
+              th #{settings.locale.difficulty}
+            else
+              th #{settings.locale.difficulty} (PoW)
+              th #{settings.locale.difficulty} (PoS)
+            if settings.index.show_hashrate == true 
+              th #{settings.locale.network} (gh/s)
             th.hidden-xs #{settings.locale.size} (kB)
             th.hidden-xs #{settings.locale.transactions}
             th #{settings.locale.total_sent} (#{settings.symbol})
@@ -44,8 +49,13 @@ block content
         tbody
           tr
             td #{stats.count}
-            td #{stats.difficulty} 
-            td #{stats.hashrate} 
+            if (settings.index.difficulty == 'POW')
+              td #{stats.difficulty.pow}
+            else
+              td #{stats.difficulty.pow} 
+              td #{stats.difficulty.pos}
+            if settings.index.show_hashrate == true  
+              td #{stats.hashrate} 
             td.hidden-xs #{stats.size} 
             td.hidden-xs #{txs.length}
             td #{t_sent} 
