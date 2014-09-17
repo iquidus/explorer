@@ -2,6 +2,7 @@ extends layout
 
 block content
   - var time = format_unixtime(tx.timestamp)
+  - var amount = tx.vout[0].amount - tx.vin[0].amount
   .row(style='margin-top:5px;')
     .col-md-12(style='text-align:center;')
       img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
@@ -23,7 +24,10 @@ block content
           - var confirms = (blockcount - tx.blockindex) + 1;
           if confirms >= confirmations                
             tr.success
-                td #{tx.total.toFixed(8)}
+                if tx.vin[0].addresses != tx.vout[0].addresses
+                  td #{tx.total.toFixed(8)}
+                else
+                  td #{amount.toFixed(8)}
                 td #{confirms}
                 td 
                   =tx.blockhash
@@ -34,7 +38,10 @@ block content
           else
             if confirms < (confirmations / 2)
               tr.danger
-                td #{tx.total.toFixed(8)}
+                if tx.vin[0].addresses != tx.vout[0].addresses
+                  td #{tx.total.toFixed(8)}
+                else
+                  td #{amount.toFixed(8)}
                 td #{confirms}
                 td 
                   =tx.blockhash
@@ -44,7 +51,10 @@ block content
                     span.glyphicon.glyphicon-eye-open.glow 
             else
               tr.warning
-                td #{tx.total.toFixed(8)}
+                if tx.vin[0].addresses != tx.vout[0].addresses
+                  td #{tx.total.toFixed(8)}
+                else
+                  td #{amount.toFixed(8)}
                 td #{confirms}
                 td 
                   =tx.blockhash
@@ -100,7 +110,6 @@ block content
                           =r.addresses 
                       td.success  #{r.amount.toFixed(8)} 
                   else
-                    - var amount = r.amount - tx.vin[0].amount
                     tr
                       td 
                         a.loading(href='/address/#{r.addresses}') 
