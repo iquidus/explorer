@@ -13,7 +13,7 @@ var app = express();
 
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);
-bitcoinapi.setAccess('only', ['getnetworkhashps' ,'getdifficulty', 'getconnectioncount', 
+bitcoinapi.setAccess('only', ['getinfo', 'getnetworkhashps' ,'getdifficulty', 'getconnectioncount', 
   'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction']);
 
 // view engine setup
