@@ -61,14 +61,13 @@ block content
               thead
                 tr
                   th #{settings.locale.tx_contributors}
-                  if tx.vin[0].addresses != 'BLOCK REWARD'
+                  if tx.vin[0].addresses != 'coinbase'
                     th #{settings.locale.mkt_amount} (#{settings.symbol})
               tbody
                 each r in tx.vin
-                  if r.addresses == 'BLOCK REWARD' 
+                  if r.addresses == 'coinbase' 
                     tr(style='text-align:center')
-                      td 
-                        =r.addresses
+                      td #{settings.locale.new_coins}
                   else
                     if r.addresses == address.a_id
                       tr.danger
