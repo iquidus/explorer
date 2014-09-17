@@ -40,6 +40,7 @@
     "total": "Total",
     "bits": "Bits",
     "nonce": "Nonce",
+    "new_coins": "BLOCK REWARD",
 
     // api view
     "api_title": "API Documentation",

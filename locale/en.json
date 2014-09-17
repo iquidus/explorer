@@ -45,7 +45,7 @@
     "total": "Total",
     "bits": "Bits",
     "nonce": "Nonce",
-
+    "new_coins": "BLOCK REWARD",
     // api view
     "api_title": "API Documentation",
     "api_message": "The block explorer provides an API allowing users and/or applications to retrieve information from the network without the need for a local wallet.",
