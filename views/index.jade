@@ -75,7 +75,14 @@ block content
             tr
               td #{txn.txid}
               td #{txn.vout.length}
-              td #{txn.total.toFixed(8)} 
+              if txn.vout.length > 0
+                if txn.vout[0].addresses[0] != txn.vin[0].addresses
+                  td #{txn.total.toFixed(8)}
+                else
+                  - var total = txn.vout[0].amount - txn.vin[0].amount
+                  td #{total.toFixed(8)}
+              else
+                td #{txn.total.toFixed(8)}
               td.view_tx 
                 a(href='/tx/#{txn.txid}')
                   span.glyphicon.glyphicon-eye-open.glow
