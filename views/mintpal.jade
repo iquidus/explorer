@@ -2,7 +2,6 @@ extends markets
 
 block market_view
   script.
-    var change_up = false;
     $(document).ready(function(){
       $('#summary-panel').hide();
       var ohlc = !{marketdata.mintpal.chartdata}
@@ -42,22 +41,19 @@ block market_view
       $(window).resize(function () { 
         plot2.replot( { resetAxes: false } );
       });
-      if (!{marketdata.mintpal.summary.change}.substring(0, 1) == '+') {
-        change_up = true;
-      }
     });        
   .row
     .hidden-xs.col-md-12  
       #chart-panel.panel.panel-default.panel-iquidus
         .panel-heading
           strong MintPal - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
-          span.glyphicon.glyphicon-th-list.pull-right.view-summary.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_view_summary}') 
+          span.fa.fa-th-list.pull-right.view-summary.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_view_summary}') 
         .panel-body
           div#chart(style="width:100%;height:300px;")
       #summary-panel.panel.panel-default.panel-iquidus
         .panel-heading
           strong MintPal - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
-          span.glyphicon.glyphicon-stats.pull-right.view-chart.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_view_chart}') 
+          span.fa.fa-line-chart.pull-right.view-chart.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_view_chart}') 
         table.table.table-bordered.summary-table 
           thead
             tr
@@ -78,7 +74,7 @@ block market_view
               td.hidden-xs #{marketdata.mintpal.summary.top_ask}
               td.hidden-xs #{marketdata.mintpal.summary.last_price}
               td.hidden-xs #{marketdata.mintpal.summary.yesterday_price}
-              if change_up == true
+              if marketdata.mintpal.summary.change.substring(0, 1) == '+'
                 td.success #{marketdata.mintpal.summary.change} %
               else
                 td.danger #{marketdata.mintpal.summary.change} %
@@ -98,7 +94,7 @@ block market_view
               td #{marketdata.mintpal.summary['24hhigh']}
               td #{marketdata.mintpal.summary['24hlow']}
               td #{marketdata.mintpal.summary['24hvol']}
-              if change_up == true
+              if marketdata.mintpal.summary.change.substring(0, 1) == '+'
                 td.success #{marketdata.mintpal.summary.change} %
               else
                 td.danger #{marketdata.mintpal.summary.change} %

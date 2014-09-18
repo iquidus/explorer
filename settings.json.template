@@ -49,6 +49,7 @@
   "display": {
     "api": true,
     "markets": true,
+    "richlist": true,
     "twitter": true,
     "search": true
   },

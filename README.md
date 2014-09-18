@@ -77,10 +77,9 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.3.0  
-Next planned: 1.3.1
+Current version: 1.3.1  
+Next planned: 1.3.2
 
-*  Rich List
 *  Cryptsy (markets)
 
 ### Known Issues

@@ -1,0 +1,52 @@
+extends layout
+
+block content
+  .row(style='margin-top:5px;')
+    .col-md-12(style='text-align:center;')
+      img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
+  .row
+    .col-md-6
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Top 100 - Received Coins
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th 
+              th Address
+              th Received (#{settings.symbol})
+          tbody
+            - var count = 0
+            each item in received
+              - count = count + 1
+              tr
+                td(style='text-align:center;') 
+                  =count
+                td
+                  a.loading(href='/address/#{item.addresses}') 
+                    =item.addresses
+                td
+                  =item.total.toFixed(8)
+    .col-md-6
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Top 100 - Current Balance
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th 
+              th Address
+              th Balance (#{settings.symbol})
+          tbody
+            - var count = 0
+            each item in balance
+              - count = count + 1
+              tr
+                td(style='text-align:center;') 
+                  =count
+                td
+                  a.loading(href='/address/#{item.addresses}') 
+                    =item.addresses
+                td
+                  =item.total.toFixed(8)
+  .footer-padding

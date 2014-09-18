@@ -50,9 +50,10 @@ function route_get_block(res, blockhash) {
           res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: 'GENESIS'});
         });
       } else {
-        console.log(block);
+        //console.log(block);
         db.get_txs(block, function(txs) {
           if (txs.length > 0) {
+            console.log(txs);
             db.get_stats(settings.coin, function(stats) {
               res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: txs});
             });
@@ -115,6 +116,7 @@ function route_get_tx(res, txid) {
 
 function route_get_index(res, error) {
   db.get_stats(settings.coin, function(stats) {
+    //console.log(stats.difficulty);
     lib.get_blockhash(stats.count, function(hash) {
       lib.get_block(hash, function (block) {
         db.get_txs(block, function(txs) {
@@ -213,6 +215,25 @@ router.get('/mintpal', function(req, res) {
         market: 'mintpal'
       });
     });
+  } else {
+    route_get_index(res, null);
+  }
+});
+
+router.get('/richlist', function(req, res) {
+  if (settings.display.richlist == true ) {   
+    db.get_richlist(settings.coin, function(richlist){
+      console.log(richlist);
+      if (richlist) {
+        res.render('richlist', { 
+          active: 'richlist', 
+          balance: richlist.balance, 
+          received: richlist.received,
+        });
+      } else {
+        route_get_index(res, null);
+      }
+    });   
   } else {
     route_get_index(res, null);
   }

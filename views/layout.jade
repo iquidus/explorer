@@ -5,8 +5,10 @@ html
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
     link(rel='stylesheet', href='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     
+
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
     script(src='/vendor/jqplot/jquery.jqplot.min.js')
@@ -16,6 +18,7 @@ html
     script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')  
     script(src='//cdn.datatables.net/responsive/1.0.1/js/dataTables.responsive.js')
     script(src='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js')
+    
     script.
       $(document).ready(function(){   
         $('#loading-icon').hide();       
@@ -80,22 +83,33 @@ html
                 li.active
                   if settings.markets.default == 'bittrex'
                     a.navbar-link.loading(href='/bittrex') 
-                      span.glyphicon.glyphicon-stats
+                      span.fa.fa-line-chart
                       span.menu-text #{settings.locale.menu_markets}
                   else
                     a.navbar-link.loading(href='/mintpal') 
-                      span.glyphicon.glyphicon-stats
+                      span.fa.fa-line-chart
                       span.menu-text #{settings.locale.menu_markets}
               else
                 li
                   if settings.markets.default == 'bittrex'
                     a.navbar-link.loading(href='/bittrex') 
-                      span.glyphicon.glyphicon-stats
+                      span.fa.fa-line-chart
                       span.menu-text #{settings.locale.menu_markets}
                   else
                     a.navbar-link.loading(href='/mintpal') 
-                      span.glyphicon.glyphicon-stats
+                      span.fa.fa-line-chart
                       span.menu-text #{settings.locale.menu_markets}
+            if settings.display.richlist == true
+              if active == 'richlist'
+                li.active
+                  a.navbar-link(href='/richlist')
+                    span.fa.fa-btc
+                    span.menu-text #{settings.locale.menu_richlist}
+              else
+                li
+                  a.navbar-link(href='/richlist')
+                    span.fa.fa-btc
+                    span.menu-text #{settings.locale.menu_richlist}
             if settings.display.api == true
               if active == 'info'
                 li.active
@@ -119,7 +133,7 @@ html
               img#loading-icon(src='/images/loading.gif')
               if settings.display.twitter
                 a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')  
-                  img(src='/images/twitter.png')
+                  span.glyphicon.fa.fa-twitter
     block content
     .navbar.navbar-inverse.navbar-fixed-bottom
       .container(style="width:100%;")

@@ -8,6 +8,7 @@
     "menu_explorer": "Explorer",
     "menu_api": "API",
     "menu_markets": "Markets",
+    "menu_richlist": "Top 100",
 
     // explorer view
     "ex_title": "Block Explorer",

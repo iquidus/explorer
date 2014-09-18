@@ -1,6 +1,8 @@
 var mongoose = require('mongoose')
   , db = require('../lib/database')
   , Tx = require('../models/tx')  
+  , Address = require('../models/address')  
+  , Richlist = require('../models/richlist')  
   , Stats = require('../models/stats')  
   , settings = require('../lib/settings')
   , fs = require('fs');
@@ -116,6 +118,8 @@ function update_mintpal(cb) {
         return cb();
       }
     });
+  } else {
+    return cb();
   }
 }
 
@@ -137,6 +141,8 @@ function update_bittrex(cb) {
         return cb();
       }
     });
+  } else {
+    return cb();
   }
 }
 
@@ -166,15 +172,22 @@ is_locked(function (exists) {
                 db.get_stats(settings.coin, function(stats){
                   if (mode == 'reindex') {
                     Tx.remove({}, function(err) { 
-                      Stats.update({coin: settings.coin}, { 
-                          last: 0,
-                        }, function() {
-                          console.log('index cleared (reindex)');
-                        }); 
-                      db.update_tx_db(settings.coin, 1, stats.count, settings.update_timeout, function(){
-                        db.get_stats(settings.coin, function(nstats){
-                          console.log('reindex complete (block: %s)', nstats.last);
-                          exit();
+                      Address.remove({}, function(err2) { 
+                        Richlist.update({coin: settings.coin}, {
+                          received: [],
+                          balance: [],
+                        }, function(err3) { 
+                          Stats.update({coin: settings.coin}, { 
+                            last: 0,
+                          }, function() {
+                            console.log('index cleared (reindex)');
+                          }); 
+                          db.update_tx_db(settings.coin, 1, stats.count, settings.update_timeout, function(){
+                            db.get_stats(settings.coin, function(nstats){
+                              console.log('reindex complete (block: %s)', nstats.last);
+                              exit();
+                            });
+                          });
                         });
                       });
                     });              
