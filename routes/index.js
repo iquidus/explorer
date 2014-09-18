@@ -53,7 +53,7 @@ function route_get_block(res, blockhash) {
         //console.log(block);
         db.get_txs(block, function(txs) {
           if (txs.length > 0) {
-            console.log(txs);
+            //console.log(txs);
             db.get_stats(settings.coin, function(stats) {
               res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: txs});
             });
