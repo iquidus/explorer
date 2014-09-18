@@ -152,6 +152,7 @@ block market_view
               th.hidden-xs Time Stamp
           tbody
             each trade in marketdata.mintpal.history
+              - var time = format_unixtime(trade.time)
               if trade.type == '0'
                 tr.success
                   td.hidden-xs BUY
@@ -162,7 +163,7 @@ block market_view
                   td.hidden-xs
                     =trade.total
                   td.hidden-xs
-                    =trade.time
+                    =time
               else
                 tr.danger 
                   td.hidden-xs SELL
@@ -173,5 +174,5 @@ block market_view
                   td.hidden-xs
                     =trade.total
                   td.hidden-xs
-                    =trade.time
+                    =time
       .footer-padding
