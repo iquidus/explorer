@@ -8,26 +8,33 @@
     "menu_explorer": "Explorer",
     "menu_api": "API",
     "menu_markets": "Markets",
-    "menu_richlist": "Rich List",
-    
+    "menu_richlist": "Top 100",
+
     // explorer view
     "ex_title": "Block Explorer",
     "ex_search_title": "Search",
     "ex_search_button": "Search",
-    "ex_search_message": "You may enter a block height, block hash or transaction hash.",
+    "ex_search_message": "You may enter a block height, block hash, tx hash or address.",
     "ex_error": "Error!",
-    "ex_search_error": "Search found no results.",
-    "ex_latest_transactions": "Latest Transactions",
-    
+    "ex_search_error": "Search found no results for: ",
+    "ex_latest_transactions": "Block Transactions",
+    "ex_summary": "Block Summary",
+
+
     // transaction view
     "tx_title": "Transaction Details",
     "tx_block_hash": "Block Hash",
     "tx_recipients": "Recipients",
+    "tx_contributors": "Input Addresses",
+    "tx_hash": "Hash",
+    "tx_address": "Address",
+    "tx_nonstandard": "NONSTANDARD TX",
 
     // block view
     "block_previous": "Previous",
     "block_next": "Next",
     "block_title": "Block Details",
+    "block_genesis": "GENESIS",
 
     // global
     "difficulty": "Difficulty",
@@ -37,11 +44,24 @@
     "size": "Size",
     "transactions": "Transactions",
     "total_sent": "Total Sent",
+    "total_received": "Total Received",
     "confirmations": "Confirmations",
     "total": "Total",
     "bits": "Bits",
     "nonce": "Nonce",
     "new_coins": "BLOCK REWARD",
+    "proof_of_stake": "PoS",
+
+    //address menu
+    "a_menu_showing": "Showing",
+    "a_menu_txs": "transactions",
+    "a_menu_all": "All",
+
+    //richlist
+    "rl_received_coins": "Top 100 - Received Coins",
+    "rl_current_balance": "Top 100 - Current Balance",
+    "rl_received": "Received",
+    "rl_balance": "Balance",
 
     // api view
     "api_title": "API Documentation",

@@ -223,7 +223,7 @@ router.get('/mintpal', function(req, res) {
 router.get('/richlist', function(req, res) {
   if (settings.display.richlist == true ) {   
     db.get_richlist(settings.coin, function(richlist){
-      console.log(richlist);
+      //console.log(richlist);
       if (richlist) {
         res.render('richlist', { 
           active: 'richlist', 

@@ -28,11 +28,13 @@
     "tx_contributors": "Input Addresses",
     "tx_hash": "Hash",
     "tx_address": "Address",
+    "tx_nonstandard": "NONSTANDARD TX",
 
     // block view
     "block_previous": "Previous",
     "block_next": "Next",
     "block_title": "Block Details",
+    "block_genesis": "GENESIS",
 
     // global
     "difficulty": "Difficulty",
@@ -42,12 +44,25 @@
     "size": "Size",
     "transactions": "Transactions",
     "total_sent": "Total Sent",
+    "total_received": "Total Received",
     "confirmations": "Confirmations",
     "total": "Total",
     "bits": "Bits",
     "nonce": "Nonce",
     "new_coins": "BLOCK REWARD",
     "proof_of_stake": "PoS",
+
+    //address menu
+    "a_menu_showing": "Showing",
+    "a_menu_txs": "transactions",
+    "a_menu_all": "All",
+
+    //richlist
+    "rl_received_coins": "Top 100 - Received Coins",
+    "rl_current_balance": "Top 100 - Current Balance",
+    "rl_received": "Received",
+    "rl_balance": "Balance",
+
     // api view
     "api_title": "API Documentation",
     "api_message": "The block explorer provides an API allowing users and/or applications to retrieve information from the network without the need for a local wallet.",

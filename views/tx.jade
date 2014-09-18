@@ -74,7 +74,7 @@ block content
                     span.glyphicon.glyphicon-eye-open.glow
     if tx.vout.length < 1
       .alert.alert-info(role='alert', style='text-align:center;')   
-        strong NONSTANDARD TX
+        strong #{settings.locale.tx_nonstandard}
     else
       .row
         .col-md-6

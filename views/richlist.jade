@@ -8,14 +8,14 @@ block content
     .col-md-6
       .panel.panel-default.panel-iquidus
         .panel-heading
-          h3.panel-title Top 100 - Received Coins
+          h3.panel-title #{settings.locale.rl_received_coins} 
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
               th(style='text-align:center;') 
                 span.fa.fa-flag-checkered
-              th Address
-              th Received (#{settings.symbol})
+              th #{settings.locale.tx_address} 
+              th #{settings.locale.rl_received} (#{settings.symbol})
           tbody
             - var count = 0
             each item in received
@@ -31,14 +31,14 @@ block content
     .col-md-6
       .panel.panel-default.panel-iquidus
         .panel-heading
-          h3.panel-title Top 100 - Current Balance
+          h3.panel-title #{settings.locale.rl_current_balance} 
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
               th(style='text-align:center;') 
                 span.fa.fa-flag-checkered
-              th Address
-              th Balance (#{settings.symbol})
+              th #{settings.locale.tx_address}
+              th #{settings.locale.rl_balance} (#{settings.symbol})
           tbody
             - var count = 0
             each item in balance
