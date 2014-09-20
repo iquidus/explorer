@@ -74,6 +74,14 @@
     "api_getblockhash": "Returns the hash of the block at ; index 0 is the genesis block.",
     "api_getblock": "Returns information about the block with the given hash.",
     "api_getrawtransaction": "Returns raw transaction representation for given transaction id. decrypt can be set to 0(false) or 1(true).",
+    "api_getmaxmoney": "Returns the maximum possible money supply.",
+    "api_getmaxvote": "Returns the maximum allowed vote for the current phase of voting.",
+    "api_getvote": "Returns the current block reward vote setting.",
+    "api_getphase": "Returns the current voting phase ('Mint', 'Limit' or 'Sustain').",
+    "api_getreward": "Returns the current block reward, which has been decided democratically in the previous round of block reward voting.",
+    "api_getsupply": "Returns the current money supply.",
+    "api_getnextrewardestimate": "Returns an estimate for the next block reward based on the current state of decentralized voting.",
+    "api_getnextrewardwhenstr": "Returns string describing how long until the votes are tallied and the next block reward is computed.",
 
     // Markets view
     "mkt_hours": "24 hours",
