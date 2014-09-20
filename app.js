@@ -59,6 +59,7 @@ app.set('markets', settings.markets);
 app.set('twitter', settings.twitter);
 app.set('genesis_block', settings.genesis_block);
 app.set('index', settings.index);
+app.set('heavy', settings.heavy);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
