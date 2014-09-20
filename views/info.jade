@@ -41,7 +41,44 @@ block content
              *#{settings.locale.api_getrawtransaction}*  
              [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0](/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0)  
              [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1](/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1)
-          
+        
+
+
+        if settings.heavy == true
+          :markdown
+            *  **getmaxmoney**  
+               *#{settings.locale.api_getmaxmoney}*  
+               [#{address}/api/getmaxmoney](/api/getmaxmoney)
+            
+            *  **getmaxvote**  
+               *#{settings.locale.api_getmaxvote}*  
+               [#{address}/api/getmaxvote](/api/getmaxvote)
+
+            *  **getvote**  
+               *#{settings.locale.api_getvote}*  
+               [#{address}/api/getvote](/api/getvote)
+
+            *  **getphase**  
+               *#{settings.locale.api_getphase}*  
+               [#{address}/api/getphase](/api/getphase)
+
+            *  **getreward**  
+               *#{settings.locale.api_getreward}*  
+               [#{address}/api/getreward](/api/getreward)
+
+            *  **getsupply**  
+               *#{settings.locale.api_getsupply}*  
+               [#{address}/api/getsupply](/api/getsupply)  
+
+            *  **getnextrewardestimate**  
+               *#{settings.locale.api_getnextrewardestimate}*  
+               [#{address}/api/getnextrewardestimate](/api/getnextrewardestimate)
+
+            *  **getnextrewardwhenstr**  
+               *#{settings.locale.api_getnextrewardwhenstr}*  
+               [#{address}/api/getnextrewardwhenstr](/api/getnextrewardwhenstr)                                                       
+
+        :markdown
           ------
 
           ### GET
@@ -57,5 +94,7 @@ block content
           *  **address (/address/hash)**
 
              [#{address}/address/#{hashes.address}](/address/#{hashes.address})
+        
+
     .footer-padding
 
