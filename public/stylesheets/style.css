@@ -159,6 +159,20 @@ tr {
 #twitter-icon {
 	font-size: 20px;
 }
+.connections {
+	position: absolute;
+	bottom: 5px;
+	right: 15px;
+
+}
+
+.glyphicon-ok {
+	color: rgb(0,255,0);
+}
+
+.glyphicon-remove {
+	color: rgb(255,0,0);
+}
 
 #twitter-icon img{
 	width: 40px;
