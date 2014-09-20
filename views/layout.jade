@@ -134,12 +134,22 @@ html
               if settings.display.twitter
                 a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')  
                   span.glyphicon.fa.fa-twitter
+            
     block content
     .navbar.navbar-inverse.navbar-fixed-bottom
-      .container(style="width:100%;")
-        ul.nav
+      .container(style="width:100%;position:relative;")
+        ul.nav                    
+          if stats.connections == 0   
+            label.label.label-danger.connections
+              span.glyphicon.fa.fa-plug(style='margin-right:5px;')
+              | #{stats.connections} connections
+          else
+            label.label.label-success.connections
+              span.glyphicon.glyphicon-ok(style='margin-right:5px;')  
+              | #{stats.connections} connections
           li.text-center
             p(style='margin-top:15px;') 
               a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer 
-              
+
+
               
