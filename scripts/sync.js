@@ -170,6 +170,11 @@ is_locked(function (exists) {
             } else {
               db.update_db(settings.coin, function(){
                 db.get_stats(settings.coin, function(stats){
+                  if (settings.heavy == true) {
+                    db.update_heavy(settings.coin, stats.count, 20, function(){
+                    
+                    });
+                  }
                   if (mode == 'reindex') {
                     Tx.remove({}, function(err) { 
                       Address.remove({}, function(err2) { 

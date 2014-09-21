@@ -18,7 +18,7 @@ html
     script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')  
     script(src='//cdn.datatables.net/responsive/1.0.1/js/dataTables.responsive.js')
     script(src='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js')
-    
+    script(src='/javascripts/chart.js')
     script.
       $(document).ready(function(){   
         $('#loading-icon').hide();       
@@ -78,6 +78,17 @@ html
                 a.navbar-link(href='/') 
                   span.glyphicon.glyphicon-search
                   span.menu-text #{settings.locale.menu_explorer}
+            if settings.heavy == true
+              if active == 'reward'
+                li.active
+                  a.navbar-link(href='/reward')
+                    span.fa.fa-star
+                    span.menu-text Reward
+              else
+                li
+                  a.navbar-link(href='/reward')
+                    span.fa.fa-star
+                    span.menu-text Reward
             if settings.display.markets == true
               if active == 'markets'
                 li.active
@@ -146,7 +157,7 @@ html
           else
             label.label.label-success.connections
               span.glyphicon.glyphicon-ok(style='margin-right:5px;')  
-              | #{stats.connections} connections
+              | #{stats.connections} connections 
           li.text-center
             p(style='margin-top:15px;') 
               a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer 

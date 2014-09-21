@@ -239,6 +239,27 @@ router.get('/richlist', function(req, res) {
   }
 });
 
+router.get('/reward', function(req, res){
+  db.get_stats(settings.coin, function (stats) {
+    console.log(stats);
+    db.get_heavy(settings.coin, function (heavy) {
+      //heavy = heavy;
+      var votes = heavy.votes; 
+      votes.sort(function (a,b) {
+        if (a.count < b.count) {
+          return -1;
+        } else if (a.count > b.count) {
+          return 1;
+        } else {
+         return 0;
+        }
+      });
+          
+      res.render('reward', { active: 'reward', stats: stats, heavy: heavy, votes: heavy.votes });
+    });
+  });
+});
+
 router.get('/tx/:txid', function(req, res) {
   route_get_tx(res, req.param('txid'));
 });
