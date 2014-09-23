@@ -121,13 +121,13 @@ function route_get_index(res, error) {
       lib.get_block(hash, function (block) {
         db.get_txs(block, function(txs) {
           if (txs.length > 0) {
-            res.render('index', { active: 'home', stats: stats, txs: txs, error: error});
+            res.render('index', { active: 'home', stats: stats, block: block, txs: txs, error: error});
           } else {
             db.create_txs(block, function(){
               db.get_txs(block, function(ntxs) {
                 if (ntxs.length > 0) {
                   db.get_stats(settings.coin, function(stats) {
-                    res.render('index', { active: 'home', stats: stats, txs: ntxs, error: error});
+                    res.render('index', { active: 'home', stats: stats, block: block, txs: ntxs, error: error});
                   });
                 } else {
                   route_get_index(res, 'Block tx\'s not found');

@@ -42,6 +42,8 @@ block content
               th #{settings.locale.difficulty} (PoS)
             if settings.index.show_hashrate == true 
               th #{settings.locale.network} (gh/s)
+            if settings.heavy == true
+              th Vote
             th.hidden-xs #{settings.locale.size} (kB)
             th.hidden-xs #{settings.locale.transactions}
             th #{settings.locale.total_sent} (#{settings.symbol})
@@ -55,7 +57,9 @@ block content
               td #{stats.difficulty.pow} 
               td #{stats.difficulty.pos}
             if settings.index.show_hashrate == true  
-              td #{stats.hashrate} 
+              td #{stats.hashrate}
+            if settings.heavy == true
+                td #{block.vote} 
             td.hidden-xs #{stats.size} 
             td.hidden-xs #{txs.length}
             td #{t_sent} 
