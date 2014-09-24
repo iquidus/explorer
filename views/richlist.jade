@@ -24,10 +24,10 @@ block content
                 td(style='text-align:center;') 
                   =count
                 td
-                  a.loading(href='/address/#{item.addresses}') 
-                    =item.addresses
+                  a.loading(href='/address/#{item.a_id}') 
+                    =item.a_id
                 td
-                  =item.total.toFixed(8)
+                  =item.received.toFixed(8)
     .col-md-6
       .panel.panel-default.panel-iquidus
         .panel-heading
@@ -47,8 +47,8 @@ block content
                 td(style='text-align:center;') 
                   =count
                 td
-                  a.loading(href='/address/#{item.addresses}') 
-                    =item.addresses
+                  a.loading(href='/address/#{item.a_id}') 
+                    =item.a_id
                 td
-                  =item.total.toFixed(8)
+                  =item.balance.toFixed(8)
   .footer-padding
