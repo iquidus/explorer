@@ -23,7 +23,7 @@ block content
     .row(style='text-align:center;')
       div.btn-group(style='margin-bottom:15px;')
         .dropdown       
-          button.btn.btn-default.dropdown-toggle(data-toggle='dropdown', style='color:#222;') #{settings.locale.a_menu_showing} #{txs.length}/#{address.txs.length} #{settings.locale.a_menu_txs} 
+          button.btn.btn-default.dropdown-toggle(data-toggle='dropdown', style='color:#222;') #{settings.locale.a_menu_showing} #{txs.length} #{settings.locale.a_menu_txs} 
             span.caret
           ul.dropdown-menu.dropdown-menu-right(role='menu', aria-labelledby='displayMenu', style='text-align:center')
             if address.txs.length > 5
