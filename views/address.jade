@@ -62,7 +62,7 @@ block content
                   if r.addresses == 'coinbase' 
                     tr(style='text-align:center')
                       td #{settings.locale.new_coins}
-                  else if r.addresses == tx.vout[0].addresses
+                  else if r.addresses == tx.vout[0].addresses && settings.heavy == false
                     tr(style='text-align:center')
                       td #{settings.locale.proof_of_stake}
                   else if r.addresses == address.a_id
