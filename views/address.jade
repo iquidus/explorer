@@ -12,13 +12,11 @@ block content
       table.table.table-bordered.table-striped.summary-table 
         thead
           tr
-            th #{settings.locale.transactions}
             th #{settings.locale.total_sent} (#{settings.symbol})
             th #{settings.locale.total_received} (#{settings.symbol})
             th #{settings.locale.rl_balance} (#{settings.symbol})
         tbody             
           tr
-            td #{address.txs.length}
             td #{address.sent.toFixed(8)}
             td #{address.received.toFixed(8)}
             td #{balance.toFixed(8)}
@@ -40,13 +38,9 @@ block content
             if address.txs.length > 50
               li(role='presentation')
                 a(href='/address/#{address.a_id}/50', role='menuitem', tabindex='-1') 50 
-            if address.txs.length > 100
+            if address.txs.length > 99
               li(role='presentation')
                 a(href='/address/#{address.a_id}/100', role='menuitem', tabindex='-1') 100
-            if address.txs.length > 5
-              li.divider(role='presentation')
-            li(role='presentation')
-              a(href='/address/#{address.a_id}/#{address.txs.length}', role='menuitem', tabindex='-1') #{settings.locale.a_menu_all}       
     each tx in txs 
       - var time = format_unixtime(tx.timestamp)      
       .panel.panel-default.panel-iquidus
