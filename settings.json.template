@@ -88,7 +88,7 @@
   "heavy": false,
 
   //amount of txs to index per address (stores latest n txs)
-  "txcount": 100
+  "txcount": 100,
   
   // how to calculate current coin supply
   // COINBASE : total sent from coinbase (PoW)
