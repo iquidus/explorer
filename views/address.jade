@@ -41,6 +41,9 @@ block content
             if address.txs.length > 99
               li(role='presentation')
                 a(href='/address/#{address.a_id}/100', role='menuitem', tabindex='-1') 100
+              if settings.txcount > 100
+                li(role='presentation')
+                  a(href='/address/#{address.a_id}/#{settings.txcount}', role='menuitem', tabindex='-1') #{settings.txcount}
     each tx in txs 
       - var time = format_unixtime(tx.timestamp)      
       .panel.panel-default.panel-iquidus
