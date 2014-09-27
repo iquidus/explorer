@@ -1,11 +1,12 @@
-Iquidus Explorer - 1.3.1
+Iquidus Explorer - 1.3.2
 ================
 
 An open source block explorer written in node.js.
 
 ### Links
 
-*  [Demo](http://explorer.iquidus.co.nz/) - Currently running with razord, and all features enabled.
+*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with Razor; Market pages (mintpal, bittrex), Top 100 (received, balance)
+*  [HeavyChain](http://heavychain.info/) - HeavyCoin block explorer; Heavy reward/votes page, Top 100 (received, balance)
 
 ### Requires
 
@@ -76,10 +77,12 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.3.1  
-Next planned: 1.3.2
+Current version: 1.3.2  
+Next planned: 1.3.3
 
 *  Cryptsy (markets)
+*  Wealth distribution
+*  PoS extraction
 
 ### Known Issues
 
