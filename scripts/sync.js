@@ -1,8 +1,3 @@
-require('nodetime').profile({
-    accountKey: '823170bf6bf4c8e481c99238999316eec066dce9', 
-    appName: 'Iquidus Explorer'
-  });
-
 var mongoose = require('mongoose')
   , db = require('../lib/database')
   , Tx = require('../models/tx')  
