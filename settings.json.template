@@ -89,5 +89,10 @@
 
   //amount of txs to index per address (stores latest n txs)
   "txcount": 100
-
+  
+  // how to calculate current coin supply
+  // COINBASE : total sent from coinbase (PoW)
+  // GETINFO : retreive from getinfo api call (PoS)
+  // HEAVY: retreive from heavys getsupply api call
+  "supply": "COINBASE"
 }

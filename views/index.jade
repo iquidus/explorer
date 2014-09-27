@@ -48,6 +48,7 @@ block content
             th.hidden-xs #{settings.locale.transactions}
             th #{settings.locale.total_sent} (#{settings.symbol})
             th.hidden-xs #{settings.locale.timestamp}
+            th.hidden-xs Coin Supply (#{settings.symbol})
         tbody
           tr
             td #{stats.count}
@@ -64,6 +65,7 @@ block content
             td.hidden-xs #{txs.length}
             td #{t_sent} 
             td.hidden-xs #{time}
+            td.hidden-xs #{stats.supply.toFixed(8)}
     .panel.panel-default.panel-iquidus
       .panel-heading
         strong #{settings.locale.ex_latest_transactions}
@@ -90,5 +92,6 @@ block content
               td.view_tx 
                 a(href='/tx/#{txn.txid}')
                   span.glyphicon.glyphicon-eye-open.glow
+  .footer-padding
       
               

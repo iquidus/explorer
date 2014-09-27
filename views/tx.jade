@@ -16,7 +16,6 @@ block content
       table.table.table-bordered.table-striped.summary-table 
         thead
           tr
-            th #{settings.locale.mkt_total} (#{settings.symbol})
             th #{settings.locale.confirmations}
             th #{settings.locale.tx_block_hash}
             th #{settings.locale.timestamp}
@@ -25,13 +24,6 @@ block content
           - var confirms = (blockcount - tx.blockindex) + 1;
           if confirms >= confirmations                
             tr.success
-                if tx.vout.length > 0
-                  if tx.vin[0].addresses != tx.vout[0].addresses
-                    td #{tx.total.toFixed(8)}
-                  else
-                    td #{amount.toFixed(8)}
-                else
-                  td #{tx.total.toFixed(8)}
                 td #{confirms}
                 td 
                   =tx.blockhash
@@ -42,13 +34,6 @@ block content
           else
             if confirms < (confirmations / 2)
               tr.danger
-                if tx.vout.length > 0
-                  if tx.vin[0].addresses != tx.vout[0].addresses
-                    td #{tx.total.toFixed(8)}
-                  else
-                    td #{amount.toFixed(8)}
-                else
-                  td #{tx.total.toFixed(8)}
                 td #{confirms}
                 td 
                   =tx.blockhash
@@ -58,13 +43,6 @@ block content
                     span.glyphicon.glyphicon-eye-open.glow 
             else
               tr.warning
-                if tx.vout.length > 0
-                  if tx.vin[0].addresses != tx.vout[0].addresses
-                    td #{tx.total.toFixed(8)}
-                  else
-                    td #{amount.toFixed(8)}
-                else
-                  td #{tx.total.toFixed(8)}
                 td #{confirms}
                 td 
                   =tx.blockhash
