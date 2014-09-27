@@ -53,7 +53,7 @@
     "proof_of_stake": "PoS",
 
     //address menu
-    "a_menu_showing": "Showing",
+    "a_menu_showing": "Showing last",
     "a_menu_txs": "transactions",
     "a_menu_all": "All",
 
