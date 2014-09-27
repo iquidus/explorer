@@ -9,6 +9,7 @@
     "menu_api": "API",
     "menu_markets": "Markets",
     "menu_richlist": "Top 100",
+    "menu_reward": "Reward",
 
     // explorer view
     "ex_title": "Block Explorer",
@@ -19,7 +20,7 @@
     "ex_search_error": "Search found no results for: ",
     "ex_latest_transactions": "Block Transactions",
     "ex_summary": "Block Summary",
-
+    "ex_supply": "Coin Supply",
 
     // transaction view
     "tx_title": "Transaction Details",
@@ -104,4 +105,17 @@
     "mkt_trade_history": "Trade History",
     "mkt_type": "Type",
     "mkt_time_stamp": "Time Stamp",
+
+    // Heavy rewards view
+    "heavy_title": "Reward/voting information",
+    "heavy_vote": "Vote",
+    "heavy_cap": "Coin Cap",
+    "heavy_phase": "Phase",
+    "heavy_maxvote": "Max Vote",
+    "heavy_reward": "Reward",
+    "heavy_current": "Current Reward",
+    "heavy_estnext": "Est. Next",
+    "heavy_changein": "Reward change in approximately",
+    "heavy_key": "Key",
+    "heavy_lastxvotes": "Last 20 votes",
 }

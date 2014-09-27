@@ -8,16 +8,17 @@ block content
     .col-xs-12.col-md-10.col-md-offset-1
       .panel.panel-default.panel-iquidus.panel-address-summary
         .panel-heading(style='position:relative;')        
-          strong #{settings.coin} Block reward voting information
+          strong #{settings.locale.heavy_title} (#{settings.symbol})
+
         table.table.table-bordered.table-striped.summary-table 
           thead
             tr
-              th Current Supply (#{settings.symbol})
-              th Coin Cap (#{settings.symbol})
-              th Phase
-              th Max Vote
-              th Reward 
-              th Est. Next
+              th #{settings.locale.ex_supply} (#{settings.symbol})
+              th #{settings.locale.heavy_cap} (#{settings.symbol})
+              th #{settings.locale.heavy_phase}
+              th #{settings.locale.heavy_maxvote}
+              th #{settings.locale.heavy_reward} 
+              th #{settings.locale.heavy_estnext}
           tbody             
             tr
               td 
@@ -53,7 +54,7 @@ block content
                     }
                   ]
                   new Chart(ctx).Doughnut(data); 
-              h5 Reward change in approximately
+              h5 #{settings.locale.heavy_changein}
               h5
                 =heavy.nextin
            
@@ -62,25 +63,25 @@ block content
                 thead
                   tbody     
                     tr
-                      th Key
+                      th #{settings.locale.heavy_key}
                       td   
                     tr
-                      th Vote
+                      th #{settings.locale.heavy_vote}
                       td 
                         div(style="width:20px;height:20px;background-color:#428bca")           
                     tr
-                      th Current Reward
+                      th #{settings.locale.heavy_current}
                       td 
                         div(style="width:20px;height:20px;background-color:#222")   
                     tr
-                      th Est. Next
+                      th #{settings.locale.heavy_estnext}
                       td
                         div(style="width:20px;height:20px;background-color:rgba(92,184,92,1.0)") 
           
           .col-md-9
             center
               .row
-                strong Last 20 votes  
+                strong #{settings.locale.heavy_lastxvotes}  
               .row
                 canvas(id="myChart", width="800", height="300", style="margin-left:-30px;margin-top:30px;")
                   script.

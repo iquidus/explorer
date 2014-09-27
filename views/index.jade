@@ -43,12 +43,12 @@ block content
             if settings.index.show_hashrate == true 
               th #{settings.locale.network} (gh/s)
             if settings.heavy == true
-              th Vote
+              th #{settings.locale.heavy_vote}
             th.hidden-xs #{settings.locale.size} (kB)
             th.hidden-xs #{settings.locale.transactions}
             th #{settings.locale.total_sent} (#{settings.symbol})
             th.hidden-xs #{settings.locale.timestamp}
-            th.hidden-xs Coin Supply (#{settings.symbol})
+            th.hidden-xs #{settings.locale.ex_supply} (#{settings.symbol})
         tbody
           tr
             td #{stats.count}

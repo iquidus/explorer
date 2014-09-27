@@ -83,12 +83,12 @@ html
                 li.active
                   a.navbar-link(href='/reward')
                     span.fa.fa-star
-                    span.menu-text Reward
+                    span.menu-text #{settings.locale.menu_reward}
               else
                 li
                   a.navbar-link(href='/reward')
                     span.fa.fa-star
-                    span.menu-text Reward
+                    span.menu-text #{settings.locale.menu_reward}
             if settings.display.markets == true
               if active == 'markets'
                 li.active
