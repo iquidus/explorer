@@ -26,19 +26,19 @@ block content
           button.btn.btn-default.dropdown-toggle(data-toggle='dropdown', style='color:#222;') #{settings.locale.a_menu_showing} #{txs.length} #{settings.locale.a_menu_txs} 
             span.caret
           ul.dropdown-menu.dropdown-menu-right(role='menu', aria-labelledby='displayMenu', style='text-align:center')
-            if address.txs.length > 5
+            if address.txs.length > 1
               li(role='presentation')
                 a(href='/address/#{address.a_id}/5', role='menuitem', tabindex='-1') 5
-            if address.txs.length > 10
+            if address.txs.length > 5
               li(role='presentation')
                 a(href='/address/#{address.a_id}/10', role='menuitem', tabindex='-1') 10
-            if address.txs.length > 25
+            if address.txs.length > 10
               li(role='presentation')
                 a(href='/address/#{address.a_id}/25', role='menuitem', tabindex='-1') 25
-            if address.txs.length > 50
+            if address.txs.length > 25
               li(role='presentation')
                 a(href='/address/#{address.a_id}/50', role='menuitem', tabindex='-1') 50 
-            if address.txs.length > 99
+            if address.txs.length > 50
               li(role='presentation')
                 a(href='/address/#{address.a_id}/100', role='menuitem', tabindex='-1') 100
               if settings.txcount > 100
