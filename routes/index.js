@@ -178,22 +178,25 @@ router.get('/', function(req, res) {
 
 router.get('/info', function(req, res) {
   db.get_stats(settings.coin, function(stats){
-  	res.render('info', { active: 'info', address: settings.address, hashes: settings.api });
+  	res.render('info', { active: 'info', address: settings.address, hashes: settings.api,  stats: stats });
   });
 });
 
 router.get('/bittrex', function(req, res) {
-  if (settings.display.markets == true ) {   
-    prepare_bittrex_data(function(bittrex_data) {
-      var market_data = {
-        coin: settings.markets.coin,
-        exchange: settings.markets.exchange,
-        bittrex: bittrex_data,
-      };
-      res.render('bittrex', { 
-        active: 'markets', 
-        marketdata: market_data, 
-        market: 'bittrex'
+  if (settings.display.markets == true ) {  
+    db.get_stats(settings.coin, function (stats) {  
+      prepare_bittrex_data(function(bittrex_data) {
+        var market_data = {
+          coin: settings.markets.coin,
+          exchange: settings.markets.exchange,
+          bittrex: bittrex_data,
+        };
+        res.render('bittrex', { 
+          active: 'markets', 
+          marketdata: market_data, 
+          market: 'bittrex',
+          stats: stats
+        });
       });
     });
   } else {
@@ -202,17 +205,20 @@ router.get('/bittrex', function(req, res) {
 });
 
 router.get('/mintpal', function(req, res) {
-  if (settings.display.markets == true ) {   
-    prepare_mintpal_data(function(mintpal_data) {
-      var market_data = {
-        coin: settings.markets.coin,
-        exchange: settings.markets.exchange,
-        mintpal: mintpal_data,
-      };
-      res.render('mintpal', { 
-        active: 'markets', 
-        marketdata: market_data, 
-        market: 'mintpal'
+  if (settings.display.markets == true ) { 
+    db.get_stats(settings.coin, function (stats) {  
+      prepare_mintpal_data(function(mintpal_data) {
+        var market_data = {
+          coin: settings.markets.coin,
+          exchange: settings.markets.exchange,
+          mintpal: mintpal_data,
+        };
+        res.render('mintpal', { 
+          active: 'markets', 
+          marketdata: market_data, 
+          market: 'mintpal',
+          stats: stats
+        });
       });
     });
   } else {
@@ -221,18 +227,21 @@ router.get('/mintpal', function(req, res) {
 });
 
 router.get('/richlist', function(req, res) {
-  if (settings.display.richlist == true ) {   
-    db.get_richlist(settings.coin, function(richlist){
-      //console.log(richlist);
-      if (richlist) {
-        res.render('richlist', { 
-          active: 'richlist', 
-          balance: richlist.balance, 
-          received: richlist.received,
-        });
-      } else {
-        route_get_index(res, null);
-      }
+  if (settings.display.richlist == true ) {  
+    db.get_stats(settings.coin, function (stats) { 
+      db.get_richlist(settings.coin, function(richlist){
+        //console.log(richlist);
+        if (richlist) {
+          res.render('richlist', { 
+            active: 'richlist', 
+            balance: richlist.balance, 
+            received: richlist.received,
+            stats: stats,
+          });
+        } else {
+          route_get_index(res, null);
+        }
+      });
     });   
   } else {
     route_get_index(res, null);
