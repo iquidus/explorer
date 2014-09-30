@@ -23,7 +23,9 @@ body {
 	margin-left: 10px;
 	color: #FFF;
 }
-
+#chart3 .jqplot-xaxis {
+	display: none;
+}
 .block-last:hover, .block-next:hover {
 	color: #CCC;
 }
