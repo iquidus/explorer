@@ -12,10 +12,7 @@ block content
           ------
 
           ### #{settings.locale.api_calls}
-
-          *  **getnetworkhashps**  
-             *#{settings.locale.api_getnetworkhashps}*  
-             [#{address}/api/getnetworkhashps](/api/getnetworkhashps)
+          *Return data from coind*
 
           *  **getdifficulty**  
              *#{settings.locale.api_getdifficulty}*  
@@ -42,6 +39,13 @@ block content
              [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0](/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0)  
              [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1](/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1)
         
+
+        if settings.index.show_hashrate == true
+          :markdown
+            *  **getnetworkhashps**  
+               *#{settings.locale.api_getnetworkhashps}*  
+               [#{address}/api/getnetworkhashps](/api/getnetworkhashps)
+
 
 
         if settings.heavy == true
@@ -81,18 +85,33 @@ block content
         :markdown
           ------
 
-          ### GET
+          ### Extended API 
+          *Return data from local indexes*
 
-          *  **transaction (/tx/txid)**
+          *  **getmoneysupply**  
+               *Returns current money supply*  
+               [#{address}/ext/getmoneysupply](/ext/getmoneysupply)
 
+          *  **getdistribution**  
+               *Returns wealth distribution stats*  
+               [#{address}/ext/getdistribution](/ext/getdistribution)               
+
+          *  **getaddress**  
+               *Returns information for given address*  
+               [#{address}/ext/getaddress/#{hashes.address}](/ext/getaddress/#{hashes.address})
+
+          ------
+
+          ### Linking (GET)
+          *Linking to the block explorer*
+
+          *  **transaction (/tx/txid)**  
              [#{address}/tx/#{hashes.txhash}](/tx/#{hashes.txhash})
 
-          *  **block (/block/hash)**
-
+          *  **block (/block/hash)**  
              [#{address}/block/#{hashes.blockhash}](/block/#{hashes.blockhash})
     
-          *  **address (/address/hash)**
-
+          *  **address (/address/hash)**  
              [#{address}/address/#{hashes.address}](/address/#{hashes.address})
         
 
