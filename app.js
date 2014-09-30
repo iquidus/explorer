@@ -7,6 +7,8 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , settings = require('./lib/settings')
   , routes = require('./routes/index')
+  , lib = require('./lib/explorer')
+  , db = require('./lib/database')
   , locale = require('./lib/locale');
 
 var app = express();
@@ -48,6 +50,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/api', bitcoinapi.app);
 app.use('/', routes);
+app.use('/ext/getmoneysupply', function(req,res){
+  lib.get_supply(function(supply){
+    res.send(' '+supply);
+  });
+});
+
+app.use('/ext/getaddress/:hash', function(req,res){
+  db.get_address(req.param('hash'), function(address){
+    var a_ext = {
+      address: address.a_id,
+      sent: address.sent.toFixed(8),
+      received: address.received.toFixed(8),
+      balance: address.balance.toFixed(8),
+      last_txs: address.txs,
+    };
+    res.send(' '+JSON.stringify(a_ext));
+  });
+});
 
 // locals
 app.set('title', settings.title);
