@@ -1,3 +1,6 @@
+1.3.2 -> 1.3.3
+* Restart explorer
+
 1.3.1 -> 1.3.2 
 * New database
 * Add new settings to settings.json (see settings.json.template)
