@@ -1,39 +1,22 @@
 extends layout
 
 block content
-  - var count = 0
-  - var top1_10 = { percent: 0, amount: 0}
-  - var top11_50 = { percent: 0, amount: 0}
-  - var top51_100 = { percent: 0, amount: 0}
-  - var hundredplus = {percent: 0, amount: 0}
-  each item in balance
-    - count = count + 1
-    - var percentage = (item.balance / stats.supply) * 100
-    if count <= 10
-      - top1_10 = { percent: top1_10.percent + percentage, amount: top1_10.amount + item.balance }
-    if count <= 50
-      - top11_50 = { percent: top11_50.percent + percentage, amount: top11_50.amount + item.balance }
-    if count <= 100
-      - top51_100 = { percent: top51_100.percent + percentage, amount: top51_100.amount + item.balance }
-  
-  - top51_100 = { percent: top51_100.percent - top11_50.percent, amount: top51_100.amount - top11_50.amount}
-  - top11_50 = { percent: top11_50.percent - top1_10.percent, amount: top11_50.amount - top1_10.amount}
-  - hundredplus = { percent: 100 - (parseFloat(top1_10.percent.toFixed(2)) + parseFloat(top11_50.percent.toFixed(2)) + parseFloat(top51_100.percent.toFixed(2))), amount: (stats.supply - top1_10.amount - top11_50.amount - top51_100.amount) }
   script.
     $(document).ready(function(){
+
       var data = [
-        ['Top 1-10', !{top1_10.percent}],['Top 11-50', !{top11_50.percent}],['Top 51-100', !{top51_100.percent}], ['101+', !{hundredplus.percent}]
+        ['Top 1-25', !{dista.percent}],['Top 26-50', !{distb.percent}],['Top 51-75', !{distc.percent}],['Top 76-100', !{distd.percent}],['101+', !{diste.percent}]
       ];
       var plot1 = jQuery.jqplot ('chart2', [data],
         {
-          seriesColors: [ "#d9534f", "#5cb85c", "#428bca", "#222"],
+          seriesColors: [ "#d9534f", "#5cb85c", "#428bca", "#CCC", "#222"],
           series: [{
             // Make this a pie chart.
             renderer: $.jqplot.PieRenderer,
             rendererOptions: {
               diameter: 180,
               padding: 0,
-              sliceMargin: 5, 
+              sliceMargin: 4, 
               // Put data labels on the pie slices.
               // By default, labels show the percentage of the slice.
               showDataLabels: false,
@@ -52,10 +35,10 @@ block content
         }
       );
       var plot3 = $.jqplot('chart3', 
-        [[!{top1_10.percent}],[!{top11_50.percent}],[!{top51_100.percent}],[!{hundredplus.percent}]
+        [[!{dista.percent}],[!{distb.percent}],[!{distc.percent}],[!{distd.percent}],[!{diste.percent}]
       ], 
         {
-          seriesColors: [ "#d9534f", "#5cb85c", "#428bca", "#222"],
+          seriesColors: [ "#d9534f", "#5cb85c", "#428bca", "#CCC", "#222"],
           // Tell the plot to stack the bars.
           stackSeries: true,
           //captureRightClick: true,
@@ -104,29 +87,34 @@ block content
               th
               th 
                 div.pull-left(style='background-color:#d9534f;width:20px;height:20px;margin-right:6px;')
-                span #{settings.locale.rl_topten}
+                span #{settings.locale.rl_top25}
               th 
                 div.pull-left(style='background-color:#5cb85c;width:20px;height:20px;margin-right:6px;')
-                span #{settings.locale.rl_topfifty}
+                span #{settings.locale.rl_top50}
               th 
                 div.pull-left(style='background-color:#428bca;width:20px;height:20px;margin-right:6px;')
-                span #{settings.locale.rl_tophundred}
+                span #{settings.locale.rl_top75}
+              th 
+                div.pull-left(style='background-color:#CCC;width:20px;height:20px;margin-right:6px;')
+                span #{settings.locale.rl_top100}
               th 
                 div.pull-left(style='background-color:#222;width:20px;height:20px;margin-right:6px;')
                 span #{settings.locale.rl_hundredplus}
           tbody
             tr
               th #{settings.symbol}
-              td #{top1_10.amount.toFixed(8)}
-              td #{top11_50.amount.toFixed(8)}
-              td #{top51_100.amount.toFixed(8)}
-              td #{hundredplus.amount.toFixed(8)}
+              td #{parseFloat(dista.total).toFixed(8)}
+              td #{parseFloat(distb.total).toFixed(8)}
+              td #{parseFloat(distc.total).toFixed(8)}
+              td #{parseFloat(distd.total).toFixed(8)}
+              td #{parseFloat(diste.total).toFixed(8)}
             tr
               th %
-              td #{top1_10.percent.toFixed(2)}
-              td #{top11_50.percent.toFixed(2)}
-              td #{top51_100.percent.toFixed(2)}
-              td #{hundredplus.percent.toFixed(2)}
+              td #{parseFloat(dista.percent).toFixed(2)}
+              td #{parseFloat(distb.percent).toFixed(2)}
+              td #{parseFloat(distc.percent).toFixed(2)}
+              td #{parseFloat(distd.percent).toFixed(2)}
+              td #{parseFloat(diste.percent).toFixed(2)}
       center
         label.label.label-iquidus #{settings.locale.ex_supply}: #{stats.supply.toFixed(8)} (#{settings.symbol})
     .col-md-2

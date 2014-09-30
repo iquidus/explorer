@@ -65,9 +65,10 @@
     "rl_received": "Received",
     "rl_balance": "Balance",
     "rl_wealth": "Wealth Distribution",
-    "rl_topten": "Top 1-10",
-    "rl_topfifty": "Top 11-50",
-    "rl_tophundred": "Top 51-100",
+    "rl_top25": "Top 1-25",
+    "rl_top50": "Top 26-50",
+    "rl_top75": "Top 51-75",
+    "rl_top100": "Top 76-100",
     "rl_hundredplus": "101+",
     
     // api view

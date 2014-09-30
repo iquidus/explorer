@@ -232,11 +232,19 @@ router.get('/richlist', function(req, res) {
       db.get_richlist(settings.coin, function(richlist){
         //console.log(richlist);
         if (richlist) {
-          res.render('richlist', { 
-            active: 'richlist', 
-            balance: richlist.balance, 
-            received: richlist.received,
-            stats: stats,
+          db.get_distribution(richlist, stats, function(distribution) {
+            console.log(distribution);
+            res.render('richlist', { 
+              active: 'richlist', 
+              balance: richlist.balance, 
+              received: richlist.received,
+              stats: stats,
+              dista: distribution.t_1_25,
+              distb: distribution.t_26_50,
+              distc: distribution.t_51_75,
+              distd: distribution.t_76_100,
+              diste: distribution.t_101plus,
+            });
           });
         } else {
           route_get_index(res, null);

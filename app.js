@@ -62,13 +62,22 @@ app.use('/ext/getaddress/:hash', function(req,res){
       address: address.a_id,
       sent: address.sent.toFixed(8),
       received: address.received.toFixed(8),
-      balance: address.balance.toFixed(8),
+      balance: address.balance.toFixed(8).toString().replace(/(^-+)/mg, ''),
       last_txs: address.txs,
     };
-    res.send(' '+JSON.stringify(a_ext));
+    res.send(a_ext);
   });
 });
 
+app.use('/ext/getdistribution', function(req,res){
+  db.get_richlist(settings.coin, function(richlist){
+    db.get_stats(settings.coin, function(stats){
+      db.get_distribution(richlist, stats, function(dist){
+        res.send(dist);
+      });
+    });
+  });
+});
 // locals
 app.set('title', settings.title);
 app.set('symbol', settings.symbol);
