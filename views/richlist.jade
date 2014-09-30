@@ -97,23 +97,23 @@ block content
     .col-md-6
       .panel.panel-default.panel-iquidus
         .panel-heading
-          h3.panel-title Wealth Distribution 
+          h3.panel-title #{settings.locale.rl_wealth} (#{settings.symbol})
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
               th
               th 
                 div.pull-left(style='background-color:#d9534f;width:20px;height:20px;margin-right:6px;')
-                span Top 1-10
+                span #{settings.locale.rl_topten}
               th 
                 div.pull-left(style='background-color:#5cb85c;width:20px;height:20px;margin-right:6px;')
-                span Top 11-50
+                span #{settings.locale.rl_topfifty}
               th 
                 div.pull-left(style='background-color:#428bca;width:20px;height:20px;margin-right:6px;')
-                span Top 51-100
+                span #{settings.locale.rl_tophundred}
               th 
                 div.pull-left(style='background-color:#222;width:20px;height:20px;margin-right:6px;')
-                span 101+
+                span #{settings.locale.rl_hundredplus}
           tbody
             tr
               th #{settings.symbol}

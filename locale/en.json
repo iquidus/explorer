@@ -50,7 +50,7 @@
     "total": "Total",
     "bits": "Bits",
     "nonce": "Nonce",
-    "new_coins": "BLOCK REWARD",
+    "new_coins": "New Coins",
     "proof_of_stake": "PoS",
 
     //address menu
@@ -63,6 +63,11 @@
     "rl_current_balance": "Top 100 - Current Balance",
     "rl_received": "Received",
     "rl_balance": "Balance",
+    "rl_wealth": "Wealth Distribution",
+    "rl_topten": "Top 1-10",
+    "rl_topfifty": "Top 11-50",
+    "rl_tophundred": "Top 51-100",
+    "rl_hundredplus": "101+",
 
     // api view
     "api_title": "API Documentation",
