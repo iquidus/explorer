@@ -1,9 +1,137 @@
 extends layout
 
 block content
+  - var count = 0
+  - var top1_10 = { percent: 0, amount: 0}
+  - var top11_50 = { percent: 0, amount: 0}
+  - var top51_100 = { percent: 0, amount: 0}
+  - var hundredplus = {percent: 0, amount: 0}
+  each item in balance
+    - count = count + 1
+    - var percentage = (item.balance / stats.supply) * 100
+    if count <= 10
+      - top1_10 = { percent: top1_10.percent + percentage, amount: top1_10.amount + item.balance }
+    if count <= 50
+      - top11_50 = { percent: top11_50.percent + percentage, amount: top11_50.amount + item.balance }
+    if count <= 100
+      - top51_100 = { percent: top51_100.percent + percentage, amount: top51_100.amount + item.balance }
+  
+  - top51_100 = { percent: top51_100.percent - top11_50.percent, amount: top51_100.amount - top11_50.amount}
+  - top11_50 = { percent: top11_50.percent - top1_10.percent, amount: top11_50.amount - top1_10.amount}
+  - hundredplus = { percent: 100 - (parseFloat(top1_10.percent.toFixed(2)) + parseFloat(top11_50.percent.toFixed(2)) + parseFloat(top51_100.percent.toFixed(2))), amount: (stats.supply - top1_10.amount - top11_50.amount - top51_100.amount) }
+  script.
+    $(document).ready(function(){
+      var data = [
+        ['Top 1-10', !{top1_10.percent}],['Top 11-50', !{top11_50.percent}],['Top 51-100', !{top51_100.percent}], ['101+', !{hundredplus.percent}]
+      ];
+      var plot1 = jQuery.jqplot ('chart2', [data],
+        {
+          seriesColors: [ "#d9534f", "#5cb85c", "#428bca", "#222"],
+          series: [{
+            // Make this a pie chart.
+            renderer: $.jqplot.PieRenderer,
+            rendererOptions: {
+              diameter: 180,
+              padding: 0,
+              sliceMargin: 5, 
+              // Put data labels on the pie slices.
+              // By default, labels show the percentage of the slice.
+              showDataLabels: false,
+            }
+          }],
+          grid: {borderWidth:0, shadow:false, background: '#fff'},
+          legend: {
+            show: false,
+
+            rendererOptions: {
+                numberRows: 1,
+                border: 'none'
+            },
+            location: 's'
+          }
+        }
+      );
+      var plot3 = $.jqplot('chart3', 
+        [[!{top1_10.percent}],[!{top11_50.percent}],[!{top51_100.percent}],[!{hundredplus.percent}]
+      ], 
+        {
+          seriesColors: [ "#d9534f", "#5cb85c", "#428bca", "#222"],
+          // Tell the plot to stack the bars.
+          stackSeries: true,
+          //captureRightClick: true,
+          seriesDefaults: {
+            renderer:$.jqplot.BarRenderer,
+            rendererOptions: {
+                // Put a 30 pixel margin between bars.
+                barMargin: 30,
+                // Highlight bars when mouse button pressed.
+                // Disables default highlighting on mouse over.
+
+                //barDirection: 'horizontal'   
+            }
+          },
+          grid: {borderWidth:0, shadow:false, background: '#fff'},
+          axes: {
+            xaxis: {
+                renderer: $.jqplot.CategoryAxisRenderer,
+                showLabel: false
+            },
+            yaxis: {
+              ticks: [0,25,50,75,100],             
+              
+            }
+          },
+        }
+      );
+    });
+    $(window).resize(function () { 
+      plot1.replot( { resetAxes: false } );
+      plot3.replot( { resetAxes: false } );
+    });
   .row(style='margin-top:5px;')
     .col-md-12(style='text-align:center;')
       img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
+  .row
+    .col-md-2.col-md-offset-1
+      div#chart3.pull-right(style="width:210px;height:205px;margin-top:-10px;margin-right:10px;")
+    .col-md-6
+      .panel.panel-default.panel-iquidus
+        .panel-heading
+          h3.panel-title Wealth Distribution 
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th
+              th 
+                div.pull-left(style='background-color:#d9534f;width:20px;height:20px;margin-right:6px;')
+                span Top 1-10
+              th 
+                div.pull-left(style='background-color:#5cb85c;width:20px;height:20px;margin-right:6px;')
+                span Top 11-50
+              th 
+                div.pull-left(style='background-color:#428bca;width:20px;height:20px;margin-right:6px;')
+                span Top 51-100
+              th 
+                div.pull-left(style='background-color:#222;width:20px;height:20px;margin-right:6px;')
+                span 101+
+          tbody
+            tr
+              th #{settings.symbol}
+              td #{top1_10.amount.toFixed(8)}
+              td #{top11_50.amount.toFixed(8)}
+              td #{top51_100.amount.toFixed(8)}
+              td #{hundredplus.amount.toFixed(8)}
+            tr
+              th %
+              td #{top1_10.percent.toFixed(2)}
+              td #{top11_50.percent.toFixed(2)}
+              td #{top51_100.percent.toFixed(2)}
+              td #{hundredplus.percent.toFixed(2)}
+      center
+        label.label.label-iquidus #{settings.locale.ex_supply}: #{stats.supply.toFixed(8)} (#{settings.symbol})
+    .col-md-2
+      div#chart2.pull-left(style="width:210px;height:240px;margin-top:-20px;")
+    
   .row
     .col-md-6
       .panel.panel-default.panel-iquidus
@@ -39,10 +167,12 @@ block content
                 span.fa.fa-flag-checkered
               th #{settings.locale.tx_address}
               th #{settings.locale.rl_balance} (#{settings.symbol})
+              th(style='text-align:center;') %
           tbody
             - var count = 0
             each item in balance
               - count = count + 1
+              - var percentage = (item.balance / stats.supply) * 100
               tr
                 td(style='text-align:center;') 
                   =count
@@ -51,4 +181,6 @@ block content
                     =item.a_id
                 td
                   =item.balance.toFixed(8)
+                td(style='text-align:center;') 
+                  =percentage.toFixed(2)
   .footer-padding
