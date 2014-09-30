@@ -13,13 +13,15 @@ block content
         thead
           tr
             th #{settings.locale.total_sent} (#{settings.symbol})
-            th #{settings.locale.total_received} (#{settings.symbol})
-            th #{settings.locale.rl_balance} (#{settings.symbol})
+            if address.a_id !== 'coinbase'
+              th #{settings.locale.total_received} (#{settings.symbol})
+              th #{settings.locale.rl_balance} (#{settings.symbol})
         tbody             
           tr
             td #{address.sent.toFixed(8)}
-            td #{address.received.toFixed(8)}
-            td #{balance.toFixed(8)}
+            if address.a_id !== 'coinbase'
+              td #{address.received.toFixed(8)}
+              td #{balance.toFixed(8).toString().replace(/(^-+)/mg, '')}
     .row(style='text-align:center;')
       div.btn-group(style='margin-bottom:15px;')
         .dropdown       
