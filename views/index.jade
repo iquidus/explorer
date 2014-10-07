@@ -41,7 +41,10 @@ block content
               th #{settings.locale.difficulty} (PoW)
               th #{settings.locale.difficulty} (PoS)
             if settings.index.show_hashrate == true 
-              th #{settings.locale.network} (gh/s)
+              if settings.nethash == 'netmhashps'
+                th #{settings.locale.network} (mh/s)
+              else
+                th #{settings.locale.network} (gh/s)
             if settings.heavy == true
               th #{settings.locale.heavy_vote}
             th.hidden-xs #{settings.locale.size} (kB)

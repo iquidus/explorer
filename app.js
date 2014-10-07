@@ -16,7 +16,7 @@ var app = express();
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);
 if (settings.heavy != true) {
-  bitcoinapi.setAccess('only', ['getinfo', 'getnetworkhashps' ,'getdifficulty', 'getconnectioncount', 
+  bitcoinapi.setAccess('only', ['getinfo', 'getnetworkhashps', 'getmininginfo','getdifficulty', 'getconnectioncount', 
     'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction']);
 } else {
   // enable additional heavy api calls
@@ -90,6 +90,7 @@ app.set('genesis_block', settings.genesis_block);
 app.set('index', settings.index);
 app.set('heavy', settings.heavy);
 app.set('txcount', settings.txcount);
+app.set('nethash', settings.nethash);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
