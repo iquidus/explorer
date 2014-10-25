@@ -3,7 +3,8 @@ var express = require('express')
   , settings = require('../lib/settings')
   , locale = require('../lib/locale')
   , db = require('../lib/database')
-  , lib = require('../lib/explorer');
+  , lib = require('../lib/explorer')
+  , qr = require('qr-image');
 
 function prepare_mintpal_data(cb){
   if (settings.markets.mintpal == true) {
@@ -329,6 +330,19 @@ router.post('/search', function(req, res) {
         });
       }
     });
+  }
+});
+
+router.get('/qr/:string', function(req, res) {
+  if (req.param('string')) {
+    var address = qr.image(req.param('string'), { 
+      type: 'png', 
+      size: 5, 
+      margin: 1, 
+      ec_level: 'M' 
+    });
+    res.type('png');
+    address.pipe(res);
   }
 });
 
