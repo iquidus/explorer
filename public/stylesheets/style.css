@@ -195,3 +195,8 @@ tr {
 	    width: 200px !important;
     }
 }
+.qrcode {
+	position: absolute;
+	top: 65px;
+	right: 15px;
+}
