@@ -337,7 +337,7 @@ router.get('/qr/:string', function(req, res) {
   if (req.param('string')) {
     var address = qr.image(req.param('string'), { 
       type: 'png', 
-      size: 5, 
+      size: 4, 
       margin: 1, 
       ec_level: 'M' 
     });

@@ -5,6 +5,7 @@ block content
   .row(style='margin-top:5px;')
     .col-md-12(style='text-align:center;')
       img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
+    img.qrcode.pull-right.hidden-xs(src='/qr/#{address.a_id}')
   .col-xs-12.col-md-10.col-md-offset-1
     .panel.panel-default.panel-iquidus.panel-address-summary
       .panel-heading(style='position:relative;')        
@@ -52,8 +53,8 @@ block content
         .panel-heading
           strong txid: #{tx.txid}
           a(href='/tx/#{tx.txid}')
-            span.glyphicon.glyphicon-eye-open.pull-right.glow-inverse
-          strong.pull-right(style='padding-right:10px;') #{time}
+            span.glyphicon.glyphicon-eye-open.pull-right.glow-inverse.hidden-xs
+          strong.pull-right.hidden-xs(style='padding-right:10px;') #{time}
         .panel-body(style='padding:0px;')
           .col-md-6(style='padding:0px;')
             table.table.table-bordered.table-striped.summary-table 
