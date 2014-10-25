@@ -1,4 +1,4 @@
-Iquidus Explorer - 1.3.3
+Iquidus Explorer - 1.3.4
 ================
 
 An open source block explorer written in node.js.
@@ -77,10 +77,9 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.3.3   
-Next planned: 1.3.4
+Current version: 1.3.4   
+Next planned: 1.3.5
 
-*  Cryptsy (markets)
 *  PoS extraction page
 
 1.4.0
