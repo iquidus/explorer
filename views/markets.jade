@@ -12,11 +12,6 @@ block content
         autowidth: true,
         responsive: true
       });
-      $('.history-table').dataTable( {        
-        searching: false,
-        ordering: false,
-        responsive: true
-      });
       $(window).resize(function () { 
         $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
       });
@@ -38,18 +33,18 @@ block content
       .container-fluid
         .collapse.navbar-collapse(id='navbar-collapse')
           ul.nav.navbar-nav
-          
-            if market == 'mintpal'
-              li.active
-                a.navbar-link.loading(href='/mintpal') MintPal
-            else
-              li
-                a.navbar-link.loading(href='/mintpal') MintPal
-          
-            if market == 'bittrex'
-              li.active
-                a.navbar-link.loading(href='/bittrex') Bittrex
-            else
-              li
-                a.navbar-link.loading(href='/bittrex') Bittrex
+            if settings.markets.mintpal == true
+              if market == 'mintpal'
+                li.active
+                  a.navbar-link.loading(href='/mintpal') MintPal
+              else
+                li
+                  a.navbar-link.loading(href='/mintpal') MintPal
+            if settings.markets.bittrex == true
+              if market == 'bittrex'
+                li.active
+                  a.navbar-link.loading(href='/bittrex') Bittrex
+              else
+                li
+                  a.navbar-link.loading(href='/bittrex') Bittrex
     block market_view
