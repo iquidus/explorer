@@ -1,11 +1,11 @@
-Iquidus Explorer - 1.3.4
+Iquidus Explorer - 1.4.0
 ================
 
 An open source block explorer written in node.js.
 
 ### Links
 
-*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with Razor; Market pages (mintpal, bittrex), Top 100 (received, balance)
+*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with DarkCoin; Market pages (bittrex), Top 100 (received, balance)
 *  [HeavyChain](http://heavychain.info/) - HeavyCoin block explorer; Heavy reward/votes page, Top 100 (received, balance)
 
 ### Requires
@@ -33,6 +33,10 @@ An open source block explorer written in node.js.
     npm start
 
 *note: mongod must be running to start the explorer*
+
+As of version 1.4 the explorer defaults to cluster mode, forking an instance of its process to each cpu core. This results in increased performance and stability. Load balancing gets automatically taken care of and any instances that for some reason die, will be restarted automatically. For testing/development (or if just just wish to) a single instance can be launched with
+
+    node bin/instance
 
 ### Syncing databases with the blockchain
 
