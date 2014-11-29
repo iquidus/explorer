@@ -1,7 +1,9 @@
 extends layout
 
 block content
-  - var balance = address.received - address.sent;
+  - var balance = (address.received - address.sent) / 100000000;
+  - var sent = address.sent / 100000000
+  - var received = address.received / 100000000
   .row(style='margin-top:5px;')
     .col-md-12(style='text-align:center;')
       img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
@@ -19,10 +21,10 @@ block content
               th #{settings.locale.rl_balance} (#{settings.symbol})
         tbody             
           tr
-            td #{address.sent.toFixed(8)}
+            td #{sent.toFixed(8)}
             if address.a_id !== 'coinbase'
-              td #{address.received.toFixed(8)}
-              td #{balance.toFixed(8).toString().replace(/(^-+)/mg, '')}
+              td #{received.toFixed(8)}
+              td #{balance.toFixed(8)}
     .row(style='text-align:center;')
       div.btn-group(style='margin-bottom:15px;')
         .dropdown       
