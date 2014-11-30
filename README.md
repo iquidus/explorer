@@ -38,7 +38,7 @@ An open source block explorer written in node.js.
 
 As of version 1.4 the explorer defaults to cluster mode, forking an instance of its process to each cpu core. This results in increased performance and stability. Load balancing gets automatically taken care of and any instances that for some reason die, will be restarted automatically. For testing/development (or if just just wish to) a single instance can be launched with
 
-    node bin/instance
+    node --stack-size=10000 bin/instance
 
 ### Syncing databases with the blockchain
 
@@ -90,7 +90,7 @@ Next planned: 1.4.1
 
 ### Tests
 
-Jasmine is used for unit/integration tests. The test can be executed simply with
+Jasmine is used for unit/integration tests. The tests can be executed simply with
 
     npm test
 
