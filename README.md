@@ -20,7 +20,9 @@ An open source block explorer written in node.js.
 
 ### Install node modules
 
-    cd explorer && npm install
+    cd explorer && npm install --production
+
+*note:If you plan to edit the codebase ignore the --production flag as it ignores dev dependecies required to run tests*
 
 ### Configure
 
@@ -81,14 +83,16 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.3.4   
-Next planned: 1.3.5
+Current version: 1.4.0   
+Next planned: 1.4.1
 
-*  PoS extraction page
+* additional market support
 
-1.4.0
+### Tests
 
-*  Additional database support
+Jasmine is used for unit/integration tests. The test can be executed simply with
+
+    npm test
 
 ### Known Issues
 
