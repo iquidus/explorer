@@ -1,0 +1,105 @@
+/*
+  This file must be valid JSON. But comments are allowed
+
+  Please edit settings.json, not settings.json.template
+*/
+{
+  // name your instance!
+  "title": "IQUIDUS",
+  
+  "address": "127.0.0.1:3001",
+  // coin name
+  "coin": "DarkCoin",
+
+  // coin symbol
+  "symbol": "DRK",
+
+  // favicon
+  "favicon": "public/favicon.ico",
+  
+  // port to listen for requests on.
+  "port" : 3001,
+
+  // database settings (MongoDB)
+  "dbsettings": {
+    "database": "explorer-dark",
+    "address": "localhost",
+    "port": 27017
+  },
+  
+  //update script settings
+  "update_timeout": 0,
+  "check_timeout": 5,
+
+  // wallet settings
+  "wallet": {
+    "host": "127.0.0.1",
+    "port": 9332,
+    "user": "darkcoinrpc",
+    "pass": "liasuBPIUFdhf78asbfkbasf89iGJKjhg"
+  },
+  
+  // confirmations
+  "confirmations": 40,
+
+  // language settings
+  "locale": "locale/en.json",
+
+  // menu settings
+  "display": {
+    "api": true,
+    "markets": true,
+    "richlist": false,
+    "twitter": true,
+    "search": true
+  },
+  
+  // index page (valid options for difficulty are POW or POS)
+  "index": {
+    "show_hashrate": true,
+    "difficulty": "POW",
+  },
+
+  // ensure links on API page are valid
+  "api": {
+    "blockindex": 1337,
+    "blockhash": "000000000000011b4fc8bd0a3241f5b33d1ad0171537c2266ccbc3273229911d",
+    "txhash": "e5a00d2175c680bc4b06d0c5484dd305d4e363ea654339ebe80f389fe79db714",
+    "address": "GZT7M1rwV1rqTsX3ghLa4K7bAeMWNhpDcz"
+  },
+  
+  // market settings
+  "markets": {
+    "coin": "DRK",
+    "exchange": "BTC",
+    "poloniex": true,
+    "bittrex": true,
+    "default": "bittrex"
+  },
+
+  // twitter
+  "twitter": "iquidus",
+
+  //genesis
+  "genesis_tx": "5f564e2b165f11e73354d056e1c4a54286b0441ef024724c469b3c0b737a8610",
+  "genesis_block": "00000001d35b10753640075f089987f4450959f3096e4a10f89fbb8112cc6036",  
+
+  //heavy (enable/disable additional heavy features)
+  "heavy": false,
+
+  "txcount": 100,
+
+  // how to calculate current coin supply
+  // COINBASE : total sent from coinbase (PoW)
+  // GETINFO : retreive from getinfo api call (PoS)
+  // HEAVY: retreive from heavys getsupply api call
+  "supply": "BALANCES",
+
+  // how to acquire network hashrate
+  // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s
+  // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s
+  "nethash": "getnetworkhashps"
+  
+  //tx: 65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410
+  //bk: b2926a56ca64e0cd2430347e383f63ad7092f406088b9b86d6d68c2a34baef51
+}
