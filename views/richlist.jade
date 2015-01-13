@@ -81,7 +81,7 @@ block content
       .panel.panel-default.panel-iquidus
         .panel-heading
           h3.panel-title #{settings.locale.rl_wealth} (#{settings.symbol})
-        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+        table.table.table-hover.table-bordered(cellspacing="0")
           thead
             tr
               th
@@ -144,7 +144,7 @@ block content
                   a.loading(href='/address/#{item.a_id}') 
                     =item.a_id
                 td
-                  =itemFixed
+                  =itemFixed.toFixed(8)
     .col-md-6
       .panel.panel-default.panel-iquidus
         .panel-heading
@@ -170,7 +170,7 @@ block content
                   a.loading(href='/address/#{item.a_id}') 
                     =item.a_id
                 td
-                  =itemFixed
+                  =itemFixed.toFixed(8)
                 td(style='text-align:center;') 
                   =percentage.toFixed(2)
   .footer-padding
