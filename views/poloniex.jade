@@ -4,14 +4,14 @@ block market_view
   script.
     $(document).ready(function(){
       $('#summary-panel').hide();
-      var ohlc = !{marketdata.mintpal.chartdata}
+      var ohlc = !{marketdata.poloniex.chartdata}
       var plot2 = $.jqplot('chart',[ohlc],{
         seriesDefaults:{yaxis:'y2axis'},
         axes: {
           xaxis: {
             renderer:$.jqplot.DateAxisRenderer,
             tickOptions:{formatString:'%R'},
-            tickInterval: "1 hours",
+            tickInterval: "2 hours",
             
           },
           y2axis: {
@@ -46,13 +46,13 @@ block market_view
     .hidden-xs.col-md-12  
       #chart-panel.panel.panel-default.panel-iquidus
         .panel-heading
-          strong MintPal - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong Poloniex - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           span.fa.fa-th-list.pull-right.view-summary.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_view_summary}') 
         .panel-body
           div#chart(style="width:100%;height:300px;")
       #summary-panel.panel.panel-default.panel-iquidus
         .panel-heading
-          strong MintPal - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong Poloniex - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           span.fa.fa-line-chart.pull-right.view-chart.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_view_chart}') 
         table.table.table-bordered.summary-table 
           thead
@@ -63,25 +63,23 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_top_bid}
               th.hidden-xs #{settings.locale.mkt_top_ask}
               th.hidden-xs #{settings.locale.mkt_last}
-              th.hidden-xs #{settings.locale.mkt_yesterday}
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.mintpal.summary['24hhigh']}
-              td #{marketdata.mintpal.summary['24hlow']}
-              td #{marketdata.mintpal.summary['24hvol']}
-              td.hidden-xs #{marketdata.mintpal.summary.top_bid}
-              td.hidden-xs #{marketdata.mintpal.summary.top_ask}
-              td.hidden-xs #{marketdata.mintpal.summary.last_price}
-              td.hidden-xs #{marketdata.mintpal.summary.yesterday_price}
-              if marketdata.mintpal.summary.change.substring(0, 1) == '+'
-                td.success #{marketdata.mintpal.summary.change} %
+              td #{marketdata.poloniex.summary['high24hr']}
+              td #{marketdata.poloniex.summary['low24hr']}
+              td #{marketdata.poloniex.summary['baseVolume']}
+              td.hidden-xs #{marketdata.poloniex.summary.highestBid}
+              td.hidden-xs #{marketdata.poloniex.summary.lowestAsk}
+              td.hidden-xs #{marketdata.poloniex.summary.last}
+              if marketdata.poloniex.summary.percentChange.substring(0, 1) == '-'
+                td.danger #{marketdata.poloniex.summary.percentChange} %
               else
-                td.danger #{marketdata.mintpal.summary.change} %
+                td.success #{marketdata.poloniex.summary.percentChange} %
     .hidden-md.hidden-lg.col-xs-12
       .panel.panel-default.panel-iquidus
         .panel-heading
-          strong MintPal - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong Poloniex - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
         table.table.table-bordered.summary-table 
           thead
             tr
@@ -91,13 +89,13 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.mintpal.summary['24hhigh']}
-              td #{marketdata.mintpal.summary['24hlow']}
-              td #{marketdata.mintpal.summary['24hvol']}
-              if marketdata.mintpal.summary.change.substring(0, 1) == '+'
-                td.success #{marketdata.mintpal.summary.change} %
+              td #{marketdata.poloniex.summary['high24hr']}
+              td #{marketdata.poloniex.summary['low24hr']}
+              td #{marketdata.poloniex.summary['baseVolume']}
+              if marketdata.poloniex.summary.percentChange.substring(0, 1) == '-'
+                td.danger #{marketdata.poloniex.summary.percentChange} %
               else
-                td.danger #{marketdata.mintpal.summary.change} %
+                td.success #{marketdata.poloniex.summary.percentChange} %
   .row
     .col-md-6
       .panel.panel-default.panel-iquidus
@@ -110,14 +108,16 @@ block market_view
               th #{settings.locale.mkt_amount} (#{marketdata.coin})
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
-            each sell in marketdata.mintpal.sells
+            each sell in marketdata.poloniex.sells
               tr
+                - var total = parseFloat(sell[0]) * parseFloat(sell[1]);
+                - total = total.toFixed(8);
                 td
-                  =sell.price
+                  =sell[0]
                 td
-                  =sell.amount
+                  =sell[1].toFixed(8)
                 td.hidden-xs
-                  =sell.total
+                  =total
     .col-md-6
       .panel.panel-default.panel-iquidus
         .panel-heading
@@ -129,15 +129,16 @@ block market_view
               th #{settings.locale.mkt_amount} (#{marketdata.coin})
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
-            each buy in marketdata.mintpal.buys
+            each buy in marketdata.poloniex.buys
               tr
+                - var total = parseFloat(buy[0]) * parseFloat(buy[1]);
+                - total = total.toFixed(8);
                 td
-                  =buy.price
+                  =buy[0]
                 td
-                  =buy.amount
+                  =buy[1].toFixed(8)
                 td.hidden-xs
-                  =buy.total
-  .row   
+                  =total
     .col-md-12
       .panel.panel-default.panel-iquidus
         .panel-heading
@@ -151,28 +152,27 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
               th.hidden-xs Time Stamp
           tbody
-            each trade in marketdata.mintpal.history
-              - var time = format_unixtime(trade.time)
-              if trade.type == '0'
+            each trade in marketdata.poloniex.history
+              if trade.type == 'buy'
                 tr.success
                   td.hidden-xs BUY
                   td
                     =trade.amount
                   td
-                    =trade.price
+                    =trade.rate
                   td.hidden-xs
                     =trade.total
                   td.hidden-xs
-                    =time
+                    =trade.date
               else
                 tr.danger 
                   td.hidden-xs SELL
                   td
                     =trade.amount
                   td
-                    =trade.price
+                    =trade.rate
                   td.hidden-xs
                     =trade.total
                   td.hidden-xs
-                    =time
+                    =trade.date
       .footer-padding

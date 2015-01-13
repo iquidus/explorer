@@ -1,3 +1,10 @@
+1.3.x -> 1.4.0
+* New database
+* Add new settings to settings.json (see settings.json.template)
+  * show_sent_received
+
+* note: mintpal support has been dropped, replaced with poloniex. Make sure market settings reflect this (see settings.json.template)
+
 1.3.3 -> 1.3.4
 * Install new dependency (qr-image)
 npm install

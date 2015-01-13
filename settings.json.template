@@ -72,9 +72,9 @@
   "markets": {
     "coin": "RZR",
     "exchange": "BTC",
-    "mintpal": true,
+    "poloniex": true,
     "bittrex": true,
-    "default": "mintpal"
+    "default": "bittrex"
   },
 
   // twitter
@@ -89,12 +89,16 @@
 
   //amount of txs to index per address (stores latest n txs)
   "txcount": 100,
+
+  //show total sent & received on address page (set false if PoS)
+  "show_sent_received": true,
   
   // how to calculate current coin supply
   // COINBASE : total sent from coinbase (PoW)
   // GETINFO : retreive from getinfo api call (PoS)
   // HEAVY: retreive from heavys getsupply api call
-  "supply": "COINBASE",
+  // BALANCES : total of all address balances
+  "supply": "BALANCES",
 
   // how to acquire network hashrate
   // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s

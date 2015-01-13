@@ -100,13 +100,13 @@ function exit() {
   });
 }
 
-function update_mintpal(cb) {
-  if (settings.markets.mintpal == true) {
-    db.check_market('mintpal', function(exists) {
+function update_poloniex(cb) {
+  if (settings.markets.poloniex == true) {
+    db.check_market('poloniex', function(exists) {
       if (exists) {
-        db.update_markets_db('mintpal', function(success) {
+        db.update_markets_db('poloniex', function(success) {
           if (success) {
-            console.log('%s market data updated successfully.', 'mintpal');
+            console.log('%s market data updated successfully.', 'poloniex');
             return cb();
           } else {
             console.log('error: updating market data: %s.', 'bittrex');
@@ -114,7 +114,7 @@ function update_mintpal(cb) {
           }
         });
       } else {
-        console.log('error: entry for %s does not exists in markets db.', 'mintpal');
+        console.log('error: entry for %s does not exists in markets db.', 'poloniex');
         return cb();
       }
     });
@@ -224,7 +224,7 @@ is_locked(function (exists) {
             }
           });
         } else {
-          update_mintpal(function(){
+          update_poloniex(function(){
             update_bittrex(function(){
               exit();
             });

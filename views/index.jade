@@ -4,7 +4,8 @@ block content
   - var t_sent = 0;
   if txs.length > 0
     each e in txs
-      - t_sent = (parseFloat(t_sent) + parseFloat(e.total)).toFixed(8);
+      - t_sent = t_sent + parseFloat(e.total);
+  - t_sent = (t_sent / 100000000).toFixed(8);
   - var time = format_unixtime(stats.timestamp)
   .row
     .col-md-10.col-md-offset-1
@@ -86,7 +87,8 @@ block content
               td #{txn.vout.length}
               if txn.vout.length > 0
                 if txn.vout[0].addresses[0] != txn.vin[0].addresses
-                  td #{txn.total.toFixed(8)}
+                  - var total = txn.total / 100000000
+                  td #{total.toFixed(8)}
                 else
                   - var total = txn.vout[0].amount - txn.vin[0].amount
                   td #{total.toFixed(8)}

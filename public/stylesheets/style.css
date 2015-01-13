@@ -1,6 +1,7 @@
 body {
   padding: 60px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url('/images/background.png')
 }
 
 .nav-search input {

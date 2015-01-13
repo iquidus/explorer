@@ -1,11 +1,11 @@
-Iquidus Explorer - 1.3.4
+Iquidus Explorer - 1.4.0
 ================
 
 An open source block explorer written in node.js.
 
 ### Links
 
-*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with Razor; Market pages (mintpal, bittrex), Top 100 (received, balance)
+*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with DarkCoin; Market pages (bittrex), Top 100 (received, balance)
 *  [HeavyChain](http://heavychain.info/) - HeavyCoin block explorer; Heavy reward/votes page, Top 100 (received, balance)
 
 ### Requires
@@ -20,7 +20,9 @@ An open source block explorer written in node.js.
 
 ### Install node modules
 
-    cd explorer && npm install
+    cd explorer && npm install --production
+
+*note:If you plan to edit the codebase ignore the --production flag as it ignores dev dependecies required to run tests*
 
 ### Configure
 
@@ -33,6 +35,10 @@ An open source block explorer written in node.js.
     npm start
 
 *note: mongod must be running to start the explorer*
+
+As of version 1.4 the explorer defaults to cluster mode, forking an instance of its process to each cpu core. This results in increased performance and stability. Load balancing gets automatically taken care of and any instances that for some reason die, will be restarted automatically. For testing/development (or if just just wish to) a single instance can be launched with
+
+    node --stack-size=10000 bin/instance
 
 ### Syncing databases with the blockchain
 
@@ -77,14 +83,17 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.3.4   
-Next planned: 1.3.5
+Current version: 1.4.0   
+Next planned: 1.4.1
 
-*  PoS extraction page
+* additional market support
+* proof of stake improvements
 
-1.4.0
+### Tests
 
-*  Additional database support
+Jasmine is used for unit/integration tests. The tests can be executed simply with
+
+    npm test
 
 ### Known Issues
 
@@ -106,10 +115,18 @@ Where [SIZE] is an integer higher than the default.
 
 *note: SIZE will depend on which blockchain you are using, you may need to play around a bit to find an optimal setting*
 
+**Incorrect total sent/received on address page (PoS)**
+
+Due to the nature of Proof of Stake the total sent and received values on address pages will appear higher than expected. This is due to how PoS is managed on the blockchain. When an address generates PoS it appears as a tx with matching input & output addresses in the form sent: 10.00000000, received: 10.04000000 (address gained 0.04 from PoS)
+
+I'm on the fence whether this is a bug or not, as technically the current values are representing the blockchain accurately. However as it makes more sense to users to have it behave as (sent: 0.00, received: 0.04) a new option will be introduced in a future release allowing it to be set one way or the other.
+
+For now if you don't wish to display the current values you can disable them by setting 'show_sent_received' to false in settings.json
+
 ### License
 
-Copyright (c) 2014, Iquidus Technology  
-Copyright (c) 2014, Luke Williams  
+Copyright (c) 2015, Iquidus Technology  
+Copyright (c) 2015, Luke Williams  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
