@@ -9,10 +9,10 @@
   
   "address": "127.0.0.1:3001",
   // coin name
-  "coin": "Razor",
+  "coin": "Darkcoin",
 
   // coin symbol
-  "symbol": "RZR",
+  "symbol": "DRK",
 
   // favicon
   "favicon": "public/favicon.ico",
@@ -22,7 +22,7 @@
 
   // database settings (MongoDB)
   "dbsettings": {
-    "database": "explorer-razor",
+    "database": "explorer-drk",
     "address": "localhost",
     "port": 27017
   },
@@ -34,8 +34,8 @@
   // wallet settings
   "wallet": {
     "host": "localhost",
-    "port": 9393,
-    "user": "vericoinrpc",
+    "port": 9332,
+    "user": "darkcoinrpc",
     "pass": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
   },
   
@@ -70,7 +70,7 @@
   
   // market settings
   "markets": {
-    "coin": "RZR",
+    "coin": "DRK",
     "exchange": "BTC",
     "poloniex": true,
     "bittrex": true,
