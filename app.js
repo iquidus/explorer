@@ -95,6 +95,8 @@ app.set('index', settings.index);
 app.set('heavy', settings.heavy);
 app.set('txcount', settings.txcount);
 app.set('nethash', settings.nethash);
+app.set('show_sent_received', settings.show_sent_received);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

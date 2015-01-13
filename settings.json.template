@@ -89,6 +89,9 @@
 
   //amount of txs to index per address (stores latest n txs)
   "txcount": 100,
+
+  //show total sent & received on address page (set false if PoS)
+  "show_sent_received": true,
   
   // how to calculate current coin supply
   // COINBASE : total sent from coinbase (PoW)
