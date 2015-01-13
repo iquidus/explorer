@@ -6,17 +6,17 @@ var express = require('express')
   , lib = require('../lib/explorer')
   , qr = require('qr-image');
 
-function prepare_mintpal_data(cb){
-  if (settings.markets.mintpal == true) {
-    db.get_market('mintpal', function(data) {
-      var mintpal = {
+function prepare_poloniex_data(cb){
+  if (settings.markets.poloniex == true) {
+    db.get_market('poloniex', function(data) {
+      var poloniex = {
         buys: data.buys,
         sells: data.sells,
         chartdata: JSON.stringify(data.chartdata),
         history: data.history,
         summary: data.summary,
       };
-      return cb(mintpal);
+      return cb(poloniex);
     });
   } else {
     // required so js can reference mintpal.chartdata
@@ -205,19 +205,19 @@ router.get('/bittrex', function(req, res) {
   }
 });
 
-router.get('/mintpal', function(req, res) {
+router.get('/poloniex', function(req, res) {
   if (settings.display.markets == true ) { 
     db.get_stats(settings.coin, function (stats) {  
-      prepare_mintpal_data(function(mintpal_data) {
+      prepare_poloniex_data(function(poloniex_data) {
         var market_data = {
           coin: settings.markets.coin,
           exchange: settings.markets.exchange,
-          mintpal: mintpal_data,
+          poloniex: poloniex_data,
         };
-        res.render('mintpal', { 
+        res.render('poloniex', { 
           active: 'markets', 
           marketdata: market_data, 
-          market: 'mintpal',
+          market: 'poloniex',
           stats: stats
         });
       });
