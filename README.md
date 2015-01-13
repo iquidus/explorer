@@ -87,6 +87,7 @@ Current version: 1.4.0
 Next planned: 1.4.1
 
 * additional market support
+* proof of stake improvements
 
 ### Tests
 
@@ -114,10 +115,18 @@ Where [SIZE] is an integer higher than the default.
 
 *note: SIZE will depend on which blockchain you are using, you may need to play around a bit to find an optimal setting*
 
+**Incorrect total sent/received on address page (PoS)**
+
+Due to the nature of Proof of Stake the total sent and received values on address pages will appear higher than expected. This is due to how PoS is managed on the blockchain. When an address generates PoS it appears as a tx with matching input & output addresses in the form sent: 10.00000000, received: 10.04000000 (address gained 0.04 from PoS)
+
+I'm on the fence whether this is a bug or not, as technically the current values are representing the blockchain accurately. However as it makes more sense to users to have it behave as (sent: 0.00, received: 0.04) a new option will be introduced in a future release allowing it to be set one way or the other.
+
+For now if you don't wish to display the current values you can disable them by setting 'show_sent_received' to false in settings.json
+
 ### License
 
-Copyright (c) 2014, Iquidus Technology  
-Copyright (c) 2014, Luke Williams  
+Copyright (c) 2015, Iquidus Technology  
+Copyright (c) 2015, Luke Williams  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
