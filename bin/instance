@@ -24,11 +24,11 @@ db.connect(dbString, function() {
     }
   });
   
-  db.check_market('mintpal', function(exists) {
+  db.check_market('poloniex', function(exists) {
     if(exists == false) {
-      console.log('no mintpal entry found, creating now..');
-      db.create_market(settings.markets.coin, settings.markets.exchange, 'mintpal', function(){
-        //console.log('mintpal entry created successfully.');
+      console.log('no poloniex entry found, creating now..');
+      db.create_market(settings.markets.coin, settings.markets.exchange, 'poloniex', function(){
+
       });
     }
   });  

@@ -72,9 +72,9 @@
   "markets": {
     "coin": "RZR",
     "exchange": "BTC",
-    "mintpal": true,
+    "poloniex": true,
     "bittrex": true,
-    "default": "mintpal"
+    "default": "bittrex"
   },
 
   // twitter

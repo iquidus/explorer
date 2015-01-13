@@ -33,13 +33,6 @@ block content
       .container-fluid
         .collapse.navbar-collapse(id='navbar-collapse')
           ul.nav.navbar-nav
-            if settings.markets.mintpal == true
-              if market == 'mintpal'
-                li.active
-                  a.navbar-link.loading(href='/mintpal') MintPal
-              else
-                li
-                  a.navbar-link.loading(href='/mintpal') MintPal
             if settings.markets.bittrex == true
               if market == 'bittrex'
                 li.active
@@ -47,4 +40,11 @@ block content
               else
                 li
                   a.navbar-link.loading(href='/bittrex') Bittrex
+            if settings.markets.poloniex == true
+              if market == 'poloniex'
+                li.active
+                  a.navbar-link.loading(href='/poloniex') Poloniex
+              else
+                li
+                  a.navbar-link.loading(href='/poloniex') Poloniex
     block market_view
