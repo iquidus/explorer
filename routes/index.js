@@ -122,7 +122,11 @@ function route_get_index(res, error) {
       lib.get_block(hash, function (block) {
         db.get_txs(block, function(txs) {
           if (txs.length > 0) {
-            res.render('index', { active: 'home', stats: stats, block: block, txs: txs, error: error});
+            if (stats.last < stats.count - 100) {
+              res.render('index', { active: 'home', stats: stats, block: block, txs: txs, error: error, warning: locale.initial_index_alert});
+            } else {
+              res.render('index', { active: 'home', stats: stats, block: block, txs: txs, error: error, warning: null});
+            }
           } else {
             db.create_txs(block, function(){
               db.get_txs(block, function(ntxs) {

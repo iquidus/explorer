@@ -13,6 +13,10 @@ block content
         .alert.alert-danger.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×
           strong #{settings.locale.ex_error} : #{error}
+      if warning !== null        
+        .alert.alert-warning.alert-dismissable(role='alert')
+          button.close(type='button', data-dismiss='alert') ×
+          strong #{settings.locale.ex_warning} #{warning}
   .col-md-12
     .panel.panel-default.panel-iquidus
       .panel-heading
