@@ -146,9 +146,11 @@ function update_bittrex(cb) {
   }
 }
 
-var dbString = "mongodb://" + settings.dbsettings.address;
-dbString = dbString + ":" + settings.dbsettings.port;
-dbString = dbString + "/" + settings.dbsettings.database;
+var dbString = 'mongodb://' + settings.dbsettings.user;
+dbString = dbString + ':' + settings.dbsettings.password;
+dbString = dbString + '@' + settings.dbsettings.address;
+dbString = dbString + ':' + settings.dbsettings.port;
+dbString = dbString + '/' + settings.dbsettings.database;
 
 is_locked(function (exists) {
   if (exists) {

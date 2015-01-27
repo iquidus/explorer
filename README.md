@@ -1,18 +1,31 @@
-Iquidus Explorer - 1.4.0
+Iquidus Explorer - 1.4.1 (development)
 ================
 
 An open source block explorer written in node.js.
 
 ### Links
 
-*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with DarkCoin; Market pages (bittrex), Top 100 (received, balance)
-*  [HeavyChain](http://heavychain.info/) - HeavyCoin block explorer; Heavy reward/votes page, Top 100 (received, balance)
+*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with Darkcoin; Market pages (bittrex,poloniex), Top 100 (received, balance)
 
 ### Requires
 
 *  node.js >= 0.10.28
 *  mongodb >= 2.6.0
 *  *coind
+
+### Create datbase
+
+Enter MongoDB cli:
+
+    $ mongo
+
+Create databse:
+
+    > use explorerdb
+
+Create user with read/write access:
+
+    > db.createUser( { user: "iquidus", pwd: "3xp!0reR", roles: [ "readWrite" ] } )
 
 ### Get the source
 

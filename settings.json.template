@@ -22,7 +22,9 @@
 
   // database settings (MongoDB)
   "dbsettings": {
-    "database": "explorer-drk",
+    "user": "iquidus",
+    "password": "3xp!0reR",
+    "database": "explorerdb",
     "address": "localhost",
     "port": 27017
   },
