@@ -1,4 +1,4 @@
-Iquidus Explorer - 1.4.1 (development)
+Iquidus Explorer - 1.4.1
 ================
 
 An open source block explorer written in node.js.
@@ -49,9 +49,13 @@ Create user with read/write access:
 
 *note: mongod must be running to start the explorer*
 
-As of version 1.4 the explorer defaults to cluster mode, forking an instance of its process to each cpu core. This results in increased performance and stability. Load balancing gets automatically taken care of and any instances that for some reason die, will be restarted automatically. For testing/development (or if just just wish to) a single instance can be launched with
+As of version 1.4.0 the explorer defaults to cluster mode, forking an instance of its process to each cpu core. This results in increased performance and stability. Load balancing gets automatically taken care of and any instances that for some reason die, will be restarted automatically. For testing/development (or if you just wish to) a single instance can be launched with
 
     node --stack-size=10000 bin/instance
+
+To stop the cluster you can use
+
+    npm stop
 
 ### Syncing databases with the blockchain
 
@@ -96,10 +100,9 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.4.0   
-Next planned: 1.4.1
+Current version: 1.4.1   
+Next planned: 1.4.2
 
-* additional market support
 * proof of stake improvements
 
 ### Tests
