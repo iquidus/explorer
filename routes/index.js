@@ -249,6 +249,9 @@ router.get('/richlist', function(req, res) {
               distc: distribution.t_51_75,
               distd: distribution.t_76_100,
               diste: distribution.t_101plus,
+              show_dist: settings.richlist.distribution,
+              show_received: settings.richlist.received,
+              show_balance: settings.richlist.balance,
             });
           });
         } else {
