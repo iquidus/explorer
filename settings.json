@@ -10,9 +10,12 @@
   "address": "127.0.0.1:3001",
   // coin name
   "coin": "Darkcoin",
-
+  
   // coin symbol
   "symbol": "DRK",
+
+  // logo
+  "logo": "/images/darkcoin.png",
 
   // favicon
   "favicon": "public/favicon.ico",
