@@ -74,103 +74,65 @@ block content
   .row(style='margin-top:5px;')
     .col-md-12(style='text-align:center;')
       img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
-  .row
-    .col-md-2
-      div#chart3.pull-right(style="width:210px;height:205px;margin-top:-10px;margin-right:10px;")
-    .col-md-8
-      .panel.panel-default.panel-iquidus
-        .panel-heading
-          h3.panel-title #{settings.locale.rl_wealth} (#{settings.symbol})
-        table.table.table-hover.table-bordered(cellspacing="0")
-          thead
-            tr
-              th
-              th 
-                div.pull-left(style='background-color:#d9534f;width:20px;height:20px;margin-right:6px;')
-                span #{settings.locale.rl_top25}
-              th 
-                div.pull-left(style='background-color:#5cb85c;width:20px;height:20px;margin-right:6px;')
-                span #{settings.locale.rl_top50}
-              th 
-                div.pull-left(style='background-color:#428bca;width:20px;height:20px;margin-right:6px;')
-                span #{settings.locale.rl_top75}
-              th 
-                div.pull-left(style='background-color:#CCC;width:20px;height:20px;margin-right:6px;')
-                span #{settings.locale.rl_top100}
-              th 
-                div.pull-left(style='background-color:#222;width:20px;height:20px;margin-right:6px;')
-                span #{settings.locale.rl_hundredplus}
-          tbody
-            tr
-              th #{settings.symbol}
-              td #{parseFloat(dista.total).toFixed(8)}
-              td #{parseFloat(distb.total).toFixed(8)}
-              td #{parseFloat(distc.total).toFixed(8)}
-              td #{parseFloat(distd.total).toFixed(8)}
-              td #{parseFloat(diste.total).toFixed(8)}
-            tr
-              th %
-              td #{parseFloat(dista.percent).toFixed(2)}
-              td #{parseFloat(distb.percent).toFixed(2)}
-              td #{parseFloat(distc.percent).toFixed(2)}
-              td #{parseFloat(distd.percent).toFixed(2)}
-              td #{parseFloat(diste.percent).toFixed(2)}
-      center
-        label.label.label-iquidus #{settings.locale.ex_supply}: #{stats.supply.toFixed(8)} (#{settings.symbol})
-    .col-md-2
-      div#chart2.pull-left(style="width:210px;height:240px;margin-top:-20px;")
-    
-  .row
-    .col-md-6
-      .panel.panel-default.panel-iquidus
-        .panel-heading
-          h3.panel-title #{settings.locale.rl_received_coins} 
-        table.table.table-hover.table-bordered(cellspacing="0")
-          thead
-            tr
-              th(style='text-align:center;') 
-                span.fa.fa-flag-checkered
-              th #{settings.locale.tx_address} 
-              th #{settings.locale.rl_received} (#{settings.symbol})
-          tbody
-            - var count = 0
-            each item in received
-              - count = count + 1
-              - var itemFixed = item.received / 100000000
+  if show_dist == true
+    .row
+      .col-md-2
+        div#chart3.pull-right(style="width:210px;height:205px;margin-top:-10px;margin-right:10px;")
+      .col-md-8
+        .panel.panel-default.panel-iquidus
+          .panel-heading
+            h3.panel-title #{settings.locale.rl_wealth} (#{settings.symbol})
+          table.table.table-hover.table-bordered(cellspacing="0")
+            thead
               tr
-                td(style='text-align:center;') 
-                  =count
-                td
-                  a.loading(href='/address/#{item.a_id}') 
-                    =item.a_id
-                td
-                  =itemFixed.toFixed(8)
-    .col-md-6
-      .panel.panel-default.panel-iquidus
-        .panel-heading
-          h3.panel-title #{settings.locale.rl_current_balance} 
-        table.table.table-hover.table-bordered(cellspacing="0")
-          thead
-            tr
-              th(style='text-align:center;') 
-                span.fa.fa-flag-checkered
-              th #{settings.locale.tx_address}
-              th #{settings.locale.rl_balance} (#{settings.symbol})
-              th(style='text-align:center;') %
-          tbody
-            - var count = 0
-            each item in balance
-              - count = count + 1
-              - var itemFixed = item.balance / 100000000
-              - var percentage = (itemFixed / stats.supply) * 100
+                th
+                th 
+                  div.pull-left(style='background-color:#d9534f;width:20px;height:20px;margin-right:6px;')
+                  span #{settings.locale.rl_top25}
+                th 
+                  div.pull-left(style='background-color:#5cb85c;width:20px;height:20px;margin-right:6px;')
+                  span #{settings.locale.rl_top50}
+                th 
+                  div.pull-left(style='background-color:#428bca;width:20px;height:20px;margin-right:6px;')
+                  span #{settings.locale.rl_top75}
+                th 
+                  div.pull-left(style='background-color:#CCC;width:20px;height:20px;margin-right:6px;')
+                  span #{settings.locale.rl_top100}
+                th 
+                  div.pull-left(style='background-color:#222;width:20px;height:20px;margin-right:6px;')
+                  span #{settings.locale.rl_hundredplus}
+            tbody
               tr
-                td(style='text-align:center;') 
-                  =count
-                td
-                  a.loading(href='/address/#{item.a_id}') 
-                    =item.a_id
-                td
-                  =itemFixed.toFixed(8)
-                td(style='text-align:center;') 
-                  =percentage.toFixed(2)
+                th #{settings.symbol}
+                td #{parseFloat(dista.total).toFixed(8)}
+                td #{parseFloat(distb.total).toFixed(8)}
+                td #{parseFloat(distc.total).toFixed(8)}
+                td #{parseFloat(distd.total).toFixed(8)}
+                td #{parseFloat(diste.total).toFixed(8)}
+              tr
+                th %
+                td #{parseFloat(dista.percent).toFixed(2)}
+                td #{parseFloat(distb.percent).toFixed(2)}
+                td #{parseFloat(distc.percent).toFixed(2)}
+                td #{parseFloat(distd.percent).toFixed(2)}
+                td #{parseFloat(diste.percent).toFixed(2)}
+        center
+          label.label.label-iquidus #{settings.locale.ex_supply}: #{stats.supply.toFixed(8)} (#{settings.symbol})
+      .col-md-2
+        div#chart2.pull-left(style="width:210px;height:240px;margin-top:-20px;")  
+  .row
+    if show_received == true
+      if show_balance == true
+        .col-md-6.col-xs-12
+          include ./includes/rl_received.jade
+      else
+        .col-md-12
+          include ./includes/rl_received.jade
+    if show_balance == true
+      if show_received == true
+        .col-md-6.col-xs-12
+          include ./includes/rl_balance.jade
+      else
+        .col-md-12
+          include ./includes/rl_balance.jade
   .footer-padding
