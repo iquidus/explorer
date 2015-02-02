@@ -8,11 +8,15 @@
   "title": "IQUIDUS",
   
   "address": "127.0.0.1:3001",
+  
   // coin name
   "coin": "Darkcoin",
 
   // coin symbol
   "symbol": "DRK",
+  
+  // logo
+  "logo": "/images/logo.png",
 
   // favicon
   "favicon": "public/favicon.ico",
@@ -77,6 +81,13 @@
     "poloniex": true,
     "bittrex": true,
     "default": "bittrex"
+  },
+
+  // richlist/top100 settings
+  "richlist": {
+    "distribution": true,
+    "received": true,
+    "balance": true
   },
 
   // twitter
