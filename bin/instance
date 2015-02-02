@@ -65,6 +65,5 @@ db.connect(dbString, function() {
 
   var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);
-    console.log('Ready to receive connections on port: ' + server.address().port);
   });
 });
