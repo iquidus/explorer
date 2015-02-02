@@ -238,7 +238,7 @@ router.get('/richlist', function(req, res) {
         //console.log(richlist);
         if (richlist) {
           db.get_distribution(richlist, stats, function(distribution) {
-            console.log(distribution);
+            //console.log(distribution);
             res.render('richlist', { 
               active: 'richlist', 
               balance: richlist.balance, 
