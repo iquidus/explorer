@@ -21,6 +21,9 @@
   // favicon
   "favicon": "public/favicon.ico",
   
+  // theme (see /public/themes for available themes)
+  "theme": "Cyborg",
+
   // port to listen for requests on.
   "port" : 3001,
 
