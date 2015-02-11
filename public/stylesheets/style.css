@@ -1,7 +1,11 @@
 body {
   padding: 60px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-image: url('/images/background.png')
+  background-image: url('/images/background2.png');
+}
+
+#index-search {
+	width: 80%;
 }
 
 .nav-search input {
@@ -16,48 +20,14 @@ body {
 .block-last {
 	margin: 0;
 	margin-right: 10px;
-	color: #FFF;
 }
 
 .block-next {
 	margin: 0;
 	margin-left: 10px;
-	color: #FFF;
 }
 #chart3 .jqplot-xaxis {
 	display: none;
-}
-.block-last:hover, .block-next:hover {
-	color: #CCC;
-}
-.glow, .glow:hover, .glow:focus
-{
-	text-decoration: none;
-	color: #222;
-	text-shadow: none;
-	-webkit-transition: 300ms linear 0s;
-	-moz-transition: 300ms linear 0s;
-	-o-transition: 300ms linear 0s;
-	transition: 300ms linear 0s;
-	outline: 0 none;
-}
-
-.glow-inverse, .glow-inverse:hover, .glow-inverse:focus
-{
-	text-decoration: none;
-	color: #fff;
-	text-shadow: none;
-	-webkit-transition: 300ms linear 0s;
-	-moz-transition: 300ms linear 0s;
-	-o-transition: 300ms linear 0s;
-	transition: 300ms linear 0s;
-	outline: 0 none;
-}
-
-
-.glow:hover, .glow:focus, .glow-inverse:hover, .glow-inverse:focus
-{
-	color: #555;
 }
 
 .data {
@@ -72,49 +42,8 @@ body {
 	overflow: hidden;
 }
 
-.btn-iquidus {
-	background-color: #222;
-	color: #fff;
-}
-
-button.btn-iquidus:hover{
-	color: #CCC;
-}
-
-.label-iquidus {
-	background-color: #222;
-	color: #fff;	
-}
-
-.label a:link {
-  color:#fff;
-}
-
-.label a:visited {
-  color:#fff;
-}
-
-.label a:hover {
-  color:#CCC;
-}
-
-.label a:active {
-  color:#fff;
-}
-
 .panel-address-summary {
  margin-bottom: 5px;
-}
-
-.panel-iquidus {
-	border-color:#CCC;
-	color:#333;
-}
-
-.panel-iquidus .panel-heading, .panel-iquidus .panel-footer {
-	background:#222;
-	border-color:#CCC;
-	color:#fff;
 }
 
 /* datatable tweaks */
