@@ -36,6 +36,7 @@ function prepare_bittrex_data(cb){
         sells: data.sells,
         summary: data.summary,
       };
+      console.log(bittrex);
       return cb(bittrex);
     });
   } else {
@@ -157,7 +158,7 @@ function route_get_address(res, hash, count) {
         }
         lib.syncLoop(count, function (loop) {
           var i = loop.iteration();
-          db.get_tx(hashes[i], function(tx) {
+          db.get_tx(hashes[i].addresses, function(tx) {
             if (tx) {
               txs.push(tx);
               loop.next();
@@ -166,6 +167,7 @@ function route_get_address(res, hash, count) {
             }
           });
         }, function(){
+         
           res.render('address', { active: 'address', stats: stats, address: address, txs: txs});
         });
         
@@ -310,7 +312,7 @@ router.post('/search', function(req, res) {
       db.get_tx(query, function(tx) {      
         if (tx) {
           db.get_stats(settings.coin, function(stats){
-            res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations});
+            res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations, blockcount: blockcount});
           });
         } else {
           lib.get_block(query, function(block) {
