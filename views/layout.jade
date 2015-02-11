@@ -5,7 +5,7 @@ html
     link(rel='stylesheet', href='/themes/#{settings.theme}/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
     link(rel='stylesheet', href='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css')
-    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
@@ -23,11 +23,7 @@ html
     script(src='/javascripts/chart.js')
     script.
       $(document).ready(function(){   
-        $('#loading-icon').hide();       
-        $('.loading').on('click', function() {
-          $('#twitter-icon').hide();
-          $('#loading-icon').show();
-        }); 
+        
         $('.block-last-next').tooltip({
           animation: true,
           delay: { hide: 500 },   
@@ -37,6 +33,7 @@ html
           ordering: false,
           responsive: true
         });
+        $('.iquidus').css('color',$('.table').css('color'));
       });
   body
     - function format_unixtime(unixtime) {
@@ -64,7 +61,7 @@ html
       - var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;   
       - return time
     -  };
-    .nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+    .nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
       .container-fluid
         .navbar-header
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-collapse')
@@ -147,14 +144,13 @@ html
                     .form-group.nav-search
                       input.form-control(type='text', name='search')
                     button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
-            li
-              img#loading-icon(src='/images/loading.gif')
-              if settings.display.twitter
+            if settings.display.twitter
+              li
                 a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')  
                   span.glyphicon.fa.fa-twitter
        
     block content
-    .navbar.navbar-inverse.navbar-fixed-bottom
+    .navbar.navbar-default.navbar-fixed-bottom
       .container(style="width:100%;position:relative;")
         ul.nav                    
           if stats.connections == 0   

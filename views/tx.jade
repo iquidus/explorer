@@ -8,11 +8,11 @@ block content
     .col-md-12(style='text-align:center;')
       img(src='#{settings.logo}', style='width:80px;margin: 0px auto 15px auto;')
   .col-xs-12.col-md-10.col-md-offset-1
-    .panel.panel-default.panel-iquidus
+    .panel.panel-default
       .panel-heading
         strong #{settings.symbol} txid: #{tx.txid}
         a(href='/api/getrawtransaction?txid=#{tx.txid}&decrypt=1')
-          span.glyphicon.glyphicon-info-sign.pull-right.glow-inverse
+          span.glyphicon.glyphicon-info-sign.iquidus.pull-right
       table.table.table-bordered.table-striped.summary-table 
         thead
           tr
@@ -30,7 +30,7 @@ block content
                 td #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
-                    span.glyphicon.glyphicon-eye-open.glow 
+                    span.glyphicon.glyphicon-eye-open 
           else
             if confirms < (confirmations / 2)
               tr.danger
@@ -40,7 +40,7 @@ block content
                 td #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
-                    span.glyphicon.glyphicon-eye-open.glow 
+                    span.glyphicon.glyphicon-eye-open 
             else
               tr.warning
                 td #{confirms}
@@ -49,14 +49,14 @@ block content
                 td #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
-                    span.glyphicon.glyphicon-eye-open.glow
+                    span.glyphicon.glyphicon-eye-open
     if tx.vout.length < 1
       .alert.alert-info(role='alert', style='text-align:center;')   
         strong #{settings.locale.tx_nonstandard}
     else
       .row
         .col-md-6
-          .panel.panel-default.panel-iquidus
+          .panel.panel-default
             .panel-heading
               strong #{settings.locale.tx_contributors}
               span.glyphicon.glyphicon-arrow-right.pull-right
@@ -75,13 +75,14 @@ block content
                     tr.info(style='text-align:center')
                       td #{settings.locale.proof_of_stake}
                   else
+                    - var ramount = r.amount / 100000000
                     tr
                       td 
                         a.loading(href='/address/#{r.addresses}') 
                           =r.addresses
-                      td.danger #{r.amount.toFixed(8)}
+                      td.danger #{ramount.toFixed(8)}
         .col-md-6
-          .panel.panel-default.panel-iquidus
+          .panel.panel-default
             .panel-heading
               strong #{settings.locale.tx_recipients}
             table.table.table-bordered.table-striped.summary-table 
@@ -92,24 +93,26 @@ block content
               tbody
                 each r in tx.vout
                   if tx.vout.length > 0 
+                    - var ramount = r.amount / 100000000
                     if tx.vin[0].addresses != tx.vout[0].addresses
                       tr
                         td 
                           a.loading(href='/address/#{r.addresses}') 
                             =r.addresses 
-                        td.success  #{r.amount.toFixed(8)} 
+                        td.success  #{ramount.toFixed(8)} 
                     else
+                      - var pos = (r.amount - tx.vin[0].amount) / 100000000
                       tr
                         td 
                           a.loading(href='/address/#{r.addresses}') 
                             =r.addresses 
-                        td.success  #{amount.toFixed(8)} 
+                        td.success  #{pos.toFixed(8)} 
                   else
                     tr
                       td 
                         a.loading(href='/address/#{r.addresses}') 
                           =r.addresses 
-                      td.success  #{r.amount.toFixed(8)} 
+                      td.success  #{ramount.toFixed(8)} 
 
     .footer-padding
 

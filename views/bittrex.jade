@@ -3,10 +3,11 @@ extends markets
 block market_view
   .row
     .col-md-12  
-      .panel.panel-default.panel-iquidus
+      .panel.panel-default
         .panel-heading
           strong Bittrex - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
-          span.fa.fa-line-chart.pull-right.view-chart-disabled.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
         table.table.table-bordered.summary-table 
           thead
             tr
@@ -34,7 +35,7 @@ block market_view
                 td.danger #{bittrex_change} %
   .row
     .col-md-6
-      .panel.panel-default.panel-iquidus
+      .panel.panel-default
         .panel-heading
           h3.panel-title #{settings.locale.mkt_sell_orders}
         table.table.table-striped.table-bordered.order-table
@@ -53,7 +54,7 @@ block market_view
                 td.hidden-xs
                   =sell.total
     .col-md-6
-      .panel.panel-default.panel-iquidus
+      .panel.panel-default
         .panel-heading
           h3.panel-title #{settings.locale.mkt_buy_orders}
         table.table.table-striped.table-bordered.order-table
@@ -73,7 +74,7 @@ block market_view
                   =buy.total
   .row   
     .col-md-12
-      .panel.panel-default.panel-iquidus
+      .panel.panel-default
         .panel-heading
           h3.panel-title #{settings.locale.mkt_trade_history}
         table.table.table-hover.history-table.table-bordered(cellspacing="0")

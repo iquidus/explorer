@@ -1,14 +1,9 @@
 extends layout
 
 block content
-  - var t_sent = 0;
-  if txs.length > 0
-    each e in txs
-      - t_sent = t_sent + parseFloat(e.total);
-  - t_sent = (t_sent / 100000000).toFixed(8);
   - var time = format_unixtime(stats.timestamp)
   .row
-    .col-md-10.col-md-offset-1
+    .col-md-12
       if error !== null        
         .alert.alert-danger.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×
@@ -18,7 +13,7 @@ block content
           button.close(type='button', data-dismiss='alert') ×
           strong #{settings.locale.ex_warning} #{warning}
   .col-md-12
-    .panel.panel-default.panel-iquidus
+    .panel.panel-default
       .panel-heading
         strong #{settings.locale.ex_title} - #{settings.coin} 
       .panel-body
@@ -28,14 +23,16 @@ block content
             p(style="margin-bottom:15px;")
               i
                 | #{settings.locale.ex_search_message}
-            .input-group
+            .input-group(id='index-search')
               input.form-control(type='text', name='search')
               span.input-group-btn
                 button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
         .hidden-md.hidden-lg.col-xs-12
-    .panel.panel-default.panel-iquidus
+    .panel.panel-default
       .panel-heading
         strong #{settings.locale.ex_summary}
+        a(href='/api/getblock?hash=#{block.hash}')
+          span.glyphicon.glyphicon-info-sign.iquidus.pull-right
       table.table.table-bordered.summary-table 
         thead
           tr
@@ -54,7 +51,6 @@ block content
               th #{settings.locale.heavy_vote}
             th.hidden-xs #{settings.locale.size} (kB)
             th.hidden-xs #{settings.locale.transactions}
-            th #{settings.locale.total_sent} (#{settings.symbol})
             th.hidden-xs #{settings.locale.timestamp}
             th.hidden-xs #{settings.locale.ex_supply} (#{settings.symbol})
         tbody
@@ -71,10 +67,9 @@ block content
                 td #{block.vote} 
             td.hidden-xs #{stats.size} 
             td.hidden-xs #{txs.length}
-            td #{t_sent} 
             td.hidden-xs #{time}
             td.hidden-xs #{stats.supply.toFixed(8)}
-    .panel.panel-default.panel-iquidus
+    .panel.panel-default
       .panel-heading
         strong #{settings.locale.ex_latest_transactions}
       table.table.table-bordered.table-striped.summary-table 
@@ -90,17 +85,17 @@ block content
               td #{txn.txid}
               td #{txn.vout.length}
               if txn.vout.length > 0
-                if txn.vout[0].addresses[0] != txn.vin[0].addresses
+                if txn.vout[0].addresses != txn.vin[0].addresses
                   - var total = txn.total / 100000000
                   td #{total.toFixed(8)}
                 else
-                  - var total = txn.vout[0].amount - txn.vin[0].amount
+                  - var total = (txn.vout[0].amount - txn.vin[0].amount) / 100000000
                   td #{total.toFixed(8)}
               else
                 td #{txn.total.toFixed(8)}
               td.view_tx 
                 a(href='/tx/#{txn.txid}')
-                  span.glyphicon.glyphicon-eye-open.glow
+                  span.glyphicon.glyphicon-eye-open
     .footer-padding
       
               

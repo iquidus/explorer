@@ -9,7 +9,7 @@ block content
       img(src='#{settings.logo}', style='width:80px;margin: 0px auto 15px auto;')
     img.qrcode.pull-right.hidden-xs(src='/qr/#{address.a_id}')
   .col-xs-12.col-md-10.col-md-offset-1
-    .panel.panel-default.panel-iquidus.panel-address-summary
+    .panel.panel-default.panel-address-summary
       .panel-heading(style='position:relative;')        
         strong #{settings.symbol} Address: #{address.a_id}
       table.table.table-bordered.table-striped.summary-table 
@@ -55,11 +55,11 @@ block content
                   a(href='/address/#{address.a_id}/#{settings.txcount}', role='menuitem', tabindex='-1') #{settings.txcount}
     each tx in txs 
       - var time = format_unixtime(tx.timestamp)      
-      .panel.panel-default.panel-iquidus
+      .panel.panel-default
         .panel-heading
           strong txid: #{tx.txid}
           a(href='/tx/#{tx.txid}')
-            span.glyphicon.glyphicon-eye-open.pull-right.glow-inverse.hidden-xs
+            span.glyphicon.glyphicon-eye-open.iquidus.pull-right.hidden-xs
           strong.pull-right.hidden-xs(style='padding-right:10px;') #{time}
         .panel-body(style='padding:0px;')
           .col-md-6(style='padding:0px;')
@@ -71,6 +71,7 @@ block content
                     th #{settings.locale.mkt_amount} (#{settings.symbol})
               tbody
                 each r in tx.vin
+                  - var ramount = r.amount / 100000000
                   if r.addresses == 'coinbase' 
                     tr(style='text-align:center')
                       td #{settings.locale.new_coins}
@@ -81,13 +82,13 @@ block content
                     tr.danger
                       td 
                         =r.addresses
-                      td #{r.amount.toFixed(8)}
+                      td #{ramount.toFixed(8)}
                   else
                     tr
                       td
                         a.loading(href='/address/#{r.addresses}') 
                           =r.addresses
-                      td #{r.amount.toFixed(8)}
+                      td #{ramount.toFixed(8)}
           .col-md-6(style='padding:0px;')
             table.table.table-bordered.table-striped.summary-table 
               thead
@@ -97,19 +98,20 @@ block content
               tbody
                 each r in tx.vout 
                   if tx.vin[0].addresses != tx.vout[0].addresses
+                    - var ramount = r.amount / 100000000
                     if r.addresses == address.a_id
                       tr.success
                         td 
                           =r.addresses
-                        td #{r.amount.toFixed(8)}
+                        td #{ramount.toFixed(8)}
                     else
                       tr
                         td
                           a.loading(href='/address/#{r.addresses}') 
                             =r.addresses
-                        td #{r.amount.toFixed(8)} 
+                        td #{ramount.toFixed(8)} 
                   else
-                    - var amount = r.amount - tx.vin[0].amount
+                    - var amount = (r.amount - tx.vin[0].amount) / 100000000
                     tr.success
                         td 
                           =r.addresses

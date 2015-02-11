@@ -6,20 +6,20 @@ block content
     .col-md-12(style='text-align:center;')
       img(src='#{settings.logo}', style='width:80px;margin: 0px auto 15px auto;')
   .col-xs-12.col-md-10.col-md-offset-1.col-lg-8.col-lg-offset-2
-    .panel.panel-default.panel-iquidus
+    .panel.panel-default
       .panel-heading(style='padding-left:25px;padding-right:25px;')       
         .row           
           if block.previousblockhash != null
             a(href='/block/#{block.previousblockhash}')
-              span.glyphicon.glyphicon-chevron-left.block-last(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_previous}')  
+              span.glyphicon.glyphicon-chevron-left.iquidus.block-last(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_previous}')  
             strong #{settings.symbol} block: #{block.hash}
           else
             strong(style='margin-left:10px;') #{settings.symbol} block: #{block.hash}
           if block.nextblockhash != null 
             a(href='/block/#{block.nextblockhash}')
-              span.glyphicon.glyphicon-chevron-right.pull-right.block-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_next}')       
+              span.glyphicon.glyphicon-chevron-right.iquidus.pull-right.block-next(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_next}')       
           a(href='/api/getblock?hash=#{block.hash}')
-            span.glyphicon.glyphicon-info-sign.pull-right.glow-inverse
+            span.glyphicon.glyphicon-info-sign.iquidus.pull-right
       table.table.table-bordered.summary-table 
         thead
           tr
@@ -75,7 +75,7 @@ block content
       .alert.alert-info(role='alert', style='text-align:center;')   
         strong #{settings.locale.block_genesis}
     else
-      .panel.panel-default.panel-iquidus
+      .panel.panel-default
         .panel-heading
           strong #{settings.locale.ex_latest_transactions}
         table.table.table-bordered.table-striped.summary-table 
@@ -91,15 +91,15 @@ block content
                 td #{txn.txid}
                 td #{txn.vout.length}
                 if txn.vout.length > 0
-                  if txn.vout[0].addresses[0] != txn.vin[0].addresses
+                  if txn.vout[0].addresses != txn.vin[0].addresses
                     - var total = txn.total / 100000000
                     td #{total.toFixed(8)}
                   else
-                    - var total = txn.vout[0].amount - txn.vin[0].amount
+                    - var total = (txn.vout[0].amount - txn.vin[0].amount) / 100000000
                     td #{total.toFixed(8)}
                 else
                   td #{txn.total.toFixed(8)}
                 td.view_tx 
                   a(href='/tx/#{txn.txid}')
-                    span.glyphicon.glyphicon-eye-open.glow 
+                    span.glyphicon.glyphicon-eye-open 
     .footer-padding  
