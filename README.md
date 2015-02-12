@@ -5,7 +5,7 @@ An open source block explorer written in node.js.
 
 ### Links
 
-*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with Darkcoin; Market pages (bittrex,poloniex), Top 100 (received, balance)
+*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with Jumbucks; Market pages (bittrex), Top 100 (balance)
 
 ### Requires
 
@@ -97,6 +97,7 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 ### Donate
 
     BTC: 168hdKA3fkccPtkxnX8hBrsxNubvk4udJi
+    JBS: JZp9893FMmrm1681bDuJBU7c6w11kyEY7D
 
 ### Development
 
