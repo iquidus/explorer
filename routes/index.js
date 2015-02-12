@@ -312,7 +312,9 @@ router.post('/search', function(req, res) {
       db.get_tx(query, function(tx) {      
         if (tx) {
           db.get_stats(settings.coin, function(stats){
-            res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations, blockcount: blockcount});
+            lib.get_blockcount(function(blockcount) {
+              res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations, blockcount: blockcount});
+            });
           });
         } else {
           lib.get_block(query, function(block) {
