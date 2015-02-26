@@ -8,8 +8,10 @@ block content
     .col-md-12(style='text-align:center;')
       img(src='#{settings.logo}', style='width:80px;margin: 0px auto 15px auto;')
   .col-xs-12.col-md-10.col-md-offset-1
+    .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
+      | #{tx.txid}
     .panel.panel-default
-      .panel-heading
+      .panel-heading.hidden-xs
         strong #{settings.symbol} txid: #{tx.txid}
         a(href='/api/getrawtransaction?txid=#{tx.txid}&decrypt=1')
           span.glyphicon.glyphicon-info-sign.iquidus.pull-right
@@ -17,7 +19,7 @@ block content
         thead
           tr
             th #{settings.locale.confirmations}
-            th #{settings.locale.tx_block_hash}
+            th.hidden-xs #{settings.locale.tx_block_hash}
             th #{settings.locale.timestamp}
             th
         tbody
@@ -25,7 +27,7 @@ block content
           if confirms >= confirmations                
             tr.success
                 td #{confirms}
-                td 
+                td.hidden-xs 
                   =tx.blockhash
                 td #{time}
                 td.view_tx  
@@ -35,7 +37,7 @@ block content
             if confirms < (confirmations / 2)
               tr.danger
                 td #{confirms}
-                td 
+                td.hidden-xs  
                   =tx.blockhash
                 td #{time}
                 td.view_tx  
@@ -44,7 +46,7 @@ block content
             else
               tr.warning
                 td #{confirms}
-                td 
+                td.hidden-xs  
                   =tx.blockhash
                 td #{time}
                 td.view_tx  
@@ -59,13 +61,13 @@ block content
           .panel.panel-default
             .panel-heading
               strong #{settings.locale.tx_contributors}
-              span.glyphicon.glyphicon-arrow-right.pull-right
+              span.glyphicon.glyphicon-arrow-right.pull-right.hidden-xs
             table.table.table-bordered.table-striped.summary-table 
               thead
                 tr
                   th #{settings.locale.tx_address}
                   if tx.vin[0].addresses != 'coinbase' && tx.vin[0].addresses != tx.vout[0].addresses
-                    th #{settings.locale.mkt_amount} (#{settings.symbol})
+                    th.hidden-xs #{settings.locale.mkt_amount} (#{settings.symbol})
               tbody
                 each r in tx.vin
                   if r.addresses == 'coinbase' 
@@ -80,7 +82,9 @@ block content
                       td 
                         a.loading(href='/address/#{r.addresses}') 
                           =r.addresses
-                      td.danger #{ramount.toFixed(8)}
+                      td.danger.hidden-xs #{ramount.toFixed(8)}
+                    tr.hidden-lg.hidden-md
+                        td.danger #{ramount.toFixed(8)} #{settings.symbol}
         .col-md-6
           .panel.panel-default
             .panel-heading
@@ -89,7 +93,7 @@ block content
               thead
                 tr
                   th #{settings.locale.tx_address}
-                  th #{settings.locale.mkt_amount} (#{settings.symbol})
+                  th.hidden-xs #{settings.locale.mkt_amount} (#{settings.symbol})
               tbody
                 each r in tx.vout
                   if tx.vout.length > 0 
@@ -99,20 +103,25 @@ block content
                         td 
                           a.loading(href='/address/#{r.addresses}') 
                             =r.addresses 
-                        td.success  #{ramount.toFixed(8)} 
+                        td.success.hidden-xs  #{ramount.toFixed(8)}
+                      tr.hidden-lg.hidden-md
+                        td.success #{ramount.toFixed(8)} #{settings.symbol}
                     else
                       - var pos = (r.amount - tx.vin[0].amount) / 100000000
                       tr
                         td 
                           a.loading(href='/address/#{r.addresses}') 
                             =r.addresses 
-                        td.success  #{pos.toFixed(8)} 
+                        td.success.hidden-xs  #{pos.toFixed(8)}
+                      tr.hidden-lg.hidden-md
+                        td.success #{ramount.toFixed(8)} #{settings.symbol}
                   else
                     tr
                       td 
                         a.loading(href='/address/#{r.addresses}') 
                           =r.addresses 
-                      td.success  #{ramount.toFixed(8)} 
-
+                      td.success.hidden-xs  #{ramount.toFixed(8)}
+                    tr.hidden-lg.hidden-md
+                      td.success #{ramount.toFixed(8)} #{settings.symbol} 
     .footer-padding
 

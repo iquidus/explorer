@@ -12,9 +12,6 @@ block content
         autowidth: true,
         responsive: true
       });
-      $(window).resize(function () { 
-        $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
-      });
       $('.market-toggle').tooltip({
         animation: true,
         delay: { hide: 500 },   

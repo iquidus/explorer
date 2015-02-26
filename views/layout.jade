@@ -34,6 +34,9 @@ html
           responsive: true
         });
         $('.iquidus').css('color',$('.table').css('color'));
+        $(window).resize(function () { 
+          $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
+        });
       });
   body
     - function format_unixtime(unixtime) {
@@ -132,7 +135,7 @@ html
                     span.glyphicon.glyphicon-info-sign
                     span.menu-text #{settings.locale.menu_api}
               else
-                li
+                li.hidden-xs
                   a.navbar-link(href='/info')
                     span.glyphicon.glyphicon-info-sign
                     span.menu-text #{settings.locale.menu_api}
@@ -150,7 +153,7 @@ html
                   span.glyphicon.fa.fa-twitter
        
     block content
-    .navbar.navbar-default.navbar-fixed-bottom
+    .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
       .container(style="width:100%;position:relative;")
         ul.nav                    
           if stats.connections == 0   
