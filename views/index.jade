@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  - var time = format_unixtime(stats.timestamp)
+  - var time = format_unixtime(block.time)
   .row
     .col-md-12
       if error !== null        
@@ -18,7 +18,7 @@ block content
         strong #{settings.locale.ex_title} - #{settings.coin} 
       .panel-body
         form.form-inline(method='post', action='/search')
-          img.pull-left(src='#{settings.logo}', style='width:80px;margin-right:15px;')
+          img.pull-left.hidden-xs(src='#{settings.logo}', style='width:80px;margin-right:15px;')
           div
             p(style="margin-bottom:15px;")
               i
@@ -54,8 +54,9 @@ block content
             th.hidden-xs #{settings.locale.timestamp}
             th.hidden-xs #{settings.locale.ex_supply} (#{settings.symbol})
         tbody
+          - var size = block.size / 1024;
           tr
-            td #{stats.count}
+            td #{block.height}
             if (settings.index.difficulty == 'POW')
               td #{stats.difficulty.pow}
             else
@@ -65,8 +66,8 @@ block content
               td #{stats.hashrate}
             if settings.heavy == true
                 td #{block.vote} 
-            td.hidden-xs #{stats.size} 
-            td.hidden-xs #{txs.length}
+            td.hidden-xs #{size.toFixed(2)}
+            td.hidden-xs #{block.tx.length}
             td.hidden-xs #{time}
             td.hidden-xs #{stats.supply.toFixed(8)}
     .panel.panel-default
@@ -75,15 +76,17 @@ block content
       table.table.table-bordered.table-striped.summary-table 
         thead
           tr
-            th #{settings.locale.tx_hash}
-            th #{settings.locale.tx_recipients}
+            th #{settings.locale.ex_block}
+            th.hidden-xs #{settings.locale.tx_hash}
+            th.hidden-xs #{settings.locale.tx_recipients}
             th #{settings.locale.mkt_amount} (#{settings.symbol})
             th
         tbody
           each txn in txs
             tr
-              td #{txn.txid}
-              td #{txn.vout.length}
+              td #{txn.blockindex}
+              td.hidden-xs #{txn.txid}
+              td.hidden-xs #{txn.vout.length}
               if txn.vout.length > 0
                 if txn.vout[0].addresses != txn.vin[0].addresses
                   - var total = txn.total / 100000000

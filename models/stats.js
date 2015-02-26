@@ -7,12 +7,8 @@ var StatsSchema = new Schema({
   last: { type: Number, default: 1 },
   difficulty: { type: Object, default: {} },
   hashrate: { type: String, default: 'N/A' },
-  timestamp: { type: Number, default: 0 },
-  size: { type: Number, default: 0 },
   supply: { type: Number, default: 0 },
-//  transactions: { type: Array },
-//  tx_count: { type: Number, default: 0 },
-//  sent: { type: String, default: 'N/A' },
+  last_txs: { type: Array, default: [] },
   connections: { type: Number, default: 0 },
 });
 

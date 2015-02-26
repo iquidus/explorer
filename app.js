@@ -82,6 +82,13 @@ app.use('/ext/getdistribution', function(req,res){
     });
   });
 });
+
+app.use('/ext/getlasttxs', function(req,res){
+  db.get_last_txs(50, function(txs){
+    res.send(txs);
+  });
+});
+
 // locals
 app.set('title', settings.title);
 app.set('symbol', settings.symbol);

@@ -19,7 +19,6 @@ function prepare_poloniex_data(cb){
       return cb(poloniex);
     });
   } else {
-    // required so js can reference mintpal.chartdata
     var nullobj = {
       chartdata: [],
     }
@@ -119,29 +118,9 @@ function route_get_tx(res, txid) {
 function route_get_index(res, error) {
   db.get_stats(settings.coin, function(stats) {
     //console.log(stats.difficulty);
-    lib.get_blockhash(stats.count, function(hash) {
+    lib.get_blockhash(stats.last, function(hash) {
       lib.get_block(hash, function (block) {
-        db.get_txs(block, function(txs) {
-          if (txs.length > 0) {
-            if (stats.last < stats.count - 100) {
-              res.render('index', { active: 'home', stats: stats, block: block, txs: txs, error: error, warning: locale.initial_index_alert});
-            } else {
-              res.render('index', { active: 'home', stats: stats, block: block, txs: txs, error: error, warning: null});
-            }
-          } else {
-            db.create_txs(block, function(){
-              db.get_txs(block, function(ntxs) {
-                if (ntxs.length > 0) {
-                  db.get_stats(settings.coin, function(stats) {
-                    res.render('index', { active: 'home', stats: stats, block: block, txs: ntxs, error: error});
-                  });
-                } else {
-                  route_get_index(res, 'Block tx\'s not found');
-                }
-              });
-            }); 
-          }
-        });
+        res.render('index', { active: 'home', stats: stats, block: block, txs: stats.last_txs, error: error, warning: null});       
       });
     });
   });
