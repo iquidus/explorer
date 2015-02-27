@@ -1,3 +1,9 @@
+1.4.1 -> 1.5.0
+* New database/reindex
+* Add new settings to settings.json (see settings.json.template)
+  * theme
+  * last_txs
+
 1.4.0 -> 1.4.1
 * New database created with read/write access. See README.
 * Add new settings to settings.json (see settings.json.template)

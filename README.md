@@ -1,11 +1,13 @@
-Iquidus Explorer - 1.4.1
+Iquidus Explorer - 1.5.0
 ================
 
 An open source block explorer written in node.js.
 
-### Links
+### See it in action
 
-*  [Demo](http://explorer.iquidus.co.nz/) - Demo site running with Darkcoin; Market pages (bittrex,poloniex), Top 100 (received, balance)
+*  [Jumbucks Explorer](http://explorer.getjumbucks.com) - Version 1.5.0 running with Jumbucks;
+
+**note: If you would like your instance mentioned here contact me**
 
 ### Requires
 
@@ -97,13 +99,14 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 ### Donate
 
     BTC: 168hdKA3fkccPtkxnX8hBrsxNubvk4udJi
+    JBS: JZp9893FMmrm1681bDuJBU7c6w11kyEY7D
 
 ### Development
 
-Current version: 1.4.1   
-Next planned: 1.4.2
+Current version: 1.5.0
+Next planned: 1.5.1
 
-* proof of stake improvements
+* proof of stake improvements (round 2)
 
 ### Tests
 
@@ -112,6 +115,12 @@ Jasmine is used for unit/integration tests. The tests can be executed simply wit
     npm test
 
 ### Known Issues
+
+**scipt is already running.**
+
+If you receive this message when lauching the sync script either a) a sync is currently in progress, or b) a previous sync was killed or crashed before it completed. If you are certian a sync is not in progress remove the index.pid from the tmp folder in the explorer root directory.
+
+    rm tmp/index.pid
 
 **exceeding stack size**
 

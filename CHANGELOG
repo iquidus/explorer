@@ -1,3 +1,16 @@
+1.5.0
+* added theme setting to settings.json
+* added bootswatch themes
+* new extended api call (getlasttxs)
+* Index page now shows last x transactions instead of only last block
+* added last_txs settings to settings.json
+* mobile fixes
+* OP_RETURN/type=nulldata crash fix
+* PoS fixes
+* search tx confirmation fix
+* search tx blockcount fix
+* address page redesign
+
 1.4.1
 
 * Added user and password to database settings
