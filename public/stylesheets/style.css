@@ -1,7 +1,7 @@
 body {
   padding: 60px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-image: url('/images/background2.png');
+ /* background-image: url('/images/background2.png');*/
 }
 
 #index-search {
@@ -52,6 +52,10 @@ table {
 }
 .dataTables_info, .dataTables_length {
 	padding-left: 10px;
+}
+
+.dataTables_info {
+	display: hidden !important;
 }
 
 .dataTables_length {

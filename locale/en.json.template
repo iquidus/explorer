@@ -18,10 +18,10 @@
     "ex_search_message": "You may enter a block height, block hash, tx hash or address.",
     "ex_error": "Error!",
     "ex_search_error": "Search found no results for: ",
-    "ex_latest_transactions": "Block Transactions",
+    "ex_latest_transactions": "Lastest Transactions",
     "ex_summary": "Block Summary",
     "ex_supply": "Coin Supply",
-
+    "ex_block": "Block",
 
     // transaction view
     "tx_title": "Transaction Details",
@@ -51,11 +51,12 @@
     "total": "Total",
     "bits": "Bits",
     "nonce": "Nonce",
-    "new_coins": "BLOCK REWARD",
+    "new_coins": "New Coins",
     "proof_of_stake": "PoS",
+    "initial_index_alert": "Indexing is currently incomplete, functionality is limited until index is up-to-date.",
 
     //address menu
-    "a_menu_showing": "Showing",
+    "a_menu_showing": "Showing last",
     "a_menu_txs": "transactions",
     "a_menu_all": "All",
 
@@ -70,7 +71,7 @@
     "rl_top75": "Top 51-75",
     "rl_top100": "Top 76-100",
     "rl_hundredplus": "101+",
-    
+
     // api view
     "api_title": "API Documentation",
     "api_message": "The block explorer provides an API allowing users and/or applications to retrieve information from the network without the need for a local wallet.",
