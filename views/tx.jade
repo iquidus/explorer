@@ -2,8 +2,6 @@ extends layout
 
 block content
   - var time = format_unixtime(tx.timestamp)
-  if tx.vout.length > 0
-    - var amount = tx.vout[0].amount - tx.vin[0].amount
   .row(style='margin-top:5px;')
     .col-md-12(style='text-align:center;')
       img(src='#{settings.logo}', style='width:80px;margin: 0px auto 15px auto;')
@@ -66,25 +64,27 @@ block content
               thead
                 tr
                   th #{settings.locale.tx_address}
-                  if tx.vin[0].addresses != 'coinbase' && tx.vin[0].addresses != tx.vout[0].addresses
-                    th.hidden-xs #{settings.locale.mkt_amount} (#{settings.symbol})
+                  if (tx.vin.length > 0)
+                    if tx.vin[0].addresses != 'coinbase'
+                      th.hidden-xs #{settings.locale.mkt_amount} (#{settings.symbol})
               tbody
-                each r in tx.vin
-                  if r.addresses == 'coinbase' 
-                    tr.info(style='text-align:center')
-                      td #{settings.locale.new_coins}
-                  else if r.addresses == tx.vout[0].addresses && settings.heavy == false
-                    tr.info(style='text-align:center')
-                      td #{settings.locale.proof_of_stake}
-                  else
-                    - var ramount = r.amount / 100000000
-                    tr
-                      td 
-                        a.loading(href='/address/#{r.addresses}') 
-                          =r.addresses
-                      td.danger.hidden-xs #{ramount.toFixed(8)}
-                    tr.hidden-lg.hidden-md
-                        td.danger #{ramount.toFixed(8)} #{settings.symbol}
+                if tx.vin.length > 0
+                  each r in tx.vin
+                    if r.addresses == 'coinbase' 
+                      tr.info(style='text-align:center')
+                        td #{settings.locale.new_coins}
+                    else
+                      - var ramount = r.amount / 100000000
+                      tr
+                        td 
+                          a.loading(href='/address/#{r.addresses}') 
+                            =r.addresses
+                        td.danger.hidden-xs #{ramount.toFixed(8)}
+                      tr.hidden-lg.hidden-md
+                          td.danger #{ramount.toFixed(8)} #{settings.symbol}
+                else
+                  tr.info(style='text-align:center')
+                    td #{settings.locale.proof_of_stake}
         .col-md-6
           .panel.panel-default
             .panel-heading
@@ -97,24 +97,14 @@ block content
               tbody
                 each r in tx.vout
                   if tx.vout.length > 0 
-                    - var ramount = r.amount / 100000000
-                    if tx.vin[0].addresses != tx.vout[0].addresses
-                      tr
-                        td 
-                          a.loading(href='/address/#{r.addresses}') 
-                            =r.addresses 
-                        td.success.hidden-xs  #{ramount.toFixed(8)}
-                      tr.hidden-lg.hidden-md
-                        td.success #{ramount.toFixed(8)} #{settings.symbol}
-                    else
-                      - var pos = (r.amount - tx.vin[0].amount) / 100000000
-                      tr
-                        td 
-                          a.loading(href='/address/#{r.addresses}') 
-                            =r.addresses 
-                        td.success.hidden-xs  #{pos.toFixed(8)}
-                      tr.hidden-lg.hidden-md
-                        td.success #{ramount.toFixed(8)} #{settings.symbol}
+                    - var ramount = r.amount / 100000000  
+                    tr
+                      td 
+                        a.loading(href='/address/#{r.addresses}') 
+                          =r.addresses 
+                      td.success.hidden-xs  #{ramount.toFixed(8)}
+                    tr.hidden-lg.hidden-md
+                      td.success #{ramount.toFixed(8)} #{settings.symbol}
                   else
                     tr
                       td 

@@ -88,12 +88,8 @@ block content
               td.hidden-xs #{txn.txid}
               td.hidden-xs #{txn.vout.length}
               if txn.vout.length > 0
-                if txn.vout[0].addresses != txn.vin[0].addresses
-                  - var total = txn.total / 100000000
-                  td #{total.toFixed(8)}
-                else
-                  - var total = (txn.vout[0].amount - txn.vin[0].amount) / 100000000
-                  td #{total.toFixed(8)}
+                - var total = txn.total / 100000000
+                td #{total.toFixed(8)}
               else
                 td #{txn.total.toFixed(8)}
               td.view_tx 

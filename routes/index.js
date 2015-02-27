@@ -309,7 +309,7 @@ router.post('/search', function(req, res) {
   } else {
     db.get_address(query, function(address) {
       if (address) {
-        route_get_address(res, address.a_id, 5);
+        route_get_address(res, address.a_id, settings.txcount);
       } else {
         lib.get_blockhash(query, function(hash) {
           if (hash != 'There was an error. Check your console.') {

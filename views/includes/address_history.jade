@@ -12,11 +12,7 @@ tbody
       td.hidden-xs #{tx.txid}
       - var done = false
       each r in tx.vout 
-        if tx.vin[0].addresses == tx.vout[0].addresses
-          td.success
-            - var amount = (tx.vout[0].amount - tx.vin[0].amount) / 100000000
-            | + #{amount.toFixed(8)}
-        else if r.addresses == address.a_id
+        if r.addresses == address.a_id
           td.success
             - var amount = r.amount / 100000000
             | + #{amount.toFixed(8)}
