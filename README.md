@@ -116,9 +116,9 @@ Jasmine is used for unit/integration tests. The tests can be executed simply wit
 
 ### Known Issues
 
-**scipt is already running.**
+**script is already running.**
 
-If you receive this message when lauching the sync script either a) a sync is currently in progress, or b) a previous sync was killed or crashed before it completed. If you are certian a sync is not in progress remove the index.pid from the tmp folder in the explorer root directory.
+If you receive this message when launching the sync script either a) a sync is currently in progress, or b) a previous sync was killed before it completed. If you are certian a sync is not in progress remove the index.pid from the tmp folder in the explorer root directory.
 
     rm tmp/index.pid
 
