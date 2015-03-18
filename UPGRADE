@@ -1,3 +1,6 @@
+1.5.0 -> 1.5.1
+* Optional - Add new labels setting to settings.json (see settings.json.template)
+
 1.4.1 -> 1.5.0
 * New database/reindex
 * Add new settings to settings.json (see settings.json.template)
