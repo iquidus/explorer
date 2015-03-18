@@ -111,6 +111,22 @@ tr {
 	margin-bottom: 5px;
 }
 
+.label a:link {
+	color: #ffffff;
+}
+
+.label a:visited {
+	color: #ffffff;
+}
+
+.label a:hover {
+	color: #ffffff;
+}
+
+.label a:active {
+	color: #ffffff;
+}
+
 @media(max-width:767px){
 	body {
 		padding: 0px;

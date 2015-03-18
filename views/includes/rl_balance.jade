@@ -18,9 +18,9 @@
         tr
           td(style='text-align:center;') 
             =count
-          td
-            a.loading(href='/address/#{item.a_id}') 
-              =item.a_id
+          td 
+            a(href='/address/#{item.a_id}') #{item.a_id}
+            include ./rl_labels.jade
           td
             =itemFixed.toFixed(8)
           td(style='text-align:center;') 

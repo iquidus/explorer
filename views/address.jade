@@ -12,6 +12,19 @@ block content
     .panel.panel-default.panel-address-summary
       .panel-heading(style='position:relative;')        
         strong #{address.a_id}
+        if settings.labels[address.a_id]
+          if settings.labels[address.a_id].type  
+            label(class='label label-#{settings.labels[address.a_id].type} pull-right hidden-xs', style='margin-left:15px;')
+              =settings.labels[address.a_id].label
+              if settings.labels[address.a_id].url
+                a(href='#{settings.labels[address.a_id].url}', target='_blank')
+                  span.fa.fa-question-circle(style='margin-left:5px;')
+          else
+            label.label.label-default.pull-right.hidden-xs(style='margin-left:15px;') 
+              =settings.labels[address.a_id].label
+              if settings.labels[address.a_id].url
+                a(href='#{settings.labels[address.a_id].url}', target='_blank')
+                  span.fa.fa-question-circle(style='margin-left:5px;')
       table.table.table-bordered.table-striped.summary-table 
         thead
           tr
