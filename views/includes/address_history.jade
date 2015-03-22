@@ -9,7 +9,8 @@ tbody
     - var time = format_unixtime(tx.timestamp)
     tr
       td.hidden-xs #{time} 
-      td.hidden-xs #{tx.txid}
+      td.hidden-xs
+        a(href='/tx/#{tx.txid}') #{tx.txid}
       - var done = false
       each r in tx.vout 
         if r.addresses == address.a_id

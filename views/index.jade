@@ -85,7 +85,8 @@ block content
           each txn in txs
             tr
               td #{txn.blockindex}
-              td.hidden-xs #{txn.txid}
+              td.hidden-xs
+                a(href='/tx/#{txn.txid}') #{txn.txid}
               td.hidden-xs #{txn.vout.length}
               if txn.vout.length > 0
                 - var total = txn.total / 100000000
