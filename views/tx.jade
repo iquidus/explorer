@@ -26,7 +26,7 @@ block content
             tr.success
                 td #{confirms}
                 td.hidden-xs 
-                  =tx.blockhash
+                  a(href='/block/#{tx.blockhash}') #{tx.blockhash}
                 td #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
@@ -36,7 +36,7 @@ block content
               tr.danger
                 td #{confirms}
                 td.hidden-xs  
-                  =tx.blockhash
+                  a(href='/block/#{tx.blockhash}') #{tx.blockhash}
                 td #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
@@ -45,7 +45,7 @@ block content
               tr.warning
                 td #{confirms}
                 td.hidden-xs  
-                  =tx.blockhash
+                  a(href='/block/#{tx.blockhash}') #{tx.blockhash}
                 td #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
