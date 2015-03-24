@@ -70,6 +70,10 @@ table {
 	margin-top: 5px;
 }
 
+table a:not(.btn),.table a:not(.btn){
+	text-decoration:none
+}
+
 tr {
 	width: 100%;
 }
