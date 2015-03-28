@@ -154,3 +154,9 @@ tr {
 	top: 65px;
 	right: 15px;
 }
+
+.footer-logo {
+	height: 40px;
+	position: absolute;
+	bottom: 0px;
+}
