@@ -73,6 +73,16 @@ app.use('/ext/getaddress/:hash', function(req,res){
   });
 });
 
+app.use('/ext/getbalance/:hash', function(req,res){
+  db.get_address(req.param('hash'), function(address){
+    if (address) {
+      res.send((address.balance / 100000000).toString().replace(/(^-+)/mg, ''));
+    } else {
+      res.send({ error: 'address not found.', hash: req.param('hash')})
+    }
+  });
+});
+
 app.use('/ext/getdistribution', function(req,res){
   db.get_richlist(settings.coin, function(richlist){
     db.get_stats(settings.coin, function(stats){
