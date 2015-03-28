@@ -7,7 +7,7 @@ An open source block explorer written in node.js.
 
 *  [Jumbucks Explorer](http://explorer.getjumbucks.com) - Version 1.5.2 running with Jumbucks (PoS);
 *  [Phalanx Explorer](http://pxl.iquidus.co.nz) - Version 1.5.2 running with Phalanx (PoW)
-*  [Vanillacoin Explorer](https://blockchain.vanillacoin.net/) - running with Vanillacoin (PoW)
+*  [Vanillacoin Explorer](https://blockchain.vanillacoin.net/) - running with Vanillacoin 
 **note: If you would like your instance mentioned here contact me**
 
 ### Requires
