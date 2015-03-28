@@ -1,12 +1,13 @@
-Iquidus Explorer - 1.5.1
+Iquidus Explorer - 1.5.2
 ================
 
 An open source block explorer written in node.js.
 
 ### See it in action
 
-*  [Jumbucks Explorer](http://explorer.getjumbucks.com) - Version 1.5.1 running with Jumbucks;
-
+*  [Jumbucks Explorer](http://explorer.getjumbucks.com) - Version 1.5.2 running with Jumbucks (PoS);
+*  [Phalanx Explorer](http://pxl.iquidus.co.nz) - Version 1.5.2 running with Phalanx (PoW)
+*  [Vanillacoin Explorer](https://blockchain.vanillacoin.net/) - running with Vanillacoin (PoW)
 **note: If you would like your instance mentioned here contact me**
 
 ### Requires
@@ -103,7 +104,7 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Development
 
-Current version: 1.5.1
+Current version: 1.5.2
 Next planned: 1.6.0
 
 * proof of stake improvements (round 2)

@@ -1,3 +1,9 @@
+Note: All updates require the explorer to be restarted
+
+1.5.1 -> 1.5.2
+* nothing required, coinbase balance / wealth distribution will be fixed in next sync.
+  run sync.js index check to force this if required.
+
 1.5.0 -> 1.5.1
 * Optional - Add new labels setting to settings.json (see settings.json.template)
 
