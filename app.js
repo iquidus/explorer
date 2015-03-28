@@ -93,8 +93,8 @@ app.use('/ext/getdistribution', function(req,res){
   });
 });
 
-app.use('/ext/getlasttxs', function(req,res){
-  db.get_last_txs(25, function(txs){
+app.use('/ext/getlasttxs/:count/:min', function(req,res){
+  db.get_last_txs(req.param('count'), (req.param('min') * 100000000), function(txs){
     res.send(txs);
   });
 });
