@@ -1,109 +1,28 @@
 extends layout
 
-block content
-  script.
-    $(document).ready(function(){
-
-      var data = [
-        ['Top 1-25', !{dista.percent}],['Top 26-50', !{distb.percent}],['Top 51-75', !{distc.percent}],['Top 76-100', !{distd.percent}],['101+', !{diste.percent}]
-      ];
-      var plot1 = $.jqplot('chart2', [data],
-        {
-          seriesColors: [ "#d9534f", "#5cb85c", "#428bca", "#CCC", "#222"],
-          series: [{
-            // Make this a pie chart.
-            renderer: $.jqplot.PieRenderer,
-            rendererOptions: {
-              diameter: 160,
-              padding: 0,
-              sliceMargin: 4, 
-              // Put data labels on the pie slices.
-              // By default, labels show the percentage of the slice.
-              showDataLabels: false,
-
-            }
-          }],
-          grid: {borderWidth:0, shadow:false},
-          legend: {
-            show: false,
-
-            rendererOptions: {
-                numberRows: 1,
-                border: 'none'
-            },
-            location: 's'
-          }
-        }
-      );
-      var plot3 = $.jqplot('chart3', 
-        [[!{dista.percent}],[!{distb.percent}],[!{distc.percent}],[!{distd.percent}],[!{diste.percent}]
-      ], 
-        {
-          seriesColors: [ "#d9534f", "#5cb85c", "#428bca", "#CCC", "#222"],
-          // Tell the plot to stack the bars.
-          stackSeries: true,
-          //captureRightClick: true,
-          seriesDefaults: {
-            renderer:$.jqplot.BarRenderer,
-            rendererOptions: {
-                // Put a 30 pixel margin between bars.
-                barMargin: 30,
-                // Highlight bars when mouse button pressed.
-                // Disables default highlighting on mouse over.
-
-                //barDirection: 'horizontal'  
-
-            }
-          },
-          grid: {borderWidth:0, shadow:false, background: '#000000'},
-          axes: {
-            xaxis: {
-                renderer: $.jqplot.CategoryAxisRenderer,
-                showLabel: false
-            },
-            yaxis: {
-              ticks: [0,25,50,75,100],             
-              
-            }
-          },
-        }
-      );
-    });
-    $(window).resize(function () { 
-      plot1.replot( { resetAxes: false } );
-      plot3.replot( { resetAxes: false } );
-    });
+block content     
   .row(style='margin-top:5px;')
     .col-md-12(style='text-align:center;')
       img(src='#{settings.logo}', style='width:80px;margin: 0px auto 15px auto;')
   if show_dist == true
-    .row.hidden-xs
-      .col-md-2
-        center
-          div#chart3(style="width:210px;height:195px;")
-      .col-md-8
+    .row.hidden-xs 
+      .col-md-10.col-md-offset-1
+        .row
         .panel.panel-default
           .panel-heading
             h3.panel-title #{settings.locale.rl_wealth} (#{settings.symbol})
-          table.table.table-hover.table-bordered(cellspacing="0")
+          table.table.table-hover.table-bordered
             thead
               tr
                 th
                 th 
-                  div.pull-left(style='background-color:#d9534f;width:20px;height:20px;margin-right:6px;')
-                  span #{settings.locale.rl_top25}
+                  =settings.locale.rl_top25
                 th 
-                  div.pull-left(style='background-color:#5cb85c;width:20px;height:20px;margin-right:6px;')
-                  span #{settings.locale.rl_top50}
+                  =settings.locale.rl_top50
                 th 
-                  div.pull-left(style='background-color:#428bca;width:20px;height:20px;margin-right:6px;')
-                  span #{settings.locale.rl_top75}
+                  =settings.locale.rl_top75
                 th 
-                  div.pull-left(style='background-color:#CCC;width:20px;height:20px;margin-right:6px;')
-                  span #{settings.locale.rl_top100}
-                th 
-                  div.pull-left(style='background-color:#222;width:20px;height:20px;margin-right:6px;')
-                  span #{settings.locale.rl_hundredplus}
+                  =settings.locale.rl_top100
             tbody
               tr
                 th #{settings.symbol}
@@ -111,32 +30,23 @@ block content
                 td #{parseFloat(distb.total).toFixed(8)}
                 td #{parseFloat(distc.total).toFixed(8)}
                 td #{parseFloat(distd.total).toFixed(8)}
-                td #{parseFloat(diste.total).toFixed(8)}
               tr
                 th %
                 td #{parseFloat(dista.percent).toFixed(2)}
                 td #{parseFloat(distb.percent).toFixed(2)}
                 td #{parseFloat(distc.percent).toFixed(2)}
                 td #{parseFloat(distd.percent).toFixed(2)}
-                td #{parseFloat(diste.percent).toFixed(2)}
-        center
-          label.label.label-iquidus #{settings.locale.ex_supply}: #{stats.supply.toFixed(8)} (#{settings.symbol})
-      .col-md-2
-        center
-          div#chart2(style="width:200px;height:205px;margin:0px;")  
   .row
-    if show_received == true
-      if show_balance == true
-        .col-md-6.col-xs-12
-          include ./includes/rl_received.jade
-      else
-        .col-md-12
-          include ./includes/rl_received.jade
-    if show_balance == true
-      if show_received == true
-        .col-md-6.col-xs-12
+    .col-xs-12.col-md-10.col-md-offset-1
+      .tabpanel
+        ul.nav.nav-tabs(role='tablist')
+          li.active(role='presentation')
+            a(href='#balance', aria-controls='balance', role='tab', data-toggle='tab') Balance
+          li(role='presentation')
+            a(href='#received', aria-controls='received', role='tab', data-toggle='tab') Received
+      .tab-content
+        #balance.tabpanel.tab-pane.active 
           include ./includes/rl_balance.jade
-      else
-        .col-md-12
-          include ./includes/rl_balance.jade
+        #received.tabpanel.tab-pane
+          include ./includes/rl_received.jade
   .footer-padding
