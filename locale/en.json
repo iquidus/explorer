@@ -114,6 +114,10 @@
     "mkt_type": "Type",
     "mkt_time_stamp": "Time Stamp",
 
+    // Markets
+    "poloniex": "Poloniex",
+    "bittrex": "Bittrex",
+
     // Heavy rewards view
     "heavy_title": "Reward/voting information",
     "heavy_vote": "Vote",

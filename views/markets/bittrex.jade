@@ -5,7 +5,7 @@ block market_view
     .col-md-12  
       .panel.panel-default
         .panel-heading
-          strong Bittrex - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong #{settings.locale.bittrex} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='#')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
         table.table.table-bordered.summary-table 
