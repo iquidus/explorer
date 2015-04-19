@@ -83,7 +83,7 @@
   },
   
   // market settings
-  //supported markets: bittrex, poloniex
+  //supported markets: bittrex, poloniex, yobit
   "markets": {
     "coin": "DRK",
     "exchange": "BTC",
