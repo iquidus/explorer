@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block content
   script.
@@ -30,18 +30,11 @@ block content
       .container-fluid
         .collapse.navbar-collapse(id='navbar-collapse')
           ul.nav.navbar-nav
-            if settings.markets.bittrex == true
-              if market == 'bittrex'
+            each mkt in settings.markets.enabled
+              if market == mkt
                 li.active
-                  a.navbar-link.loading(href='/bittrex') Bittrex
+                  a.navbar-link.loading(href='/markets/#{mkt}') #{mkt}
               else
                 li
-                  a.navbar-link.loading(href='/bittrex') Bittrex
-            if settings.markets.poloniex == true
-              if market == 'poloniex'
-                li.active
-                  a.navbar-link.loading(href='/poloniex') Poloniex
-              else
-                li
-                  a.navbar-link.loading(href='/poloniex') Poloniex
+                  a.navbar-link.loading(href='/markets/#{mkt}') #{mkt}
     block market_view

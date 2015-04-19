@@ -6,43 +6,6 @@ var express = require('express')
   , lib = require('../lib/explorer')
   , qr = require('qr-image');
 
-function prepare_poloniex_data(cb){
-  if (settings.markets.poloniex == true) {
-    db.get_market('poloniex', function(data) {
-      var poloniex = {
-        buys: data.buys,
-        sells: data.sells,
-        chartdata: JSON.stringify(data.chartdata),
-        history: data.history,
-        summary: data.summary,
-      };
-      return cb(poloniex);
-    });
-  } else {
-    var nullobj = {
-      chartdata: [],
-    }
-    return cb(nullobj);
-  }  
-}
-
-function prepare_bittrex_data(cb){
-  if (settings.markets.bittrex == true) {
-    db.get_market('bittrex', function(data) {
-      var bittrex = {
-        history: data.history,
-        buys: data.buys,
-        sells: data.sells,
-        summary: data.summary,
-      };
-      console.log(bittrex);
-      return cb(bittrex);
-    });
-  } else {
-    return cb(null);
-  }
-}
-
 function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
     if (block != 'There was an error. Check your console.') {
@@ -168,41 +131,20 @@ router.get('/info', function(req, res) {
   });
 });
 
-router.get('/bittrex', function(req, res) {
-  if (settings.display.markets == true ) {  
-    db.get_stats(settings.coin, function (stats) {  
-      prepare_bittrex_data(function(bittrex_data) {
+router.get('/markets/:market', function(req, res) {
+  var market = req.param('market');
+  if (settings.markets.enabled.indexOf(market) != -1) {
+    db.get_stats(settings.coin, function (stats) { 
+      db.get_market(market, function(data) {
         var market_data = {
           coin: settings.markets.coin,
           exchange: settings.markets.exchange,
-          bittrex: bittrex_data,
+          data: data,
         };
-        res.render('bittrex', { 
+        res.render('./markets/' + market, { 
           active: 'markets', 
           marketdata: market_data, 
-          market: 'bittrex',
-          stats: stats
-        });
-      });
-    });
-  } else {
-    route_get_index(res, null);
-  }
-});
-
-router.get('/poloniex', function(req, res) {
-  if (settings.display.markets == true ) { 
-    db.get_stats(settings.coin, function (stats) {  
-      prepare_poloniex_data(function(poloniex_data) {
-        var market_data = {
-          coin: settings.markets.coin,
-          exchange: settings.markets.exchange,
-          poloniex: poloniex_data,
-        };
-        res.render('poloniex', { 
-          active: 'markets', 
-          marketdata: market_data, 
-          market: 'poloniex',
+          market: market,
           stats: stats
         });
       });

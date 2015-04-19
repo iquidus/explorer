@@ -99,24 +99,14 @@ html
             if settings.display.markets == true
               if active == 'markets'
                 li.active
-                  if settings.markets.default == 'bittrex'
-                    a.navbar-link.loading(href='/bittrex') 
-                      span.fa.fa-line-chart
-                      span.menu-text #{settings.locale.menu_markets}
-                  else
-                    a.navbar-link.loading(href='/poloniex') 
-                      span.fa.fa-line-chart
-                      span.menu-text #{settings.locale.menu_markets}
+                  a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
+                    span.fa.fa-line-chart
+                    span.menu-text #{settings.locale.menu_markets}
               else
                 li
-                  if settings.markets.default == 'bittrex'
-                    a.navbar-link.loading(href='/bittrex') 
-                      span.fa.fa-line-chart
-                      span.menu-text #{settings.locale.menu_markets}
-                  else
-                    a.navbar-link.loading(href='/poloniex') 
-                      span.fa.fa-line-chart
-                      span.menu-text #{settings.locale.menu_markets}
+                  a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
+                    span.fa.fa-line-chart
+                    span.menu-text #{settings.locale.menu_markets}
             if settings.display.richlist == true
               if active == 'richlist'
                 li.active

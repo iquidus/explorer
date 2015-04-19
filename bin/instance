@@ -25,25 +25,17 @@ db.connect(dbString, function() {
       });
     }
   });
-  
-  db.check_market('poloniex', function(exists) {
-    if(exists == false) {
-      console.log('no poloniex entry found, creating now..');
-      db.create_market(settings.markets.coin, settings.markets.exchange, 'poloniex', function(){
-
-      });
-    }
-  });  
-  
-  
-  db.check_market('bittrex', function(exists) {
-    if(exists == false) {
-      console.log('no bittrex entry found, creating now..');
-      db.create_market(settings.markets.coin, settings.markets.exchange, 'bittrex', function(){
-        //console.log('bittrex entry created successfully.');
-      });
-    }
-  });  
+  // check markets
+  var markets = settings.markets.enabled;
+  for (var i = 0; i < markets.length; i++) {
+    db.check_market(markets[i], function(market, exists) {
+      if(exists == false) {
+        console.log('no %s entry found, creating now..', market);
+          db.create_market(settings.markets.coin, settings.markets.exchange, market, function(){
+        });
+      }
+    });  
+  } 
   
   db.check_richlist(settings.coin, function(exists){
     if (exists == false) {
@@ -53,15 +45,16 @@ db.connect(dbString, function() {
       });
     }
   });  
+  if ( settings.heavy == true ) {
+    db.check_heavy(settings.coin, function(exists){
+      if (exists == false) {
+        console.log('no heavy entry found, creating now..');
+        db.create_heavy(settings.coin, function() {
 
-  db.check_heavy(settings.coin, function(exists){
-    if (exists == false) {
-      console.log('no heavy entry found, creating now..');
-      db.create_heavy(settings.coin, function() {
-
-      });
-    }
-  }); 
+        });
+      }
+    }); 
+  }
 
   var server = app.listen(app.get('port'), function() {
     debug('Express server listening on port ' + server.address().port);

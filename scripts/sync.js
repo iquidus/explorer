@@ -100,52 +100,6 @@ function exit() {
   });
 }
 
-function update_poloniex(cb) {
-  if (settings.markets.poloniex == true) {
-    db.check_market('poloniex', function(exists) {
-      if (exists) {
-        db.update_markets_db('poloniex', function(success) {
-          if (success) {
-            console.log('%s market data updated successfully.', 'poloniex');
-            return cb();
-          } else {
-            console.log('error: updating market data: %s.', 'bittrex');
-            return cb();
-          }
-        });
-      } else {
-        console.log('error: entry for %s does not exists in markets db.', 'poloniex');
-        return cb();
-      }
-    });
-  } else {
-    return cb();
-  }
-}
-
-function update_bittrex(cb) {
-  if (settings.markets.bittrex == true) {
-    db.check_market('bittrex', function(exists) {
-      if (exists) {
-        db.update_markets_db('bittrex', function(success) {
-          if (success) {
-            console.log('%s market data updated successfully.', 'bittrex');
-            return cb();
-          } else {
-            console.log('error: updating market data: %s.', 'bittrex');
-            return cb();
-          }
-        });
-      } else {
-        console.log('error: entry for %s does not exists in markets db.', 'bittrex');
-        return cb();
-      }
-    });
-  } else {
-    return cb();
-  }
-}
-
 var dbString = 'mongodb://' + settings.dbsettings.user;
 dbString = dbString + ':' + settings.dbsettings.password;
 dbString = dbString + '@' + settings.dbsettings.address;
@@ -226,11 +180,37 @@ is_locked(function (exists) {
             }
           });
         } else {
-          update_poloniex(function(){
-            update_bittrex(function(){
-              exit();
+          //update markets
+          var markets = settings.markets.enabled;
+          var complete = 0;
+          for (var x = 0; x < markets.length; x++) {
+            var market = markets[x];
+            db.check_market(market, function(mkt, exists) {
+              if (exists) {
+                db.update_markets_db(mkt, function(success) {
+                  if (success) {
+                    console.log('%s market data updated successfully.', mkt);
+                    complete++;
+                    if (complete == markets.length) {
+                      exit();
+                    }
+                  } else {
+                    console.log('error: updating market data: %s.', mkt);
+                    complete++;
+                    if (complete == markets.length) {
+                      exit();
+                    }
+                  }
+                });
+              } else {
+                console.log('error: entry for %s does not exists in markets db.', mkt);
+                complete++;
+                if (complete == markets.length) {
+                  exit();
+                }
+              }
             });
-          }); 
+          }
         }
       });
     });

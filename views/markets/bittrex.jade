@@ -1,4 +1,4 @@
-extends markets
+extends menu
 
 block market_view
   .row
@@ -21,14 +21,14 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.bittrex.summary.High.toFixed(8)}
-              td #{marketdata.bittrex.summary.Low.toFixed(8)}
-              td #{marketdata.bittrex.summary.Volume.toFixed(8)}
-              td.hidden-xs #{marketdata.bittrex.summary.Bid.toFixed(8)}
-              td.hidden-xs #{marketdata.bittrex.summary.Ask.toFixed(8)}
-              td.hidden-xs #{marketdata.bittrex.summary.PrevDay.toFixed(8)}
-              td.hidden-xs #{marketdata.bittrex.summary.Last.toFixed(8)}
-              - var bittrex_change = (100 - ((parseFloat(marketdata.bittrex.summary.PrevDay)/parseFloat(marketdata.bittrex.summary.Last))*100)).toFixed(2);
+              td #{marketdata.data.summary.High.toFixed(8)}
+              td #{marketdata.data.summary.Low.toFixed(8)}
+              td #{marketdata.data.summary.Volume.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.Bid.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.Ask.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.PrevDay.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.Last.toFixed(8)}
+              - var bittrex_change = (100 - ((parseFloat(marketdata.data.summary.PrevDay)/parseFloat(marketdata.data.summary.Last))*100)).toFixed(2);
               if bittrex_change >= 0
                 td.success +#{bittrex_change} %
               else
@@ -45,7 +45,7 @@ block market_view
               th #{settings.locale.mkt_amount} (#{marketdata.coin})
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
-            each sell in marketdata.bittrex.sells
+            each sell in marketdata.data.sells
               tr
                 td
                   =sell.price.toFixed(8)
@@ -64,7 +64,7 @@ block market_view
               th #{settings.locale.mkt_amount} (#{marketdata.coin})
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
-            each buy in marketdata.bittrex.buys
+            each buy in marketdata.data.buys
               tr
                 td
                   =buy.price.toFixed(8)
@@ -86,7 +86,7 @@ block market_view
               th #{settings.locale.mkt_total} (#{marketdata.exchange})
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
-            each order in marketdata.bittrex.history
+            each order in marketdata.data.history
               if order.OrderType == 'BUY'
                 tr.success
                   td.hidden-xs

@@ -1,10 +1,10 @@
-extends markets
+extends menu
 
 block market_view
   script.
     $(document).ready(function(){
       $('#summary-panel').hide();
-      var ohlc = !{marketdata.poloniex.chartdata}
+      var ohlc = !{marketdata.data.chartdata}
       var plot2 = $.jqplot('chart',[ohlc],{
         seriesDefaults:{yaxis:'y2axis'},
         axes: {
@@ -66,16 +66,16 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.poloniex.summary['high24hr']}
-              td #{marketdata.poloniex.summary['low24hr']}
-              td #{marketdata.poloniex.summary['baseVolume']}
-              td.hidden-xs #{marketdata.poloniex.summary.highestBid}
-              td.hidden-xs #{marketdata.poloniex.summary.lowestAsk}
-              td.hidden-xs #{marketdata.poloniex.summary.last}
-              if marketdata.poloniex.summary.percentChange.substring(0, 1) == '-'
-                td.danger #{marketdata.poloniex.summary.percentChange} %
+              td #{marketdata.data.summary['high24hr']}
+              td #{marketdata.data.summary['low24hr']}
+              td #{marketdata.data.summary['baseVolume']}
+              td.hidden-xs #{marketdata.data.summary.highestBid}
+              td.hidden-xs #{marketdata.data.summary.lowestAsk}
+              td.hidden-xs #{marketdata.data.summary.last}
+              if marketdata.data.summary.percentChange.substring(0, 1) == '-'
+                td.danger #{marketdata.data.summary.percentChange} %
               else
-                td.success #{marketdata.poloniex.summary.percentChange} %
+                td.success #{marketdata.data.summary.percentChange} %
     .hidden-md.hidden-lg.col-xs-12
       .panel.panel-default
         .panel-heading
@@ -89,13 +89,13 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.poloniex.summary['high24hr']}
-              td #{marketdata.poloniex.summary['low24hr']}
-              td #{marketdata.poloniex.summary['baseVolume']}
-              if marketdata.poloniex.summary.percentChange.substring(0, 1) == '-'
-                td.danger #{marketdata.poloniex.summary.percentChange} %
+              td #{marketdata.data.summary['high24hr']}
+              td #{marketdata.data.summary['low24hr']}
+              td #{marketdata.data.summary['baseVolume']}
+              if marketdata.data.summary.percentChange.substring(0, 1) == '-'
+                td.danger #{marketdata.data.summary.percentChange} %
               else
-                td.success #{marketdata.poloniex.summary.percentChange} %
+                td.success #{marketdata.data.summary.percentChange} %
   .row
     .col-md-6
       .panel.panel-default
@@ -108,7 +108,7 @@ block market_view
               th #{settings.locale.mkt_amount} (#{marketdata.coin})
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
-            each sell in marketdata.poloniex.sells
+            each sell in marketdata.data.sells
               tr
                 - var total = parseFloat(sell[0]) * parseFloat(sell[1]);
                 - total = total.toFixed(8);
@@ -129,7 +129,7 @@ block market_view
               th #{settings.locale.mkt_amount} (#{marketdata.coin})
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
-            each buy in marketdata.poloniex.buys
+            each buy in marketdata.data.buys
               tr
                 - var total = parseFloat(buy[0]) * parseFloat(buy[1]);
                 - total = total.toFixed(8);
@@ -152,7 +152,7 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
               th.hidden-xs Time Stamp
           tbody
-            each trade in marketdata.poloniex.history
+            each trade in marketdata.data.history
               if trade.type == 'buy'
                 tr.success
                   td.hidden-xs BUY

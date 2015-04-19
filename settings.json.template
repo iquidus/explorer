@@ -83,11 +83,11 @@
   },
   
   // market settings
+  //supported markets: bittrex, poloniex
   "markets": {
     "coin": "DRK",
     "exchange": "BTC",
-    "poloniex": true,
-    "bittrex": true,
+    "enabled": ["bittrex", "poloniex"],
     "default": "bittrex"
   },
 
