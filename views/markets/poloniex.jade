@@ -100,27 +100,6 @@ block market_view
     .col-md-6
       .panel.panel-default
         .panel-heading
-          h3.panel-title #{settings.locale.mkt_sell_orders}
-        table.table.table-striped.table-bordered.responsive.order-table
-          thead
-            tr
-              th #{settings.locale.mkt_price} (#{marketdata.exchange})
-              th #{settings.locale.mkt_amount} (#{marketdata.coin})
-              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
-          tbody
-            each sell in marketdata.data.sells
-              tr
-                - var total = parseFloat(sell[0]) * parseFloat(sell[1]);
-                - total = total.toFixed(8);
-                td
-                  =sell[0]
-                td
-                  =sell[1].toFixed(8)
-                td.hidden-xs
-                  =total
-    .col-md-6
-      .panel.panel-default
-        .panel-heading
           h3.panel-title #{settings.locale.mkt_buy_orders}
         table.table.table-striped.table-bordered.responsive.order-table
           thead
@@ -137,6 +116,27 @@ block market_view
                   =buy[0]
                 td
                   =buy[1].toFixed(8)
+                td.hidden-xs
+                  =total
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_sell_orders}
+        table.table.table-striped.table-bordered.responsive.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                - var total = parseFloat(sell[0]) * parseFloat(sell[1]);
+                - total = total.toFixed(8);
+                td
+                  =sell[0]
+                td
+                  =sell[1].toFixed(8)
                 td.hidden-xs
                   =total
     .col-md-12

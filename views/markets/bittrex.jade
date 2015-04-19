@@ -34,26 +34,7 @@ block market_view
               else
                 td.danger #{bittrex_change} %
   .row
-    .col-md-6
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title #{settings.locale.mkt_sell_orders}
-        table.table.table-striped.table-bordered.order-table
-          thead
-            tr
-              th #{settings.locale.mkt_price} (#{marketdata.exchange})
-              th #{settings.locale.mkt_amount} (#{marketdata.coin})
-              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
-          tbody
-            each sell in marketdata.data.sells
-              tr
-                td
-                  =sell.price.toFixed(8)
-                td
-                  =sell.amount.toFixed(8)
-                td.hidden-xs
-                  =sell.total
-    .col-md-6
+    .col-md-6.col-xs-12
       .panel.panel-default
         .panel-heading
           h3.panel-title #{settings.locale.mkt_buy_orders}
@@ -72,6 +53,25 @@ block market_view
                   =buy.amount.toFixed(8)
                 td.hidden-xs
                   =buy.total
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_sell_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                td
+                  =sell.price.toFixed(8)
+                td
+                  =sell.amount.toFixed(8)
+                td.hidden-xs
+                  =sell.total
   .row   
     .col-md-12
       .panel.panel-default
