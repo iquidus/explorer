@@ -132,34 +132,32 @@ html
           ul.hidden-xs.nav.navbar-nav.pull-right
             if settings.display.search == true
               if active != 'home'
-                li.hidden-xs
+                li.hidden-xs.hidden-sm
                   form.navbar-form(role='search', method='post', action='/search')
                     .form-group.nav-search
                       input.form-control(type='text', name='search')
                     button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
-            if settings.display.twitter
-              li
-                a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')  
-                  span.glyphicon.fa.fa-twitter
-       
     block content
     .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
-      .container(style="width:100%;position:relative;")
-        ul.nav                    
-          if stats.connections == 0   
-            label.label.label-danger.connections
-              span.glyphicon.fa.fa-plug(style='margin-right:5px;')
-              | #{stats.connections} connections
-          else
-            label.label.label-success.connections
-              span.glyphicon.glyphicon-ok(style='margin-right:5px;')  
-              | #{stats.connections} connections 
-          
-          a(href='https://github.com/iquidus/explorer', target='_blank')
-            img.footer-logo(src='/images/logo.png')
+      .col-md-4
+        if settings.display.twitter
+          ul.nav.navbar-nav
+            li.pull-left
+              a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')  
+                span.glyphicon.fa.fa-twitter
+      .col-md-4
+        ul.nav
           li.text-center(style='margin-left:80px;margin-right:80px;')
             p(style='margin-top:15px;') 
               a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer 
+      if stats.connections == 0   
+        label.label.label-danger.connections
+          span.glyphicon.fa.fa-plug(style='margin-right:5px;')
+          | #{stats.connections} connections
+      else
+        label.label.label-success.connections
+          span.glyphicon.glyphicon-ok(style='margin-right:5px;')  
+          | #{stats.connections} connections
 
 
               
