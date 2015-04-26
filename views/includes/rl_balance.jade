@@ -7,8 +7,8 @@
         th(style='text-align:center;') 
           span.fa.fa-flag-checkered
         th #{settings.locale.tx_address}
-        th #{settings.locale.rl_balance} (#{settings.symbol})
-        th(style='text-align:center;') %
+        th.hidden-xs #{settings.locale.rl_balance} (#{settings.symbol})
+        th.hidden-xs(style='text-align:center;') %
     tbody
       - var count = 0
       each item in balance
@@ -21,7 +21,7 @@
           td 
             a(href='/address/#{item.a_id}') #{item.a_id}
             include ./rl_labels.jade
-          td
+          td.hidden-xs
             =itemFixed.toFixed(8)
-          td(style='text-align:center;') 
+          td.hidden-xs(style='text-align:center;') 
             =percentage.toFixed(2)
