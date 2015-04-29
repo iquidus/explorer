@@ -16,14 +16,22 @@ html
     script(src='/vendor/jqplot/plugins/jqplot.pieRenderer.min.js')
     script(src='/vendor/jqplot/plugins/jqplot.barRenderer.min.js')
     script(src='/vendor/jqplot/plugins/jqplot.categoryAxisRenderer.min.js')
-      
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js')
     script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')  
     script(src='//cdn.datatables.net/responsive/1.0.1/js/dataTables.responsive.js')
     script(src='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js')
     script(src='/javascripts/chart.js')
     script.
-      $(document).ready(function(){   
-        
+      $(document).ready(function(){
+        function update_stats(){   
+          $.ajax({url: '/ext/summary', success: function(json){
+            $("#supply").text(json.data[0].supply);
+            $("#difficulty").text(json.data[0].difficulty);
+            $("#hashrate").text(json.data[0].hashrate.toFixed(4));
+            $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
+            $("#lblConnections").text(json.data[0].connections + ' connections');
+          }});
+        }
         $('.block-last-next').tooltip({
           animation: true,
           delay: { hide: 500 },   
@@ -37,6 +45,10 @@ html
         $(window).resize(function () { 
           $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
         });
+        setInterval( function() {
+          update_stats();
+        }, 60000);
+        update_stats();
       });
   body
     - function format_unixtime(unixtime) {
@@ -129,14 +141,42 @@ html
                   a.navbar-link(href='/info')
                     span.glyphicon.glyphicon-info-sign
                     span.menu-text #{settings.locale.menu_api}
-          ul.hidden-xs.nav.navbar-nav.pull-right
-            if settings.display.search == true
-              if active != 'home'
-                li.hidden-xs.hidden-sm
-                  form.navbar-form(role='search', method='post', action='/search')
-                    .form-group.nav-search
-                      input.form-control(type='text', name='search')
-                    button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
+    .col-md-12
+      .row.text-center
+        .col-md-2.col-md-offset-1
+          .panel.panel-default
+            .panel-heading
+              if (settings.nethash == 'netmhashps')
+                strong #{settings.locale.network} (MH/s)
+              else
+                strong #{settings.locale.network} (GH/s)
+            .panel-body
+              label#hashrate -
+        .col-md-2
+          .panel.panel-default
+            .panel-heading
+              strong #{settings.locale.difficulty}
+            .panel-body
+              label#difficulty -
+        .col-md-2
+          img(src='#{settings.logo}', style='margin-top:-15px;')
+        .col-md-2
+          .panel.panel-default
+            .panel-heading
+              strong #{settings.locale.ex_supply} (#{settings.symbol})
+            .panel-body
+              label#supply -
+        .col-md-2
+          .panel.panel-default
+            .panel-heading
+              strong #{settings.markets.exchange} Price
+            .panel-body
+              label#lastPrice -
+      .row.text-center(style='margin-top:10px;margin-bottom:20px;')
+        form.form-inline(method='post', action='/search')      
+          #index-search.form-group
+            input.form-control(type='text', name='search', placeholder='#{settings.locale.ex_search_message}', style='min-width:80%;margin-right:5px;')
+            button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
     block content
     .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
       .col-md-4
@@ -150,14 +190,7 @@ html
           li.text-center(style='margin-left:80px;margin-right:80px;')
             p(style='margin-top:15px;') 
               a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer 
-      if stats.connections == 0   
-        label.label.label-danger.connections
-          span.glyphicon.fa.fa-plug(style='margin-right:5px;')
-          | #{stats.connections} connections
-      else
-        label.label.label-success.connections
-          span.glyphicon.glyphicon-ok(style='margin-right:5px;')  
-          | #{stats.connections} connections
+      label#lblConnections.label.label-default.connections -
 
 
               

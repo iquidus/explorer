@@ -4,9 +4,6 @@ block content
   - var balance = (address.received - address.sent) / 100000000;
   - var sent = address.sent /100000000
   - var received = address.received / 100000000
-  .row(style='margin-top:5px;')
-    .col-md-12(style='text-align:center;')
-      img(src='#{settings.logo}', style='width:80px;margin: 0px auto 15px auto;')
     img.qrcode.pull-right.hidden-xs(src='/qr/#{address.a_id}')
   .col-xs-12.col-md-10.col-md-offset-1
     .panel.panel-default.panel-address-summary

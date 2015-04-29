@@ -1,7 +1,68 @@
 extends layout
 
 block content
-  - var time = format_unixtime(block.time)
+  script.
+    $(document).ready(function(){
+      var stable = $('#block-table').dataTable( {  
+        autoWidth: true,      
+        searching: false,
+        ordering: false,
+        //responsive: true,
+        lengthChange: false,
+        //processing: true,
+        paging: false,
+        info: false,
+        ajax: {
+          url: '/ext/summary',
+          dataSrc: function ( json ) {
+          console.log(json.data);
+            json.data[0]['height'] = "<a href='/block/" + json.data[0]['hash'] + "'>" + json.data[0]['height'] + "</a>";
+            return json.data;
+          }
+        },
+        columns: [
+          //{ data: 'height', width: '8%' },
+          { data: 'difficulty', width: '10%' },
+          //{ data: 'size', width:'10%' },
+          //{ data: 'txs', width: '10%' },
+          { data: 'supply', width: '15%' },
+          //{ data: 'time', width: '20%' },
+        ]
+      });
+      var rtable = $('#recent-table').dataTable( {  
+        autoWidth: true,      
+        searching: false,
+        ordering: false,
+        //responsive: true,
+        lengthChange: true,
+        //processing: true,
+        ajax: {
+          url: '/ext/getlasttxs/100/0.00000001',
+          dataSrc: function ( json ) {
+            for ( var i=0;i<json.data.length; i++ ) {
+              json.data[i]['timestamp'] = moment(json.data[i]['timestamp'] * 1000).format('Do MMMM YYYY - HH:mm:ss');
+              json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'>" + json.data[i]['txid'] + "</a>";
+              json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'>" + json.data[i]['blockindex'] + "</a>";
+              var amount = json.data[i]['total'] / 100000000;
+              json.data[i]['total'] = amount;
+              json.data[i]['recipients'] = json.data[i]['vout'].length;
+            }
+            return json.data;
+          }
+        },
+        columns: [
+          { data: 'blockindex', width: '8%' },
+          { data: 'txid', width: '40%' },
+          { data: 'recipients', width:'5%' },
+          { data: 'total', width: '15%' },
+          { data: 'timestamp', width: '25%' },
+        ]
+      });
+      setInterval( function () {
+        rtable.api().ajax.reload(null, false);
+        stable.api().ajax.reload(null, false);
+      }, 60000 );
+    });
   .row
     .col-md-12
       if error !== null        
@@ -12,90 +73,20 @@ block content
         .alert.alert-warning.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×
           strong #{settings.locale.ex_warning} #{warning}
+  
   .col-md-12
     .panel.panel-default
       .panel-heading
-        strong #{settings.locale.ex_title} - #{settings.coin} 
-      .panel-body
-        form.form-inline(method='post', action='/search')
-          img.pull-left.hidden-xs(src='#{settings.logo}', style='width:80px;margin-right:15px;')
-          div
-            p(style="margin-bottom:15px;")
-              i
-                | #{settings.locale.ex_search_message}
-            .input-group(id='index-search')
-              input.form-control(type='text', name='search')
-              span.input-group-btn
-                button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
-        .hidden-md.hidden-lg.col-xs-12
-    .panel.panel-default
-      .panel-heading
-        strong #{settings.locale.ex_summary}
-        a(href='/api/getblock?hash=#{block.hash}')
-          span.glyphicon.glyphicon-info-sign.iquidus.pull-right
-      table.table.table-bordered.summary-table 
-        thead
-          tr
-            th #{settings.locale.height}
-            if (settings.index.difficulty == 'POW')
-              th #{settings.locale.difficulty}
-            else
-              th #{settings.locale.difficulty} (PoW)
-              th #{settings.locale.difficulty} (PoS)
-            if settings.index.show_hashrate == true 
-              if settings.nethash == 'netmhashps'
-                th #{settings.locale.network} (mh/s)
-              else
-                th #{settings.locale.network} (gh/s)
-            if settings.heavy == true
-              th #{settings.locale.heavy_vote}
-            th.hidden-xs #{settings.locale.size} (kB)
-            th.hidden-xs #{settings.locale.transactions}
-            th.hidden-xs #{settings.locale.timestamp}
-            th.hidden-xs #{settings.locale.ex_supply} (#{settings.symbol})
-        tbody
-          - var size = block.size / 1024;
-          tr
-            td #{block.height}
-            if (settings.index.difficulty == 'POW')
-              td #{stats.difficulty.pow}
-            else
-              td #{stats.difficulty.pow} 
-              td #{stats.difficulty.pos}
-            if settings.index.show_hashrate == true  
-              td #{stats.hashrate}
-            if settings.heavy == true
-                td #{block.vote} 
-            td.hidden-xs #{size.toFixed(2)}
-            td.hidden-xs #{block.tx.length}
-            td.hidden-xs #{time}
-            td.hidden-xs #{stats.supply.toFixed(8)}
-    .panel.panel-default
-      .panel-heading
         strong #{settings.locale.ex_latest_transactions}
-      table.table.table-bordered.table-striped.summary-table 
+      table#recent-table.table.table-bordered.table-striped
         thead
           tr
-            th #{settings.locale.ex_block}
-            th.hidden-xs #{settings.locale.tx_hash}
-            th.hidden-xs #{settings.locale.tx_recipients}
-            th #{settings.locale.mkt_amount} (#{settings.symbol})
-            th
-        tbody
-          each txn in txs
-            tr
-              td #{txn.blockindex}
-              td.hidden-xs
-                a(href='/tx/#{txn.txid}') #{txn.txid}
-              td.hidden-xs #{txn.vout.length}
-              if txn.vout.length > 0
-                - var total = txn.total / 100000000
-                td #{total.toFixed(8)}
-              else
-                td #{txn.total.toFixed(8)}
-              td.view_tx 
-                a(href='/tx/#{txn.txid}')
-                  span.glyphicon.glyphicon-eye-open
+            th.text-center #{settings.locale.ex_block}
+            th.hidden-xs.text-center #{settings.locale.tx_hash}
+            th.hidden-xs.text-center #{settings.locale.tx_recipients}
+            th.text-center #{settings.locale.mkt_amount} (#{settings.symbol})
+            th.text-center #{settings.locale.timestamp}
+        tbody.text-center
     .footer-padding
       
               

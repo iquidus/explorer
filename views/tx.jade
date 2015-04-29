@@ -2,9 +2,6 @@ extends layout
 
 block content
   - var time = format_unixtime(tx.timestamp)
-  .row(style='margin-top:5px;')
-    .col-md-12(style='text-align:center;')
-      img(src='#{settings.logo}', style='width:80px;margin: 0px auto 15px auto;')
   .col-xs-12.col-md-10.col-md-offset-1
     .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
       | #{tx.txid}
