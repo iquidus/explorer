@@ -91,7 +91,7 @@ block market_view
                     - var total = order.amount * order.price;
                     =total.toFixed(8)
                   td.hidden-xs
-                    =order.timestamp
+                    =format_unixtime(order.timestamp)       
               else
                 tr.danger 
                   td.hidden-xs
@@ -104,5 +104,5 @@ block market_view
                     - var total = order.amount * order.price;
                     =total.toFixed(8)
                   td.hidden-xs
-                    =order.timestamp
+                    =format_unixtime(order.timestamp)
       .footer-padding
