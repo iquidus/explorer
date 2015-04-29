@@ -10,24 +10,16 @@ function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
     if (block != 'There was an error. Check your console.') {
       if (blockhash == settings.genesis_block) {
-        db.get_stats(settings.coin, function(stats) {
-          res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: 'GENESIS'});
-        });
+        res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: 'GENESIS'});
       } else {
-        //console.log(block);
         db.get_txs(block, function(txs) {
-          if (txs.length > 0) {
-            //console.log(txs);
-            db.get_stats(settings.coin, function(stats) {
-              res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: txs});
-            });
+          if (txs.length > 0) {          
+            res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: txs});
           } else {
             db.create_txs(block, function(){
               db.get_txs(block, function(ntxs) {
                 if (ntxs.length > 0) {
-                  db.get_stats(settings.coin, function(stats) {
-                    res.render('block', { active: 'block', block: block, stats: stats, confirmations: settings.confirmations, txs: ntxs});
-                  });
+                  res.render('block', { active: 'block', block: block, confirmations: settings.confirmations, txs: ntxs});
                 } else {
                   route_get_index(res, 'Block not found: ' + blockhash);
                 }
@@ -49,10 +41,8 @@ function route_get_tx(res, txid) {
   } else {
     db.get_tx(txid, function(tx) {
       if (tx) {
-        db.get_stats(settings.coin, function(stats){
-          lib.get_blockcount(function(blockcount) {
-            res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations, blockcount: blockcount});
-          });
+        lib.get_blockcount(function(blockcount) {
+          res.render('tx', { active: 'tx', tx: tx, confirmations: settings.confirmations, blockcount: blockcount});
         });
       } 
       else {
@@ -63,9 +53,7 @@ function route_get_tx(res, txid) {
                 route_get_index(res, null);
               } else {
                 db.get_tx(txid, function(newtx) {
-                  db.get_stats(settings.coin, function(stats){
-                    res.render('tx', { active: 'tx', tx: newtx, stats: stats, confirmations: settings.confirmations});
-                  });
+                  res.render('tx', { active: 'tx', tx: newtx, confirmations: settings.confirmations});
                 });
               }
             });
@@ -79,44 +67,35 @@ function route_get_tx(res, txid) {
 }
 
 function route_get_index(res, error) {
-  db.get_stats(settings.coin, function(stats) {
-    //console.log(stats.difficulty);
-    lib.get_blockhash(stats.last, function(hash) {
-      lib.get_block(hash, function (block) {
-        res.render('index', { active: 'home', stats: stats, block: block, txs: stats.last_txs, error: error, warning: null});       
-      });
-    });
-  });
+  res.render('index', { active: 'home', error: error, warning: null});        
 }
 
 function route_get_address(res, hash, count) {
-  db.get_stats(settings.coin, function(stats) {
-    db.get_address(hash, function(address) {
-      if (address) {
-        var txs = [];
-        var hashes = address.txs.reverse();
-        if (address.txs.length < count) {
-          count = address.txs.length;
-        }
-        lib.syncLoop(count, function (loop) {
-          var i = loop.iteration();
-          db.get_tx(hashes[i].addresses, function(tx) {
-            if (tx) {
-              txs.push(tx);
-              loop.next();
-            } else {
-              loop.next();
-            }
-          });
-        }, function(){
-         
-          res.render('address', { active: 'address', stats: stats, address: address, txs: txs});
-        });
-        
-      } else {
-        route_get_index(res, hash + ' not found');
+  db.get_address(hash, function(address) {
+    if (address) {
+      var txs = [];
+      var hashes = address.txs.reverse();
+      if (address.txs.length < count) {
+        count = address.txs.length;
       }
-    });
+      lib.syncLoop(count, function (loop) {
+        var i = loop.iteration();
+        db.get_tx(hashes[i].addresses, function(tx) {
+          if (tx) {
+            txs.push(tx);
+            loop.next();
+          } else {
+            loop.next();
+          }
+        });
+      }, function(){
+       
+        res.render('address', { active: 'address', address: address, txs: txs});
+      });
+      
+    } else {
+      route_get_index(res, hash + ' not found');
+    }
   });
 }
 
@@ -126,27 +105,22 @@ router.get('/', function(req, res) {
 });
 
 router.get('/info', function(req, res) {
-  db.get_stats(settings.coin, function(stats){
-  	res.render('info', { active: 'info', address: settings.address, hashes: settings.api,  stats: stats });
-  });
+  res.render('info', { active: 'info', address: settings.address, hashes: settings.api });
 });
 
 router.get('/markets/:market', function(req, res) {
   var market = req.param('market');
   if (settings.markets.enabled.indexOf(market) != -1) {
-    db.get_stats(settings.coin, function (stats) { 
-      db.get_market(market, function(data) {
-        var market_data = {
-          coin: settings.markets.coin,
-          exchange: settings.markets.exchange,
-          data: data,
-        };
-        res.render('./markets/' + market, { 
-          active: 'markets', 
-          marketdata: market_data, 
-          market: market,
-          stats: stats
-        });
+    db.get_market(market, function(data) {
+      var market_data = {
+        coin: settings.markets.coin,
+        exchange: settings.markets.exchange,
+        data: data,
+      };
+      res.render('./markets/' + market, { 
+        active: 'markets', 
+        marketdata: market_data, 
+        market: market,
       });
     });
   } else {
@@ -188,7 +162,7 @@ router.get('/richlist', function(req, res) {
 });
 
 router.get('/reward', function(req, res){
-  db.get_stats(settings.coin, function (stats) {
+  //db.get_stats(settings.coin, function (stats) {
     console.log(stats);
     db.get_heavy(settings.coin, function (heavy) {
       //heavy = heavy;
@@ -205,7 +179,7 @@ router.get('/reward', function(req, res){
           
       res.render('reward', { active: 'reward', stats: stats, heavy: heavy, votes: heavy.votes });
     });
-  });
+  //});
 });
 
 router.get('/tx/:txid', function(req, res) {
@@ -228,19 +202,15 @@ router.post('/search', function(req, res) {
   var query = req.body.search;
   if (query.length == 64) {
     if (query == settings.genesis_tx) {
-      route_get_block(res, settings.genesis_block);
+      res.redirect('/block/' + settings.genesis_block);
     } else {
       db.get_tx(query, function(tx) {      
         if (tx) {
-          db.get_stats(settings.coin, function(stats){
-            lib.get_blockcount(function(blockcount) {
-              res.render('tx', { active: 'tx', tx: tx, stats: stats, confirmations: settings.confirmations, blockcount: blockcount});
-            });
-          });
+          res.redirect('/tx/' +tx.txid);
         } else {
           lib.get_block(query, function(block) {
             if (block != 'There was an error. Check your console.') {
-              route_get_block(res, query);
+              res.redirect('/block/' + query);
             } else {
               route_get_index(res, locale.ex_search_error + query );
             }
@@ -251,11 +221,11 @@ router.post('/search', function(req, res) {
   } else {
     db.get_address(query, function(address) {
       if (address) {
-        route_get_address(res, address.a_id, settings.txcount);
+        res.redirect('/address/' + address.a_id);
       } else {
         lib.get_blockhash(query, function(hash) {
           if (hash != 'There was an error. Check your console.') {
-            route_get_block(res, hash);
+            res.redirect('/block/' + hash);
           } else {
             route_get_index(res, locale.ex_search_error + query );
           }
@@ -278,5 +248,29 @@ router.get('/qr/:string', function(req, res) {
   }
 });
 
+router.get('/ext/summary', function(req, res) {
+  lib.get_difficulty(function(difficulty) {
+    if (difficulty['proof-of-work']) {
+      if (settings.index.difficulty == 'POW') {
+        difficulty = difficulty['proof-of-work'];
+      } else {
+        difficulty = difficulty['proof-of-stake'];
+      }
+    }
+    lib.get_hashrate(function(hashrate) {
+      lib.get_connectioncount(function(connections){
+        db.get_stats(settings.coin, function (stats) {
+          res.send({ data: [{ 
+            difficulty: difficulty, 
+            supply: stats.supply,
+            hashrate: hashrate,
+            lastPrice: stats.last_price,
+            connections: connections
+          }]});
+        });
+      });
+    });
+  });
+});
 module.exports = router;
 
