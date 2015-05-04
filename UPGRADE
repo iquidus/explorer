@@ -1,5 +1,9 @@
 Note: All updates require the explorer to be restarted
 
+1.5.2 -> 1.6.0
+* Change market settings to new format (see settings.json.template)
+* Reindex explorerdb (node --stack-size=15000 scripts/sync.js index reindex)
+
 1.5.1 -> 1.5.2
 * nothing required, coinbase balance / wealth distribution will be fixed in next sync.
   run sync.js index check to force this if required.

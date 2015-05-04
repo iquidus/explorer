@@ -1,3 +1,13 @@
+1.6.0
+* Fixed negative/incorrect balance due to sending to yourself (Issues #6, #8)
+* Pages found via search now display full url 
+* Markets backend overhaul/rewrite
+* Added Yobit support (markets)
+* Added Empoex support (markets)
+* Layout redesign
+* Layout data (coin supply, connections etc) now fetched via ajax
+* Dynamic table data on main view (ajax, updates every 30 seconds)
+
 1.5.2
 * fix poloniex href (xCore)
 * added links (xCore)
