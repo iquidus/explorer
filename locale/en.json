@@ -102,7 +102,7 @@
     "mkt_volume": "Volume",
     "mkt_top_bid": "Top Bid",
     "mkt_top_ask": "Top Ask",
-    "mkt_last": "Last",
+    "mkt_last": "Last Price",
     "mkt_yesterday": "Yesterday",
     "mkt_change": "Change",
     "mkt_sell_orders": "Sell Orders",
@@ -118,6 +118,7 @@
     "poloniex": "Poloniex",
     "bittrex": "Bittrex",
     "yobit": "Yobit",
+    "empoex": "Empoex",
 
     // Heavy rewards view
     "heavy_title": "Reward/voting information",
