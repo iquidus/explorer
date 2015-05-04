@@ -187,15 +187,15 @@ is_locked(function (exists) {
             var market = markets[x];
             db.check_market(market, function(mkt, exists) {
               if (exists) {
-                db.update_markets_db(mkt, function(success) {
-                  if (success) {
+                db.update_markets_db(mkt, function(err) {
+                  if (!err) {
                     console.log('%s market data updated successfully.', mkt);
                     complete++;
                     if (complete == markets.length) {
                       exit();
                     }
                   } else {
-                    console.log('error: updating market data: %s.', mkt);
+                    console.log('%s: %s', mkt, err);
                     complete++;
                     if (complete == markets.length) {
                       exit();
