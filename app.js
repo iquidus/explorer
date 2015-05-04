@@ -95,7 +95,7 @@ app.use('/ext/getdistribution', function(req,res){
 
 app.use('/ext/getlasttxs/:count/:min', function(req,res){
   db.get_last_txs(req.param('count'), (req.param('min') * 100000000), function(txs){
-    res.send(txs);
+    res.send({data: txs});
   });
 });
 
