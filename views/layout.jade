@@ -27,7 +27,7 @@ html
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(json.data[0].supply);
             $("#difficulty").text(json.data[0].difficulty);
-            $("#hashrate").text(json.data[0].hashrate.toFixed(4));
+            $("#hashrate").text(json.data[0].hashrate);
             $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
             $("#lblConnections").text(json.data[0].connections + ' connections');
           }});
@@ -144,7 +144,7 @@ html
     .col-md-12
       .row.text-center
         .col-md-2.col-md-offset-1
-          .panel.panel-default
+          .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
               if (settings.nethash == 'netmhashps')
                 strong #{settings.locale.network} (MH/s)
@@ -153,21 +153,21 @@ html
             .panel-body
               label#hashrate -
         .col-md-2
-          .panel.panel-default
+          .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
               strong #{settings.locale.difficulty}
             .panel-body
               label#difficulty -
-        .col-md-2
+        .col-md-2.col-sm-12
           img(src='#{settings.logo}', style='margin-top:-15px;height:128px;')
         .col-md-2
-          .panel.panel-default
+          .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
               strong #{settings.locale.ex_supply} (#{settings.symbol})
             .panel-body
               label#supply -
         .col-md-2
-          .panel.panel-default
+          .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
               strong #{settings.markets.exchange} Price
             .panel-body
