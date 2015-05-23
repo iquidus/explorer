@@ -101,8 +101,12 @@ tr {
 }
 .connections {
 	position: absolute;
-	bottom: 10px;
+	bottom: 15px;
 	right: 15px;
+}
+
+#lblBlockcount {
+	margin-right: 10px;
 }
 
 #twitter-icon img{
