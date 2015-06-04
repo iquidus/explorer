@@ -119,6 +119,7 @@
     "bittrex": "Bittrex",
     "yobit": "Yobit",
     "empoex": "Empoex",
+    "cryptsy": "Cryptsy",
 
     // Heavy rewards view
     "heavy_title": "Reward/voting information",

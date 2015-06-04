@@ -5,11 +5,11 @@ block content
     $(document).ready(function(){
       var stable = $('#block-table').dataTable( {  
         autoWidth: true,      
-        searching: false,
+        searching: true,
         ordering: false,
-        //responsive: true,
+        responsive: true,
         lengthChange: false,
-        //processing: true,
+        processing: true,
         paging: false,
         info: false,
         ajax: {
@@ -33,18 +33,18 @@ block content
         autoWidth: true,      
         searching: false,
         ordering: false,
-        //responsive: true,
+        responsive: true,
         lengthChange: true,
-        //processing: true,
+        processing: true,
         ajax: {
           url: '/ext/getlasttxs/100/0.00000001',
           dataSrc: function ( json ) {
             for ( var i=0;i<json.data.length; i++ ) {
-              json.data[i]['timestamp'] = moment(json.data[i]['timestamp'] * 1000).format('Do MMMM YYYY - HH:mm:ss');
+              json.data[i]['timestamp'] = new Date((json.data[i]['timestamp']) * 1000).toUTCString();
               json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'>" + json.data[i]['txid'] + "</a>";
               json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'>" + json.data[i]['blockindex'] + "</a>";
               var amount = json.data[i]['total'] / 100000000;
-              json.data[i]['total'] = amount;
+              json.data[i]['total'] = amount.toFixed(8);
               json.data[i]['recipients'] = json.data[i]['vout'].length;
             }
             return json.data;

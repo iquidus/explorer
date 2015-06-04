@@ -83,13 +83,18 @@
   },
   
   // market settings
-  //supported markets: bittrex, poloniex, yobit, empoex
+  //supported markets: bittrex, poloniex, yobit, empoex, cryptsy * 3
   //default market is loaded by default and determines last price in header
   "markets": {
-    "coin": "JBS",
+    "coin": "DRK",
     "exchange": "BTC",
-    "enabled": ["bittrex", "empoex"],
-    "default": "bittrex"
+    "enabled": ["bittrex", "empoex", "cryptsy"],
+    "default": "bittrex",
+    "Crymktid": "141",
+    "Cryexchange2": "XRP",
+    "Crymktid2": "345",
+    "Cryexchange3": "LTC",
+    "Crymktid3": "345"
   },
 
   // richlist/top100 settings
