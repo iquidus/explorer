@@ -10,7 +10,7 @@ An open source block explorer written in node.js.
 *  [Vanillacoin](https://blockchain.vanillacoin.net/)
 *  [Coven](http://cov.iquidus.co.nz)
 *  [OKCash](http://okcash.explorer.rocks/)
-*  [Neoscoin](http://infernopool.com:8080/)
+*  [Neoscoin](http://explorer.infernopool.com/)
 
 **note: If you would like your instance mentioned here contact me**
 
