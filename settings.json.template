@@ -86,7 +86,7 @@
   //supported markets: bittrex, poloniex, yobit, empoex, cryptsy * 3
   //default market is loaded by default and determines last price in header
   "markets": {
-    "coin": "DRK",
+    "coin": "42",
     "exchange": "BTC",
     "enabled": ["bittrex", "empoex", "cryptsy"],
     "default": "bittrex",
