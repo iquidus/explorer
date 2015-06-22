@@ -149,8 +149,18 @@ html
             .panel-heading
               if (settings.nethash == 'netmhashps')
                 strong #{settings.locale.network} (MH/s)
-              else
+              else if settings.nethashSP == 'K')
+                strong #{settings.locale.network} (KH/s)
+              else if settings.nethashSP == 'M')
+                strong #{settings.locale.network} (MH/s)
+              else if settings.nethashSP == 'G')
                 strong #{settings.locale.network} (GH/s)
+              else if settings.nethashSP == 'T')
+                strong #{settings.locale.network} (TH/s)
+              else if settings.nethashSP == 'P')
+                strong #{settings.locale.network} (PH/s)
+              else
+                strong #{settings.locale.network} (H/s)
             .panel-body
               label#hashrate -
         .col-md-2

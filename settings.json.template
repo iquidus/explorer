@@ -131,6 +131,9 @@
   // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s
   // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s
   "nethash": "getnetworkhashps",
+  // nethashSP: sets nethash API return speed, in PH/s P, TH/s T, GH/s G, MH/s M or KH/s K
+  "nethashSP": "G",
+
 
   // Address labels
   // example : "JhbrvAmM7kNpwA6wD5KoAsbtikLWWMNPcM": {"label": "This is a burn address", "type":"danger", "url":"http://example.com"} 
