@@ -147,19 +147,17 @@ html
         .col-md-2.col-md-offset-1
           .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
-              if (settings.nethash == 'netmhashps')
-                strong #{settings.locale.network} (MH/s)
-              else if settings.nethashSP == 'K')
+              if settings.nethash_units == 'K'
                 strong #{settings.locale.network} (KH/s)
-              else if settings.nethashSP == 'M')
+              else if settings.nethash_units == 'M'
                 strong #{settings.locale.network} (MH/s)
-              else if settings.nethashSP == 'G')
+              else if settings.nethash_units == 'G'
                 strong #{settings.locale.network} (GH/s)
-              else if settings.nethashSP == 'T')
+              else if settings.nethash_units == 'T'
                 strong #{settings.locale.network} (TH/s)
-              else if settings.nethashSP == 'P')
+              else if settings.nethash_units == 'P'
                 strong #{settings.locale.network} (PH/s)
-              else
+              else if settings.nethash_units == 'H'
                 strong #{settings.locale.network} (H/s)
             .panel-body
               label#hashrate -
