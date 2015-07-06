@@ -1,3 +1,9 @@
+1.6.1
+* fixed last_txs setting
+* added hashrate_units setting
+* added cryptsy support (markets)
+* removed market update lockfile
+
 1.6.0
 * Fixed negative/incorrect balance due to sending to yourself (Issues #6, #8)
 * Pages found via search now display full url 

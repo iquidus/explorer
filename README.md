@@ -1,4 +1,4 @@
-Iquidus Explorer - 1.6.0
+Iquidus Explorer - 1.6.1
 ================
 
 An open source block explorer written in node.js.
@@ -6,13 +6,14 @@ An open source block explorer written in node.js.
 ### See it in action
 
 *  [Jumbucks](http://explorer.getjumbucks.com)
-*  [Phalanx](http://pxl.iquidus.co.nz)
+*  [Sphere](http://sphere.iquidus.io)
+*  [Gambit](http://explorer.gambitcrypto.com)
 *  [Vanillacoin](https://blockchain.vanillacoin.net/)
-*  [Coven](http://cov.iquidus.co.nz)
+*  [Coven](http://cov.iquidus.io)
 *  [OKCash](http://okcash.explorer.rocks/)
-*  [Neoscoin](http://explorer.infernopool.com/)
+*  [Neoscoin](http://explorer.infernopool.com/)  
 
-**note: If you would like your instance mentioned here contact me**
+*note: If you would like your instance mentioned here contact me*
 
 ### Requires
 
