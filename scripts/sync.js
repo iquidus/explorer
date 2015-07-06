@@ -59,38 +59,50 @@ if (process.argv[2] == 'index') {
 }
 
 function create_lock(cb) {
-  var fname = './tmp/' + database + '.pid';
-  fs.appendFile(fname, process.pid, function (err) {
-    if (err) {
-      console.log("Error: unable to create %s", fname);
-      process.exit(1);
-    } else {
-      return cb();
-    }
-  });
+  if ( database == 'index' ) {
+    var fname = './tmp/' + database + '.pid';
+    fs.appendFile(fname, process.pid, function (err) {
+      if (err) {
+        console.log("Error: unable to create %s", fname);
+        process.exit(1);
+      } else {
+        return cb();
+      }
+    });
+  } else {
+    return cb();
+  }
 }
 
 function remove_lock(cb) {
-  var fname = './tmp/' + database + '.pid';
-  fs.unlink(fname, function (err){
-    if(err) {
-      console.log("unable to remove lock: %s", fname);
-      process.exit(1);
-    } else {
-      return cb();
-    }
-  });
+  if ( database == 'index' ) {
+    var fname = './tmp/' + database + '.pid';
+    fs.unlink(fname, function (err){
+      if(err) {
+        console.log("unable to remove lock: %s", fname);
+        process.exit(1);
+      } else {
+        return cb();
+      }
+    });
+  } else {
+    return cb();
+  }  
 }
 
 function is_locked(cb) {
-  var fname = './tmp/' + database + '.pid';
-  fs.exists(fname, function (exists){
-    if(exists) {
-      return cb(true);
-    } else {
-      return cb(false);
-    }
-  });
+  if ( database == 'index' ) {
+    var fname = './tmp/' + database + '.pid';
+    fs.exists(fname, function (exists){
+      if(exists) {
+        return cb(true);
+      } else {
+        return cb(false);
+      }
+    });
+  } else {
+    return cb();
+  } 
 }
 
 function exit() {
