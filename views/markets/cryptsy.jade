@@ -19,12 +19,12 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_last}
           tbody
             tr
-              td #{marketdata.data.summary.price_high}
-              td #{marketdata.data.summary.price_low}
+              td #{marketdata.data.summary.high}
+              td #{marketdata.data.summary.low}
               td #{marketdata.data.summary.volume}
-              td.hidden-xs #{marketdata.data.summary.Bid}
-              td.hidden-xs #{marketdata.data.summary.Ask}
-              td.hidden-xs #{marketdata.data.summary.Last}
+              td.hidden-xs #{marketdata.data.summary.bid}
+              td.hidden-xs #{marketdata.data.summary.ask}
+              td.hidden-xs #{marketdata.data.summary.last}
   .row
     .col-md-6.col-xs-12
       .panel.panel-default
@@ -42,7 +42,7 @@ block market_view
                 td
                   =buy.price
                 td
-                  =buy.amount
+                  =buy.amount.toFixed(8)
                 td.hidden-xs
                   =buy.total
     .col-md-6.col-xs-12
@@ -61,7 +61,7 @@ block market_view
                 td
                   =sell.price
                 td
-                  =sell.amount
+                  =sell.amount.toFixed(8)
                 td.hidden-xs
                   =sell.total
   .row   

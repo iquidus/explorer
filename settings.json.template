@@ -83,18 +83,14 @@
   },
   
   // market settings
-  //supported markets: bittrex, poloniex, yobit, empoex, cryptsy * 3
+  //supported markets: bittrex, poloniex, yobit, empoex, cryptsy
   //default market is loaded by default and determines last price in header
   "markets": {
-    "coin": "42",
+    "coin": "JBS",
     "exchange": "BTC",
-    "enabled": ["bittrex", "empoex", "cryptsy"],
-    "default": "bittrex",
-    "Crymktid": "141",
-    "Cryexchange2": "XRP",
-    "Crymktid2": "345",
-    "Cryexchange3": "LTC",
-    "Crymktid3": "345"
+    "enabled": ["bittrex", "cryptsy"],
+    "cryptsy_id": "290",
+    "default": "bittrex"
   },
 
   // richlist/top100 settings
@@ -131,9 +127,10 @@
   // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s
   // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s
   "nethash": "getnetworkhashps",
-  // nethashSP: sets nethash API return speed, in PH/s P, TH/s T, GH/s G, MH/s M or KH/s K
-  "nethashSP": "G",
-
+  
+  // nethash unitd: sets nethash API return units
+  // valid options: "P" (PH/s), "T" (TH/s), "G" (GH/s), "M" (MH/s), "K" (KH/s)
+  "nethash_units": "G",
 
   // Address labels
   // example : "JhbrvAmM7kNpwA6wD5KoAsbtikLWWMNPcM": {"label": "This is a burn address", "type":"danger", "url":"http://example.com"} 
