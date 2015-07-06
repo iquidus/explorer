@@ -117,7 +117,6 @@ router.get('/markets/:market', function(req, res) {
         exchange: settings.markets.exchange,
         data: data,
       };
-      console.log(data);
       res.render('./markets/' + market, { 
         active: 'markets', 
         marketdata: market_data, 
