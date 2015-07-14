@@ -117,6 +117,7 @@
     // Markets
     "poloniex": "Poloniex",
     "bittrex": "Bittrex",
+    "bleutrade": "Bleutrade",
     "yobit": "Yobit",
     "empoex": "Empoex",
     "cryptsy": "Cryptsy",
