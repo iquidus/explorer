@@ -18,8 +18,8 @@
     "bitcoin-node-api": "0.1.0",
     "request": "2.36.0",
     "jsonminify": "0.2.3",
-    "mongodb": "1.4.5",
-    "mongoose": "3.8.12",
+    "mongodb": "2.0.45",
+    "mongoose": "4.1.10",
     "markdown-js": "0.0.3",
     "qr-image": "~2.0.0"
   },
