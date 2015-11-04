@@ -26,3 +26,7 @@ node_modules
 
 settings.json
 .idea
+*~
+*.ico
+*.png
+
