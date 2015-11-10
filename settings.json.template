@@ -67,7 +67,7 @@
     "search": true
   },
 
-  // index page (valid options for difficulty are POW or POS)
+  // index page (valid options for difficulty are POW, POS or Hybrid)
   "index": {
     "show_hashrate": true,
     "difficulty": "POW",
