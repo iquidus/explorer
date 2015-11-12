@@ -91,7 +91,7 @@
     "enabled": ["bittrex", "cryptsy"],
     "cryptsy_id": "290",
     "cryptopia_id": "1658",
-    "ccex_key" : "Get-Your-Own-Key"
+    "ccex_key" : "Get-Your-Own-Key",
     "default": "bittrex"
   },
 
