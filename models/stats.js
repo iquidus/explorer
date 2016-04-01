@@ -13,4 +13,4 @@ var StatsSchema = new Schema({
   last_price: { type: Number, default: 0 },
 });
 
-module.exports = mongoose.model('Stats', StatsSchema);
+module.exports = mongoose.model('coinstats', StatsSchema);
