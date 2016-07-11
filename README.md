@@ -12,6 +12,7 @@ An open source block explorer written in node.js.
 *  [Coven](http://cov.iquidus.io)
 *  [OKCash](http://okcash.explorer.rocks/)
 *  [Neoscoin](http://explorer.infernopool.com/)  
+*  [C2Chain](http://c2chain.info/)
 
 *note: If you would like your instance mentioned here contact me*
 
