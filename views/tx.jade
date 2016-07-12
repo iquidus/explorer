@@ -18,7 +18,7 @@ block content
             th #{settings.locale.timestamp}
             th
         tbody
-          - var confirms = (blockcount - tx.blockindex) + 1;
+          - var confirms = (blockcount - tx.blockindex);
           if confirms >= confirmations                
             tr.success
                 td #{confirms}
@@ -111,4 +111,3 @@ block content
                     tr.hidden-lg.hidden-md
                       td.success #{ramount.toFixed(8)} #{settings.symbol} 
     .footer-padding
-
