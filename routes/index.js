@@ -250,10 +250,14 @@ router.get('/qr/:string', function(req, res) {
 
 router.get('/ext/summary', function(req, res) {
   lib.get_difficulty(function(difficulty) {
+    difficultyHybrid = ''
     if (difficulty['proof-of-work']) {
-      if (settings.index.difficulty == 'POW') {
-        difficulty = difficulty['proof-of-work'];
-      } else {
+            if (settings.index.difficulty == 'Hybrid') {
+              difficultyHybrid = 'POS: ' + difficulty['proof-of-stake'];
+              difficulty = 'POW: ' + difficulty['proof-of-work'];
+            } else if (settings.index.difficulty == 'POW') {
+              difficulty = difficulty['proof-of-work'];
+            } else {
         difficulty = difficulty['proof-of-stake'];
       }
     }
@@ -266,6 +270,7 @@ router.get('/ext/summary', function(req, res) {
             } 
             res.send({ data: [{ 
               difficulty: difficulty, 
+              difficultyHybrid: difficultyHybrid,
               supply: stats.supply,
               hashrate: hashrate,
               lastPrice: stats.last_price,
