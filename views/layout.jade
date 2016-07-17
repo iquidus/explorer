@@ -23,6 +23,7 @@ html
     script(src='/javascripts/chart.js')
     script.
       $(document).ready(function(){
+        $('##{active}').addClass('active');
         function update_stats(){   
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(json.data[0].supply);
@@ -90,71 +91,35 @@ html
           a.navbar-brand(href='/') #{settings.title}
         .collapse.navbar-collapse(id='navbar-collapse')
           ul.nav.navbar-nav
-            if active == 'home'
-              li.active
-                a.navbar-link(href='/') 
-                  span.glyphicon.glyphicon-search
-                  span.menu-text #{settings.locale.menu_explorer}
-            else
-              li
-                a.navbar-link(href='/') 
-                  span.glyphicon.glyphicon-search
-                  span.menu-text #{settings.locale.menu_explorer}
+            li#home
+              a.navbar-link(href='/') 
+                span.glyphicon.glyphicon-search
+                span.menu-text #{settings.locale.menu_explorer}
             if settings.heavy == true
-              if active == 'reward'
-                li.active
-                  a.navbar-link(href='/reward')
-                    span.fa.fa-star
-                    span.menu-text #{settings.locale.menu_reward}
-              else
-                li
-                  a.navbar-link(href='/reward')
-                    span.fa.fa-star
-                    span.menu-text #{settings.locale.menu_reward}
-            if settings.display.markets == true
-              if active == 'markets'
-                li.active
-                  a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
-                    span.fa.fa-line-chart
-                    span.menu-text #{settings.locale.menu_markets}
-              else
-                li
-                  a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
-                    span.fa.fa-line-chart
-                    span.menu-text #{settings.locale.menu_markets}
+              li#reward
+                a.navbar-link(href='/reward')
+                  span.fa.fa-star
+                  span.menu-text #{settings.locale.menu_reward}
             if settings.display.movement == true
-              if active == 'movement'
-                li.active 
-                  a.navbar-link.loading(href='/movement') 
-                    span.fa.fa-money
-                    span.menu-text Movement
-              else
-                li
-                  a.navbar-link.loading(href='/movement') 
-                    span.fa.fa-money
-                    span.menu-text Movement
+              li#movement 
+                a.navbar-link.loading(href='/movement') 
+                  span.fa.fa-money
+                  span.menu-text #{settings.locale.menu_movement}
             if settings.display.richlist == true
-              if active == 'richlist'
-                li.active
-                  a.navbar-link(href='/richlist')
-                    span.fa.fa-btc
-                    span.menu-text #{settings.locale.menu_richlist}
-              else
-                li
-                  a.navbar-link(href='/richlist')
-                    span.fa.fa-btc
-                    span.menu-text #{settings.locale.menu_richlist}
+              li#richlist
+                a.navbar-link(href='/richlist')
+                  span.fa.fa-btc
+                  span.menu-text #{settings.locale.menu_richlist}
+            if settings.display.markets == true
+              li#markets
+                a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
+                  span.fa.fa-line-chart
+                  span.menu-text #{settings.locale.menu_markets}
             if settings.display.api == true
-              if active == 'info'
-                li.active
-                  a.navbar-link(href='/info')
-                    span.glyphicon.glyphicon-info-sign
-                    span.menu-text #{settings.locale.menu_api}
-              else
-                li.hidden-xs
-                  a.navbar-link(href='/info')
-                    span.glyphicon.glyphicon-info-sign
-                    span.menu-text #{settings.locale.menu_api}
+              li#info
+                a.navbar-link(href='/info')
+                  span.glyphicon.glyphicon-info-sign
+                  span.menu-text #{settings.locale.menu_api}
     .col-md-12
       .row.text-center
         .col-md-2.col-md-offset-1
