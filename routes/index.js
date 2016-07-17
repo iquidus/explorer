@@ -183,6 +183,10 @@ router.get('/richlist', function(req, res) {
   }
 });
 
+router.get('/movement', function(req, res) {
+  res.render('movement', {active: 'movement', flaga: settings.movement.low_flag, flagb: settings.movement.high_flag});
+});
+
 router.get('/reward', function(req, res){
   //db.get_stats(settings.coin, function (stats) {
     console.log(stats);

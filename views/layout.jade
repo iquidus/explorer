@@ -122,6 +122,17 @@ html
                   a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
                     span.fa.fa-line-chart
                     span.menu-text #{settings.locale.menu_markets}
+            if settings.display.movement == true
+              if active == 'movement'
+                li.active 
+                  a.navbar-link.loading(href='/movement') 
+                    span.fa.fa-money
+                    span.menu-text Movement
+              else
+                li
+                  a.navbar-link.loading(href='/movement') 
+                    span.fa.fa-money
+                    span.menu-text Movement
             if settings.display.richlist == true
               if active == 'richlist'
                 li.active

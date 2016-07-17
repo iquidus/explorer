@@ -6,24 +6,24 @@
 {
   // name your instance!
   "title": "IQUIDUS",
-  
+
   "address": "127.0.0.1:3001",
-  
+
   // coin name
   "coin": "Darkcoin",
 
   // coin symbol
   "symbol": "DRK",
-  
+
   // logo
   "logo": "/images/logo.png",
 
   // favicon
   "favicon": "public/favicon.ico",
-  
+
   // Uses bootswatch themes (http://bootswatch.com/)
-  // Valid options: 
-  //     Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Lumen, Paper, 
+  // Valid options:
+  //     Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Lumen, Paper,
   //     Readable, Sandstone, Simplex, Slate, Spacelab, Superhero, United, Yeti
   // theme (see /public/themes for available themes)
   "theme": "Cyborg",
@@ -39,7 +39,7 @@
     "address": "localhost",
     "port": 27017
   },
-  
+
   //update script settings
   "update_timeout": 10,
   "check_timeout": 250,
@@ -51,7 +51,7 @@
     "user": "darkcoinrpc",
     "pass": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
   },
-  
+
   // confirmations
   "confirmations": 40,
 
@@ -64,7 +64,8 @@
     "markets": true,
     "richlist": true,
     "twitter": true,
-    "search": true
+    "search": true,
+    "movement": true
   },
 
   // index page (valid options for difficulty are POW, POS or Hybrid)
@@ -73,7 +74,7 @@
     "difficulty": "POW",
     "last_txs": 100
   },
-  
+
   // ensure links on API page are valid
   "api": {
     "blockindex": 1337,
@@ -81,7 +82,7 @@
     "txhash": "f270cd3813254c9922a2e222a56ba745842d9112223a1394062e460b33d27b7e",
     "address": "RBiXWscC63Jdn1GfDtRj8hgv4Q6Zppvpwb"
   },
-  
+
   // market settings
   //supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex
   //default market is loaded by default and determines last price in header
@@ -100,13 +101,22 @@
     "received": true,
     "balance": true
   },
+  // movement page settings
+  // min amount: show transactions greater than this value
+  // low flag: greater than this value flagged yellow
+  // high flag: greater than this value flagged red
+  "movement": {
+    "min_amount": 100,
+    "low_flag": 1000,
+    "high_flag": 10000
+  },
 
   // twitter
   "twitter": "iquidus",
 
   //genesis
   "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
-  "genesis_block": "b2926a56ca64e0cd2430347e383f63ad7092f406088b9b86d6d68c2a34baef51",  
+  "genesis_block": "b2926a56ca64e0cd2430347e383f63ad7092f406088b9b86d6d68c2a34baef51",
 
   //heavy (enable/disable additional heavy features)
   "heavy": false,
@@ -116,7 +126,7 @@
 
   //show total sent & received on address page (set false if PoS)
   "show_sent_received": true,
-  
+
   // how to calculate current coin supply
   // COINBASE : total sent from coinbase (PoW)
   // GETINFO : retreive from getinfo api call (PoS)
@@ -128,16 +138,16 @@
   // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s
   // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s
   "nethash": "getnetworkhashps",
-  
+
   // nethash unitd: sets nethash API return units
   // valid options: "P" (PH/s), "T" (TH/s), "G" (GH/s), "M" (MH/s), "K" (KH/s)
   "nethash_units": "G",
 
   // Address labels
-  // example : "JhbrvAmM7kNpwA6wD5KoAsbtikLWWMNPcM": {"label": "This is a burn address", "type":"danger", "url":"http://example.com"} 
+  // example : "JhbrvAmM7kNpwA6wD5KoAsbtikLWWMNPcM": {"label": "This is a burn address", "type":"danger", "url":"http://example.com"}
   // label (required) = test to display
   // type (optional) = class of label, valid types: default, primary, warning, danger, success
-  // url (optional) = url to link to for more information 
+  // url (optional) = url to link to for more information
   "labels": {
   //  "JSoEdU717hvz8KQVq2HfcqV9A79Wihzusu": {"label": "Developers address", "type":"primary", "url":"http://example.com"},
   //  "JSWVXHWeYNknPdG9uDrcBoZHztKMFCsndw": {"label": "Cryptsy"}
