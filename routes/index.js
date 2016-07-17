@@ -184,7 +184,7 @@ router.get('/richlist', function(req, res) {
 });
 
 router.get('/movement', function(req, res) {
-  res.render('movement', {active: 'movement', flaga: settings.movement.low_flag, flagb: settings.movement.high_flag});
+  res.render('movement', {active: 'movement', flaga: settings.movement.low_flag, flagb: settings.movement.high_flag, min_amount:settings.movement.min_amount});
 });
 
 router.get('/reward', function(req, res){

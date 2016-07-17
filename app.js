@@ -17,7 +17,7 @@ var app = express();
 bitcoinapi.setWalletDetails(settings.wallet);
 if (settings.heavy != true) {
   bitcoinapi.setAccess('only', ['getinfo', 'getnetworkhashps', 'getmininginfo','getdifficulty', 'getconnectioncount',
-    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction']);
+    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 'getpeerinfo']);
 } else {
   // enable additional heavy api calls
   /*
@@ -93,8 +93,8 @@ app.use('/ext/getdistribution', function(req,res){
   });
 });
 
-app.use('/ext/getlasttxs', function(req,res){
-  db.get_last_txs(settings.index.last_txs, (settings.movement.min_amount * 100000000), function(txs){
+app.use('/ext/getlasttxs/:min', function(req,res){
+  db.get_last_txs(settings.index.last_txs, (req.params.min * 100000000), function(txs){
     res.send({data: txs});
   });
 });
