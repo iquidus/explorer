@@ -65,7 +65,8 @@
     "richlist": true,
     "twitter": true,
     "search": true,
-    "movement": true
+    "movement": true,
+    "network": true
   },
 
   // index page (valid options for difficulty are POW, POS or Hybrid)
@@ -89,7 +90,7 @@
   "markets": {
     "coin": "JBS",
     "exchange": "BTC",
-    "enabled": ["bittrex", "cryptopia"],
+    "enabled": ["bittrex"],
     "cryptopia_id": "1658",
     "ccex_key" : "Get-Your-Own-Key",
     "default": "bittrex"
@@ -108,7 +109,7 @@
   "movement": {
     "min_amount": 100,
     "low_flag": 1000,
-    "high_flag": 10000
+    "high_flag": 5000
   },
 
   // twitter
@@ -132,7 +133,7 @@
   // GETINFO : retreive from getinfo api call (PoS)
   // HEAVY: retreive from heavys getsupply api call
   // BALANCES : total of all address balances
-  "supply": "BALANCES",
+  "supply": "COINBASE",
 
   // how to acquire network hashrate
   // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s
