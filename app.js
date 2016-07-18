@@ -9,7 +9,8 @@ var express = require('express')
   , routes = require('./routes/index')
   , lib = require('./lib/explorer')
   , db = require('./lib/database')
-  , locale = require('./lib/locale');
+  , locale = require('./lib/locale')
+  , request = require('request');
 
 var app = express();
 
@@ -96,6 +97,12 @@ app.use('/ext/getdistribution', function(req,res){
 app.use('/ext/getlasttxs/:min', function(req,res){
   db.get_last_txs(settings.index.last_txs, (req.params.min * 100000000), function(txs){
     res.send({data: txs});
+  });
+});
+
+app.use('/ext/connections', function(req,res){
+  db.get_peers(function(peers){
+    res.send({data: peers});
   });
 });
 

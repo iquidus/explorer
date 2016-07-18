@@ -12,6 +12,7 @@
     "menu_reward": "Reward",
     "menu_movement": "Movement",
     "menu_node": "Nodes",
+    "menu_network": "Network",
 
     // explorer view
     "ex_title": "Block Explorer",
@@ -73,6 +74,13 @@
     "rl_top75": "Top 51-75",
     "rl_top100": "Top 76-100",
     "rl_hundredplus": "101+",
+
+    "net_connections": "Connections",
+    "net_address": "Address",
+    "net_protocol": "Protocol",
+    "net_subversion": "Sub-version",
+    "net_country": "Country",
+    "net_warning": "This is sub sample of the network based on wallets that have connected to this node in the last 24hours.",
 
     // api view
     "api_title": "API Documentation",

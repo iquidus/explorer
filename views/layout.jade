@@ -105,6 +105,11 @@ html
                 a.navbar-link.loading(href='/movement') 
                   span.fa.fa-money
                   span.menu-text #{settings.locale.menu_movement}
+            if settings.display.network == true
+              li#network
+                a.navbar-link(href='/network')
+                  span.fa.fa-share-alt
+                  span.menu-text #{settings.locale.menu_network}
             if settings.display.richlist == true
               li#richlist
                 a.navbar-link(href='/richlist')
