@@ -196,8 +196,18 @@ html
         if settings.display.twitter
           ul.nav.navbar-nav
             li.pull-left
-              a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')  
+              a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')
                 span.glyphicon.fa.fa-twitter
+        if settings.display.facebook
+          ul.nav.navbar-nav
+            li.pull-left
+              a#facebook-icon(href="https://www.facebook.com/#{settings.facebook}", target='_blank')
+                span.glyphicon.fa.fa-facebook
+        if settings.display.googleplus
+          ul.nav.navbar-nav
+            li.pull-left
+              a#googleplus-icon(href="https://plus.google.com/#{settings.googleplus}", target='_blank')
+                span.glyphicon.fa.fa-google-plus
       .col-md-4
         ul.nav
           li.text-center(style='margin-left:80px;margin-right:80px;')
