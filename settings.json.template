@@ -64,6 +64,8 @@
     "markets": true,
     "richlist": true,
     "twitter": true,
+    "facebook": false,
+    "googleplus": false,
     "search": true,
     "movement": true,
     "network": true
@@ -112,8 +114,10 @@
     "high_flag": 5000
   },
 
-  // twitter
+  // twitter, facebook, googleplus
   "twitter": "iquidus",
+  "facebook": "yourfacebookpage",
+  "googleplus": "yourgooglepluspage",
 
   //genesis
   "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
