@@ -131,18 +131,21 @@ router.get('/info', function(req, res) {
 });
 
 router.get('/markets/:market', function(req, res) {
-  var market = req.param('market');
+  var market = req.params['market'];
   if (settings.markets.enabled.indexOf(market) != -1) {
     db.get_market(market, function(data) {
-      var market_data = {
-        coin: settings.markets.coin,
-        exchange: settings.markets.exchange,
-        data: data,
-      };
+      /*if (market === 'bittrex') {
+        data = JSON.parse(data);
+      }*/
+      console.log(data);
       res.render('./markets/' + market, {
         active: 'markets',
-        marketdata: market_data,
-        market: market,
+        marketdata: {
+          coin: settings.markets.coin,
+          exchange: settings.markets.exchange,
+          data: data,
+        },
+        market: market
       });
     });
   } else {

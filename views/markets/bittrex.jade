@@ -1,6 +1,8 @@
 extends menu
 
 block market_view
+  script.
+    console.log('#{marketdata.data}');
   .row
     .col-md-12  
       .panel.panel-default
@@ -48,9 +50,9 @@ block market_view
             each buy in marketdata.data.buys
               tr
                 td
-                  =buy.price.toFixed(8)
+                  =buy.price
                 td
-                  =buy.amount.toFixed(8)
+                  =buy.amount
                 td.hidden-xs
                   =buy.total
     .col-md-6.col-xs-12
@@ -67,9 +69,9 @@ block market_view
             each sell in marketdata.data.sells
               tr
                 td
-                  =sell.price.toFixed(8)
+                  =sell.price
                 td
-                  =sell.amount.toFixed(8)
+                  =sell.amount
                 td.hidden-xs
                   =sell.total
   .row   
