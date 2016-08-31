@@ -137,6 +137,7 @@
   // GETINFO : retreive from getinfo api call (PoS)
   // HEAVY: retreive from heavys getsupply api call
   // BALANCES : total of all address balances
+  // TXOUTSET : retreive from gettxoutsetinfo api call
   "supply": "COINBASE",
 
   // how to acquire network hashrate
