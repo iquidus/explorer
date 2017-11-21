@@ -11,6 +11,8 @@ An open source block explorer written in node.js.
 *  [Vanillacoin](https://blockchain.vanillacoin.net/)
 *  [Neoscoin](http://explorer.infernopool.com/)  
 *  [C2Chain](http://c2chain.info/)
+*  [Vivo](http://vivo.explorerz.top:3003)
+*  [Florincoin](https://florincoin.info/info)
 
 *note: If you would like your instance mentioned here contact me*
 
