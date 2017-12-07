@@ -66,6 +66,7 @@
     "twitter": true,
     "facebook": false,
     "googleplus": false,
+    "youtube": false,
     "search": true,
     "movement": true,
     "network": true
@@ -114,10 +115,11 @@
     "high_flag": 5000
   },
 
-  // twitter, facebook, googleplus
+  // twitter, facebook, googleplus, youtube
   "twitter": "iquidus",
   "facebook": "yourfacebookpage",
   "googleplus": "yourgooglepluspage",
+  "youtube": "youryoutubechannel",
 
   //genesis
   "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
