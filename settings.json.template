@@ -1,19 +1,14 @@
-/*
-  This file must be valid JSON. But comments are allowed
-
-  Please edit settings.json, not settings.json.template
-*/
 {
   // name your instance!
-  "title": "IQUIDUS",
+  "title": "NEODASH",
 
-  "address": "127.0.0.1:3001",
+  "address": "45.32.72.80:3001",
 
   // coin name
-  "coin": "Darkcoin",
+  "coin": "Neodash",
 
   // coin symbol
-  "symbol": "DRK",
+  "symbol": "NDASH",
 
   // logo
   "logo": "/images/logo.png",
@@ -47,9 +42,9 @@
   // wallet settings
   "wallet": {
     "host": "localhost",
-    "port": 9332,
-    "user": "darkcoinrpc",
-    "pass": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
+    "port": 9998,
+    "user": "neodashcoin",
+    "pass": "c21h23no5c21h23no5c21h23no5"
   },
 
   // confirmations
@@ -60,12 +55,12 @@
 
   // menu settings
   "display": {
-    "api": true,
-    "markets": true,
+    "api": false,
+    "markets": false,
     "richlist": true,
     "twitter": true,
-    "facebook": false,
-    "googleplus": false,
+    "facebook": true,
+    "googleplus": true,
     "search": true,
     "movement": true,
     "network": true
@@ -115,16 +110,16 @@
   },
 
   // twitter, facebook, googleplus
-  "twitter": "iquidus",
-  "facebook": "yourfacebookpage",
-  "googleplus": "yourgooglepluspage",
+  "twitter": "neodashcoin",
+  "facebook": "neodashcoin",
+  "googleplus": "114215305236195568150",
 
   //genesis
-  "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
-  "genesis_block": "b2926a56ca64e0cd2430347e383f63ad7092f406088b9b86d6d68c2a34baef51",
+  "genesis_tx": "29e6fefd834f9ebcd02e9b7c2e5e6be1ea75d5a4d5eb43608e8e42df9e412690",
+  "genesis_block": "0x00000086bfc6557edfe2ccec9d702ffa01819bf015f80582e09a964e2dfcb08e",
 
   //heavy (enable/disable additional heavy features)
-  "heavy": false,
+  "heavy": true,
 
   //amount of txs to index per address (stores latest n txs)
   "txcount": 100,
@@ -138,12 +133,12 @@
   // HEAVY: retreive from heavys getsupply api call
   // BALANCES : total of all address balances
   // TXOUTSET : retreive from gettxoutsetinfo api call
-  "supply": "COINBASE",
+  "supply": "TXOUTSET",
 
   // how to acquire network hashrate
   // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s
   // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s
-  "nethash": "getnetworkhashps",
+  "nethash":"getnetworkhashps",
 
   // nethash unitd: sets nethash API return units
   // valid options: "P" (PH/s), "T" (TH/s), "G" (GH/s), "M" (MH/s), "K" (KH/s)
