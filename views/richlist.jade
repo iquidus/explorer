@@ -32,10 +32,10 @@ block content
           }
         }
       );
+      $(window).resize(function () { 
+        pieWealthDist.replot( { resetAxes: false } );
+      });  
     });
-    $(window).resize(function () { 
-      pieWealthDist.replot( { resetAxes: false } );
-    });  
   .col-xs-12.col-md-8
     .tabpanel
       ul.nav.nav-tabs(role='tablist')
