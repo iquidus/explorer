@@ -30,6 +30,13 @@ block content
         var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;   
         return time;
       }
+      var matches = /minamount=([^&#=]*)/.exec(window.location.search);
+      var minamount=#{min_amount};
+      if(matches) 
+       {
+        minamount=parseFloat(matches[1]);
+        if (!minamount || (minamount<=#{min_amount})) minamount=#{min_amount};
+       }
       var rtable = $('#alerts-table').dataTable( {  
         autoWidth: false,      
         searching: false,
@@ -38,7 +45,7 @@ block content
         lengthChange: false,
         //processing: true,
         ajax: {
-          url: '/ext/getlasttxs/#{min_amount}',
+          url: '/ext/getlasttxs/'+minamount,
           dataSrc: function ( json ) {
             for ( var i=0;i<json.data.length; i++ ) {
               json.data[i]['timestamp'] = format_unixtime(json.data[i]['timestamp']);
@@ -66,6 +73,13 @@ block content
       }, 45000 );
     });
   .col-xs-12.col-md-10.col-md-offset-1(style="margin-bottom: 5%")
+
+    .row.text-center(style='margin-top:10px;margin-bottom:20px;')
+      form.form-inline()           
+       #index-search.form-group
+        input.form-control(type='text', name='minamount', placeholder='Minimum amount', style='min-width:60%;margin-right:5px;')
+        button.btn.btn-success(type='submit') Set
+
     table#alerts-table.table.table-striped.table-bordered
       thead
         th timestamp

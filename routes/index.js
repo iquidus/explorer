@@ -137,7 +137,7 @@ router.get('/markets/:market', function(req, res) {
       /*if (market === 'bittrex') {
         data = JSON.parse(data);
       }*/
-      console.log(data);
+      //console.log(data);
       res.render('./markets/' + market, {
         active: 'markets',
         marketdata: {

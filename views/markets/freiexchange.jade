@@ -5,7 +5,7 @@ block market_view
     .col-md-12  
       .panel.panel-default
         .panel-heading
-          strong #{settings.locale.yobit} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong #{settings.locale.freiexchange} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='#')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
         table.table.table-bordered.summary-table 
@@ -18,11 +18,11 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_last}
           tbody
             tr
-              td #{marketdata.data.summary.high.toFixed(8)}
-              td #{marketdata.data.summary.low.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.buy.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.sell.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.last.toFixed(8)}
+              td #{marketdata.data.summary.high}
+              td #{marketdata.data.summary.low}
+              td.hidden-xs #{marketdata.data.summary.high}
+              td.hidden-xs #{marketdata.data.summary.low}
+              td.hidden-xs #{marketdata.data.summary.last}
   .row
     .col-md-6.col-xs-12
       .panel.panel-default
@@ -79,30 +79,28 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
             each order in marketdata.data.history
-              if order.type == 'bid'
+              if order.type == 'BUY'
                 tr.success
                   td.hidden-xs
                     =order.type
                   td
-                    =order.amount.toFixed(8)
+                    =order.total_coin
                   td
-                    =order.price.toFixed(8)
+                    =order.price
                   td
-                    - var total = order.amount * order.price;
-                    =total.toFixed(8)
+                    =order.total_btc
                   td.hidden-xs
-                    =format_unixtime(order.timestamp)       
+                    =order.time
               else
                 tr.danger 
                   td.hidden-xs
                     =order.type
                   td
-                    =order.amount.toFixed(8)
+                    =order.total_coin
                   td
-                    =order.price.toFixed(8)
+                    =order.price
                   td
-                    - var total = order.amount * order.price;
-                    =total.toFixed(8)
+                    =order.total_btc
                   td.hidden-xs
-                    =format_unixtime(order.timestamp)
+                    =order.time
       .footer-padding

@@ -5,18 +5,27 @@
 */
 {
   // name your instance!
-  "title": "IQUIDUS",
+  "title": "NewYorkCoin Explorer",
 
-  "address": "127.0.0.1:3001",
+  //interface to bind
+  "address": "127.0.0.1",
+
+  // port to listen for requests on.
+  "port" : 3001,
+
 
   // coin name
-  "coin": "Darkcoin",
+  "coin": "NewYorkCoin",
 
   // coin symbol
-  "symbol": "DRK",
+  "symbol": "NYC",
 
   // logo
   "logo": "/images/logo.png",
+
+  //logo hyperlink - if not set, logo will not be clickable
+  "logoref": "https://nycoin.community",
+
 
   // favicon
   "favicon": "public/favicon.ico",
@@ -26,10 +35,8 @@
   //     Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Lumen, Paper,
   //     Readable, Sandstone, Simplex, Slate, Spacelab, Superhero, United, Yeti
   // theme (see /public/themes for available themes)
-  "theme": "Cyborg",
+  "theme": "Paper",
 
-  // port to listen for requests on.
-  "port" : 3001,
 
   // database settings (MongoDB)
   "dbsettings": {
@@ -47,9 +54,9 @@
   // wallet settings
   "wallet": {
     "host": "localhost",
-    "port": 9332,
-    "user": "darkcoinrpc",
-    "pass": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
+    "port": 18823,
+    "user": "nycuser",
+    "pass": "somepassword"
   },
 
   // confirmations
@@ -66,9 +73,12 @@
     "twitter": true,
     "facebook": false,
     "googleplus": false,
+    "telegram":false,
+    "bitcointalk":false,
     "search": true,
     "movement": true,
     "network": true
+
   },
 
   // index page (valid options for difficulty are POW, POS or Hybrid)
@@ -78,21 +88,21 @@
     "last_txs": 100
   },
 
-  // ensure links on API page are valid
+  // ensure links on API page are valid nyc Update address next
   "api": {
     "blockindex": 1337,
     "blockhash": "1733320247b15ca2262be646397d1ffd6be953fa638ebb8f5dcbb4c2b91b34f1",
-    "txhash": "f270cd3813254c9922a2e222a56ba745842d9112223a1394062e460b33d27b7e",
+    "txhash": "3c291443c1b91de8d78d7a25ce4a906f0a839206b0a60bb32453a58229a00512",
     "address": "RBiXWscC63Jdn1GfDtRj8hgv4Q6Zppvpwb"
   },
 
   // market settings
-  //supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex
+  //supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex, freiexchange
   //default market is loaded by default and determines last price in header
   "markets": {
-    "coin": "JBS",
-    "exchange": "BTC",
-    "enabled": ["bittrex"],
+    "coin": "NYC",
+    "exchange": "USD",
+    "enabled": ["yobit"],
     "cryptopia_id": "1658",
     "ccex_key" : "Get-Your-Own-Key",
     "default": "bittrex"
@@ -118,6 +128,8 @@
   "twitter": "iquidus",
   "facebook": "yourfacebookpage",
   "googleplus": "yourgooglepluspage",
+  "telegram": "yourtelegramgroup",
+  "bitcointalk": "yourbtctopic",
 
   //genesis
   "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
@@ -138,15 +150,16 @@
   // HEAVY: retreive from heavys getsupply api call
   // BALANCES : total of all address balances
   // TXOUTSET : retreive from gettxoutsetinfo api call
-  "supply": "COINBASE",
+  "supply": "GETINFO",
 
   // how to acquire network hashrate
   // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s
-  // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s
+  // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s, 
+  //  if valute is POS and returns getmininginfo.netmhashpsm=0 - uses getmininginfo.netstakeweight
   "nethash": "getnetworkhashps",
 
   // nethash unitd: sets nethash API return units
-  // valid options: "P" (PH/s), "T" (TH/s), "G" (GH/s), "M" (MH/s), "K" (KH/s)
+  // valid options: "P" (PH/s), "T" (TH/s), "G" (GH/s), "M" (MH/s), "K" (KH/s), POS - (Weight)
   "nethash_units": "G",
 
   // Address labels

@@ -114,6 +114,8 @@ app.set('locale', locale);
 app.set('display', settings.display);
 app.set('markets', settings.markets);
 app.set('twitter', settings.twitter);
+app.set('telegram', settings.telegram);
+app.set('bitcointalk',settings.bitcointalk);
 app.set('genesis_block', settings.genesis_block);
 app.set('index', settings.index);
 app.set('heavy', settings.heavy);
@@ -122,6 +124,7 @@ app.set('nethash', settings.nethash);
 app.set('nethash_units', settings.nethash_units);
 app.set('show_sent_received', settings.show_sent_received);
 app.set('logo', settings.logo);
+app.set('logoref',settings.logoref);
 app.set('theme', settings.theme);
 app.set('labels', settings.labels);
 

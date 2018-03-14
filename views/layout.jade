@@ -5,7 +5,7 @@ html
     link(rel='stylesheet', href='/themes/#{settings.theme}/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
     link(rel='stylesheet', href='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css')
-    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
@@ -54,7 +54,43 @@ html
         }, 60000);
         update_stats();
       });
+
+    script(type='text/javascript').
+     (function (d, w, c) {
+     (w[c] = w[c] || []).push(function() {
+     try {
+     w.yaCounter47221251 = new Ya.Metrika({
+     id:47221251,
+     clickmap:true,
+     trackLinks:true,
+     accurateTrackBounce:true
+     });
+     } catch(e) { }
+     });
+     var n = d.getElementsByTagName("script")[0],
+     s = d.createElement("script"),
+     f = function () { n.parentNode.insertBefore(s, n); };
+     s.type = "text/javascript";
+     s.async = true;
+     s.src = "https://mc.yandex.ru/metrika/watch.js";
+     if (w.opera == "[object Opera]") {
+     d.addEventListener("DOMContentLoaded", f, false);
+     } else { f(); }
+     })(document, window, "yandex_metrika_callbacks");
+
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-112695258-1')
+    
+    script.
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     gtag('config', 'UA-112695258-1');
+
   body
+    div
+     img(src='https://mc.yandex.ru/watch/47221251', style='position:absolute; left:-9999px;', alt='')
+
+
     - function format_unixtime(unixtime) {
       - var a = new Date(unixtime*1000);  
       - var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -125,11 +161,20 @@ html
                 a.navbar-link(href='/info')
                   span.glyphicon.glyphicon-info-sign
                   span.menu-text #{settings.locale.menu_api}
+
     .col-md-12
       .row.text-center
-        .col-md-2.col-md-offset-1
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
+
+        .col-md-2
+         if settings.logoref
+          a(href='#{settings.logoref}' target='_blank') #[img(src='#{settings.logo}', style='height:100px;'  )]
+         else 
+          img(src='#{settings.logo}', style='height:100px;' )
+
+        .col-md-7
+         table.table-hover.table-bordered
+          tr
+           td 
               if settings.nethash_units == 'K'
                 strong #{settings.locale.network} (KH/s)
               else if settings.nethash_units == 'M'
@@ -142,49 +187,55 @@ html
                 strong #{settings.locale.network} (PH/s)
               else if settings.nethash_units == 'H'
                 strong #{settings.locale.network} (H/s)
-            .panel-body
+              else if settings.nethash_units == 'POS'
+                strong #{settings.locale.network} weight
+           td(align='left')
               if settings.index.difficulty == 'Hybrid'
                label#hashrate - 
                <br>
                label#lblX1  
               else  
                label#hashrate - 
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              strong #{settings.locale.difficulty}
-            .panel-body
+          tr
+           td
+            strong #{settings.locale.difficulty}
+           td(align='left')
+
               if settings.index.difficulty == 'Hybrid'
                label#difficulty -
                <br>
                label#difficultyHybrid -
               else
                label#difficulty -
-        .col-md-2.col-sm-12
-          img(src='#{settings.logo}', style='margin-top:-15px;height:128px;')
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
+          tr
+           td
               strong #{settings.locale.ex_supply} (#{settings.symbol})
-            .panel-body
+           td(align='left')
               if settings.index.difficulty == 'Hybrid'
                label#supply - 
                <br>
                label#lblX1
               else
                label#supply -  
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
+
+          tr
+           td
               strong #{settings.markets.exchange} Price
-            .panel-body
+           td(align='left')
               if settings.index.difficulty == 'Hybrid'
                label#lastPrice -
                <br>
                label#lblX1
               else
                label#lastPrice - 
-                 
+        
+        .col-md-1
+            script(type='text/javascript', src='https://files.coinmarketcap.com/static/widget/currency.js')
+            .coinmarketcap-currency-widget(data-currencyid="298" data-base="USD" data-secondary="BTC" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-stats="USD" data-statsticker="true")
+
+
+               
+
       .row.text-center(style='margin-top:10px;margin-bottom:20px;')
         form.form-inline(method='post', action='/search')      
           #index-search.form-group
@@ -192,12 +243,30 @@ html
             button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
     block content
     .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
-      .col-md-4
+      .col-md-2
+
         if settings.display.twitter
           ul.nav.navbar-nav
             li.pull-left
               a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')
                 span.glyphicon.fa.fa-twitter
+
+        if settings.display.telegram
+          ul.nav.navbar-nav
+            li.pull-left
+              a#twitter-icon(href="https://t.me/#{settings.telegram}", target='_blank')
+                span.glyphicon.fa.fa-telegram
+
+
+        if settings.display.bitcointalk
+          ul.nav.navbar-nav
+            li.pull-left
+              a#twitter-icon(href="https://bitcointalk.org/index.php?topic=#{settings.bitcointalk}", target='_blank')
+                span.glyphicon.fa.fa-btc
+
+
+
+
         if settings.display.facebook
           ul.nav.navbar-nav
             li.pull-left
@@ -208,12 +277,25 @@ html
             li.pull-left
               a#googleplus-icon(href="https://plus.google.com/#{settings.googleplus}", target='_blank')
                 span.glyphicon.fa.fa-google-plus
-      .col-md-4
+
+                
+
+
+      .col-md-7
         ul.nav
           li.text-center(style='margin-left:80px;margin-right:80px;')
             p(style='margin-top:15px;') 
-              a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer 
+              a.navbar-link(href='https://yobit.net/en/trade/NYC/BTC',target='_blank',style='color:#FF0000') Buy NYCoin on Yobit!
+              br
+              span Support the Explorer maintainer: RDHXiRSRvbznzrbx1LpvP3WvkUjhvjDvfd
+
+
+
       span.connections
+        a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank', title='Powered by Iquidus Explorer')
+         span.glyphicon.fa.fa-github &nbsp 
+        a.navbar-link(href="https://github.com/NewYorkCoin-NYC", target='_blank')
+         span.glyphicon.fa.fa-github-alt &nbsp 
         label#lblBlockcount.label.label-default -
         label#lblConnections.label.label-default -
 
