@@ -11,6 +11,7 @@ An open source block explorer written in node.js.
 *  [Vanillacoin](https://blockchain.vanillacoin.net/)
 *  [Neoscoin](http://explorer.infernopool.com/)  
 *  [C2Chain](http://c2chain.info/)
+*  [Tokyocoin](http://tokyocoin.xyz)
 
 *note: If you would like your instance mentioned here contact me*
 
@@ -89,6 +90,10 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
 
 
 *It is recommended to have this script launched via a cronjob at 1+ min intervals.*
+
+Also scripts/sync.js index update can be called from your coind when new block appears
+For this, use -blocknotify parameter and example scripts from contrib/scripts
+
 
 **crontab**
 
