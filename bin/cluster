@@ -12,6 +12,7 @@ if (cluster.isMaster) {
       process.on('SIGINT', function() {
         console.log('Cluster shutting down..');
         for (var id in cluster.workers) {
+			console.log('Killing worker: ' + id);
           cluster.workers[id].kill();
         }
         // exit the master process

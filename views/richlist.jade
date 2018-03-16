@@ -32,10 +32,10 @@ block content
           }
         }
       );
+      $(window).resize(function () { 
+        pieWealthDist.replot( { resetAxes: false } );
+      });
     });
-    $(window).resize(function () { 
-      pieWealthDist.replot( { resetAxes: false } );
-    });  
   .col-xs-12.col-md-8
     .tabpanel
       ul.nav.nav-tabs(role='tablist')
@@ -88,7 +88,7 @@ block content
               th
                 span #{settings.locale.total}
               td 
-              td.text-center #{(100 - parseFloat(distd.percent)).toFixed(2)}
+              td.text-center #{(parseFloat(dista.percent) + parseFloat(distb.percent) + parseFloat(distc.percent) + parseFloat(distd.percent)).toFixed(2)}
       center
         div#pieChart(style="width:300px;height:305px;margin:0px;")
   .row.footer-margin
