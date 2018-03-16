@@ -61,7 +61,7 @@
   // menu settings
   "display": {
     "api": true,
-    "markets": false,
+    "markets": true,
     "richlist": true,
     "twitter": true,
     "facebook": true,
