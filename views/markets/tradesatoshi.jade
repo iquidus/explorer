@@ -1,5 +1,5 @@
 extends menu
- 
+
 block market_view
   .row
     .col-md-12  
@@ -16,17 +16,13 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_top_bid}
               th.hidden-xs #{settings.locale.mkt_top_ask}
               th.hidden-xs #{settings.locale.mkt_last}
-              th #{settings.locale.mkt_volume} #{marketdata.coin}
-              th #{settings.locale.mkt_volume} #{marketdata.exchange}
           tbody
             tr
               td #{marketdata.data.summary.high}
               td #{marketdata.data.summary.low}
-              td.hidden-xs #{marketdata.data.summary.bid}
-              td.hidden-xs #{marketdata.data.summary.ask}
+              td.hidden-xs #{marketdata.data.summary.buy}
+              td.hidden-xs #{marketdata.data.summary.sell}
               td.hidden-xs #{marketdata.data.summary.last}
-              td #{marketdata.data.summary.volume}
-              td #{marketdata.data.summary.volume_btc}
   .row
     .col-md-6.col-xs-12
       .panel.panel-default
@@ -42,12 +38,12 @@ block market_view
             each buy in marketdata.data.buys
               tr
                 td
-                  =buy.price
+                  =buy[0].toFixed(8)
                 td
-                  =buy.amount
+                  =buy[1].toFixed(8)
                 td.hidden-xs
-                  =buy.total
-
+                  - var total = buy[0] * buy[1];
+                  =total.toFixed(8)
     .col-md-6.col-xs-12
       .panel.panel-default
         .panel-heading
@@ -62,11 +58,12 @@ block market_view
             each sell in marketdata.data.sells
               tr
                 td
-                  =sell.price
+                  =sell[0].toFixed(8)
                 td
-                  =sell.amount
+                  =sell[1].toFixed(8)
                 td.hidden-xs
-                  =sell.total
+                  - var total = sell[0] * sell[1];
+                  =total.toFixed(8)
   .row   
     .col-md-12
       .panel.panel-default
@@ -82,30 +79,30 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
             each order in marketdata.data.history
-              if order.ordertype == 'Buy'
+              if order.type == 'bid'
                 tr.success
                   td.hidden-xs
-                    =order.ordertype
+                    =order.type
                   td
-                    =order.amount
+                    =order.amount.toFixed(8)
                   td
-                    =order.price
+                    =order.price.toFixed(8)
                   td
-                    =order.total
+                    - var total = order.amount * order.price;
+                    =total.toFixed(8)
                   td.hidden-xs
-                    =(new Date(order.timestamp * 1000).toUTCString())
+                    =format_unixtime(order.timestamp)       
               else
                 tr.danger 
                   td.hidden-xs
-                    =order.ordertype
+                    =order.type
                   td
-                    =order.amount
+                    =order.amount.toFixed(8)
                   td
-                    =order.price
+                    =order.price.toFixed(8)
                   td
-                    =order.total
+                    - var total = order.amount * order.price;
+                    =total.toFixed(8)
                   td.hidden-xs
-                     =(new Date(order.timestamp * 1000).toUTCString())
-
+                    =format_unixtime(order.timestamp)
       .footer-padding
-
