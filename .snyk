@@ -1,0 +1,84 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.10.2
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:braces:20180219':
+    - anymatch > micromatch > braces:
+        reason: None given
+        expires: '2018-04-20T14:01:33.336Z'
+    - chokidar > anymatch > micromatch > braces:
+        reason: None given
+        expires: '2018-04-20T14:01:33.337Z'
+    - forever-monitor > chokidar > anymatch > micromatch > braces:
+        reason: None given
+        expires: '2018-04-20T14:01:33.337Z'
+  'npm:cookie-signature:20160804':
+    - bitcoin-node-api > express > cookie-signature:
+        reason: None given
+        expires: '2018-04-20T14:01:33.337Z'
+    - bitcoin-node-api > express > connect > cookie-signature:
+        reason: None given
+        expires: '2018-04-20T14:01:33.337Z'
+  'npm:express:20140912':
+    - bitcoin-node-api > express:
+        reason: None given
+        expires: '2018-04-20T14:01:33.337Z'
+  'npm:fresh:20170908':
+    - bitcoin-node-api > express > fresh:
+        reason: None given
+        expires: '2018-04-20T14:01:33.337Z'
+    - bitcoin-node-api > express > send > fresh:
+        reason: None given
+        expires: '2018-04-20T14:01:33.338Z'
+    - bitcoin-node-api > express > connect > fresh:
+        reason: None given
+        expires: '2018-04-20T14:01:33.338Z'
+    - bitcoin-node-api > express > connect > send > fresh:
+        reason: None given
+        expires: '2018-04-20T14:01:33.338Z'
+  'npm:mime:20170907':
+    - express > accepts > mime:
+        reason: None given
+        expires: '2018-04-20T14:01:33.338Z'
+    - bitcoin-node-api > express > send > mime:
+        reason: None given
+        expires: '2018-04-20T14:01:33.338Z'
+    - bitcoin-node-api > express > connect > send > mime:
+        reason: None given
+        expires: '2018-04-20T14:01:33.338Z'
+  'npm:qs:20170213':
+    - bitcoin-node-api > express > connect > qs:
+        reason: None given
+        expires: '2018-04-20T14:01:33.338Z'
+  'npm:send:20140912':
+    - bitcoin-node-api > express > send:
+        reason: None given
+        expires: '2018-04-20T14:01:33.339Z'
+    - bitcoin-node-api > express > connect > send:
+        reason: None given
+        expires: '2018-04-20T14:01:33.339Z'
+  'npm:send:20151103':
+    - bitcoin-node-api > express > send:
+        reason: None given
+        expires: '2018-04-20T14:01:33.339Z'
+    - bitcoin-node-api > express > connect > send:
+        reason: None given
+        expires: '2018-04-20T14:01:33.339Z'
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:qs:20140806':
+    - bitcoin-node-api > express > connect > qs:
+        patched: '2018-03-21T13:58:13.005Z'
+  'npm:qs:20140806-1':
+    - bitcoin-node-api > express > connect > qs:
+        patched: '2018-03-21T13:58:13.005Z'
+  'npm:uglify-js:20150824':
+    - jade > transformers > uglify-js:
+        patched: '2018-03-21T13:58:13.005Z'
+    - jade > constantinople > uglify-js:
+        patched: '2018-03-21T13:58:13.005Z'
+  'npm:uglify-js:20151024':
+    - jade > transformers > uglify-js:
+        patched: '2018-03-21T13:58:13.005Z'
+    - jade > constantinople > uglify-js:
+        patched: '2018-03-21T13:58:13.005Z'
