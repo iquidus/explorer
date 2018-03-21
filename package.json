@@ -1,3 +1,5 @@
+  GNU nano 2.5.3                                                                 File: package.json
+
 {
   "name": "explorer",
   "version": "1.6.1",
@@ -5,25 +7,29 @@
   "scripts": {
     "start": "node --stack-size=10000 ./bin/cluster",
     "stop": "kill -2 $(cat tmp/cluster.pid)",
-    "test": "node ./node_modules/jasmine/bin/jasmine.js"
+    "test": "snyk test && node ./node_modules/jasmine/bin/jasmine.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
-    "express": "~4.2.0",
-    "static-favicon": "~1.0.0",
-    "morgan": "~1.0.0",
-    "cookie-parser": "~1.0.1",
-    "body-parser": "~1.0.0",
-    "debug": "~0.7.4",
-    "jade": "~1.3.0",
-    "bitcoin-node-api": "0.1.0",
-    "request": "2.74.0",
+    "bitcoin-node-api": "^0.1.0",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.3.2",
+    "debug": "^2.6.9",
+    "express": "^4.16.0",
+    "jade": "^1.8.0",
     "jsonminify": "0.2.3",
+    "markdown-js": "0.0.4",
     "mongodb": "2.2.13",
-    "mongoose": "4.7.6",
-    "markdown-js": "0.0.3",
-    "qr-image": "~2.0.0"
+    "mongoose": "^4.11.14",
+    "morgan": "~1.0.0",
+    "qr-image": "~2.0.0",
+    "request": "^2.82.0",
+    "snyk": "^1.70.2",
+    "static-favicon": "~1.0.0"
   },
   "devDependencies": {
     "jasmine": "~2.1.0"
-  }
+  },
+  "snyk": true
 }
