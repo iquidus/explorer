@@ -68,17 +68,17 @@ ignore:
 patch:
   'npm:qs:20140806':
     - bitcoin-node-api > express > connect > qs:
-        patched: '2018-03-21T13:58:13.005Z'
+        patched: '2018-03-21T14:10:49.753Z'
   'npm:qs:20140806-1':
     - bitcoin-node-api > express > connect > qs:
-        patched: '2018-03-21T13:58:13.005Z'
+        patched: '2018-03-21T14:10:49.753Z'
   'npm:uglify-js:20150824':
     - jade > transformers > uglify-js:
-        patched: '2018-03-21T13:58:13.005Z'
+        patched: '2018-03-21T14:10:49.753Z'
     - jade > constantinople > uglify-js:
         patched: '2018-03-21T13:58:13.005Z'
   'npm:uglify-js:20151024':
     - jade > transformers > uglify-js:
-        patched: '2018-03-21T13:58:13.005Z'
+        patched: '2018-03-21T14:10:49.753Z'
     - jade > constantinople > uglify-js:
         patched: '2018-03-21T13:58:13.005Z'
