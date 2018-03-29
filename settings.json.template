@@ -63,13 +63,12 @@
     "api": true,
     "markets": false,
     "richlist": true,
-    "twitter": true,
-    "facebook": true,
+    "twitter": false,
+    "facebook": false,
     "googleplus": false,
-//    "bitcointalk": true,
-//    "website": false,
-//    "slack": false,
-//    "github": true,
+    "bitcointalk": false,
+    "website": false,
+    "github": false,
     "search": true,
     "movement": true,
     "network": true
@@ -120,13 +119,13 @@
   },
 
   // twitter, facebook, googleplus, bitcointalk, github, slack, website
-  "twitter": "MinCoinus",
-  "facebook": "mincoin.us",
+  "twitter": "yourtwitter",
+  "facebook": "yourfacebook",
   "googleplus": "yourgooglepluspage",
-//  "bitcointalk": "165397",
-//  "github": "mincoin/mincoin",
-//  "slack": "yourfullslackinviteurl",
-//  "website": "mincoin.us",
+  "bitcointalk": "bitcointalk thread id",
+  "github": "github repo",
+  "website": "website",
+  "discord": "discordlink",
 
   //genesis
   "genesis_tx": "97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9",
