@@ -20,12 +20,12 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.data.summary.high}
+              td #{marketdata.data.summary.high.toFixed(8)}
               td #{marketdata.data.summary.low.toFixed(8)}
-              td #{marketdata.data.summary.volume}
-              td.hidden-xs #{marketdata.data.summary.bid}
-              td.hidden-xs #{marketdata.data.summary.ask}
-              td.hidden-xs #{marketdata.data.summary.last}
+              td #{marketdata.data.summary.volume.toFixed(2)}
+              td.hidden-xs #{marketdata.data.summary.bid.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.ask.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.last.toFixed(8)}
               - var tradesatoshi_change = parseFloat(marketdata.data.summary.change).toFixed(4);
               if tradesatoshi_change >= 0
                 td.success +#{tradesatoshi_change} %
