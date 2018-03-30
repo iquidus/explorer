@@ -71,7 +71,7 @@ block market_view
                   =sell.amount
                 td.hidden-xs
                   =sell.total
-  .row   
+  .row
     .col-md-12
       .panel.panel-default
         .panel-heading
@@ -86,28 +86,28 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
             each result in marketdata.data.history
-              if result.OrderType == 'BUY'
+              if result.OrderType == 'Buy'
                 tr.success
                   td.hidden-xs
-                    =result.OrderType
+                    =result.orderType
                   td
-                    =result.Quantity.toFixed(8)
+                    =result.quantity.toFixed(8)
                   td
-                    =result.Price.toFixed(8)
+                    =result.price.toFixed(8)
                   td
-                    =result.Total.toFixed(8)
+                    =result.total.toFixed(8)
                   td.hidden-xs
-                    =result.TimeStamp
+                    =result.timeStamp
               else
-                tr.danger 
+                tr.danger
                   td.hidden-xs
-                    =result.OrderType
+                    =result.orderType
                   td
-                    =result.Quantity.toFixed(8)
+                    =result.quantity.toFixed(8)
                   td
-                    =result.Price.toFixed(8)
+                    =result.price.toFixed(8)
                   td
-                    =result.Total.toFixed(8)
+                    =result.total.toFixed(8)
                   td.hidden-xs
-                    =result.TimeStamp
+                    =result.timeStamp
       .footer-padding
