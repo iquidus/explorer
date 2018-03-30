@@ -7,7 +7,7 @@
   // name your instance!
   "title": "Mincoin Explorer",
 
-  "address": "127.0.0.1:3001",
+  "address": "explore-the-minco.in:3001",
 
   // coin name
   "coin": "Mincoin",
@@ -48,7 +48,7 @@
   "wallet": {
     "host": "localhost",
     "port": 9335,
-    "user": "mincoinrpcuser",
+    "user": "mincoinrpcusername",
     "pass": "mincoinrpcpassword"
   },
 
@@ -61,14 +61,15 @@
   // menu settings
   "display": {
     "api": true,
-    "markets": false,
+    "markets": true,
     "richlist": true,
-    "twitter": false,
-    "facebook": false,
+    "twitter": true,
+    "facebook": true,
     "googleplus": false,
-    "bitcointalk": false,
-    "website": false,
-    "github": false,
+    "weburl": false,
+    "discord": true,
+    "bitcointalk": true,
+    "github": true,
     "search": true,
     "movement": true,
     "network": true
@@ -85,7 +86,7 @@
   "api": {
     "blockindex": 1,
     "blockhash": "12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2",
-    "txhash": "97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9",
+    "txhash": "bcbacc8c13ad6670d712e7b340ba97ce91ec3d4fed48e3c5de48da9e51491ca6",
     "address": "M9PqFF3vXRwb7QpbdxdtqnXeL7s6EwEeF6"
   },
 
@@ -118,14 +119,14 @@
     "high_flag": 500
   },
 
-  // twitter, facebook, googleplus, bitcointalk, github, slack, website
-  "twitter": "yourtwitter",
-  "facebook": "yourfacebook",
+  // twitter, facebook, googleplus, bitcointalk, github, website, discord
+  "twitter": "MinCoinus",
+  "facebook": "mincoin.us",
   "googleplus": "yourgooglepluspage",
-  "bitcointalk": "bitcointalk thread id",
-  "github": "github repo",
-  "website": "website",
-  "discord": "discordlink",
+  "bitcointalk": "165397",
+  "github": "mincoin/mincoin",
+  "weburl": "mincoin.us",
+  "discord": "UWWU4sA",
 
   //genesis
   "genesis_tx": "97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9",
