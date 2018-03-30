@@ -21,7 +21,7 @@ block market_view
           tbody
             tr
               td #{marketdata.data.summary.high}
-              td #{marketdata.data.summary.low}
+              td #{marketdata.data.summary.low.toFixed(8)}
               td #{marketdata.data.summary.volume}
               td.hidden-xs #{marketdata.data.summary.bid}
               td.hidden-xs #{marketdata.data.summary.ask}
