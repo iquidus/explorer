@@ -97,7 +97,7 @@ block market_view
                   td
                     =result.total.toFixed(8)
                   td.hidden-xs
-                    =result.timeStamp.substr(0, 19).replace("T", "_")." GMT"
+                    =result.timeStamp.substr(0, 19).replace("T", "_")
               else
                 tr.success
                   td.hidden-xs
@@ -109,5 +109,5 @@ block market_view
                   td
                     =result.total.toFixed(8)
                   td.hidden-xs
-                    =result.timeStamp.substr(0, 19).replace("T", "_")." GMT"
+                    =result.timeStamp.substr(0, 19).replace("T", "_")
       .footer-padding
