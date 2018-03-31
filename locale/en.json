@@ -122,7 +122,7 @@
     "mkt_total": "Total",
     "mkt_trade_history": "Trade History",
     "mkt_type": "Type",
-    "mkt_time_stamp": "Time Stamp",
+    "mkt_time_stamp": "Time Stamp (GMT)",
 
     // Markets
     "poloniex": "Poloniex",
