@@ -36,7 +36,7 @@ block market_view
       .panel.panel-default
         .panel-heading
           h3.panel-title #{settings.locale.mkt_buy_orders}
-        table.table.table-striped.table-bordered.order-table
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
               th #{settings.locale.mkt_price} (#{marketdata.exchange})
@@ -56,7 +56,7 @@ block market_view
       .panel.panel-default
         .panel-heading
           h3.panel-title #{settings.locale.mkt_sell_orders}
-        table.table.table-striped.table-bordered.order-table
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
               th #{settings.locale.mkt_price} (#{marketdata.exchange})
@@ -71,3 +71,43 @@ block market_view
                   =sell.amount
                 td.hidden-xs
                   =sell.total
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_trade_history}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.hidden-xs #{settings.locale.mkt_type}
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th.hidden-xs #{settings.locale.mkt_time_stamp}
+          tbody
+            each result in marketdata.data.history
+              if result.orderType == 'Sell'
+                tr.danger
+                  td.hidden-xs
+                    =result.orderType
+                  td
+                    =result.quantity.toFixed(8)
+                  td
+                    =result.price.toFixed(8)
+                  td
+                    =result.total.toFixed(8)
+                  td.hidden-xs
+                    =result.timeStamp.substr(0, 19).replace("T", "	")
+              else
+                tr.success
+                  td.hidden-xs
+                    =result.orderType
+                  td
+                    =result.quantity.toFixed(8)
+                  td
+                    =result.price.toFixed(8)
+                  td
+                    =result.total.toFixed(8)
+                  td.hidden-xs
+                    =result.timeStamp.substr(0, 19).replace("T", "	")
+      .footer-padding

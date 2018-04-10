@@ -2,6 +2,13 @@ doctype html
 html
   head
     title= settings.title
+    meta( name='Mincoin' content='Mincoin' )
+    meta( name='description' content='A blockexplorer for Mincoin' )
+    meta( name='keywords' content='Mincoin, Blockexplorer, MNC, Cryptocurrency, Address, TX, API, ' )
+    meta( name='page-type' content='statistic' )
+    meta( name='audience' content='all' )
+    meta( name='robots' content='index, follow' )
+    meta( name='google-site-verification' content='-OAY08TdpOLJkPNBlXuhb-19TnReb6CNj0Oxcp6_oJY' )
     link(rel='stylesheet', href='/themes/#{settings.theme}/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
     link(rel='stylesheet', href='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css')
@@ -17,14 +24,14 @@ html
     script(src='/vendor/jqplot/plugins/jqplot.barRenderer.min.js')
     script(src='/vendor/jqplot/plugins/jqplot.categoryAxisRenderer.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js')
-    script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')  
+    script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')
     script(src='//cdn.datatables.net/responsive/1.0.1/js/dataTables.responsive.js')
     script(src='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js')
     script(src='/javascripts/chart.js')
     script.
       $(document).ready(function(){
         $('##{active}').addClass('active');
-        function update_stats(){   
+        function update_stats(){
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(json.data[0].supply.toFixed());
             $("#difficulty").text(json.data[0].difficulty.toFixed(4));
@@ -38,15 +45,15 @@ html
         }
         $('.block-last-next').tooltip({
           animation: true,
-          delay: { hide: 500 },   
+          delay: { hide: 500 },
         });
-        $('.history-table').dataTable( {        
+        $('.history-table').dataTable( {
           searching: false,
           ordering: false,
           responsive: true
         });
         $('.iquidus').css('color',$('.table').css('color'));
-        $(window).resize(function () { 
+        $(window).resize(function () {
           $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
         });
         setInterval( function() {
@@ -56,7 +63,7 @@ html
       });
   body
     - function format_unixtime(unixtime) {
-      - var a = new Date(unixtime*1000);  
+      - var a = new Date(unixtime*1000);
       - var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       - var year = a.getFullYear();
       - var month = months[a.getMonth()];
@@ -77,7 +84,7 @@ html
         - min = '0' + min
       if sec < 10
         - sec = '0' + sec
-      - var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;   
+      - var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
       - return time
     -  };
     .nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
@@ -92,7 +99,7 @@ html
         .collapse.navbar-collapse(id='navbar-collapse')
           ul.nav.navbar-nav
             li#home
-              a.navbar-link(href='/') 
+              a.navbar-link(href='/')
                 span.glyphicon.glyphicon-search
                 span.menu-text #{settings.locale.menu_explorer}
             if settings.heavy == true
@@ -101,8 +108,8 @@ html
                   span.fa.fa-star
                   span.menu-text #{settings.locale.menu_reward}
             if settings.display.movement == true
-              li#movement 
-                a.navbar-link.loading(href='/movement') 
+              li#movement
+                a.navbar-link.loading(href='/movement')
                   span.fa.fa-money
                   span.menu-text #{settings.locale.menu_movement}
             if settings.display.network == true
@@ -117,7 +124,7 @@ html
                   span.menu-text #{settings.locale.menu_richlist}
             if settings.display.markets == true
               li#markets
-                a.navbar-link.loading(href='/markets/#{settings.markets.default}') 
+                a.navbar-link.loading(href='/markets/#{settings.markets.default}')
                   span.fa.fa-line-chart
                   span.menu-text #{settings.locale.menu_markets}
             if settings.display.api == true
@@ -144,11 +151,11 @@ html
                 strong #{settings.locale.network} (H/s)
             .panel-body
               if settings.index.difficulty == 'Hybrid'
-               label#hashrate - 
+               label#hashrate -
                <br>
-               label#lblX1  
-              else  
-               label#hashrate - 
+               label#lblX1
+              else
+               label#hashrate -
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
@@ -168,11 +175,11 @@ html
               strong #{settings.locale.ex_supply} (#{settings.symbol})
             .panel-body
               if settings.index.difficulty == 'Hybrid'
-               label#supply - 
+               label#supply -
                <br>
                label#lblX1
               else
-               label#supply -  
+               label#supply -
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
@@ -183,10 +190,10 @@ html
                <br>
                label#lblX1
               else
-               label#lastPrice - 
-                 
+               label#lastPrice -
+
       .row.text-center(style='margin-top:10px;margin-bottom:20px;')
-        form.form-inline(method='post', action='/search')      
+        form.form-inline(method='post', action='/search')
           #index-search.form-group
             input.form-control(type='text', name='search', placeholder='#{settings.locale.ex_search_message}', style='min-width:80%;margin-right:5px;')
             button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
@@ -211,8 +218,8 @@ html
         if settings.display.discord
           ul.nav.navbar-nav
             li.pull-left
-              a#github-icon(href="https://discord.gg/UWWU4sA", target='_blank')
-                span.glyphicon.fa.fa-github
+              a#btc-icon(href="https://discord.gg/UWWU4sA", target='_blank')
+                span.glyphicon.fa.fa-heart
         if settings.display.bitcointalk
           ul.nav.navbar-nav
             li.pull-left
@@ -221,8 +228,8 @@ html
         if settings.display.weburl
           ul.nav.navbar-nav
             li.pull-left
-              a#cloud-icon(href="#{settings.weburl}", target='_blank')
-                span.glyphicon.cloud
+              a#globe-icon(href="https://www.mincoin.us/", target='_blank')
+                span.glyphicon.fa.fa-globe
         if settings.display.github
           ul.nav.navbar-nav
             li.pull-left
@@ -231,11 +238,8 @@ html
       .col-md-4
         ul.nav
           li.text-center(style='margin-left:80px;margin-right:80px;')
-            p(style='margin-top:15px;') 
-              a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer 
+            p(style='margin-top:15px;')
+              a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer
       span.connections
         label#lblBlockcount.label.label-default -
         label#lblConnections.label.label-default -
-
-
-              

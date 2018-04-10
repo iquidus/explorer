@@ -30,7 +30,5 @@ node_modules
 settings.json
 .idea
 *~
-*.ico
-*.png
 #https://www.internetwache.org/analyse-der-ds-store-datei-in-den-alexa-top-1-millionen-12-03-2018/
 .DS_Store
