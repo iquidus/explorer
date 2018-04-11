@@ -31,8 +31,10 @@ settings.json
 .idea
 *~
 #https://www.internetwache.org/analyse-der-ds-store-datei-in-den-alexa-top-1-millionen-12-03-2018/
+key/
 .DS_Store
 .Key
 .crt
 .pem
 .cert
+public/google9c12edd62df1400c.html
