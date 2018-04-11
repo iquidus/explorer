@@ -1,4 +1,4 @@
 User-Agent: *
 Disallow:
 
-Sitemap: http://explore-the-minco.in/sitemap.xml
+Sitemap: https://explore-the-minco.in/sitemap.xml

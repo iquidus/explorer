@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"> 
 <url>
-  <loc>http://explore-the-minco.in/</loc>
+  <loc>https://explore-the-minco.in/</loc>
   <priority>1.0</priority>
   <changefreq>always</changefreq>
   <lastmod>2018-04-01</lastmod>
 </url>
 <url>
-  <loc>http://explore-the-minco.in/movement</loc>
+  <loc>https://explore-the-minco.in/movement</loc>
   <priority>1.0</priority>
   <changefreq>always</changefreq>
   <lastmod>2018-04-01</lastmod>
 </url>
 <url>
-  <loc>http://explore-the-minco.in/network</loc>
+  <loc>https://explore-the-minco.in/network</loc>
   <priority>1.0</priority>
   <changefreq>always</changefreq>
   <lastmod>2018-04-01</lastmod>
 </url>
 <url>
-  <loc>http://explore-the-minco.in/richlist</loc>
+  <loc>https://explore-the-minco.in/richlist</loc>
   <priority>1.0</priority>
   <changefreq>always</changefreq>
   <lastmod>2018-04-01</lastmod>
 </url>
 <url>
-  <loc>http://explore-the-minco.in/markets/tradesatoshi</loc>
+  <loc>https://explore-the-minco.in/markets/tradesatoshi</loc>
   <priority>1.0</priority>
   <changefreq>always</changefreq>
   <lastmod>2018-04-01</lastmod>
 </url>
 <url>
-  <loc>http://explore-the-minco.in/info</loc>
+  <loc>https://explore-the-minco.in/info</loc>
   <priority>1.0</priority>
   <changefreq>always</changefreq>
   <lastmod>2018-04-01</lastmod>
