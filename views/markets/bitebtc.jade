@@ -89,7 +89,7 @@ block market_view
               if data.type == 'sell'
                 tr.danger
                   td.hidden-xs
-                    =data.orderType
+                    =data.type
                   td
                     =data.amount.toFixed(8)
                   td
@@ -101,7 +101,7 @@ block market_view
               else
                 tr.success
                   td.hidden-xs
-                    =data.orderType
+                    =data.type
                   td
                     =data.amount.toFixed(8)
                   td
