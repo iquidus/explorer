@@ -91,7 +91,7 @@
   },
 
   // market settings
-  //supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex, coinexchange, tradesatoshi
+  //supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex, coinexchange, tradesatoshi, bitebtc
   //default market is loaded by default and determines last price in header
   "markets": {
     "coin": "MNC",
