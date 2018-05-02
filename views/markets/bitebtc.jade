@@ -4,8 +4,8 @@ block market_view
   .row
     .col-md-12
       .panel.panel-default
-	    .panel-heading
-          strong #{settings.locale.tradesatoshi} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+        .panel-heading
+          strong #{settings.locale.bitebtc} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='https://coinmarketcap.com/currencies/mincoin/#charts')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}')
         table.table.table-bordered.summary-table
@@ -85,29 +85,29 @@ block market_view
               th #{settings.locale.mkt_total} (#{marketdata.exchange})
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
-            each data in marketdata.data.history
-              if data.type == 'sell'
+            each result in marketdata.data.history
+              if result.orderType == 'Sell'
                 tr.danger
                   td.hidden-xs
-                    =data.type
+                    =result.orderType
                   td
-                    =data.amount.toFixed(8)
+                    =result.quantity.toFixed(8)
                   td
-                    =data.rate.toFixed(8)
+                    =result.price.toFixed(8)
                   td
-                    =data.total.toFixed(8)
+                    =result.total.toFixed(8)
                   td.hidden-xs
-                    =data.date
+                    =result.timeStamp.substr(0, 19).replace("T", "	")
               else
                 tr.success
                   td.hidden-xs
-                    =data.type
+                    =result.orderType
                   td
-                    =data.amount.toFixed(8)
+                    =result.quantity.toFixed(8)
                   td
-                    =data.rate.toFixed(8)
+                    =result.price.toFixed(8)
                   td
-                    =data.total.toFixed(8)
+                    =result.total.toFixed(8)
                   td.hidden-xs
-                    =data.date
+                    =result.timeStamp.substr(0, 19).replace("T", "	")
       .footer-padding
