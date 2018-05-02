@@ -5,7 +5,7 @@ block market_view
     .col-md-12
       .panel.panel-default
         .panel-heading
-          strong #{settings.locale.cryptohub} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong #{settings.locale.bitebtc} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href=#)
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}')
         table.table.table-bordered.summary-table
@@ -26,11 +26,11 @@ block market_view
               td.hidden-xs #{marketdata.data.summary.bid.toFixed(8)}
               td.hidden-xs #{marketdata.data.summary.ask.toFixed(8)}
               td.hidden-xs #{marketdata.data.summary.last.toFixed(8)}
-              - var cryptohub_change = parseFloat(marketdata.data.summary.change).toFixed(4);
-              if cryptohub_change >= 0
-                td.success +#{cryptohub_change} %
+              - var bitebtc_change = parseFloat(marketdata.data.summary.change).toFixed(4);
+              if bitebtc_change >= 0
+                td.success +#{bitebtc_change} %
               else
-                td.danger #{cryptohub_change} %
+                td.danger #{bitebtc_change} %
   .row
     .col-md-6.col-xs-12
       .panel.panel-default
