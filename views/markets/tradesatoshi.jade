@@ -20,12 +20,12 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.data.summary.high.toFixed(8)}
-              td #{marketdata.data.summary.low.toFixed(8)}
-              td #{marketdata.data.summary.volume.toFixed(2)}
-              td.hidden-xs #{marketdata.data.summary.bid.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.ask.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.last.toFixed(8)}
+              td #{marketdata.data.summary.high}
+              td #{marketdata.data.summary.low}
+              td #{marketdata.data.summary.volume}
+              td.hidden-xs #{marketdata.data.summary.bid}
+              td.hidden-xs #{marketdata.data.summary.ask}
+              td.hidden-xs #{marketdata.data.summary.last}
               - var tradesatoshi_change = parseFloat(marketdata.data.summary.change).toFixed(4);
               if tradesatoshi_change >= 0
                 td.success +#{tradesatoshi_change} %
@@ -91,11 +91,11 @@ block market_view
                   td.hidden-xs
                     =result.orderType
                   td
-                    =result.quantity.toFixed(8)
+                    =result.quantity
                   td
-                    =result.price.toFixed(8)
+                    =result.price
                   td
-                    =result.total.toFixed(8)
+                    =result.total
                   td.hidden-xs
                     =result.timeStamp.substr(0, 19).replace("T", "	")
               else
@@ -103,11 +103,11 @@ block market_view
                   td.hidden-xs
                     =result.orderType
                   td
-                    =result.quantity.toFixed(8)
+                    =result.quantity
                   td
-                    =result.price.toFixed(8)
+                    =result.price
                   td
-                    =result.total.toFixed(8)
+                    =result.total
                   td.hidden-xs
                     =result.timeStamp.substr(0, 19).replace("T", "	")
       .footer-padding
