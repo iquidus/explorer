@@ -4,9 +4,9 @@ block market_view
   .row
     .col-md-12
       .panel.panel-default
-        .panel-heading
-          strong #{settings.locale.bitebtc} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
-          a(href=#)
+	    .panel-heading
+          strong #{settings.locale.tradesatoshi} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='https://coinmarketcap.com/currencies/mincoin/#charts')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}')
         table.table.table-bordered.summary-table
           thead
