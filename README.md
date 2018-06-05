@@ -11,6 +11,7 @@ An open source block explorer written in node.js.
 *  [Vanillacoin](https://blockchain.vanillacoin.net/)
 *  [Neoscoin](http://explorer.infernopool.com/)  
 *  [C2Chain](http://c2chain.info/)
+*  [Vertcoin](http://explorer.vertcoin.info/)
 
 *note: If you would like your instance mentioned here contact me*
 
