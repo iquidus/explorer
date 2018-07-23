@@ -92,9 +92,9 @@ block content
                 td #{txn.vout.length}
                 if txn.vout.length > 0
                   - var total = txn.total / 100000000
-                  td #{total.toFixed(8)}
+                  td #{total.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")}
                 else
-                  td #{txn.total.toFixed(8)}
+                  td #{txn.total.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")}
                 td.view_tx 
                   a(href='/tx/#{txn.txid}')
                     span.glyphicon.glyphicon-eye-open 
