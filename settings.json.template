@@ -119,6 +119,10 @@
     "high_flag": 500
   },
 
+  "peers": {
+    "ipstack_api_key": "Your API Key" 
+  },
+  
   // twitter, facebook, googleplus, bitcointalk, github, website, discord
   "twitter": "MinCoinus",
   "facebook": "mincoin.us",
