@@ -2,13 +2,13 @@ doctype html
 html
   head
     title= settings.title
-    meta( name='Mincoin' content='Mincoin' )
-    meta( name='description' content='A blockexplorer for Mincoin' )
-    meta( name='keywords' content='Mincoin, Blockexplorer, MNC, Cryptocurrency, Address, TX, API, ' )
+    meta( name='#{settings.coin}' content='#{settings.coin}' )
+    meta( name='description' content='A blockexplorer for #{settings.coin}' )
+    meta( name='keywords' content='#{settings.coin}, Blockexplorer, #{settings.symbol}, Cryptocurrency, Address, TX, API, ' )
     meta( name='page-type' content='statistic' )
     meta( name='audience' content='all' )
     meta( name='robots' content='index, follow' )
-    meta( name='google-site-verification' content='-OAY08TdpOLJkPNBlXuhb-19TnReb6CNj0Oxcp6_oJY' )
+    meta( name='google-site-verification' content='#{settings.googlesearch}' )
     link(rel='stylesheet', href='/themes/#{settings.theme}/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
     link(rel='stylesheet', href='/stylesheets/dataTables.bootstrap.css')
@@ -218,22 +218,22 @@ html
         if settings.display.discord
           ul.nav.navbar-nav
             li.pull-left
-              a#btc-icon(href="https://discord.gg/UWWU4sA", target='_blank')
-                span.glyphicon.fa.fa-heart
+              a#discord-icon(href="https://discord.gg/#{settings.discord}", target='_blank')
+                span.glyphicon.fa.fa-comments
         if settings.display.bitcointalk
           ul.nav.navbar-nav
             li.pull-left
-              a#btc-icon(href="https://bitcointalk.org/index.php?topic=165397", target='_blank')
+              a#bitcointalk-icon(href="https://bitcointalk.org/index.php?topic=#{settings.bitcointalk}", target='_blank')
                 span.glyphicon.fa.fa-btc
         if settings.display.weburl
           ul.nav.navbar-nav
             li.pull-left
-              a#globe-icon(href="https://www.mincoin.us/", target='_blank')
+              a#globe-icon(href="#{settings.bitcointalk}", target='_blank')
                 span.glyphicon.fa.fa-globe
         if settings.display.github
           ul.nav.navbar-nav
             li.pull-left
-              a#github-icon(href="https://github.com/mincoin/mincoin", target='_blank')
+              a#github-icon(href="https://github.com/#{settings.github}", target='_blank')
                 span.glyphicon.fa.fa-github
       .col-md-4
         ul.nav

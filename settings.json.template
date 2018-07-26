@@ -129,8 +129,9 @@
   "googleplus": "yourgooglepluspage",
   "bitcointalk": "165397",
   "github": "mincoin/mincoin",
-  "weburl": "mincoin.us",
+  "website": "https://mincoin.us",
   "discord": "UWWU4sA",
+  "googlesearch": "googlesearch console token",
 
   //genesis
   "genesis_tx": "97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9",
