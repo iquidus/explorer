@@ -20,4 +20,4 @@
             a(href='/address/#{item.a_id}') #{item.a_id}
             include ./rl_labels.jade
           td.hidden-xs
-            =itemFixed.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
+            =itemFixed.toFixed(0)
