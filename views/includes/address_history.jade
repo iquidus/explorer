@@ -15,10 +15,10 @@ tbody
       - var vin = 0
       each r in tx.vout 
         if r.addresses == address.a_id
-          - out = r.amount
+          - out += r.amount
       each s in tx.vin
         if s.addresses == address.a_id
-          - vin = s.amount
+          - vin += s.amount
       if out > 0 && vin > 0
         td.info
           - var amount = (out - vin) / 100000000

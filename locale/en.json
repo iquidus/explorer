@@ -80,7 +80,7 @@
     "net_protocol": "Protocol",
     "net_subversion": "Sub-version",
     "net_country": "Country",
-    "net_warning": "This is sub sample of the network based on wallets that have connected to this node in the last 24hours.",
+    "net_warning": "This is sub sample of the network based on wallets that have connected to this node in the last 48 hours.",
 
     // api view
     "api_title": "API Documentation",
