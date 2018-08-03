@@ -5,12 +5,8 @@ An open source block explorer written in node.js.
 
 ### See it in action
 
-*  [Jumbucks](http://explorer.getjumbucks.com)
-*  [Sphere](http://sphere.iquidus.io)
-*  [SAR](http://explorer.sarcoin.info)
-*  [Vanillacoin](https://blockchain.vanillacoin.net/)
-*  [Neoscoin](http://explorer.infernopool.com/)  
-*  [C2Chain](http://c2chain.info/)
+*  [Mincoin](https://explore-the-minco.in)
+*  [Mincoin Deepweb](http://mincoinus7355vly.onion:8080)
 
 *note: If you would like your instance mentioned here contact me*
 
@@ -40,7 +36,7 @@ Create user with read/write access:
 
 ### Get the source
 
-    git clone https://github.com/iquidus/explorer explorer
+    git clone https://github.com/2g4y1/explorer explorer
 
 ### Install node modules
 
