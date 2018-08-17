@@ -7,6 +7,7 @@ An open source block explorer written in node.js.
 
 *  [Deutsche eMark](http://b.emark.tk/)
 *  [Sphere](http://sphere.iquidus.io)
+*  [Vertcoin](http://explorer.vertcoin.info/)
 *  [Vivo](http://vivo.explorerz.top:3003)
 *  [Florincoin](https://florincoin.info/info)
 *  [Maxcoin Explorer 1](https://explorer.maxcoinproject.net/)
