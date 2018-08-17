@@ -6,8 +6,11 @@ An open source block explorer written in node.js.
 ### See it in action
 
 *  [Sphere](http://sphere.iquidus.io)
+*  [Vivo](http://vivo.explorerz.top:3003)
+*  [Florincoin](https://florincoin.info/info)
 *  [Maxcoin Explorer 1](https://explorer.maxcoinproject.net/)
 *  [Maxcoin Explorer 2](https://explorer2.maxcoinproject.net/)
+
 
 *note: If you would like your instance mentioned here contact me*
 
