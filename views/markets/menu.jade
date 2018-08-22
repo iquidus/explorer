@@ -1,0 +1,40 @@
+extends ../layout
+
+block content
+  script.
+    $(document).ready(function(){     
+      $('.order-table').dataTable( {
+        info: false,
+        paging: false,
+        searching: false,
+        ordering: false,
+        scrollY: '250px',
+        autowidth: true,
+        responsive: true
+      });
+      $('.market-toggle').tooltip({
+        animation: true,
+        delay: { hide: 500 },   
+      });
+      $('.view-summary').on('click', function(){
+        $('#chart-panel').hide();
+        $('#summary-panel').show();
+      });
+      $('.view-chart').on('click', function(){
+        $('#summary-panel').hide();
+        $('#chart-panel').show();
+      });
+    });
+  .col-xs-12.col-md-12
+    .hidden-xs.nav.navbar.navbar-default(role='navigation' id='market_menu')
+      .container-fluid
+        .collapse.navbar-collapse(id='navbar-collapse')
+          ul.nav.navbar-nav
+            each mkt in settings.markets.enabled
+              if market == mkt
+                li.active
+                  a.navbar-link.loading(href='/markets/#{mkt}') #{settings.locale[mkt]}
+              else
+                li
+                  a.navbar-link.loading(href='/markets/#{mkt}') #{settings.locale[mkt]}
+    block market_view

@@ -1,0 +1,73 @@
+extends layout
+
+block content
+  script.
+    var rplot;
+    var colors = [ "#0071bc" ];
+    $(document).ready(function(){
+      function format_unixtime(unixtime) {
+        var a = new Date(unixtime*1000);  
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var suffix = 'th'
+        if (date == 1 || date == 21 || date == 31)
+          suffix = 'st';
+        if (date == 2 || date == 22 || date == 32)
+          suffix = 'nd';
+        if (date == 3 || date == 23)
+          suffix = 'rd';
+        if (hour < 10)
+          hour = '0' + hour;
+        if (min < 10)
+          min = '0' + min;
+        if (sec < 10)
+          sec = '0' + sec;
+        var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;   
+        return time;
+      }
+      var rtable = $('#alerts-table').dataTable( {  
+        autoWidth: false,      
+        searching: false,
+        ordering: false,
+        //responsive: true,
+        lengthChange: false,
+        //processing: true,
+        ajax: {
+          url: '/ext/getlasttxs/#{min_amount}',
+          dataSrc: function ( json ) {
+            for ( var i=0;i<json.data.length; i++ ) {
+              json.data[i]['timestamp'] = format_unixtime(json.data[i]['timestamp']);
+              json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "' target='_blank'>" + json.data[i]['txid'] + "</a>"
+              var amount = json.data[i]['total'] / 100000000;
+              if (amount > '#{flagb}') {
+                json .data[i]['total'] = "<label class='label label-danger'>" + amount + "</label>";
+              } else if (amount > '#{flaga}') {
+                json .data[i]['total'] = "<label class='label label-warning'>" + amount + "</label>";
+              } else {
+                json .data[i]['total'] = "<label class='label label-success'>" + amount + "</label>";
+              }
+            }
+            return json.data;
+          }
+        },
+        columns: [
+          { data: 'timestamp', width: '25%' },
+          { data: 'txid', width: '60%' },
+          { data: 'total', width: '15%' },
+        ]
+      });
+      setInterval( function () {
+        rtable.api().ajax.reload(null, false);
+      }, 45000 );
+    });
+  .col-xs-12.col-md-10.col-md-offset-1(style="margin-bottom: 5%")
+    table#alerts-table.table.table-striped.table-bordered
+      thead
+        th timestamp
+        th.hidden-xs txid
+        th amount

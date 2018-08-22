@@ -1,0 +1,142 @@
+1.6.1
+* fixed last_txs setting
+* added hashrate_units setting
+* added cryptsy support (markets)
+* removed market update lockfile
+
+1.6.0
+* Fixed negative/incorrect balance due to sending to yourself (Issues #6, #8)
+* Pages found via search now display full url 
+* Markets backend overhaul/rewrite
+* Added Yobit support (markets)
+* Added Empoex support (markets)
+* Layout redesign
+* Layout data (coin supply, connections etc) now fetched via ajax
+* Dynamic table data on main view (ajax, updates every 30 seconds)
+
+1.5.2
+* fix poloniex href (xCore)
+* added links (xCore)
+* coinbase balance fix (xCore)
+* getaddress balance fix
+* added getbalance api call
+* finalized getlasttxs api call
+* added footer logo
+
+1.5.1
+* added labels setting (address labels)
+
+1.5.0
+* added theme setting to settings.json
+* added bootswatch themes
+* new extended api call (getlasttxs)
+* Index page now shows last x transactions instead of only last block
+* added last_txs settings to settings.json
+* mobile fixes
+* OP_RETURN/type=nulldata crash fix
+* PoS fixes
+* search tx confirmation fix
+* search tx blockcount fix
+* address page redesign
+
+1.4.1
+
+* Added user and password to database settings
+* Mongo authentication 
+* Added alert (index not up-to-date)
+* New richlist configuration settings
+* added 'npm stop' to kill cluster
+* Added logo setting
+
+1.4.0
+
+* Removed mintpal support (markets)
+* Added poloniex support (markets)
+* Cluster support
+* Jasmine test scripts
+* getaddress api fix (address not found)
+* Base 2 rounding fix (values stored in satoshis)
+* DRK fixes
+* New current supply setting: BALANCES
+* Sync fixes/optimizations
+* New setting: show_sent_received
+
+1.3.4
+
+* Added qrcode api
+* Added qrcode to address page
+
+1.3.3
+
+* Wealth Distribution stats & charts (richlist)
+* New locale settings (richlist)
+* Extended api
+* getmoneysupply (api)
+* getaddress (api)
+* getdistribution (api)
+* Negative zero balance fix (address)
+
+1.3.2
+
+* HeavyCoin support
+* New heavy setting (heavy)
+* New rewards page (heavy)
+* Current coin supply (coinbase total sent, getinfo.moneysupply, getsupply (heavy))
+* New supply setting (supply)
+* New txcount setting
+* Address txs segfault fix
+* Indexing optimizations
+* DOS address page fix
+
+1.3.1
+
+* Rich Lists/Top 100
+* PoS fixes
+* ui fixes
+* coinbase address segfault fix
+* performance tweaks
+
+1.3.0
+
+* merged blocknotify.js and markets.js into sync.js
+* added update and check timeout settings
+* local tx index
+* input addresses/amounts
+* unixtime format (now human friendly date/time)
+* fixed genesis crash
+* added genesis settings
+* local address index
+* new address view
+* search by address
+
+1.2.1
+
+* updated locale (markets)
+* updated index view
+* updated tx view
+* updated block view
+* added optional seach to navbar
+* added confirmations setting
+* added screenshots
+
+1.2.0
+
+* added jqplot and datatables
+* new markets page 
+* added mintpal support (markets)
+* added bittrex support (markets)
+* new display setting (markets, twitter) 
+* new locale entries (markets) 
+* new settings (markets, api)
+* added icons to nav (explorer, markets, api, loading, twitter)
+* new twitter setting
+
+1.1.0
+
+* fixed navbar title (was not reading from settings)
+* added locale support (and updated views)
+* new display setting to toggle menu items (api)
+
+1.0.0
+
+* initial release

@@ -1,0 +1,180 @@
+extends menu
+
+block market_view
+  script.
+    $(document).ready(function(){
+      $('#summary-panel').hide();
+      var ohlc = !{marketdata.data.chartdata}
+      var plot2 = $.jqplot('chart',[ohlc],{
+        seriesDefaults:{yaxis:'y2axis'},
+        axes: {
+          xaxis: {
+            renderer:$.jqplot.DateAxisRenderer,
+            tickOptions:{formatString:'%R'},
+            tickInterval: "2 hours",
+            
+          },
+          y2axis: {
+            tickOptions:{formatString:'%.8f'},
+          }
+        },
+        // To make a candle stick chart, set the "candleStick" option to true.
+        series: [
+          {
+            renderer:$.jqplot.OHLCRenderer,
+            rendererOptions:{ candleStick:true }
+          }
+        ],
+        highlighter: {
+          show: true,
+          showMarker:false,
+          tooltipAxes: 'xy',
+          yvalues: 4,
+          formatString:'<table class="jqplot-highlighter"> \
+          <tr><td>time:</td><td>%s</td></tr> \
+          <tr><td>open:</td><td>%s</td></tr> \
+          <tr><td>hi:</td><td>%s</td></tr> \
+          <tr><td>low:</td><td>%s</td></tr> \
+          <tr><td>close:</td><td>%s</td></tr></table>'
+        }
+      }); 
+      $(window).resize(function () { 
+        plot2.replot( { resetAxes: false } );
+      });
+    });        
+  .row
+    .hidden-xs.col-md-12  
+      #chart-panel.panel.panel-default
+        .panel-heading
+          strong #{settings.locale.poloniex} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-th-list.pull-right.view-summary.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_view_summary}') 
+        .panel-body
+          div#chart(style="width:100%;height:300px;")
+      #summary-panel.panel.panel-default
+        .panel-heading
+          strong #{settings.locale.poloniex} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_view_chart}') 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th.hidden-xs #{settings.locale.mkt_top_bid}
+              th.hidden-xs #{settings.locale.mkt_top_ask}
+              th.hidden-xs #{settings.locale.mkt_last}
+              th #{settings.locale.mkt_change}
+          tbody
+            tr
+              td #{marketdata.data.summary['high24hr']}
+              td #{marketdata.data.summary['low24hr']}
+              td #{marketdata.data.summary['baseVolume']}
+              td.hidden-xs #{marketdata.data.summary.highestBid}
+              td.hidden-xs #{marketdata.data.summary.lowestAsk}
+              td.hidden-xs #{marketdata.data.summary.last}
+              if marketdata.data.summary.percentChange.substring(0, 1) == '-'
+                td.danger #{marketdata.data.summary.percentChange} %
+              else
+                td.success #{marketdata.data.summary.percentChange} %
+    .hidden-md.hidden-lg.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          strong Poloniex - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th #{settings.locale.mkt_change}
+          tbody
+            tr
+              td #{marketdata.data.summary['high24hr']}
+              td #{marketdata.data.summary['low24hr']}
+              td #{marketdata.data.summary['baseVolume']}
+              if marketdata.data.summary.percentChange.substring(0, 1) == '-'
+                td.danger #{marketdata.data.summary.percentChange} %
+              else
+                td.success #{marketdata.data.summary.percentChange} %
+  .row
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_buy_orders}
+        table.table.table-striped.table-bordered.responsive.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.data.buys
+              tr
+                - var total = parseFloat(buy[0]) * parseFloat(buy[1]);
+                - total = total.toFixed(8);
+                td
+                  =buy[0]
+                td
+                  =buy[1].toFixed(8)
+                td.hidden-xs
+                  =total
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_sell_orders}
+        table.table.table-striped.table-bordered.responsive.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                - var total = parseFloat(sell[0]) * parseFloat(sell[1]);
+                - total = total.toFixed(8);
+                td
+                  =sell[0]
+                td
+                  =sell[1].toFixed(8)
+                td.hidden-xs
+                  =total
+    .col-md-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_trade_history}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.hidden-xs Type
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th.hidden-xs Time Stamp
+          tbody
+            each trade in marketdata.data.history
+              if trade.type == 'buy'
+                tr.success
+                  td.hidden-xs BUY
+                  td
+                    =trade.amount
+                  td
+                    =trade.rate
+                  td.hidden-xs
+                    =trade.total
+                  td.hidden-xs
+                    =trade.date
+              else
+                tr.danger 
+                  td.hidden-xs SELL
+                  td
+                    =trade.amount
+                  td
+                    =trade.rate
+                  td.hidden-xs
+                    =trade.total
+                  td.hidden-xs
+                    =trade.date
+      .footer-padding
