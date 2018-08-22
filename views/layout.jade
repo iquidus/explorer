@@ -3,7 +3,7 @@ html
   head
     title= settings.title
     meta( name='#{settings.coin}' content='#{settings.coin}' )
-    meta( name='description' content='A blockexplorer for #{settings.coin}' )
+    meta( name='description' content='A block explorer for the #{settings.coin} cryptocurrency.' )
     meta( name='keywords' content='#{settings.coin}, Blockexplorer, #{settings.symbol}, Cryptocurrency, Address, TX, API, ' )
     meta( name='page-type' content='statistic' )
     meta( name='audience' content='all' )
@@ -203,37 +203,37 @@ html
         if settings.display.twitter
           ul.nav.navbar-nav
             li.pull-left
-              a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')
+              a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank', title='#{settings.coin}s Twitter Page')
                 span.glyphicon.fa.fa-twitter
         if settings.display.facebook
           ul.nav.navbar-nav
             li.pull-left
-              a#facebook-icon(href="https://www.facebook.com/#{settings.facebook}", target='_blank')
+              a#facebook-icon(href="https://www.facebook.com/#{settings.facebook}", target='_blank', title='#{settings.coin}s Facebook Page')
                 span.glyphicon.fa.fa-facebook
         if settings.display.googleplus
           ul.nav.navbar-nav
             li.pull-left
-              a#googleplus-icon(href="https://plus.google.com/#{settings.googleplus}", target='_blank')
+              a#googleplus-icon(href="https://plus.google.com/#{settings.googleplus}", target='_blank', title='#{settings.coin}s Google Plus page')
                 span.glyphicon.fa.fa-google-plus
         if settings.display.discord
           ul.nav.navbar-nav
             li.pull-left
-              a#discord-icon(href="https://discord.gg/#{settings.discord}", target='_blank')
+              a#discord-icon(href="https://discord.gg/#{settings.discord}", target='_blank', title='#{settings.coin}s Discord')
                 span.glyphicon.fa.fa-comments
         if settings.display.bitcointalk
           ul.nav.navbar-nav
             li.pull-left
-              a#bitcointalk-icon(href="https://bitcointalk.org/index.php?topic=#{settings.bitcointalk}", target='_blank')
+              a#bitcointalk-icon(href="https://bitcointalk.org/index.php?topic=#{settings.bitcointalk}", target='_blank', title='#{settings.coin}s Bitcointalk')
                 span.glyphicon.fa.fa-btc
         if settings.display.web
           ul.nav.navbar-nav
             li.pull-left
-              a#globe-icon(href="#{settings.web}", target='_blank')
+              a#globe-icon(href="#{settings.web}", target='_blank', title='Website', title='#{settings.coin}s website')
                 span.glyphicon.fa.fa-link
         if settings.display.github
           ul.nav.navbar-nav
             li.pull-left
-              a#github-icon(href="https://github.com/#{settings.github}", target='_blank')
+              a#github-icon(href="https://github.com/#{settings.github}", target='_blank', title='#{settings.coin}s source on Github')
                 span.glyphicon.fa.fa-github
       .col-md-4
         ul.nav
