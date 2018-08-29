@@ -1,0 +1,27 @@
+extends menu
+
+block market_view
+    .row
+    .col-md-12  
+      .panel.panel-default
+        .panel-heading
+          h5 #{settings.locale.bitglo} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          span.hidden-xs
+        table.table.table-striped.blog-texts.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th.hidden-xs #{settings.locale.mkt_top_bid}
+              th.hidden-xs #{settings.locale.mkt_top_ask}
+              th.hidden-xs #{settings.locale.mkt_last}
+          tbody
+            tr
+              td #{marketdata.data.summary.high}
+              td #{marketdata.data.summary.low}
+              td #{marketdata.data.summary.volume_btc}
+              td.hidden-xs #{marketdata.data.summary.bid}
+              td.hidden-xs #{marketdata.data.summary.ask}
+              td.hidden-xs #{marketdata.data.summary.last}
+       .footer-padding

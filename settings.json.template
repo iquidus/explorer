@@ -88,7 +88,7 @@
   },
 
   // market settings
-  //supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex
+  //supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex, bitglo
   //default market is loaded by default and determines last price in header
   "markets": {
     "coin": "JBS",
