@@ -68,6 +68,7 @@
     "googleplus": false,
     "web": false,
     "discord": true,
+    "discordreferal": true,
     "bitcointalk": true,
     "github": true,
     "search": true,
@@ -131,6 +132,7 @@
   "github": "mincoin/mincoin",
   "web": "https://mincoin.us",
   "discord": "UWWU4sA",
+  "discordreferal": "http://invites.referralranks.com/",
   "googlesearch": "googlesearch console token",
 
   //genesis

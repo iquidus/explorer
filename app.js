@@ -44,7 +44,9 @@ app.disable('x-powered-by');
 app.use(favicon(path.join(__dirname, settings.favicon)));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -118,6 +120,7 @@ app.set('facebook', settings.facebook);
 app.set('googleplus', settings.googleplus);
 app.set('bitcointalk', settings.bitcointalk);
 app.set('discord', settings.discord);
+app.set('discordreferal', settings.discordreferal);
 app.set('github', settings.github);
 app.set('web', settings.web);
 app.set('genesis_block', settings.genesis_block);
