@@ -132,6 +132,11 @@ html
                 a.navbar-link(href='/info')
                   span.glyphicon.glyphicon-info-sign
                   span.menu-text #{settings.locale.menu_api}
+              li#discord
+                a.navbar-link(href='"http://invites.referralranks.com/invite/#{settings.discordreferal}", target='_blank')
+                  span.svg(width="24px", height="24px")
+				  span.use(xlink:href="../public/images/discord.svg")
+				  span.menu-text 'Join Discord'
     .col-md-12
       .row.text-center
         .col-md-2.col-md-offset-1
