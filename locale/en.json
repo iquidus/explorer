@@ -23,7 +23,7 @@
     "ex_search_error": "Search found no results for: ",
     "ex_latest_transactions": "Latest Transactions",
     "ex_summary": "Block Summary",
-    "ex_supply": "Coin Supply",
+    "ex_supply": "Supply",
     "ex_block": "Block",
 
     // transaction view
