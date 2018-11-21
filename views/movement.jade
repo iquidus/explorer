@@ -68,6 +68,6 @@ block content
   .col-xs-12.col-md-10.col-md-offset-1(style="margin-bottom: 5%")
     table#alerts-table.table.table-striped.table-bordered
       thead
-        th timestamp
-        th.hidden-xs txid
-        th amount
+        th.text-center #{settings.locale.timestamp}
+        th.hidden-xs.text-center TXID
+        th.text-center #{settings.locale.mkt_amount}
