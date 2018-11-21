@@ -1,169 +1,175 @@
-Iquidus Explorer - 1.6.1
-================
-
-An open source block explorer written in node.js.
-
-### See it in action
-
-*  [Deutsche eMark](http://b.emark.tk/)
-*  [Sphere](http://sphere.iquidus.io)
-*  [Vertcoin](http://explorer.vertcoin.info/)
-*  [Vivo](http://vivo.explorerz.top:3003)
-*  [Florincoin](https://florincoin.info/info)
-*  [Maxcoin Explorer 1](https://explorer.maxcoinproject.net/)
-*  [Maxcoin Explorer 2](https://explorer2.maxcoinproject.net/)
-
-
-*note: If you would like your instance mentioned here contact me*
-
-### Requires
-
-*  node.js >= 0.10.28
-*  mongodb 2.6.x
-*  *coind
-
-### Create database
-
-Enter MongoDB cli:
-
-    $ mongo
-
-Create databse:
-
-    > use explorerdb
-
-Create user with read/write access:
-
-    > db.createUser( { user: "iquidus", pwd: "3xp!0reR", roles: [ "readWrite" ] } )
-
-*note: If you're using mongo shell 2.4.x, use the following to create your user:
-
-    > db.addUser( { user: "username", pwd: "password", roles: [ "readWrite"] })
-
-### Get the source
-
-    git clone https://github.com/iquidus/explorer explorer
-
-### Install node modules
-
-    cd explorer && npm install --production
-
-### Configure
-
-    cp ./settings.json.template ./settings.json
-
-*Make required changes in settings.json*
-
-### Start Explorer
-
-    npm start
-
-*note: mongod must be running to start the explorer*
-
-As of version 1.4.0 the explorer defaults to cluster mode, forking an instance of its process to each cpu core. This results in increased performance and stability. Load balancing gets automatically taken care of and any instances that for some reason die, will be restarted automatically. For testing/development (or if you just wish to) a single instance can be launched with
-
-    node --stack-size=10000 bin/instance
-
-To stop the cluster you can use
-
-    npm stop
-
-### Syncing databases with the blockchain
-
-sync.js (located in scripts/) is used for updating the local databases. This script must be called from the explorers root directory.
-
-    Usage: node scripts/sync.js [database] [mode]
-
-    database: (required)
-    index [mode] Main index: coin info/stats, transactions & addresses
-    market       Market data: summaries, orderbooks, trade history & chartdata
-
-    mode: (required for index database only)
-    update       Updates index from last sync to current block
-    check        checks index for (and adds) any missing transactions/addresses
-    reindex      Clears index then resyncs from genesis to current block
-
-    notes:
-    * 'current block' is the latest created block when script is executed.
-    * The market database only supports (& defaults to) reindex mode.
-    * If check mode finds missing data(ignoring new data since last sync),
-      index_timeout in settings.json is set too low.
-
-
-*It is recommended to have this script launched via a cronjob at 1+ min intervals.*
-
-**crontab**
-
-*Example crontab; update index every minute and market data every 2 minutes*
-
-    */1 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/sync.js index update > /dev/null 2>&1
-    */2 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/sync.js market > /dev/null 2>&1
-    */5 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/peers.js > /dev/null 2>&1
-
-### Wallet
-
-Iquidus Explorer is intended to be generic so it can be used with any wallet following the usual standards. The wallet must be running with atleast the following flags
-
-    -daemon -txindex
-
-### Donate
-
-    BTC: 168hdKA3fkccPtkxnX8hBrsxNubvk4udJi
-    JBS: JZp9893FMmrm1681bDuJBU7c6w11kyEY7D
-
-### Known Issues
-
-**script is already running.**
-
-If you receive this message when launching the sync script either a) a sync is currently in progress, or b) a previous sync was killed before it completed. If you are certian a sync is not in progress remove the index.pid from the tmp folder in the explorer root directory.
-
-    rm tmp/index.pid
-
-**exceeding stack size**
-
-    RangeError: Maximum call stack size exceeded
-
-Nodes default stack size may be too small to index addresses with many tx's. If you experience the above error while running sync.js the stack size needs to be increased.
-
-To determine the default setting run
-
-    node --v8-options | grep -B0 -A1 stack_size
-
-To run sync.js with a larger stack size launch with
-
-    node --stack-size=[SIZE] scripts/sync.js index update
-
-Where [SIZE] is an integer higher than the default.
-
-*note: SIZE will depend on which blockchain you are using, you may need to play around a bit to find an optimal setting*
-
-### License
-
-Copyright (c) 2015, Iquidus Technology  
-Copyright (c) 2015, Luke Williams  
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-* Neither the name of Iquidus Technology nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# IQUIDUS EXPLORER INSTALLATION ON VPS
+
+## INTRO: switch from Bitpay Inishgt
+기존의 Bitpay Insight를 사용하고 있었다. 나쁘지 않았다 하지만 bitcoin `v0.16` 이후에 `getinfo`가 삭제되었고 최신버젼에서는 Bitpay Insight를 더이상 사용할수없다. 그 대안으로 찾은것이 바로 IQUIDUS EXPLORER 이다. 다양한 기능을 제공하며 꽤 괜찮은 성능을 보여준다.
+
+Bitpay Insight doesn't support after bitcoin v0.16
+```js
+info: insight server listening on port 3000 in development mode
+error: ERROR  code=-32601, message=getinfo
+
+This call was removed in version 0.16.0. Use the appropriate fields from:
+- getblockchaininfo: blocks, difficulty, chain
+- getnetworkinfo: version, protocolversion, timeoffset, connections, proxy, relayfee, warnings
+- getwalletinfo: balance, keypoololdest, keypoolsize, paytxfee, unlocked_until, walletversion
+```
+
+## MAKE A VPS FIRST
+```bash
+ssh root@123.123.123.123
+```
+
+## SETUP
+
+### locale all to `en_US.UTF-8`
+```bash
+export LANGUAGE="en_US.UTF-8" && \
+echo 'LANGUAGE="en_US.UTF-8"' >> /etc/default/locale && \
+echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale
+```
+
+### timezone to `Asia/Seoul`
+```bash
+sudo timedatectl set-timezone Asia/Seoul
+```
+> LOGOUT/IN
+
+### wallet depends
+```bash
+cd && \
+sudo add-apt-repository ppa:bitcoin/bitcoin -y && \
+sudo apt-get update -y && \
+sudo apt-get install -y \
+software-properties-common libdb4.8-dev libdb4.8++-dev build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libminiupnpc-dev libzmq3-dev libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev && \
+cd
+```
+
+### wallet build
+```bash
+git clone git@github.com:cryptozeny/sugarchain-v0.16.3.git && \
+cd sugarchain-v0.16.3/ && \
+git checkout r4-yes-DGW-etc-brand-gene-icon && \
+./autogen.sh && \
+./configure && \
+make -j$(nproc)
+```
+
+if your VPS doesn't have enough memory (under 1GB)
+```bash
+./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768"
+```
+
+### wallet run: explorer needs `-txindex` 
+for testing log `-printtoconsole` instead of `-daemon`
+```bash
+./src/sugarchaind -server=1 -rpcuser=username -rpcpassword=password -txindex -daemon
+```
+
+### Nodejs (explorer needs node v0.10.28)
+```bash
+cd && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
+```
+> LOGOUT/IN
+
+```bash
+nvm ls-remote && \
+nvm install v0.10.28 && \
+nvm ls && \
+node -v && \
+nvm use v0.10.28
+```
+> LOGOUT/IN
+
+### explorer depends
+```bash
+cd && \
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927 && \
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list && \
+sudo apt-get update && \
+sudo apt-get install -y mongodb-org libkrb5-dev
+```
+
+### upstart for starting MongoDB
+```bash
+sudo apt-get install upstart-sysv -y
+```
+> REBOOT
+
+### explorer DB start
+```bash
+sudo service mongod stop && \
+sudo service mongod start
+
+```
+
+### explorer MongoDB create
+```bash
+mongo
+> use explorerdb
+> db.createUser( { user: "mongo-user", pwd: "mongo-pwd", roles: [ "readWrite" ] } )
+> exit
+```
+
+#### option: drop MongoDB
+```bash
+use explorerdb;
+db.dropDatabase();
+db.dropUser("mongo-user")
+```
+
+### explorer install (branch master)
+```bash
+cd && \
+git clone git@github.com:sugarchain-project/explorer.git explorer && \
+cd explorer && npm install --production
+```
+
+### explorer settings
+```bash
+cp ./settings.json.sugarchain ./settings.json
+```
+> edit `./settings.json`
+
+### explorer test-run (각각 다른 터미널에서)
+```bash
+npm start # term-1
+node scripts/sync.js index update # term-2 (run twice)
+```
+> stop both
+
+### forever for Nodejs
+```bash
+npm install forever -g
+npm install forever-monitor
+```
+
+### explorer start
+```
+forever start bin/cluster
+```
+
+### explorer update every `15s` (sync.js peer.js)
+update first
+```bash
+node scripts/sync.js index update && \
+node scripts/sync.js market && \
+node scripts/peers.js
+```
+
+update auto
+```bash
+while true; 
+do touch tmp/index.pid && \
+rm -f ./tmp/index.pid && \
+node scripts/sync.js index update && \
+node scripts/sync.js market && \
+node scripts/peers.js; 
+sleep 15.0; 
+done
+```
+
+### todo: cron & start.sh
+cron  
+https://github.com/cryptozeny/zny-nomp-kawaii  
+start.sh  
+https://gist.github.com/zeronug/5c66207c426a1d4d5c73cc872255c572  
