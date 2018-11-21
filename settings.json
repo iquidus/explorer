@@ -121,6 +121,12 @@
   "googleplus": "yourgooglepluspage",
   "youtube": "youryoutubechannel",
 
+  // Peers page settings
+  // ipstack_api_key: ipstack.com Geo IP. This is the replacement of http://freegeoip.net You need an API Key for the Requests 
+  "peers": {
+    "ipstack_api_key": "YourIpstackAPIKey" 
+  },
+  
   //genesis
   "genesis_tx": "09a754250024b34f2d2a8e0edbb43375fbb024ec6025edb243b32e50b6c20d76",
   "genesis_block": "0005ab1f82e540826c218b634f82a99e292913303747244685d561d90bc06de5",
