@@ -5,7 +5,7 @@ thead
     th #{settings.locale.mkt_amount} (#{settings.symbol})
 tbody
   each tx in txs
-    - var time = format_unixtime(tx.timestamp)
+    - var time = new Date(tx.timestamp).toTimeString();
     tr
       td.hidden-xs #{time} 
       td.hidden-xs

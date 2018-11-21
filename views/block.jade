@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  - var time = format_unixtime(block.time)
+  - var time = new Date(block.time).toTimeString();
   .col-xs-12.col-md-10.col-md-offset-1
     .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
       | #{block.hash}
