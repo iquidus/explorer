@@ -36,7 +36,7 @@ block content
             tr.success
               - var block_size = block.size/1024
               td #{block.height}
-              td #{block.difficulty.toFixed(4)}
+              td #{block.difficulty.toFixed(16)}
               td #{block.confirmations}
               if settings.heavy == true
                 td  #{block.vote}
@@ -49,7 +49,7 @@ block content
               tr.danger
                 - var block_size = block.size/1024
                 td #{block.height}
-                td #{block.difficulty.toFixed(4)}
+                td #{block.difficulty.toFixed(16)}
                 td #{block.confirmations}
                 if settings.heavy == true
                   td  #{block.vote}
@@ -61,7 +61,7 @@ block content
               tr.warning
                 - var block_size = block.size/1024
                 td #{block.height}
-                td #{block.difficulty.toFixed(4)}
+                td #{block.difficulty.toFixed(16)}
                 td #{block.confirmations}
                 if settings.heavy == true
                   td  #{block.vote}
