@@ -33,11 +33,17 @@
 
   // database settings (MongoDB)
   "dbsettings": {
-    "user": "iquidus",
+    "scheme": "mongodb",
+    "hosts": [
+      {
+        "host": "localhost",
+        "port": 27017
+      },
+    ],
+    "username": "iquidus",
     "password": "3xp!0reR",
-    "database": "explorerdb",
-    "address": "localhost",
-    "port": 27017
+    "options": {  },
+    "database": "explorerdb"
   },
 
   //update script settings

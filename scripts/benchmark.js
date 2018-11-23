@@ -1,9 +1,9 @@
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
   , db = require('../lib/database')
   , Tx = require('../models/tx')  
   , Address = require('../models/address')  
-  , settings = require('../lib/settings');
-
+  , settings = require('../lib/settings')
+  , mongoUri = require('mongodb-uri');
 
 var COUNT = 5000; //number of blocks to index
 
@@ -12,13 +12,7 @@ function exit() {
   process.exit(0);
 }
 
-var dbString = 'mongodb://' + settings.dbsettings.user;
-dbString = dbString + ':' + settings.dbsettings.password;
-dbString = dbString + '@' + settings.dbsettings.address;
-dbString = dbString + ':' + settings.dbsettings.port;
-dbString = dbString + "/IQUIDUS-BENCHMARK";
-
-mongoose.connect(dbString, function(err) {
+mongoose.connect(mongoUri.formatMongoose(settings.dbsettings), function(err) {
   if (err) {
     console.log('Unable to connect to database: %s', dbString);
     console.log('Aborting');
