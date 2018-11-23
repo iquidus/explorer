@@ -3,11 +3,10 @@ var debug = require('debug')('explorer');
 var settings = require('../lib/settings');
 var db = require('../lib/database');
 var app = require('../app');
-const mongoUri = require('mongodb-uri');
 
 app.set('port', process.env.PORT || settings.port);
 
-db.connect(mongoUri.formatMongoose(settings.dbsettings), function() {
+db.connect(settings.dbsettings.uri, function() {
   db.check_stats(settings.coin, function(exists) {
     if (exists == false) {
       console.log('no stats entry found, creating now..');

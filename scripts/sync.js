@@ -5,8 +5,7 @@ var mongoose = require('mongoose')
   , Richlist = require('../models/richlist')  
   , Stats = require('../models/stats')  
   , settings = require('../lib/settings')
-  , fs = require('fs')
-  , mongoUri = require('mongodb-uri');
+  , fs = require('fs');
 
 var mode = 'update';
 var database = 'index';
@@ -113,7 +112,7 @@ function exit() {
   });
 }
 
-const dbString = mongoUri.formatMongoose(settings.dbsettings);
+const dbString = settings.dbsettings.uri;
 
 is_locked(function (exists) {
   if (exists) {

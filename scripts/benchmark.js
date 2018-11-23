@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
   , db = require('../lib/database')
   , Tx = require('../models/tx')  
   , Address = require('../models/address')  
-  , settings = require('../lib/settings')
-  , mongoUri = require('mongodb-uri');
+  , settings = require('../lib/settings');
 
 var COUNT = 5000; //number of blocks to index
 
@@ -12,7 +11,7 @@ function exit() {
   process.exit(0);
 }
 
-mongoose.connect(mongoUri.formatMongoose(settings.dbsettings), function(err) {
+mongoose.connect(settings.dbsettings.benchmark_uri, function(err) {
   if (err) {
     console.log('Unable to connect to database: %s', dbString);
     console.log('Aborting');
