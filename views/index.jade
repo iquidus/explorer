@@ -40,12 +40,12 @@ block content
           url: '/ext/getlasttxs/0.00000001',
           dataSrc: function ( json ) {
             for ( var i=0;i<json.data.length; i++ ) {
-              json.data[i]['timestamp'] = "<span style='font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + new Date((json.data[i]['timestamp']) * 1000).toTimeString() + "</span>";
-              json.data[i]['txid'] = "<style> a:hover {background-color: cyan;} </style>" + "<a href='/tx/" + json.data[i]['txid'] + "'" + "style='color:#6C82CF; font-family:monospace; font-size: 80%;" + "'>" + json.data[i]['txid'] + "</a>";
-              json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'" + "style='color:#5FC000; font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + json.data[i]['blockindex'] + "</a>";
+              json.data[i]['blockindex'] = "<style> a:hover {background-color: cyan;} </style>" + "<a href='/block/" + json.data[i]['blockhash'] + "'" + "style='color:#5FC000; font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + json.data[i]['blockindex'] + "</a>";
+              json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'" + "style='color:#6C82CF; font-family:monospace; font-size: 80%;" + "'>" + json.data[i]['txid'] + "</a>";
+              json.data[i]['recipients'] = "<span style='font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + json.data[i]['vout'].length + "</span>";
               var amount = json.data[i]['total'] / 100000000;
               json.data[i]['total'] = "<span style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
-              json.data[i]['recipients'] = "<span style='font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + json.data[i]['vout'].length + "</span>";
+              json.data[i]['timestamp'] = "<span style='font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + new Date((json.data[i]['timestamp']) * 1000).toTimeString() + "</span>";
             }
             return json.data;
           }
