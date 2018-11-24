@@ -31,7 +31,7 @@
     "tx_block_hash": "Block Hash",
     "tx_recipients": "Recipients",
     "tx_contributors": "Input Addresses",
-    "tx_hash": "Hash",
+    "tx_hash": "TXID",
     "tx_address": "Address",
     "tx_nonstandard": "NONSTANDARD TX",
 
