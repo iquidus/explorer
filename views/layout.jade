@@ -27,7 +27,7 @@ html
         function update_stats(){   
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(json.data[0].supply);
-            $("#difficulty").text(json.data[0].difficulty.toFixed(16));
+            $("#difficulty").text(json.data[0].difficulty.toFixed(12));
             $("#difficultyHybrid").text(json.data[0].difficultyHybrid);
             $("#hashrate").text(json.data[0].hashrate);
             $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
@@ -148,7 +148,7 @@ html
                <br>
                label#lblX1  
               else  
-               label#hashrate - 
+               tt#hashrate.text-success -
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
@@ -159,7 +159,7 @@ html
                <br>
                label#difficultyHybrid -
               else
-               label#difficulty -
+               tt#difficulty.text-danger -
         .col-md-2.col-sm-12
           img(src='#{settings.logo}', style='margin-top:-15px;height:128px;')
         .col-md-2
@@ -172,7 +172,7 @@ html
                <br>
                label#lblX1
               else
-               label#supply -  
+               tt#supply.text-primary -
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
             .panel-heading
@@ -183,7 +183,7 @@ html
                <br>
                label#lblX1
               else
-               label#lastPrice - 
+               tt#lastPrice.text-dark -
                  
       .row.text-center(style='margin-top:10px;margin-bottom:20px;')
         form.form-inline(method='post', action='/search')      
