@@ -44,7 +44,16 @@ block content
               json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'" + "style='color:#6C82CF; font-family:monospace; font-size: 80%;" + "'>" + json.data[i]['txid'] + "</a>";
               json.data[i]['recipients'] = "<span style='font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + json.data[i]['vout'].length + "</span>";
               var amount = json.data[i]['total'] / 100000000;
-              json.data[i]['total'] = "<span style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
+              //- json.data[i]['total'] = "<span style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
+              if (amount > '#{flagb}') {
+                json .data[i]['total'] = "<span class='bg-danger text-white' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
+              } else if (amount > '#{flaga}') {
+                json .data[i]['total'] = "<span class='bg-warning text-white' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
+              } else if (amount > '#{min_amount}') {
+                json .data[i]['total'] = "<span class='bg-success text-white' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
+              } else {
+                json .data[i]['total'] = "<span style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
+              }
               json.data[i]['timestamp'] = "<span style='font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + new Date((json.data[i]['timestamp']) * 1000).toTimeString() + "</span>";
             }
             return json.data;
