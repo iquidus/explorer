@@ -45,11 +45,11 @@ block content
               json.data[i]['txid'] = "<style> a:hover {background-color: cyan;} </style>" + "<a href='/tx/" + json.data[i]['txid'] + "'" + "style='color:#6C82CF; font-family:monospace; font-size: 80%;" + "'>" + json.data[i]['txid'] + "</a>";
               var amount = json.data[i]['total'] / 100000000;
               if (amount > '#{flagb}') {
-                json .data[i]['total'] = "<label class='label label-danger'" + "style='font-family:monospace; font-size: 85%; text-align: right; display: block;" + "'>" + amount + "</label>";
+                json .data[i]['total'] = "<span class='bg-danger text-white' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount + "</span>";
               } else if (amount > '#{flaga}') {
-                json .data[i]['total'] = "<label class='label label-warning'" + "style='font-family:monospace; font-size: 85%; text-align: right; display: block;" + "'>" + amount + "</label>";
+                json .data[i]['total'] = "<span class='bg-warning text-white' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount + "</span>";
               } else {
-                json .data[i]['total'] = "<label class='label label-success'" + "style='font-family:monospace; font-size: 85%; text-align: right; display: block;" + "'>" + amount + "</label>";
+                json .data[i]['total'] = "<span class='bg-success text-white' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount + "</span>";
               }
             }
             return json.data;
