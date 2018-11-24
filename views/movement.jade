@@ -35,7 +35,7 @@ block content
         searching: false,
         ordering: false,
         //responsive: true,
-        lengthChange: false,
+        lengthChange: true,
         //processing: true,
         ajax: {
           url: '/ext/getlasttxs/#{min_amount}',
@@ -65,12 +65,16 @@ block content
         rtable.api().ajax.reload(null, false);
       }, 45000 );
     });
-  .col-xs-12.col-md-10.col-md-offset-1(style="margin-bottom: 5%")
+  //- .col-xs-12.col-md-10.col-md-offset-1(style="margin-bottom: 5%")
+  .col-md-12(style="margin-bottom: 5%")
     .row.text-center(style='margin-bottom:15px;')
       i Movement tab shows large amount of TXs like whale alert. Above <font color="darkgreen">#{settings.movement.min_amount} is green</font>, <font color="darkgoldenrod">#{settings.movement.low_flag} is orange</font>, and <font color="darkred">#{settings.movement.high_flag} is red</font>.
-    table#alerts-table.table.table-striped.table-bordered
-      thead
-        th.text-center #{settings.locale.timestamp}
-        th.hidden-xs.text-center #{settings.locale.tx_hash}
-        th.text-center #{settings.symbol}
-      tbody
+    .panel.panel-default
+      .panel-heading
+        strong Large Amount of TXs
+      table#alerts-table.table.table-striped.table-bordered
+        thead
+          th.text-center #{settings.locale.timestamp}
+          th.hidden-xs.text-center #{settings.locale.tx_hash}
+          th.text-center #{settings.symbol}
+        tbody
