@@ -110,9 +110,9 @@
   // low flag: greater than this value flagged yellow
   // high flag: greater than this value flagged red
   "movement": {
-    "min_amount": 0.00000001,
-    "low_flag": 100,
-    "high_flag": 500
+    "min_amount": 100,
+    "low_flag": 1000,
+    "high_flag": 5000
   },
 
   // twitter, facebook, googleplus, youtube
