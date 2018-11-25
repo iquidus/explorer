@@ -45,11 +45,11 @@ block content
               json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'" + "style='font-family:monospace; font-size: 80%;" + "'>" + json.data[i]['txid'] + "</a>";
               var amount = json.data[i]['total'] / 100000000;
               if (amount > '#{flagb}') {
-                json .data[i]['total'] = "<span class='text-danger' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount + "</span>";
+                json .data[i]['total'] = "<span class='text-danger' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
               } else if (amount > '#{flaga}') {
-                json .data[i]['total'] = "<span class='text-warning' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount + "</span>";
+                json .data[i]['total'] = "<span class='text-warning' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
               } else {
-                json .data[i]['total'] = "<span class='text-success' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount + "</span>";
+                json .data[i]['total'] = "<span class='text-success' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount.toFixed(8) + "</span>";
               }
             }
             return json.data;
