@@ -71,7 +71,7 @@ table {
 }
 
 table a:not(.btn),.table a:not(.btn){
-	text-decoration:none
+	/* text-decoration:none */
 }
 
 tr {
@@ -163,4 +163,3 @@ tr {
 	position: absolute;
 	bottom: 0px;
 }
-

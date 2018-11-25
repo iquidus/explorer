@@ -1087,12 +1087,12 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #2a9fd6;
+  color: #428bca;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #2a9fd6;
+  color: cyan;
   text-decoration: underline;
 }
 a:focus {
@@ -6586,8 +6586,8 @@ table,
 }
 table a:not(.btn),
 .table a:not(.btn) {
-  color: #fff;
-  text-decoration: underline;
+  /* color: #fff; */
+  /* text-decoration: underline; */
 }
 table .dropdown-menu a,
 .table .dropdown-menu a {
