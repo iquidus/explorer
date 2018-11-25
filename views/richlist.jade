@@ -87,8 +87,8 @@ block content
             tr
               th
                 span #{settings.locale.total}
-              td
-              td(style='text-align:right; font-family:monospace; font-size:100%;') #{(100 - parseFloat(distd.percent)).toFixed(2)}
+              td(style='text-align:right; font-family:monospace; font-size:100%;') #{(parseFloat(dista.total) + parseFloat(distb.total) + parseFloat(distc.total) + parseFloat(distd.total)).toFixed(8)}
+              td(style='text-align:right; font-family:monospace; font-size:100%;') #{(parseFloat(dista.percent) + parseFloat(distb.percent) + parseFloat(distc.percent) + parseFloat(distd.percent)).toFixed(2)}
       center
         div#pieChart(style="width:300px;height:305px;margin:0px;")
   .row.footer-margin
