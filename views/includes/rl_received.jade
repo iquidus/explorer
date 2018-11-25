@@ -17,8 +17,7 @@
           td(style='text-align:center; font-family:monospace; font-size:100%;')
             =count
           td
-            <style> a:hover {background-color: cyan;} </style>
-            a(style='color:skyblue; text-align:left; font-family:monospace; font-size:100%;' href='/address/#{item.a_id}') #{item.a_id}
+            a(style='text-align:left; font-family:monospace; font-size:100%;' href='/address/#{item.a_id}') #{item.a_id}
             include ./rl_labels.jade
           td.hidden-xs(style='text-align:right; font-family:monospace; font-size:100%;')
             =itemFixed.toFixed(8)

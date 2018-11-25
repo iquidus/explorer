@@ -42,7 +42,7 @@ block content
           dataSrc: function ( json ) {
             for ( var i=0;i<json.data.length; i++ ) {
               json.data[i]['timestamp'] = "<span style='font-family:monospace; font-size: 100%; text-align: center; display: block;" + "'>" + new Date(json.data[i]['timestamp']).toTimeString() + "</span>";
-              json.data[i]['txid'] = "<style> a:hover {background-color: cyan;} </style>" + "<a href='/tx/" + json.data[i]['txid'] + "'" + "style='color:#6C82CF; font-family:monospace; font-size: 80%;" + "'>" + json.data[i]['txid'] + "</a>";
+              json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'" + "style='font-family:monospace; font-size: 80%;" + "'>" + json.data[i]['txid'] + "</a>";
               var amount = json.data[i]['total'] / 100000000;
               if (amount > '#{flagb}') {
                 json .data[i]['total'] = "<span class='bg-danger text-white' style='font-family:monospace; font-size: 100%; text-align: right; display: block;" + "'>" + amount + "</span>";
