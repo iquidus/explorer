@@ -4,11 +4,11 @@
   table.table.table-hover.table-bordered(cellspacing="0")
     thead
       tr
-        th(style='text-align:left;') 
+        th.text-center
           span.fa.fa-flag-checkered
-        th #{settings.locale.tx_address}
-        th.hidden-xs #{settings.locale.rl_balance} (#{settings.symbol})
-        th.hidden-xs(style='text-align:left;') %
+        th.text-center #{settings.locale.tx_address}
+        th.text-center.hidden-xs #{settings.locale.rl_balance} (#{settings.symbol})
+        th.text-center.hidden-xs %
     tbody
       - var count = 0
       each item in balance
@@ -16,12 +16,12 @@
         - var itemFixed = item.balance / 100000000
         - var percentage = (itemFixed / stats.supply) * 100
         tr
-          td(style='text-align:left;') 
+          td(style='text-align:center; font-family:monospace; font-size:100%;')
             =count
-          td(style='text-align:left;')
-            a(href='/address/#{item.a_id}') #{item.a_id}
+          td
+            a(style='text-align:left; font-family:monospace; font-size:100%;' href='/address/#{item.a_id}') #{item.a_id}
             include ./rl_labels.jade
-          td.hidden-xs(style='text-align:left;')
+          td.hidden-xs(style='text-align:right; font-family:monospace; font-size:100%;')
             =itemFixed.toFixed(8)
-          td.hidden-xs(style='text-align:left;') 
+          td.hidden-xs(style='text-align:right; font-family:monospace; font-size:100%;')
             =percentage.toFixed(2)
