@@ -3,11 +3,12 @@ extends layout
 block content
   - var time = new Date(tx.timestamp).toTimeString();
   .col-xs-12.col-md-10.col-md-offset-1
-    .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
-      | #{tx.txid}
+    //- .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
+    //-   | #{tx.txid}
     .panel.panel-default
       .panel-heading.hidden-xs
-        strong #{settings.symbol} txid: #{tx.txid}
+        strong #{settings.symbol} TXID:
+        span(style='font-family:monospace; color:white')  #{tx.txid}
         a(href='/api/getrawtransaction?txid=#{tx.txid}&decrypt=1')
           span.glyphicon.glyphicon-info-sign.iquidus.pull-right
       table.table.table-bordered.table-striped.summary-table 
@@ -21,29 +22,29 @@ block content
           - var confirms = (blockcount - tx.blockindex);
           if confirms >= confirmations                
             tr.success
-                td #{confirms}
-                td.hidden-xs 
+                td(style='font-family:monospace;') #{confirms}
+                td.hidden-xs(style='font-family:monospace;')
                   a(href='/block/#{tx.blockhash}') #{tx.blockhash}
-                td #{time}
+                td(style='font-family:monospace;') #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
                     span.glyphicon.glyphicon-eye-open 
           else
             if confirms < (confirmations / 2)
               tr.danger
-                td #{confirms}
-                td.hidden-xs  
+                td(style='font-family:monospace;') #{confirms}
+                td.hidden-xs(style='font-family:monospace;')
                   a(href='/block/#{tx.blockhash}') #{tx.blockhash}
-                td #{time}
+                td(style='font-family:monospace;') #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
                     span.glyphicon.glyphicon-eye-open 
             else
               tr.warning
-                td #{confirms}
-                td.hidden-xs  
+                td(style='font-family:monospace;') #{confirms}
+                td.hidden-xs(style='font-family:monospace;')
                   a(href='/block/#{tx.blockhash}') #{tx.blockhash}
-                td #{time}
+                td(style='font-family:monospace;') #{time}
                 td.view_tx  
                   a(href='/block/#{tx.blockhash}')
                     span.glyphicon.glyphicon-eye-open
@@ -63,7 +64,7 @@ block content
                   th #{settings.locale.tx_address}
                   if (tx.vin.length > 0)
                     if tx.vin[0].addresses != 'coinbase'
-                      th.hidden-xs #{settings.locale.mkt_amount} (#{settings.symbol})
+                      th.hidden-xs #{settings.symbol}
               tbody
                 if tx.vin.length > 0
                   each r in tx.vin
@@ -73,12 +74,12 @@ block content
                     else
                       - var ramount = r.amount / 100000000
                       tr
-                        td 
+                        td(style='font-family:monospace; font-size: 80%;')
                           a.loading(href='/address/#{r.addresses}') 
                             =r.addresses
-                        td.danger.hidden-xs #{ramount.toFixed(8)}
-                      tr.hidden-lg.hidden-md
-                          td.danger #{ramount.toFixed(8)} #{settings.symbol}
+                        td.danger.hidden-xs.text-right(style='font-family:monospace;') #{ramount.toFixed(8)}
+                      //- tr.hidden-lg.hidden-md
+                      //-     td.danger #{ramount.toFixed(8)} #{settings.symbol}
                 else
                   tr.info(style='text-align:center')
                     td #{settings.locale.proof_of_stake}
@@ -90,18 +91,18 @@ block content
               thead
                 tr
                   th #{settings.locale.tx_address}
-                  th.hidden-xs #{settings.locale.mkt_amount} (#{settings.symbol})
+                  th.hidden-xs #{settings.symbol}
               tbody
                 each r in tx.vout
                   if tx.vout.length > 0 
                     - var ramount = r.amount / 100000000  
                     tr
                       td 
-                        a.loading(href='/address/#{r.addresses}') 
+                        a.loading(style='font-family:monospace; font-size: 80%;' href='/address/#{r.addresses}')
                           =r.addresses 
-                      td.success.hidden-xs  #{ramount.toFixed(8)}
-                    tr.hidden-lg.hidden-md
-                      td.success #{ramount.toFixed(8)} #{settings.symbol}
+                      td.success.hidden-xs.text-right(style='font-family:monospace;') #{ramount.toFixed(8)}
+                    //- tr.hidden-lg.hidden-md
+                    //-   td.success #{ramount.toFixed(8)} #{settings.symbol}
                   else
                     tr
                       td 
