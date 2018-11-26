@@ -3,8 +3,8 @@ extends layout
 block content
   - var time = new Date(block.time).toTimeString();
   .col-xs-12.col-md-10.col-md-offset-1
-    .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
-      | #{block.hash}
+    //- .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
+    //-   | #{block.hash}
     .panel.panel-default
       .panel-heading(style='padding-left:25px;padding-right:25px;')       
         .row           
