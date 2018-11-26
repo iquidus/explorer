@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node --stack-size=10000 ./bin/cluster",
     "stop": "kill -2 $(cat tmp/cluster.pid)",
-    "test": "node ./node_modules/jasmine/bin/jasmine.js"
+    "test": "node ./node_modules/jasmine/bin/jasmine.js",
+    "debug": "node --inspect --stack-size=10000 ./bin/cluster"
   },
   "dependencies": {
     "bitcoin-node-api": "0.1.0",
