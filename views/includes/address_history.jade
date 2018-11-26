@@ -24,16 +24,16 @@ tbody
           - var amount = (out - vin) / 100000000
           if amount < 0
             - amount = amount * -1
-            | - #{amount.toFixed(8)}
+            | #{amount.toFixed(8)} (<b>-</b>)
           else if amount > 0
-            | + #{amount.toFixed(8)}
+            | #{amount.toFixed(8)} (<b>+</b>)
           else
             | #{amount.toFixed(8)}
       else if out > 0
         td.success.text-right(style='font-family:monospace;')
           - var amount = out / 100000000
-          | + #{amount.toFixed(8)}
+          | #{amount.toFixed(8)} (<b>+</b>)
       else
         td.danger.text-right(style='font-family:monospace;')
           - var amount = vin / 100000000
-          | - #{amount.toFixed(8)}
+          | #{amount.toFixed(8)} (<b>-</b>)
