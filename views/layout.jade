@@ -197,7 +197,7 @@ html
               ul.nav.navbar-nav
                 li.pull-left
                   a#twitter-icon(href="https://twitter.com/#{settings.twitter}", target='_blank')  
-                    span.glyphicon.fa.fa-twitter    
+                    span.glyphicon.fa.fa-twitter
             if settings.display.facebook
               ul.nav.navbar-nav
                 li.pull-left
@@ -213,11 +213,11 @@ html
                 li.pull-left
                   a#youtube-icon(href="https://www.youtube.com/channel/#{settings.youtube}", target='_blank')
                     span.glyphicon.fa.fa-youtube
-          .col-md-4
-            ul.nav
-              li.text-center(style='margin-left:80px;margin-right:80px;')
-                //- p(style='margin-top:15px;') 
-                  //- a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer 
+          //- .col-md-4
+          //-   ul.nav
+          //-     li.text-center(style='margin-left:80px;margin-right:80px;')
+          //-       p(style='margin-top:15px;')
+          //-         a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer
           span.connections
-            label#lblBlockcount.label.label-default -
-            label#lblConnections.label.label-default -
+            label#lblBlockcount.label.label-primary(style='font-size:medium;') -
+            label#lblConnections.label.label-success(style='font-size:medium;') -
