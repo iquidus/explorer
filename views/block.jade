@@ -11,8 +11,8 @@ block content
           if block.previousblockhash != null
             a(href='/block/#{block.previousblockhash}')
               span.glyphicon.glyphicon-chevron-left.iquidus.block-last(data-toggle='tooltip', data-placement='top', title='#{settings.locale.block_previous}')  
-            strong.hidden-xs #{settings.symbol} block:
-            span(style='font-family:monospace;')  #{block.hash}
+            strong.hidden-xs #{settings.symbol} BLOCK:
+            span(style='font-family:monospace; color:white;')  #{block.hash}
           else
             strong.hidden-xs(style='margin-left:10px;') #{settings.symbol} #{settings.locale.ex_block}: #{block.hash}
           if block.nextblockhash != null 
