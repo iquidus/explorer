@@ -168,6 +168,11 @@ sleep 15.0;
 done
 ```
 
+### run.sh as daemon
+```bash
+setsid ./run.sh > /dev/null 2>&1 < /dev/null &
+```
+
 ### todo: cron & start.sh
 cron  
 https://github.com/cryptozeny/zny-nomp-kawaii  
