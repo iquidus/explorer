@@ -27,21 +27,21 @@ block content
         thead
           tr
             if settings.show_sent_received == true
-              th.text-center #{settings.locale.total_sent} (#{settings.symbol})
+              th.text-center #{settings.locale.total_sent}
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                th.text-center #{settings.locale.total_received} (#{settings.symbol})
-              th.text-center Final #{settings.locale.rl_balance} (#{settings.symbol})
-              th.text-center QR (#{settings.symbol})
+                th.text-center #{settings.locale.total_received}
+              th.text-center Final #{settings.locale.rl_balance}
+              th.text-center QR
         tbody             
           tr
             if settings.show_sent_received == true 
-              td.text-center(style='font-family:monospace;') #{sent.toFixed(8)}
+              td.text-center(style='font-family:monospace; width:25%;') #{sent.toFixed(8)}<br>#{settings.symbol}
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                td.text-center(style='font-family:monospace;') #{received.toFixed(8)}
-              td.text-center(style='font-family:monospace;') #{balance.toFixed(8)}
-              td.text-center
+                td.text-center(style='font-family:monospace; width:25%;') #{received.toFixed(8)}<br>#{settings.symbol}
+              td.text-center(style='font-family:monospace; width:25%;') #{balance.toFixed(8)}<br>#{settings.symbol}
+              td.text-center(style='font-family:monospace; width:25%;')
                 img(src='/qr/#{address.a_id}' style='margin-top:0px; margin-bottom:0px;')
     .panel.panel-default.hidden-xs
       .panel-heading
