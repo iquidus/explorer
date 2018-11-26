@@ -123,6 +123,7 @@
 
   // Peers page settings
   // ipstack_api_key: ipstack.com Geo IP. This is the replacement of http://freegeoip.net You need an API Key for the Requests 
+  // YourIpstackAPIKey
   "peers": {
     "ipstack_api_key": "YourIpstackAPIKey" 
   },
