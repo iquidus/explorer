@@ -8,7 +8,8 @@ block content
   .col-xs-12.col-md-10.col-md-offset-1
     .panel.panel-default.panel-address-summary
       .panel-heading(style='position:relative;')        
-        strong #{address.a_id}
+        strong #{settings.symbol} ADDRESS:
+        span(style='font-family:monospace; color:white')  #{address.a_id}
         if settings.labels[address.a_id]
           if settings.labels[address.a_id].type  
             label(class='label label-#{settings.labels[address.a_id].type} pull-right hidden-xs', style='margin-left:15px;')
@@ -30,24 +31,24 @@ block content
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
                 th #{settings.locale.total_received} (#{settings.symbol})
-              th #{settings.locale.rl_balance} (#{settings.symbol})
+              th Final #{settings.locale.rl_balance} (#{settings.symbol})
         tbody             
           tr
             if settings.show_sent_received == true 
-              td #{sent.toFixed(8)}
+              td(style='font-family:monospace;') #{sent.toFixed(8)}
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                td #{received.toFixed(8)}
-              td #{balance.toFixed(8)}
+                td(style='font-family:monospace;') #{received.toFixed(8)}
+              td(style='font-family:monospace;') #{balance.toFixed(8)}
     .panel.panel-default.hidden-xs
       .panel-heading
         strong #{settings.locale.ex_latest_transactions}
       table.table.table-bordered.table-striped.history-table
         include ./includes/address_history.jade  
-    .panel.panel-default.hidden-lg.hidden-md
-      .panel-heading
-        strong #{settings.locale.ex_latest_transactions}
-      table.table.table-bordered.table-striped
-        include ./includes/address_history.jade    
+    //- .panel.panel-default.hidden-lg.hidden-md
+    //-   .panel-heading
+    //-     strong #{settings.locale.ex_latest_transactions}
+    //-   table.table.table-bordered.table-striped
+    //-     include ./includes/address_history.jade    
     .footer-padding
             

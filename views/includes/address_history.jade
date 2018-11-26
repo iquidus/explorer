@@ -1,14 +1,14 @@
 thead
   tr
-    th.hidden-xs #{settings.locale.timestamp}
-    th.hidden-xs #{settings.locale.tx_hash}
-    th #{settings.locale.mkt_amount} (#{settings.symbol})
+    th.hidden-xs.text-center #{settings.locale.timestamp}
+    th.hidden-xs.text-center #{settings.locale.tx_hash}
+    th.text-center #{settings.symbol}
 tbody
   each tx in txs
     - var time = new Date(tx.timestamp).toTimeString();
     tr
-      td.hidden-xs #{time} 
-      td.hidden-xs
+      td.hidden-xs.text-center(style='font-family:monospace;') #{time}
+      td.hidden-xs.text-left(style='font-family:monospace; font-size: 80%;')
         a(href='/tx/#{tx.txid}') #{tx.txid}
       - var done = false
       - var out = 0
@@ -20,7 +20,7 @@ tbody
         if s.addresses == address.a_id
           - vin = s.amount
       if out > 0 && vin > 0
-        td.info
+        td.info.text-right(style='font-family:monospace;')
           - var amount = (out - vin) / 100000000
           if amount < 0
             - amount = amount * -1
@@ -30,10 +30,10 @@ tbody
           else
             | #{amount.toFixed(8)}
       else if out > 0
-        td.success
+        td.success.text-right(style='font-family:monospace;')
           - var amount = out / 100000000
           | + #{amount.toFixed(8)}
       else
-        td.danger
+        td.danger.text-right(style='font-family:monospace;')
           - var amount = vin / 100000000
           | - #{amount.toFixed(8)}
