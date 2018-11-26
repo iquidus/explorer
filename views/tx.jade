@@ -23,7 +23,7 @@ block content
           if confirms >= confirmations                
             tr.success
                 td(style='font-family:monospace;') #{confirms}
-                td.hidden-xs(style='font-family:monospace;')
+                td.hidden-xs(style='font-family:monospace; font-size: 80%;')
                   a(href='/block/#{tx.blockhash}') #{tx.blockhash}
                 td(style='font-family:monospace;') #{time}
                 td.view_tx  
@@ -33,7 +33,7 @@ block content
             if confirms < (confirmations / 2)
               tr.danger
                 td(style='font-family:monospace;') #{confirms}
-                td.hidden-xs(style='font-family:monospace;')
+                td.hidden-xs(style='font-family:monospace; font-size: 80%;')
                   a(href='/block/#{tx.blockhash}') #{tx.blockhash}
                 td(style='font-family:monospace;') #{time}
                 td.view_tx  
@@ -42,7 +42,7 @@ block content
             else
               tr.warning
                 td(style='font-family:monospace;') #{confirms}
-                td.hidden-xs(style='font-family:monospace;')
+                td.hidden-xs(style='font-family:monospace; font-size: 80%;')
                   a(href='/block/#{tx.blockhash}') #{tx.blockhash}
                 td(style='font-family:monospace;') #{time}
                 td.view_tx  
@@ -64,7 +64,7 @@ block content
                   th #{settings.locale.tx_address}
                   if (tx.vin.length > 0)
                     if tx.vin[0].addresses != 'coinbase'
-                      th.hidden-xs #{settings.symbol}
+                      th.hidden-xs.text-right #{settings.symbol}
               tbody
                 if tx.vin.length > 0
                   each r in tx.vin
@@ -77,7 +77,7 @@ block content
                         td(style='font-family:monospace; font-size: 80%;')
                           a.loading(href='/address/#{r.addresses}') 
                             =r.addresses
-                        td.danger.hidden-xs.text-right(style='font-family:monospace;') #{ramount.toFixed(8)}
+                        td.danger.hidden-xs.text-right(style='font-family:monospace; font-size: 90%;') #{ramount.toFixed(8)}
                       //- tr.hidden-lg.hidden-md
                       //-     td.danger #{ramount.toFixed(8)} #{settings.symbol}
                 else
@@ -91,7 +91,7 @@ block content
               thead
                 tr
                   th #{settings.locale.tx_address}
-                  th.hidden-xs #{settings.symbol}
+                  th.hidden-xs.text-right #{settings.symbol}
               tbody
                 each r in tx.vout
                   if tx.vout.length > 0 
@@ -100,7 +100,7 @@ block content
                       td 
                         a.loading(style='font-family:monospace; font-size: 80%;' href='/address/#{r.addresses}')
                           =r.addresses 
-                      td.success.hidden-xs.text-right(style='font-family:monospace;') #{ramount.toFixed(8)}
+                      td.success.hidden-xs.text-right(style='font-family:monospace; font-size: 90%;') #{ramount.toFixed(8)}
                     //- tr.hidden-lg.hidden-md
                     //-   td.success #{ramount.toFixed(8)} #{settings.symbol}
                   else

@@ -89,7 +89,7 @@ block content
             each txn in txs
               tr
                 td.hidden-xs
-                  a(style='font-family:monospace;' href='/tx/#{txn.txid}') #{txn.txid}
+                  a(style='font-family:monospace; font-size: 80%;' href='/tx/#{txn.txid}') #{txn.txid}
                 td(style='font-family:monospace;') #{txn.vout.length}
                 if txn.vout.length > 0
                   - var total = txn.total / 100000000
