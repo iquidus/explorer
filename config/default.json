@@ -1,0 +1,77 @@
+{
+  "dbsettings": {
+    "uri": "mongodb://localhost:27017/blockchain-explorer",
+    "benchmark_uri": "mongodb://localhost:27017/explorer-benchmark"
+  },
+  "wallet": {
+    "url": "http://localhost:18332",
+    "username": "undefined",
+    "password": "undefined"
+  },
+  "title": "Equibit",
+  "address": "127.0.0.1:3001",
+  "coin": "Equibit",
+  "symbol": "EQB",
+  "logo": "/images/logo.png",
+  "favicon": "public/favicon.ico",
+  "theme": "Darkly",
+  "port": "3001",
+  "update_timeout": 10,
+  "check_timeout": 250,
+  "confirmations": 40,
+  "locale": "locale/en.json",
+  "display": {
+    "api": true,
+    "markets": true,
+    "richlist": true,
+    "twitter": true,
+    "facebook": false,
+    "googleplus": false,
+    "youtube": false,
+    "search": true,
+    "movement": true,
+    "network": true
+  },
+  "index": {
+    "show_hashrate": true,
+    "difficulty": "POW",
+    "last_txs": 100
+  },
+  "api": {
+    "blockindex": 1337,
+    "blockhash": "1733320247b15ca2262be646397d1ffd6be953fa638ebb8f5dcbb4c2b91b34f1",
+    "txhash": "f270cd3813254c9922a2e222a56ba745842d9112223a1394062e460b33d27b7e",
+    "address": "RBiXWscC63Jdn1GfDtRj8hgv4Q6Zppvpwb"
+  },
+  "markets": {
+    "coin": "JBS",
+    "exchange": "BTC",
+    "enabled": ["bittrex"],
+    "cryptopia_id": "1658",
+    "ccex_key" : "Get-Your-Own-Key",
+    "default": "bittrex"
+  },
+  "richlist": {
+    "distribution": true,
+    "received": true,
+    "balance": true
+  },
+  "movement": {
+    "min_amount": 100,
+    "low_flag": 1000,
+    "high_flag": 5000
+  },
+  "twitter": "iquidus",
+  "facebook": "yourfacebookpage",
+  "googleplus": "yourgooglepluspage",
+  "youtube": "youryoutubechannel",
+  "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
+  "genesis_block": "b2926a56ca64e0cd2430347e383f63ad7092f406088b9b86d6d68c2a34baef51",
+  "heavy": false,
+  "txcount": 100,
+  "show_sent_received": true,
+  "supply": "COINBASE",
+  "nethash": "getnetworkhashps",
+  "nethash_units": "G",
+  "labels": {  }
+}

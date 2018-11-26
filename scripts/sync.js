@@ -112,11 +112,7 @@ function exit() {
   });
 }
 
-var dbString = 'mongodb://' + settings.dbsettings.user;
-dbString = dbString + ':' + settings.dbsettings.password;
-dbString = dbString + '@' + settings.dbsettings.address;
-dbString = dbString + ':' + settings.dbsettings.port;
-dbString = dbString + '/' + settings.dbsettings.database;
+const dbString = settings.dbsettings.uri;
 
 is_locked(function (exists) {
   if (exists) {

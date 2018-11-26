@@ -6,13 +6,7 @@ var app = require('../app');
 
 app.set('port', process.env.PORT || settings.port);
 
-var dbString = 'mongodb://' + settings.dbsettings.user;
-dbString = dbString + ':' + settings.dbsettings.password;
-dbString = dbString + '@' + settings.dbsettings.address;
-dbString = dbString + ':' + settings.dbsettings.port;
-dbString = dbString + '/' + settings.dbsettings.database;
-
-db.connect(dbString, function() {
+db.connect(settings.dbsettings.uri, function() {
   db.check_stats(settings.coin, function(exists) {
     if (exists == false) {
       console.log('no stats entry found, creating now..');

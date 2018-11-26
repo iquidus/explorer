@@ -29,4 +29,6 @@ settings.json
 *~
 *.ico
 *.png
+*.env
+.vscode
 
