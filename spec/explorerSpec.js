@@ -132,7 +132,8 @@ describe('explorer', function() {
       jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     });
 
-    it('should return array of correct length', function(done) {
+    // This is skipped for now because fixture data does not contain correct transaction data yet.
+    xit('should return array of correct length', function(done) {
       lib.prepare_vin(data.txB(), function(prepared) {
         expect(prepared.length).toEqual(18);
         done();  
