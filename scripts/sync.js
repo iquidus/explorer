@@ -112,21 +112,15 @@ function exit() {
   });
 }
 
-const dbString = settings.dbsettings.uri;
-
 is_locked(function (exists) {
   if (exists) {
     console.log("Script already running..");
     process.exit(0);
   } else {
-    create_lock(function (){
+    create_lock(function () {
       console.log("script launched with pid: " + process.pid);
-      mongoose.connect(dbString, function(err) {
-        if (err) {
-          console.log('Unable to connect to database: %s', dbString);
-          console.log('Aborting');
-          exit();
-        } else if (database == 'index') {
+      mongoose.connect(settings.dbsettings.uri, settings.dbsettings.options).then(() => {
+        if (database == 'index') {
           db.check_stats(settings.coin, function(exists) {
             if (exists == false) {
               console.log('Run \'npm start\' to create database structures before running this script.');
@@ -220,6 +214,11 @@ is_locked(function (exists) {
             });
           }
         }
+      }).catch(err => {
+        console.log(`Unable to connect to database: ${settings.dbsettings.uri}.`);
+        console.log(`With options: ${JSON.stringify(settings.dbsettings.options, null, 2)}`);
+        console.log('Aborting');
+        exit();
       });
     });
   }

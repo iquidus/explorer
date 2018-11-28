@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Equibit/explorer.png?branch=development)](https://travis-ci.com/Equibit/explorer)
+
 Iquidus Explorer - 1.6.1
 ================
 

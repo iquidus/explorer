@@ -6,7 +6,7 @@ var app = require('../app');
 
 app.set('port', process.env.PORT || settings.port);
 
-db.connect(settings.dbsettings.uri, function() {
+db.connect(settings.dbsettings, function() {
   db.check_stats(settings.coin, function(exists) {
     if (exists == false) {
       console.log('no stats entry found, creating now..');

@@ -11,12 +11,8 @@ function exit() {
   process.exit(0);
 }
 
-mongoose.connect(settings.dbsettings.uri, function(err) {
-  if (err) {
-    console.log('Unable to connect to database: %s', dbString);
-    console.log('Aborting');
-    exit();
-  } else {
+mongoose.connect(settings.dbsettings.uri, settings.dbsettings.options)
+  .then(() => {
     request({uri: 'http://127.0.0.1:' + settings.port + '/api/getpeerinfo', json: true}, function (error, response, body) {
       lib.syncLoop(body.length, function (loop) {
         var i = loop.iteration();
@@ -42,5 +38,9 @@ mongoose.connect(settings.dbsettings.uri, function(err) {
         exit();
       });
     });
-  }
-});
+  }).catch(err => {
+    console.log(`Unable to connect to database: ${settings.dbsettings.uri}`);
+    console.log(`With options: ${JSON.stringify(settings.dbsettings.options, null, 2)}`);
+    console.log('Aborting');
+    exit();
+  });

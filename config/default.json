@@ -1,7 +1,9 @@
 {
   "dbsettings": {
     "uri": "mongodb://localhost:27017/blockchain-explorer",
-    "benchmark_uri": "mongodb://localhost:27017/explorer-benchmark"
+    "options": { "useNewUrlParser": true },
+    "benchmark_uri": "mongodb://localhost:27017/explorer-benchmark",
+    "benchmark_options": { "useNewUrlParser": true }
   },
   "wallet": {
     "url": "http://localhost:18332",
