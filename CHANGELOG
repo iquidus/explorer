@@ -1,3 +1,9 @@
+1.7.1
+* Updated dependencies to mitigate vulnerabilities
+* Updated themes to bootstrap 4 for latest Bootswatch themes
+* Imported features from suprnurd/ciquidus fork
+* Implemented requests made in Issues: #252, 253, 256
+
 1.6.1
 * fixed last_txs setting
 * added hashrate_units setting

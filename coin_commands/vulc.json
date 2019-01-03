@@ -1,0 +1,17 @@
+{
+	"heavy":[
+	   "getmasternodecount",
+	   "getmasternodeoutputs",
+	   "getmasternodescores",
+	   "getmasternodestatus",
+	   "getmasternodewinners",
+	   "listmasternodes",
+	   "masternode",
+	   "masternodecurrent"
+   ],
+   "default":[
+		"getmasternodecount",
+		"listmasternodes"
+   ]
+   
+}

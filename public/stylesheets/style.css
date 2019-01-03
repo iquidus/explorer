@@ -96,9 +96,16 @@ tr {
 	margin-left:5px;
 }
 
-#twitter-icon {
+#twitter-icon, 
+#facebook-icon, 
+#googleplus-icon, 
+#bitcointalk-icon, 
+#website-icon, 
+#github-icon, 
+#slack-icon {
 	font-size: 20px;
 }
+
 .connections {
 	position: absolute;
 	bottom: 15px;
@@ -109,13 +116,28 @@ tr {
 	margin-right: 10px;
 }
 
-#twitter-icon img{
+#twitter-icon img, 
+#facebook-icon img, 
+#googleplus-icon img, 
+#bitcointalk-icon img, 
+#website-icon img, 
+#github-icon img, 
+#slack-icon img{
 	width: 40px;
 	margin: 5px 5px;
 }
 
 #market_menu {
 	margin-bottom: 5px;
+}
+
+#hashratepanel span,
+#difficultypanel span,
+#supplypanel span,
+#masternodepanel span,
+#pricepanel span{
+	margin: 0 5px 0 5px;
+	top: 0;
 }
 
 .label a:link {

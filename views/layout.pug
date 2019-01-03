@@ -1,0 +1,229 @@
+doctype html
+html
+  head
+    title=settings.title
+    link(rel='stylesheet', href='/themes/'+ settings.theme+'/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
+    link(res='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css')
+    link(rel='stylesheet', href='//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+    script(src='//netdna.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js')
+    script(src='/vendor/jqplot/jquery.jqplot.min.js')
+    script(src='/vendor/jqplot/plugins/jqplot.dateAxisRenderer.min.js')
+    script(src='/vendor/jqplot/plugins/jqplot.ohlcRenderer.min.js')
+    script(src='/vendor/jqplot/plugins/jqplot.highlighter.min.js')
+    script(src='/vendor/jqplot/plugins/jqplot.pieRenderer.min.js')
+    script(src='/vendor/jqplot/plugins/jqplot.barRenderer.min.js')
+    script(src='/vendor/jqplot/plugins/jqplot.categoryAxisRenderer.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js')
+    script(src='//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js')
+    script(src='//cdn.datatables.net/responsive/1.0.1/js/dataTables.responsive.js')
+    script(src='//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js')
+    script(src='/javascripts/chart.js')
+    script.
+      $(document).ready(function(){
+        $('#active').addClass('active');
+        function update_stats(){
+          $.ajax({url: '/ext/summary', success: function(json){
+            $("#supply").text(json.data[0].supply);
+            $("#masternodeCountOnline").text(json.data[0].masternodeCountOnline);
+            $("#masternodeCountOffline").text(json.data[0].masternodeCountOffline);
+            $("#difficulty").text(json.data[0].difficulty);
+            $("#difficultyHybrid").text(json.data[0].difficultyHybrid);
+            $("#hashrate").text(json.data[0].hashrate);
+            $("#lastPrice").text(json.data[0].lastPrice.toFixed(Number('#{settings.decimal_places}')));
+            $("#lblConnections").text(json.data[0].connections + ' connections');
+            $("#lblBlockcount").text(json.data[0].blockcount + ' blocks');
+            $("#lblX1").text(' ');
+          }});
+        }
+        $('.block-last-next').tooltip({
+          animation: true,
+          delay: { hide: 500 },
+        });
+        if($('.history-table tbody tr').length) {
+          $('.history-table').dataTable( {
+            searching: false,
+            ordering: false,
+            responsive: true
+          });
+        }
+        $('.iquidus').css('color',$('.table').css('color'));
+        $(window).resize(function () {
+          $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
+        });
+        setInterval( function() {
+          update_stats();
+        }, 60000);
+        update_stats();
+      });
+  body
+    - function format_unixtime(unixtime) {
+      - var a = new Date(unixtime*1000);
+      - var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      - var year = a.getFullYear();
+      - var month = months[a.getMonth()];
+      - var date = a.getDate();
+      - var hour = a.getHours();
+      - var min = a.getMinutes();
+      - var sec = a.getSeconds();
+      - var suffix = 'th'
+      if date == 1 || date == 21 || date == 31
+        - suffix = 'st'
+      if date == 2 || date == 22 || date == 32
+        - suffix = 'nd'
+      if date == 3 || date == 23
+        - suffix = 'rd'
+      if hour < 10
+        - hour = '0' + hour
+      if min < 10
+        - min = '0' + min
+      if sec < 10
+        - sec = '0' + sec
+      - var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+      - return time
+    -  };
+    .nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.fixed-top(role='navigation')
+      .navbar-header
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-collapse')
+          span.navbar-toggler-icon
+        a.navbar-brand(href='/')=settings.coin
+      .collapse.navbar-collapse(id='navbar-collapse')
+        ul.navbar-nav.mr-auto
+          li#home
+            a.nav-link(href='/')
+              span.glyphicon.glyphicon-search
+              span.menu-text=settings.locale.menu_explorer
+          if settings.heavy == true
+            li#reward
+              a.nav-link(href='/reward')
+                span.fa.fa-star
+                span.menu-text=settings.locale.menu_reward
+          if settings.display.movement == true
+            li#movement
+              a.nav-link.loading(href='/movement')
+                span.fa.fa-money
+                span.menu-text=settings.locale.menu_movement
+          if settings.display.network == true
+            li#network
+              a.nav-link(href='/network')
+                span.fa.fa-share-alt
+                span.menu-text=settings.locale.menu_network
+          if settings.display.richlist == true
+            li#richlist
+              a.nav-link(href='/richlist')
+                span.fa.fa-btc
+                span.menu-text=settings.locale.menu_richlist
+          if settings.display.markets == true
+            li#markets
+              a.nav-link.loading(href='/markets/'+settings.markets.default+'')
+                span.fa.fa-line-chart
+                span.menu-text settings.locale.menu_markets
+          if settings.display.api == true
+            li#info
+              a.nav-link(href='/info')
+                span.glyphicon.glyphicon-info-sign
+                span.menu-text=settings.locale.menu_api
+
+    .col-md-12
+      .row.text-center.d-flex.justify-content-center
+        .col-md-2
+          .card.card-default.hidden-sm.hidden-xs
+            .card-header
+              if settings.nethash_units == 'K'
+                strong=settings.locale.network +'(KH/s)'
+              else if settings.nethash_units == 'M'
+                strong=settings.locale.network +'(MH/s)'
+              else if settings.nethash_units == 'G'
+                strong=settings.locale.network +'(GH/s)'
+              else if settings.nethash_units == 'T'
+                strong=settings.locale.network +'(TH/s)'
+              else if settings.nethash_units == 'P'
+                strong=settings.locale.network +'(PH/s)'
+              else if settings.nethash_units == 'H'
+                strong=settings.locale.network +'(H/s)'
+            .card-body
+              #hashratecard
+                span.glyphicon.fa.fa-gears
+                if settings.index.difficulty == 'Hybrid'
+                  label#hashrate -
+                  <br>
+                  label#lblX1
+                else
+                  label#hashrate -
+        .col-md-2
+          .card.card-default.hidden-sm.hidden-xs
+            .card-header
+              strong=settings.locale.difficulty
+            .card-body
+              #difficultycard
+                span.glyphicon.fa.fa-sliders
+                if settings.index.difficulty == 'Hybrid'
+                  label#difficulty -
+                  <br>
+                  label#difficultyHybrid -
+                else
+                  label#difficulty -
+        .col-md-2
+         .card.card-default.hidden-sm.hidden-xs
+            .card-header
+              strong=settings.locale.masternodecount
+            .card-body
+              #masternodecard
+                span.glyphicon.fa.fa-exclamation-triangle
+                label#masternodeCountOffline -
+                label &nbsp;&#x2F;&nbsp;        
+                label#masternodeCountOnline -
+                span.glyphicon.fa.fa-check-circle
+        .col-md-2
+          .card.card-default.hidden-sm.hidden-xs
+            .card-header
+              strong=settings.locale.ex_supply +'('+ settings.symbol+')'
+            .card-body
+              #supplycard
+                span.glyphicon.fa.fa-pie-chart
+                if settings.index.difficulty == 'Hybrid'
+                  label#supply -
+                  <br>
+                  label#lblX1
+                else
+                  label#supply -
+        .col-md-2
+          .card.card-default.hidden-sm.hidden-xs
+            .card-header
+              strong=settings.markets.exchange+ ' Price'
+            .card-body
+              #pricecard
+                span.glyphicon.fa.fa-rocket
+                if settings.index.difficulty == 'Hybrid'
+                  label#lastPrice -
+                  <br>
+                  label#lblX1
+                else
+                  label#lastPrice -                
+
+      .row.text-center(style='margin-top:10px;margin-bottom:20px;')
+        form.form-inline.col-12.d-flex.justify-content-center(method='post', action='/search')
+          #index-search.form-group.d-flex.justify-content-center
+            input.form-control(type='text', name='search', placeholder=settings.locale.ex_search_message, style='min-width:80%;margin-right:5px;')
+            button.btn.btn-success(type='submit')=settings.locale.ex_search_button
+    block content
+    .nav.navbar.navbar-default.fixed-bottom.hidden-xs.bg-primary
+      .col-md-4
+        ui.nav.justify-content-left
+          each social in settings.social
+            if social.enabled
+                li.pull-left(style="margin-right:1%")
+                  a#website-icon(href=social.url)
+                    span(class="glyphicon fa "+ social.fontawesome)
+      .col-md-4
+        ul.nav.justify-content-center
+          li.text-center(style='margin-left:80px;margin-right:80px;')
+            p(style='margin-top:15px;')
+              a(href='https://github.com/iquidus/explorer', target='_blank') Iquidus Explorer
+      .col-md-4
+        ui.nav.justify-content-end
+          label#lblBlockcount.label.label-default
+          label#lblConnections.label.label-default 

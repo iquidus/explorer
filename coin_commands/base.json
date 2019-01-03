@@ -1,0 +1,36 @@
+{
+   "heavy":[
+      "getinfo",
+      "getstakinginfo",
+      "getnetworkhashps",
+      "getdifficulty",
+      "getconnectioncount",
+      "getblockcount",
+      "getblockhash",
+      "getblock",
+      "getrawtransaction",
+      "getmaxmoney",
+      "getvote",
+      "getmaxvote",
+      "getphase",
+      "getreward",
+      "getnextrewardestimate",
+      "getnextrewardwhenstr",
+      "getnextrewardwhensec",
+      "getsupply",
+      "gettxoutsetinfo"
+   ],
+   "default":[
+      "getinfo",
+      "getnetworkhashps",
+      "getmininginfo",
+      "getdifficulty",
+      "getconnectioncount",
+      "getblockcount",
+      "getblockhash",
+      "getblock",
+      "getrawtransaction",
+      "getpeerinfo",
+      "gettxoutsetinfo"
+   ]
+}

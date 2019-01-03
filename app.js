@@ -1,7 +1,7 @@
 var express = require('express')
   , path = require('path')
   , bitcoinapi = require('bitcoin-node-api')
-  , favicon = require('static-favicon')
+  , favicon = require('serve-favicon')
   , logger = require('morgan')
   , cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
@@ -10,41 +10,30 @@ var express = require('express')
   , lib = require('./lib/explorer')
   , db = require('./lib/database')
   , locale = require('./lib/locale')
-  , request = require('request');
+  , request = require('request')
+  , fs = require('fs');
 
 var app = express();
 
 // bitcoinapi
 bitcoinapi.setWalletDetails(settings.wallet);
-if (settings.heavy != true) {
-  bitcoinapi.setAccess('only', ['getinfo', 'getnetworkhashps', 'getmininginfo','getdifficulty', 'getconnectioncount',
-    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 'getpeerinfo', 'gettxoutsetinfo']);
-} else {
-  // enable additional heavy api calls
-  /*
-    getvote - Returns the current block reward vote setting.
-    getmaxvote - Returns the maximum allowed vote for the current phase of voting.
-    getphase - Returns the current voting phase ('Mint', 'Limit' or 'Sustain').
-    getreward - Returns the current block reward, which has been decided democratically in the previous round of block reward voting.
-    getnextrewardestimate - Returns an estimate for the next block reward based on the current state of decentralized voting.
-    getnextrewardwhenstr - Returns string describing how long until the votes are tallied and the next block reward is computed.
-    getnextrewardwhensec - Same as above, but returns integer seconds.
-    getsupply - Returns the current money supply.
-    getmaxmoney - Returns the maximum possible money supply.
-  */
-  bitcoinapi.setAccess('only', ['getinfo', 'getstakinginfo', 'getnetworkhashps', 'getdifficulty', 'getconnectioncount',
-    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction','getmaxmoney', 'getvote',
-    'getmaxvote', 'getphase', 'getreward', 'getnextrewardestimate', 'getnextrewardwhenstr',
-    'getnextrewardwhensec', 'getsupply', 'gettxoutsetinfo']);
-}
+var commands = [];
+    for(i=0; i < settings.commands_needed.length; i++){
+      var cmds = JSON.parse(fs.readFileSync("coin_commands/"+settings.commands_needed[i]));
+      var cmd = (settings.heavy ? cmds.heavy : cmds.default);
+      for(k=0; k < cmd.length; k++){
+        commands.push(cmd[k]);
+      }
+    }
+  bitcoinapi.setAccess('only', commands);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(favicon(path.join(__dirname, settings.favicon)));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -94,6 +83,22 @@ app.use('/ext/getdistribution', function(req,res){
   });
 });
 
+app.use('/ext/getlasttxsajax', function(req,res){
+  db.get_last_txs_ajax(req.query.start, req.query.length,function(txs, count){
+    var data = [];
+    for(i=0; i<txs.length; i++){
+      var row = [];
+      row.push(txs[i].blockindex);
+      row.push(txs[i].txid);
+      row.push(txs[i].vout.length);
+      row.push((txs[i].total / 100000000).toFixed(settings.decimal_places));
+      row.push(new Date((txs[i].timestamp) * 1000).toUTCString());
+      data.push(row);
+    }
+    res.json({"data":data, "draw": req.query.draw, "recordsTotal": count, "recordsFiltered": count});
+  });
+});
+
 app.use('/ext/getlasttxs/:min', function(req,res){
   db.get_last_txs(settings.index.last_txs, (req.params.min * 100000000), function(txs){
     res.send({data: txs});
@@ -113,10 +118,6 @@ app.set('coin', settings.coin);
 app.set('locale', locale);
 app.set('display', settings.display);
 app.set('markets', settings.markets);
-app.set('twitter', settings.twitter);
-app.set('facebook', settings.youtube);
-app.set('googleplus', settings.googleplus);
-app.set('youtube', settings.youtube);
 app.set('genesis_block', settings.genesis_block);
 app.set('index', settings.index);
 app.set('heavy', settings.heavy);
@@ -127,6 +128,23 @@ app.set('show_sent_received', settings.show_sent_received);
 app.set('logo', settings.logo);
 app.set('theme', settings.theme);
 app.set('labels', settings.labels);
+app.set('decimal_places', settings.decimal_places);
+/*for(i=0;i<Object.keys(settings.social).length; i++)
+{
+  app.set(Object.keys(settings.social)[i], Object.values(settings.social)[i]);
+}*/
+/*
+Object.keys(settings.social).forEach(function(key) {
+  app.set(key, settings.social[key]);
+});*/
+app.set("social", settings.social);
+
+app.use('/ext/testsocial', function(req,res){
+  Object.keys(settings.social).forEach(function(key) {
+    var val = settings.social[key];
+    res.json(key);
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -125,7 +125,9 @@ is_locked(function (exists) {
   } else {
     create_lock(function (){
       console.log("script launched with pid: " + process.pid);
-      mongoose.connect(dbString, function(err) {
+      mongoose.connect(dbString, { useCreateIndex: true,
+        useNewUrlParser: true
+      }, function(err) {
         if (err) {
           console.log('Unable to connect to database: %s', dbString);
           console.log('Aborting');
