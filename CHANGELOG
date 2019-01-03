@@ -1,4 +1,4 @@
-1.7.1
+1.7.2
 * Updated dependencies to mitigate vulnerabilities
 * Updated themes to bootstrap 4 for latest Bootswatch themes
 * Imported features from suprnurd/ciquidus fork
