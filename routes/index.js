@@ -4,7 +4,8 @@ var express = require('express')
   , locale = require('../lib/locale')
   , db = require('../lib/database')
   , lib = require('../lib/explorer')
-  , qr = require('qr-image');
+  , qr = require('qr-image')
+  ;
 
 function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
@@ -100,21 +101,7 @@ function route_get_address(res, hash, count) {
       if (address.txs.length < count) {
         count = address.txs.length;
       }
-      lib.syncLoop(count, function (loop) {
-        var i = loop.iteration();
-        db.get_tx(hashes[i].addresses, function(tx) {
-          if (tx) {
-            txs.push(tx);
-            loop.next();
-          } else {
-            loop.next();
-          }
-        });
-      }, function(){
-
-        res.render('address', { active: 'address', address: address, txs: txs});
-      });
-
+        res.render('address', { active: 'address', address: address});
     } else {
       route_get_index(res, hash + ' not found');
     }
@@ -151,6 +138,10 @@ router.get('/markets/:market', function(req, res) {
   } else {
     route_get_index(res, null);
   }
+});
+
+router.get('/masternodes', function(req, res) {
+  res.render('masternodes', {active: 'masternodes'});
 });
 
 router.get('/richlist', function(req, res) {
@@ -296,24 +287,91 @@ router.get('/ext/summary', function(req, res) {
     }
     lib.get_hashrate(function(hashrate) {
       lib.get_connectioncount(function(connections){
-        lib.get_blockcount(function(blockcount) {
-          db.get_stats(settings.coin, function (stats) {
-            if (hashrate == 'There was an error. Check your console.') {
-              hashrate = 0;
-            }
-            res.send({ data: [{
-              difficulty: difficulty,
-              difficultyHybrid: difficultyHybrid,
-              supply: stats.supply,
-              hashrate: hashrate,
-              lastPrice: stats.last_price,
-              connections: connections,
-              blockcount: blockcount
-            }]});
+        lib.get_masternodecount(function(masternodestotal){
+          lib.get_blockcount(function(blockcount) {
+            db.get_stats(settings.coin, function (stats) {
+              if (hashrate == 'There was an error. Check your console.') {
+                hashrate = 0;
+              }
+              var masternodesoffline = Math.floor(masternodestotal.total - masternodestotal.enabled);
+              res.send({ data: [{
+                difficulty: difficulty,
+                difficultyHybrid: difficultyHybrid,
+                supply: stats.supply,
+                hashrate: hashrate,
+                lastPrice: stats.last_price,
+                connections: connections,
+                masternodeCountOnline: masternodestotal.enabled,
+                masternodeCountOffline: masternodesoffline,
+                blockcount: blockcount
+              }]});
+            });
           });
         });
       });
     });
+  });
+});
+
+router.get('/ext/masternodes', function(req, res) {
+  lib.get_masternodelist(function(list) {
+    var mnList = [];
+
+    for (i=0;i< list.length; i++) {
+      //if (settings.baseType === 'pivx')
+      //{
+        var mn = list[i];
+        var mnItem = {
+          address: mn.addr,
+          status: mn.status,
+          lastseen: mn.lastseen,
+          lastpaid: mn.lastpaid,
+          //ip: ""
+        };
+        mnList.push(mnItem);
+
+      //  continue;
+      //}
+/*
+      if (list.hasOwnProperty(key)) {
+        var mnData = list[key].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
+        var mnItem = {
+          address: "",
+          status: "",
+          lastseen: "",
+          lastpaid: null,
+          ip: ""
+        };
+
+        // Address
+        if (settings.masternodes.list_format.address === 0)
+          mnItem.address = key;
+        else if (settings.masternodes.list_format.address > -1)
+          mnItem.address = mnData[settings.masternodes.list_format.address - 1];
+
+        // Status
+        if (settings.masternodes.list_format.status > -1)
+          mnItem.status = mnData[settings.masternodes.list_format.status - 1];
+
+        // last seen
+        if (settings.masternodes.list_format.lastseen > -1)
+          mnItem.lastseen = mnData[settings.masternodes.list_format.lastseen - 1];
+
+        // last paid
+        if (settings.masternodes.list_format.lastpaid > -1)
+          mnItem.lastpaid = mnData[settings.masternodes.list_format.lastpaid - 1];
+
+/*        // IP
+        if (settings.masternodes.list_format.ip === 0)
+          mnItem.ip = key.trim().replace(':'+settings.masternodes.default_port, '');
+        else if (settings.masternodes.list_format.ip > -1)
+          mnItem.ip = mnData[settings.masternodes.list_format.ip - 1].trim().replace(':'+settings.masternodes.default_port, '');
+*/ 
+      //mnList.push(mnItem);
+      //}
+    }
+
+    res.send({ data: mnList });
   });
 });
 module.exports = router;

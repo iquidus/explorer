@@ -57,6 +57,7 @@
     "new_coins": "New Coins",
     "proof_of_stake": "PoS",
     "initial_index_alert": "Indexing is currently incomplete, functionality is limited until index is up-to-date.",
+    "masternodecount": "Masternodes",
 
     //address menu
     "a_menu_showing": "Showing last",
@@ -145,5 +146,5 @@
     "heavy_estnext": "Est. Next",
     "heavy_changein": "Reward change in approximately",
     "heavy_key": "Key",
-    "heavy_lastxvotes": "Last 20 votes",
+    "heavy_lastxvotes": "Last 20 votes"
 }

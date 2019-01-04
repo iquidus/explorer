@@ -43,13 +43,6 @@ html
           animation: true,
           delay: { hide: 500 },
         });
-        if($('.history-table tbody tr').length) {
-          $('.history-table').dataTable( {
-            searching: false,
-            ordering: false,
-            responsive: true
-          });
-        }
         $('.iquidus').css('color',$('.table').css('color'));
         $(window).resize(function () {
           $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
@@ -120,13 +113,16 @@ html
             li#markets
               a.nav-link.loading(href='/markets/'+settings.markets.default+'')
                 span.fa.fa-line-chart
-                span.menu-text settings.locale.menu_markets
+                span.menu-text=settings.locale.menu_markets
           if settings.display.api == true
             li#info
               a.nav-link(href='/info')
                 span.glyphicon.glyphicon-info-sign
                 span.menu-text=settings.locale.menu_api
-
+          li#masternodes
+            a.nav-link(href='/masternodes')
+              span.glyphicon.glyphicon-info-sign
+              span.menu-text="Masternodes"
     .col-md-12
       .row.text-center.d-flex.justify-content-center
         .col-md-2

@@ -1,53 +1,81 @@
 extends layout
 
 block content
+  script.
+    $(document).ready(function(){
+      var historytable = $('#history-table').dataTable( {  
+        autoWidth: true,      
+        searching: false,
+        ordering: false,
+        responsive: true,
+        lengthChange: true,
+        processing: true,
+        serverSide: true,
+        ajax: '/ext/getaddresstransactions/#{address.a_id}',
+        rowCallback: function(row, data, index) {
+          var timestamp = data[0];
+          var hash = data[1];
+          var amount = data[2];
+          data[1] = "<a href='/tx/"+hash +"'>"+ hash +"</a>";
+          $("td:eq(1)", row).html(data[1]);
+          if(amount.charAt(0) == "+"){
+            $("td:eq(2)",row).addClass("table-success");
+          }else{
+            $("td:eq(2)",row).addClass("table-danger");
+          }
+        }
+      });
+      setInterval( function () {
+        historytable.api().ajax.reload(null, false);
+      }, 60000 );
+    });
   - var balance = (address.received - address.sent) / 100000000;
   - var sent = address.sent /100000000
   - var received = address.received / 100000000
-    img.qrcode.pull-right.hidden-xs(src='/qr/'+ address.a_id )
+    img.qrcode.pull-right.hidden-xs(src='/qr/#{address.a_id}')
   .col-xs-12.col-md-10.offset-md-1
     .card.card-default.card-address-summary
       .card-header(style='position:relative;')        
-        strong '+ address.a_id
+        strong=address.a_id
         if settings.labels[address.a_id]
           if settings.labels[address.a_id].type  
-            label(class='label label-'+ settings.labels[address.a_id].type + ' pull-right hidden-xs', style='margin-left:15px;')
+            label(class='label label-#{ settings.labels[address.a_id].type} pull-right hidden-xs', style='margin-left:15px;')
               =settings.labels[address.a_id].label
               if settings.labels[address.a_id].url
-                a(href="'+ settings.labels[address.a_id].url'", target='_blank')
+                a(href="#{ settings.labels[address.a_id].url}'", target='_blank')
                   span.fa.fa-question-circle(style='margin-left:5px;')
           else
             label.label.label-default.pull-right.hidden-xs(style='margin-left:15px;') 
               =settings.labels[address.a_id].label
               if settings.labels[address.a_id].url
-                a(href=''+ settings.labels[address.a_id].url}', target='_blank')
+                a(href='#{settings.labels[address.a_id].url}', target='_blank')
                   span.fa.fa-question-circle(style='margin-left:5px;')
       table.table.table-bordered.table-striped.summary-table 
         thead
           tr
             if settings.show_sent_received == true
-              th '+ settings.locale.total_sent +' ('+ settings.symbol +')
+              th #{settings.locale.total_sent} (#{settings.symbol})
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                th '+ settings.locale.total_received} ('+ settings.symbol})
-              th '+ settings.locale.rl_balance} ('+ settings.symbol})
+                th #{settings.locale.total_received} (#{settings.symbol})
+              th #{settings.locale.rl_balance} (#{settings.symbol})
         tbody             
           tr
             if settings.show_sent_received == true 
-              td '+ sent.toFixed(settings.decimal_places)}
+              td #{ sent.toFixed(settings.decimal_places)}
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                td '+ received.toFixed(settings.decimal_places)}
-              td '+ balance.toFixed(settings.decimal_places)}
+                td #{received.toFixed(settings.decimal_places)}
+              td #{ balance.toFixed(settings.decimal_places)}
     .card.card-default.hidden-xs
       .card-header
-        strong '+ settings.locale.ex_latest_transactions}
-      table.table.table-bordered.table-striped.history-table
-        include ./includes/address_history.pug  
-    .card.card-default.hidden-lg.hidden-md
-      .card-header
-        strong '+ settings.locale.ex_latest_transactions}
-      table.table.table-bordered.table-striped
-        include ./includes/address_history.pug    
+        strong #{ settings.locale.ex_latest_transactions}
+      table#history-table.table.table-bordered.table-striped
+        thead
+          tr
+            th.hidden-xs=settings.locale.timestamp
+            th.hidden-xs=settings.locale.tx_hash
+            th=settings.locale.mkt_amount +' ('+ settings.symbol +')'
+        tbody.text-center
     .footer-padding
             

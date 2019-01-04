@@ -47,7 +47,7 @@ app.use('/ext/getmoneysupply', function(req,res){
 });
 
 app.use('/ext/getaddress/:hash', function(req,res){
-  db.get_address(req.param('hash'), function(address){
+  db.get_address(req.params.hash, function(address){
     if (address) {
       var a_ext = {
         address: address.a_id,
@@ -58,17 +58,17 @@ app.use('/ext/getaddress/:hash', function(req,res){
       };
       res.send(a_ext);
     } else {
-      res.send({ error: 'address not found.', hash: req.param('hash')})
+      res.send({ error: 'address not found.', hash: req.params.hash})
     }
   });
 });
 
 app.use('/ext/getbalance/:hash', function(req,res){
-  db.get_address(req.param('hash'), function(address){
+  db.get_address(req.params.hash, function(address){
     if (address) {
       res.send((address.balance / 100000000).toString().replace(/(^-+)/mg, ''));
     } else {
-      res.send({ error: 'address not found.', hash: req.param('hash')})
+      res.send({ error: 'address not found.', hash: req.params.hash})
     }
   });
 });
@@ -96,6 +96,53 @@ app.use('/ext/getlasttxsajax', function(req,res){
       data.push(row);
     }
     res.json({"data":data, "draw": req.query.draw, "recordsTotal": count, "recordsFiltered": count});
+  });
+});
+
+app.use('/ext/getaddresstransactions/:hash', function(req,res){
+  db.get_address_ajax(req.params.hash,req.query.start, req.query.length,function(txs){
+    var data = [];
+    var length = (parseInt(req.query.length) + parseInt(req.query.start)); //facepalm
+    //facepalm for days. I'm sure there's a saying out there that just because you can, doesn't mean you should.
+    //works though.
+    var ntx = txs.txes.reverse();
+    for(i=req.query.start; i<length; i++){
+      var row = [];
+      var mtx = ntx[i];
+      row.push(lib.format_unixtime(mtx.timestamp));
+      row.push(mtx.txid);
+      var done = false;
+      var out = 0;
+      var vin = 0;
+      for(r = 0; r < mtx.vout.length; r++){
+        if(mtx.vout[r].addresses == req.params.hash)
+          out = mtx.vout[r].amount;
+      }
+      for(s = 0; s < mtx.vin.length; s++){
+        if(mtx.vin[s].addresses == req.params.hash)
+          out = mtx.vin[s].amount;
+      }
+      if (out > 0 && vin > 0){
+        var amount = (out - vin) / 100000000
+        if (amount < 0){
+          amount = amount * -1
+          console.log('here');
+          row.push("- "+amount.toFixed(settings.decimal_places));
+        }else if(amount > 0){
+          row.push( "+ "+ amount.toFixed(settings.decimal_places));
+        }else{
+          row.push(amount.toFixed(settings.decimal_places))
+        }
+      }else if(out > 0){
+        var amount = out / 100000000
+        row.push("+ " + amount.toFixed(settings.decimal_places))
+      }else{
+        var amount = vin / 100000000
+        row.push("- " +amount.toFixed(settings.decimal_places))
+      }
+      data.push(row);
+    }
+    res.json({"data":data, "draw": req.query.draw, "recordsTotal": txs.totalTxes, "recordsFiltered": txs.totalTxes});
   });
 });
 

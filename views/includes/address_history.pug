@@ -3,37 +3,5 @@ thead
     th.hidden-xs=settings.locale.timestamp
     th.hidden-xs=settings.locale.tx_hash
     th=settings.locale.mkt_amount +' ('+ settings.symbol +')'
-tbody
-  each tx in txs
-    - var time = format_unixtime(tx.timestamp)
-    tr
-      td.hidden-xs=time 
-      td.hidden-xs
-        a(href='/tx/'+ tx.txid)=tx.txid
-      - var done = false
-      - var out = 0
-      - var vin = 0
-      each r in tx.vout 
-        if r.addresses == address.a_id
-          - out = r.amount
-      each s in tx.vin
-        if s.addresses == address.a_id
-          - vin = s.amount
-      if out > 0 && vin > 0
-        td.table-info
-          - var amount = (out - vin) / 100000000
-          if amount < 0
-            - amount = amount * -1
-            | - =amount.toFixed(settings.decimal_places)
-          else if amount > 0
-            | + =amount.toFixed(settings.decimal_places)
-          else
-            | =amount.toFixed(settings.decimal_places)
-      else if out > 0
-        td.table-success
-          - var amount = out / 100000000
-          | + =amount.toFixed(settings.decimal_places)
-      else
-        td.table-danger
-          - var amount = vin / 100000000
-          | - =amount.toFixed(settings.decimal_places)
+tbody.text-center
+  

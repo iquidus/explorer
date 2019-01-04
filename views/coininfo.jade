@@ -1,0 +1,88 @@
+extends layout
+
+block content   
+  .col-md-12(style="margin-bottom: 4%")
+    .panel.panel-primary.coin-info
+      .panel-heading
+        strong #{settings.locale.coininfo_head}
+      .panel-body
+        .row
+          .col-md-3
+            .panel.panel-default
+              .panel-heading
+                strong #{settings.locale.coininfo_basicinfo}
+              .panel-body
+                each item in coininfo.basic_info_links
+                  a(href="#{item[1]}", target="_blank") #{item[0]}
+                  <br>
+          .col-md-9
+            .panel.panel-default
+              .panel-body.text-center
+                .row.info-row
+                  .col-md-4
+                    img(src='#{settings.logo}', style='')
+                  .col-md-4
+                    h2 #{settings.coin} &nbsp(#{settings.symbol})
+                    span #{lastPriceBtc} BTC
+                    if lastPriceUsd
+                      span  / $#{lastPriceUsd} &nbsp;
+                      - pricePercChangeClass = pricePercChange24h ? (pricePercChange24h.substr(0, 1) == '-' ? 'text-danger' : 'text-success') : 'text-default';
+                      span(class=pricePercChangeClass) (#{pricePercChange24h}%)
+                .row.info-row
+                  .col-md-4
+                    h4 #{marketCapUsd}
+                    h5.sub Market Cap (USD)
+                  .col-md-4
+                    h4 #{supply} #{settings.symbol}
+                    h5.sub Current Coin supply
+                  .col-md-4
+                    h4 #{coinsLocked}
+                    h5.sub Coins locked (#{coinsLockedPerc}%)
+                .row.info-row
+                  .col-md-4
+                    h4 #{activeMasternodes} / #{totalMasternodes}
+                    h5.sub Active / Total nodes
+                  .col-md-4
+                    h4 #{mnRequiredCoins}
+                    h5.sub Required coins
+                  .col-md-4
+                    h4
+                      span #{nodeWorthBtc} BTC
+                      if nodeWorthUsd
+                        span  / $#{nodeWorthUsd}
+                    h5.sub Node worth
+                .row
+                  <hr>
+                .row.text-left
+                  .col-md-12
+                    h4 Estimated earnings (Coin/BTC/USD)
+                .row.earnings
+                  .col-xs-2.col-md-offset-3.text-right
+                    div Daily
+                  .col-xs-10.col-md-7.text-left
+                    div #{dailyCoin} #{settings.symbol} / #{dailyBtc} BTC / $#{dailyUsd}
+                .row.earnings
+                  .col-xs-2.col-md-offset-3.text-right
+                    div Weekly
+                  .col-xs-10.col-md-7.text-left
+                    div #{weeklyCoin} #{settings.symbol} / #{weeklyBtc} BTC / $#{weeklyUsd}
+                .row.earnings
+                  .col-xs-2.col-md-offset-3.text-right
+                    div Monthly
+                  .col-xs-10.col-md-7.text-left
+                    div #{monthlyCoin} #{settings.symbol} / #{monthlyBtc} BTC / $#{monthlyUsd}
+                .row.earnings
+                  .col-xs-2.col-md-offset-3.text-right
+                    div Yearly
+                  .col-xs-10.col-md-7.text-left
+                    div #{yearlyCoin} #{settings.symbol} / #{yearlyBtc} BTC / $#{yearlyUsd}
+                if (calculatedBasedOnRealData)
+                  .row &nbsp;
+                  .row.earnings
+                    .col-md-offset-5.text-left
+                      em Calculations are based on real masternode payment data over the last 24h.
+
+
+
+
+
