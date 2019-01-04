@@ -27,6 +27,8 @@ function create_peers(address, protocol, version){
       //todo
       //semver: semver,
       country: geo.country_name
+    }, function(){
+
     });
   });
 }
@@ -58,8 +60,7 @@ mongoose.connect(dbString, { useCreateIndex: true,
         var semver = version.split(":")[1];
         livepeers[i] = address;
         db.find_peers(address, function(peer) {
-          if (peer) {
-              console.log('Live version is: ', semver); //remove this if you'd like
+          if (peer.length) {
               for(i=0; i<peer.length; i++){
                 // cmp(a,b)
                 // result 1 = a is greater than b
@@ -69,8 +70,8 @@ mongoose.connect(dbString, { useCreateIndex: true,
                   if(settings.peers.purge_on_run != true){
                     db.delete_peer({_id:peer[i]._id});
                   }
-                  create_peer(address, body[i].version, version);
-                  console.log('Delete the db version:', peer[i].version.split(":")[1]); //remove
+                  create_peers(address, body[i].version, version);
+                  //console.log('Delete the db version:', peer[i].version.split(":")[1]); //remove
                 } else if(cmp(peer[i].version.split(":")[1], semver) == 0){
                     //console.log('Do nothing, they\'re the same');
                 } else {
@@ -80,7 +81,7 @@ mongoose.connect(dbString, { useCreateIndex: true,
               }
               loop.next();
           } else {
-            create_peer(address, body[i].version, version);            
+            create_peers(address, body[i].version, version);            
             loop.next();
           }
         });
