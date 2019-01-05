@@ -101,7 +101,20 @@ function route_get_address(res, hash, count) {
       if (address.txs.length < count) {
         count = address.txs.length;
       }
-        res.render('address', { active: 'address', address: address});
+      lib.syncLoop(count, function (loop) {
+        var i = loop.iteration();
+        db.get_tx(hashes[i].addresses, function(tx) {
+          if (tx) {
+            txs.push(tx);
+            loop.next();
+          } else {
+            loop.next();
+          }
+        });
+      }, function(){
+
+        res.render('address', { active: 'address', address: address, txs: txs});
+      });
     } else {
       route_get_index(res, hash + ' not found');
     }
@@ -124,7 +137,6 @@ router.get('/markets/:market', function(req, res) {
       /*if (market === 'bittrex') {
         data = JSON.parse(data);
       }*/
-      console.log(data);
       res.render('./markets/' + market, {
         active: 'markets',
         marketdata: {
@@ -138,10 +150,6 @@ router.get('/markets/:market', function(req, res) {
   } else {
     route_get_index(res, null);
   }
-});
-
-router.get('/masternodes', function(req, res) {
-  res.render('masternodes', {active: 'masternodes'});
 });
 
 router.get('/richlist', function(req, res) {
@@ -183,6 +191,11 @@ router.get('/movement', function(req, res) {
 
 router.get('/network', function(req, res) {
   res.render('network', {active: 'network'});
+});
+
+// Masternodelist
+router.get('/masternodes', function(req, res) {
+  res.render('masternodes', {active: 'masternodes'});
 });
 
 router.get('/reward', function(req, res){
@@ -236,7 +249,7 @@ router.post('/search', function(req, res) {
             if (block != 'There was an error. Check your console.') {
               res.redirect('/block/' + query);
             } else {
-              route_get_index(res, locale.ex_search_error + query );
+              route_get_index(res, t('search.no_results',{query:query}));
             }
           });
         }
@@ -251,7 +264,7 @@ router.post('/search', function(req, res) {
           if (hash != 'There was an error. Check your console.') {
             res.redirect('/block/' + hash);
           } else {
-            route_get_index(res, locale.ex_search_error + query );
+            route_get_index(res, t('tsearch.no_results',{query:query}));
           }
         });
       }

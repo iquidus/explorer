@@ -10,6 +10,9 @@ var express = require('express')
   , lib = require('./lib/explorer')
   , db = require('./lib/database')
   , locale = require('./lib/locale')
+  , i18next = require('i18next')
+  , i18nextMiddleware = require('i18next-express-middleware')
+  , i18Backend = require('i18next-node-fs-backend')
   , request = require('request')
   , fs = require('fs');
 
@@ -31,9 +34,47 @@ var commands = [];
 
     }
   bitcoinapi.setAccess('only', commands);
+
+// Language setup
+i18next
+  .use(i18Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    interpolation: {
+      format: function(value, format, lng) {
+          if (format === 'uppercase') return value.toUpperCase();
+          if(value instanceof Date) return moment(value).format(format);
+          return value;
+        }
+    },
+    backend: {
+      loadPath: __dirname + '/locale/{{lng}}/{{ns}}.json',
+      addPath: __dirname + '/locale/{{lng}}/{{ns}}.missing.json'
+    },
+    detection: {
+      order: ['querystring', 'cookie'],
+      caches: ['cookie']
+    },
+   
+    fallbackLng: settings.language_fallback,
+    preload: settings.language,
+    saveMissing: true,
+    debug: false
+});
+
+
+
+
+
+
+
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.use(i18nextMiddleware.handle(i18next));
 
 app.use(favicon(path.join(__dirname, settings.favicon)));
 app.use(logger('dev'));
@@ -41,6 +82,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Add Languages to Local Variabels
+app.use(function (req, res, next) {
+  res.locals.currentlang = req.language;
+
+  next();
+})
+
+// Language Files for Datatable
+app.use('/datatable/lang', function(req,res){
+    i18next.changeLanguage(req.language, (err, t) => {
+      if (err) return console.log('something went wrong loading', err);
+      res.send(i18next.t("datatable", { returnObjects: true }));
+    });   
+});
 
 // routes
 app.use('/api', bitcoinapi.app);
@@ -163,6 +219,13 @@ app.use('/ext/connections', function(req,res){
   });
 });
 
+//Masternodes 
+app.use('/ext/getmasternodes', function(req, res) {
+   db.get_masternodes(function(masternode){
+    res.send({data: masternode});
+   });
+});
+
 // locals
 app.set('title', settings.title);
 app.set('symbol', settings.symbol);
@@ -191,12 +254,6 @@ Object.keys(settings.social).forEach(function(key) {
 });*/
 app.set("social", settings.social);
 
-app.use('/ext/testsocial', function(req,res){
-  Object.keys(settings.social).forEach(function(key) {
-    var val = settings.social[key];
-    res.json(key);
-  });
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

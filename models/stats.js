@@ -11,6 +11,10 @@ var StatsSchema = new Schema({
   //last_txs: { type: Array, default: [] },
   connections: { type: Number, default: 0 },
   last_price: { type: Number, default: 0 },
+  list_masternode_update: { type: Number, default: 0 },
+  list_network_update: { type: Number, default: 0 },
+  list_blockchain_update: { type: Number, default: 0 },
+  list_market_update: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model('coinstats', StatsSchema);

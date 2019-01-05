@@ -22,7 +22,10 @@
     "qr-image": "~3.2.0",
     "request": "^2.88.0",
     "semver-compare": "^1.0.0",
-    "serve-favicon": "~2.5.0"
+    "serve-favicon": "~2.5.0",
+    "i18next": "*",
+    "i18next-express-middleware": "1.0.5",
+    "i18next-node-fs-backend": "1.0.0"
   },
   "devDependencies": {
     "jasmine": "~3.3.1"

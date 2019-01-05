@@ -1,14 +1,14 @@
 .card.card-default
   .card-header
-    h3.card-title=settings.locale.rl_current_balance 
+    h3.card-title=t('richlist.balance_top',{top : 100}) 
   table.table.table-hover.table-bordered(cellspacing="0")
     thead
       tr
         th(style='text-align:center;') 
           span.fa.fa-flag-checkered
-        th=settings.locale.tx_address
-        th.hidden-xs=settings.locale.rl_balance +' ('+ settings.symbol +')'
-        th.hidden-xs(style='text-align:center;') %
+        th=t('richlist.address')
+        th.hidden-xs=t('richlist.balance_coin',{coin : settings.symbol})
+        th.hidden-xs(style='text-align:center;')=t('richlist.percent_symbol')
     tbody
       - var count = 0
       each item in balance

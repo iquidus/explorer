@@ -1,0 +1,96 @@
+extends menu
+
+block market_view
+  .row
+    .col-md-12  
+      .panel.panel-default
+        .panel-heading
+          strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange }) 
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title= t('market.no_chart')) 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th= t('market.high')
+              th= t('market.low')
+              th= t('market.volume')
+              th.hidden-xs= t('market.top_bid')
+              th.hidden-xs= t('market.top_ask')
+              th.hidden-xs= t('market.last_price')
+          tbody
+            tr
+              td #{marketdata.data.summary.high}
+              td #{marketdata.data.summary.low}
+              td #{marketdata.data.summary.volume}
+              td.hidden-xs #{marketdata.data.summary.bid}
+              td.hidden-xs #{marketdata.data.summary.ask}
+              td.hidden-xs #{marketdata.data.summary.last}
+  .row
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title= t('market.buy_orders')
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th= t('market.price_coin',{coin : marketdata.exchange })
+              th= t('market.total_coin',{coin : marketdata.coin })
+              th.hidden-xs= t('market.amount_coin',{coin : marketdata.exchange})
+          tbody
+            each buy in marketdata.data.buys
+              tr
+                td
+                  =parseFloat(buy.price).toFixed(8)
+                td
+                  =parseFloat(buy.amount).toFixed(8)
+                td.hidden-xs
+                  =parseFloat(buy.total).toFixed(8)
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title= t('market.sell_orders')
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th= t('market.price_coin',{coin : marketdata.exchange })
+              th= t('market.total_coin',{coin : marketdata.coin })
+              th.hidden-xs= t('market.amount_coin',{coin : marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                td
+                  =parseFloat(sell.price).toFixed(8)
+                td
+                  =parseFloat(sell.amount).toFixed(8)
+                td.hidden-xs
+                  =parseFloat(sell.total).toFixed(8)
+  .row   
+    .col-md-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title= t('market.trade_history')
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.hidden-xs= t('market.order_type')
+              th= t('market.total_coin',{coin : marketdata.coin })
+              th= t('market.price_coin',{coin : marketdata.exchange })
+              th= t('market.amount_coin',{coin : marketdata.exchange})
+              th= t('market.timestamp')
+          tbody
+            each order in marketdata.data.history
+                tr
+                  td.hidden-xs
+                    if(order.ordertype)
+                      =t('market.order.' + order.ordertype.toLowerCase())
+                    else 
+                      = t('market.order_unknown')
+                  td
+                    =order.amount
+                  td
+                    =order.price
+                  td
+                    =order.total
+                  td.hidden-xs
+                    =(new Date(order.timestamp * 1000).toUTCString())
+      .footer-padding

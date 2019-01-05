@@ -43,120 +43,120 @@ block market_view
       });
     });        
   .row
-    .hidden-xs.col-md-10  
-      #chart-panel.card.card-default
-        .card-header
-          strong '+ settings.locale.poloniex} - '+ marketdata.coin}/'+ marketdata.exchange} - '+ settings.locale.mkt_hours}
+    .hidden-xs.col-md-12  
+      #chart-panel.panel.panel-default
+        .panel-heading
+          strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange })
           a(href='#')
-            span.fa.fa-th-list.pull-right.view-summary.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=''+ settings.locale.mkt_view_summary}') 
-        .card-body
+            span.fa.fa-th-list.pull-right.view-summary.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom',  title= t('market.view_summary')) 
+        .panel-body
           div#chart(style="width:100%;height:300px;")
-      #summary-panel.card.card-default
-        .card-header
-          strong '+ settings.locale.poloniex} - '+ marketdata.coin}/'+ marketdata.exchange} - '+ settings.locale.mkt_hours}
+      #summary-panel.panel.panel-default
+        .panel-heading
+          strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange })
           a(href='#')
-            span.fa.fa-line-chart.pull-right.view-chart.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=''+ settings.locale.mkt_view_chart}') 
+            span.fa.fa-line-chart.pull-right.view-chart.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom',  title= t('market.view_chart')) 
         table.table.table-bordered.summary-table 
           thead
             tr
-              th '+ settings.locale.mkt_high}
-              th '+ settings.locale.mkt_low}
-              th '+ settings.locale.mkt_volume}
-              th.hidden-xs '+ settings.locale.mkt_top_bid}
-              th.hidden-xs '+ settings.locale.mkt_top_ask}
-              th.hidden-xs '+ settings.locale.mkt_last}
-              th '+ settings.locale.mkt_change}
+              th= t('market.high')
+              th= t('market.low')
+              th= t('market.volume')
+              th.hidden-xs= t('market.top_bid')
+              th.hidden-xs= t('market.top_ask')
+              th.hidden-xs= t('market.yeserday')
+              th.hidden-xs= t('market.last_price')
+              th= t('market.change')
           tbody
             tr
-              td '+ marketdata.data.summary['high24hr']}
-              td '+ marketdata.data.summary['low24hr']}
-              td '+ marketdata.data.summary['baseVolume']}
-              td.hidden-xs '+ marketdata.data.summary.highestBid}
-              td.hidden-xs '+ marketdata.data.summary.lowestAsk}
-              td.hidden-xs '+ marketdata.data.summary.last}
+              td #{marketdata.data.summary['high24hr']}
+              td #{marketdata.data.summary['low24hr']}
+              td #{marketdata.data.summary['baseVolume']}
+              td.hidden-xs #{marketdata.data.summary.highestBid}
+              td.hidden-xs #{marketdata.data.summary.lowestAsk}
+              td.hidden-xs #{marketdata.data.summary.last}
               if marketdata.data.summary.percentChange.substring(0, 1) == '-'
-                td.table-danger '+ marketdata.data.summary.percentChange} %
+                td.danger #{marketdata.data.summary.percentChange} %
               else
-                td.table-success '+ marketdata.data.summary.percentChange} %
+                td.success #{marketdata.data.summary.percentChange} %
     .hidden-md.hidden-lg.col-xs-12
-      .card.card-default
-        .card-header
-          strong Poloniex - '+ marketdata.coin}/'+ marketdata.exchange} - '+ settings.locale.mkt_hours}
+      .panel.panel-default
+        .panel-heading
+          strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange })
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title= t('market.no_chart')) 
         table.table.table-bordered.summary-table 
           thead
             tr
-              th '+ settings.locale.mkt_high}
-              th '+ settings.locale.mkt_low}
-              th '+ settings.locale.mkt_volume}
-              th '+ settings.locale.mkt_change}
+              th= t('market.high')
+              th= t('market.low')
+              th= t('market.volume')
+              th= t('market.change')
           tbody
             tr
-              td '+ marketdata.data.summary['high24hr']}
-              td '+ marketdata.data.summary['low24hr']}
-              td '+ marketdata.data.summary['baseVolume']}
+              td #{marketdata.data.summary['high24hr']}
+              td #{marketdata.data.summary['low24hr']}
+              td #{marketdata.data.summary['baseVolume']}
               if marketdata.data.summary.percentChange.substring(0, 1) == '-'
-                td.table-danger '+ marketdata.data.summary.percentChange} %
+                td.danger #{marketdata.data.summary.percentChange} %
               else
-                td.table-success '+ marketdata.data.summary.percentChange} %
+                td.success #{marketdata.data.summary.percentChange} %
   .row
-    .col-md-6
-      .card.card-default
-        .card-header
-          h3.card-title '+ settings.locale.mkt_buy_orders}
-        table.table.table-striped.table-bordered.responsive.order-table
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title= t('market.buy_orders')
+        table.table.table-striped.table-bordered.order-table
           thead
             tr
-              th '+ settings.locale.mkt_price} ('+ marketdata.exchange})
-              th '+ settings.locale.mkt_amount} ('+ marketdata.coin})
-              th.hidden-xs '+ settings.locale.mkt_total} ('+ marketdata.exchange})
+              th= t('market.price_coin',{coin : marketdata.exchange })
+              th= t('market.total_coin',{coin : marketdata.coin })
+              th.hidden-xs= t('market.amount_coin',{coin : marketdata.exchange})
           tbody
             each buy in marketdata.data.buys
               tr
-                - var total = parseFloat(buy[0]) * parseFloat(buy[1]);
-                - total = total.toFixed(settings.decimal_places);
                 td
-                  =buy[0]
+                  =parseFloat(buy.price).toFixed(8)
                 td
-                  =buy[1].toFixed(settings.decimal_places)
+                  =parseFloat(buy.amount).toFixed(8)
                 td.hidden-xs
-                  =total
-    .col-md-6
-      .card.card-default
-        .card-header
-          h3.card-title '+ settings.locale.mkt_sell_orders}
-        table.table.table-striped.table-bordered.responsive.order-table
+                  =parseFloat(buy.total).toFixed(8)
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title= t('market.sell_orders')
+        table.table.table-striped.table-bordered.order-table
           thead
             tr
-              th '+ settings.locale.mkt_price} ('+ marketdata.exchange})
-              th '+ settings.locale.mkt_amount} ('+ marketdata.coin})
-              th.hidden-xs '+ settings.locale.mkt_total} ('+ marketdata.exchange})
+              th= t('market.price_coin',{coin : marketdata.exchange })
+              th= t('market.total_coin',{coin : marketdata.coin })
+              th.hidden-xs= t('market.amount_coin',{coin : marketdata.exchange})
           tbody
             each sell in marketdata.data.sells
               tr
-                - var total = parseFloat(sell[0]) * parseFloat(sell[1]);
-                - total = total.toFixed(settings.decimal_places);
                 td
-                  =sell[0]
+                  =parseFloat(sell.price).toFixed(8)
                 td
-                  =sell[1].toFixed(settings.decimal_places)
+                  =parseFloat(sell.amount).toFixed(8)
                 td.hidden-xs
-                  =total
-    .col-md-10
-      .card.card-default
-        .card-header
-          h3.card-title '+ settings.locale.mkt_trade_history}
+                  =parseFloat(sell.total).toFixed(8)
+  .row   
+    .col-md-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title= t('market.trade_history')
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
-              th.hidden-xs Type
-              th '+ settings.locale.mkt_amount} ('+ marketdata.coin})
-              th '+ settings.locale.mkt_price} ('+ marketdata.exchange})
-              th.hidden-xs '+ settings.locale.mkt_total} ('+ marketdata.exchange})
-              th.hidden-xs Time Stamp
+              th.hidden-xs= t('market.order_type')
+              th= t('market.total_coin',{coin : marketdata.coin })
+              th= t('market.price_coin',{coin : marketdata.exchange })
+              th= t('market.amount_coin',{coin : marketdata.exchange})
+              th= t('market.timestamp')
           tbody
             each trade in marketdata.data.history
               if trade.type == 'buy'
-                tr.table-success
+                tr.success
                   td.hidden-xs BUY
                   td
                     =trade.amount
@@ -167,7 +167,7 @@ block market_view
                   td.hidden-xs
                     =trade.date
               else
-                tr.table-danger 
+                tr.danger 
                   td.hidden-xs SELL
                   td
                     =trade.amount

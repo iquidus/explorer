@@ -1,13 +1,13 @@
 .card.card-default
   .card-header
-    h3.card-title '+ settings.locale.rl_received_coins} 
+    h3.card-title t('richlist.received_top',{top : 100})
   table.table.table-hover.table-bordered(cellspacing="0")
     thead
       tr
         th(style='text-align:center;') 
           span.fa.fa-flag-checkered
-        th=settings.locale.tx_address
-        th.hidden-xs=settings.locale.rl_received +' ('+ settings.symbol + ')'
+        th=t('richlist.address')
+        th.hidden-xs=t('richlist.received_coin',{coin : settings.symbol})
     tbody
       - var count = 0
       each item in received

@@ -4,6 +4,7 @@ html
     title=settings.title
     link(rel='stylesheet', href='/themes/'+ settings.theme+'/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
+    link(rel='stylesheet', href='/vendor/flags-css/css/flag-icon.min.css')
     link(res='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css')
     link(rel='stylesheet', href='//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
@@ -82,65 +83,63 @@ html
       .navbar-header
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-collapse')
           span.navbar-toggler-icon
+          
+          
+          
+          
         a.navbar-brand(href='/')=settings.coin
       .collapse.navbar-collapse(id='navbar-collapse')
         ul.navbar-nav.mr-auto
           li#home
             a.nav-link(href='/')
               span.glyphicon.glyphicon-search
-              span.menu-text=settings.locale.menu_explorer
+              span.menu-text=t('layout.navigation.explorer')
           if settings.heavy == true
             li#reward
               a.nav-link(href='/reward')
                 span.fa.fa-star
-                span.menu-text=settings.locale.menu_reward
+                span.menu-text= t('layout.navigation.reward')
           if settings.display.masternodes == true
             li#masternodes
               a.nav-link(href='/masternodes')
-                span.glyphicon.glyphicon-info-sign
-                span.menu-text="Masternodes"
+                span.fa.fa-share-alt
+                span.menu-text= t('layout.navigation.masternodes')
           if settings.display.movement == true
             li#movement
               a.nav-link.loading(href='/movement')
                 span.fa.fa-money
-                span.menu-text=settings.locale.menu_movement
+                span.menu-text=t('layout.navigation.movement')
           if settings.display.network == true
             li#network
               a.nav-link(href='/network')
                 span.fa.fa-share-alt
-                span.menu-text=settings.locale.menu_network
+                span.menu-text=t('layout.navigation.network')
           if settings.display.richlist == true
             li#richlist
               a.nav-link(href='/richlist')
                 span.fa.fa-btc
-                span.menu-text=settings.locale.menu_richlist
+                span.menu-text=t('layout.navigation.richlist')
           if settings.display.markets == true
             li#markets
               a.nav-link.loading(href='/markets/'+settings.markets.default+'')
                 span.fa.fa-line-chart
-                span.menu-text=settings.locale.menu_markets
+                span.menu-text=t('layout.navigation.markets')
           if settings.display.api == true
             li#info
               a.nav-link(href='/info')
                 span.glyphicon.glyphicon-info-sign
-                span.menu-text=settings.locale.menu_api
+                span.menu-text=t('layout.navigation.api')
+    
+    
+    
+    
+    
     .col-md-12
       .row.text-center.d-flex.justify-content-center
         .col-md-2
           .card.card-default.hidden-sm.hidden-xs
             .card-header
-              if settings.nethash_units == 'K'
-                strong=settings.locale.network +'(KH/s)'
-              else if settings.nethash_units == 'M'
-                strong=settings.locale.network +'(MH/s)'
-              else if settings.nethash_units == 'G'
-                strong=settings.locale.network +'(GH/s)'
-              else if settings.nethash_units == 'T'
-                strong=settings.locale.network +'(TH/s)'
-              else if settings.nethash_units == 'P'
-                strong=settings.locale.network +'(PH/s)'
-              else if settings.nethash_units == 'H'
-                strong=settings.locale.network +'(H/s)'
+              strong= t('layout.stats.network') + t(['layout.stats.nethash.' + settings.nethash_units, 'layout.stats.nethash.unspecific'])
             .card-body
               #hashratecard
                 span.glyphicon.fa.fa-gears
@@ -153,7 +152,7 @@ html
         .col-md-2
           .card.card-default.hidden-sm.hidden-xs
             .card-header
-              strong=settings.locale.difficulty
+              strong=t('layout.stats.difficulty')
             .card-body
               #difficultycard
                 span.glyphicon.fa.fa-sliders
@@ -166,7 +165,7 @@ html
         .col-md-2
          .card.card-default.hidden-sm.hidden-xs
             .card-header
-              strong=settings.locale.masternodecount
+              strong=t('layout.stats.masternode',{count: 0 })
             .card-body
               #masternodecard
                 span.glyphicon.fa.fa-exclamation-triangle
@@ -177,7 +176,7 @@ html
         .col-md-2
           .card.card-default.hidden-sm.hidden-xs
             .card-header
-              strong=settings.locale.ex_supply +'('+ settings.symbol+')'
+              strong=t('layout.stats.coin_supply',{coin : settings.symbol})
             .card-body
               #supplycard
                 span.glyphicon.fa.fa-pie-chart
@@ -190,7 +189,7 @@ html
         .col-md-2
           .card.card-default.hidden-sm.hidden-xs
             .card-header
-              strong=settings.markets.exchange+ ' Price'
+              strong=t('layout.stats.coin_price',{exchange : settings.markets.exchange})
             .card-body
               #pricecard
                 span.glyphicon.fa.fa-rocket
@@ -204,8 +203,8 @@ html
       .row.text-center(style='margin-top:10px;margin-bottom:20px;')
         form.form-inline.col-12.d-flex.justify-content-center(method='post', action='/search')
           #index-search.form-group.d-flex.justify-content-center
-            input.form-control(type='text', name='search', placeholder=settings.locale.ex_search_message, style='min-width:80%;margin-right:5px;')
-            button.btn.btn-success(type='submit')=settings.locale.ex_search_button
+            input.form-control(type='text', name='search', placeholder=t('layout.search.hint'), style='min-width:80%;margin-right:5px;')
+            button.btn.btn-success(type='submit')=t('layout.search.button')
     block content
     .nav.navbar.navbar-default.fixed-bottom.hidden-xs.bg-primary
       .col-md-4
