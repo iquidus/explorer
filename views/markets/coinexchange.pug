@@ -5,7 +5,7 @@ block market_view
     .col-md-12  
       .panel.panel-default
         .panel-heading
-          strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange }) 
+          strong= t('market.market_title',{market : t('exchange.coinexchange'),coin :  marketdata.coin, exchange : marketdata.exchange }) 
           a(href='#')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title= t('market.no_chart')) 
         table.table.table-bordered.summary-table 
