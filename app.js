@@ -20,10 +20,15 @@ bitcoinapi.setWalletDetails(settings.wallet);
 var commands = [];
     for(i=0; i < settings.commands_needed.length; i++){
       var cmds = JSON.parse(fs.readFileSync("coin_commands/"+settings.commands_needed[i]));
-      var cmd = (settings.heavy ? cmds.heavy : cmds.default);
-      for(k=0; k < cmd.length; k++){
-        commands.push(cmd[k]);
+      if(settings.heavy){
+        for(k=0; k < cmds.heavy.length; k++){
+          commands.push(cmds.heavy[k]);
+        }
       }
+      for(k=0; k < cmds.default.length; k++){
+        commands.push(cmds.default[k]);
+      }
+
     }
   bitcoinapi.setAccess('only', commands);
 // view engine setup

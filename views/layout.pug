@@ -94,6 +94,11 @@ html
               a.nav-link(href='/reward')
                 span.fa.fa-star
                 span.menu-text=settings.locale.menu_reward
+          if settings.display.masternodes == true
+            li#masternodes
+              a.nav-link(href='/masternodes')
+                span.glyphicon.glyphicon-info-sign
+                span.menu-text="Masternodes"
           if settings.display.movement == true
             li#movement
               a.nav-link.loading(href='/movement')
@@ -119,10 +124,6 @@ html
               a.nav-link(href='/info')
                 span.glyphicon.glyphicon-info-sign
                 span.menu-text=settings.locale.menu_api
-          li#masternodes
-            a.nav-link(href='/masternodes')
-              span.glyphicon.glyphicon-info-sign
-              span.menu-text="Masternodes"
     .col-md-12
       .row.text-center.d-flex.justify-content-center
         .col-md-2
