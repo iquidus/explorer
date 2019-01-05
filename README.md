@@ -3,6 +3,14 @@ Iquidus Explorer - 1.7.2
 
 An open source block explorer written in node.js.
 
+This is a community fork to continue development where Iquidus left off. The ultimate goal is that this is the midway point to 2.x and above. 
+
+Plenty of code was inspired or pulled from various sources in the community including the following:
+*  [Suprnurd's Ciquidus 'Chaincoin Explorer'](https://github.com/suprnurd/ciquidus) 
+*  [DSTRACoin's Diquidus v2 Explorer](https://github.com/DSTRACoin/diquidus)
+*  [SigqoTechnologies' Explorer](https://github.com/SigwoTechnologies/explorer)
+*  [UAKTags' Explorer](https://github.com/uaktags/explorer)
+
 ### See it in action
 
 *  [Deutsche eMark](http://b.emark.tk/)
@@ -99,6 +107,7 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
     */1 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/sync.js index update > /dev/null 2>&1
     */2 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/sync.js market > /dev/null 2>&1
     */5 * * * * cd /path/to/explorer && /usr/bin/nodejs scripts/peers.js > /dev/null 2>&1
+    */5 * * * * ch /path/to/explorer && /usr/bin/nodejs scripts/masternodes.js > /dev/null 2>&1
 
 ### Wallet
 
@@ -108,8 +117,20 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
 ### Donate
 
+    Luke "Iquidus"
     BTC: 168hdKA3fkccPtkxnX8hBrsxNubvk4udJi
-    JBS: JZp9893FMmrm1681bDuJBU7c6w11kyEY7D
+
+    Suprnurd - Ciquidus
+    CHC: CLkWg5YSLod772uLzsFRxHgHiWVGAJSezm
+    BTC: 1J8Chi5teDJrvBtSuQhioNCHfTNBCcCrPx
+
+    DSTRACoin - Diquidus
+    DST: D9uKDZxndukJsvNJxxU7bhi2fhXLZ7AhwQ
+    BTC: 3LjfMHcNnUt46mbQifvHfLTUPQW583NV41
+
+    Tim - "UAKTags"
+    BTC: 1CySa41xM8sRy6gbf34tebgcZ7dWrHyvBm
+
 
 ### Known Issues
 
