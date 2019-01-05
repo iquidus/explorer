@@ -2,19 +2,27 @@ extends layout
 
 block content   
   script.
+    function secondsToHms(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+        var dy = Math.floor(h / 24);
+        var h = h % 24;
+        return ('0' + dy).slice(-2) + " day " + ('0' + h).slice(-2) + ":" + ('0' + m).slice(-2) + ":" + ('0' + s).slice(-2);
+    }
     $(document).ready(function(){
       var ctable = $('#masternodes-table').dataTable( {
+        language: { url: '/datatable/lang' },
         autoWidth: true,
         searching: true,
         ordering: true,
+        order: [[ 5, 'desc' ]],
         responsive: true,
         lengthChange: true,
-        processing: false,
-        bPaginate: true,
-        pageLength: 25,
-        order: [[ 3, "desc" ]],
+        processing: true,
         ajax: {
-          url: '/ext/masternodes',
+          url: '/ext/getmasternodes',
           dataSrc: function ( json ) {
             for ( var i=0;i<json.data.length; i++ ) {
               json.data[i]['address'] = "<a href='/address/" + json.data[i]['address'] + "'>" + json.data[i]['address'] + "</a>";
@@ -23,28 +31,65 @@ block content
                 json.data[i]['lastpaid'] = new Date((json.data[i]['lastpaid']) * 1000).toLocaleString();
               else
                 json.data[i]['lastpaid'] = '<em>not available</em>';
+              if (json.data[i]['activetime'])
+                json.data[i]['activetime'] = secondsToHms(json.data[i]['activetime']);
+              else
+                json.data[i]['activetime'] = '<em>not available</em>';
+
+              json.data[i]['addr'] = "<a href='/address/" + json.data[i]['addr'] + "'>" + json.data[i]['addr'] + "</a>";
             }
             return json.data;
           }
         },
         columns: [
-          { data: 'address', width: '25%', className: 'text-left', title: "Address" },
-          { data: 'status', width: '15%', title: "Status" },
-          { data: 'lastseen', width:'25%', title: "Last Seen" },
-          { data: 'lastpaid', width:'25%', title: "Last Paid" },
-        ]
+          { data: 'rank', width: '3%' },
+          { data: 'network', width: '4%' },  
+          { data: 'addr', width:'10%' },
+          { data: 'version', width:'10%' },
+          { data: 'lastseen', width:'10%' },
+          { data: 'lastpaid', width:'10%' },
+          { data: 'activetime', width:'10%' },
+          { data: 'status', width:'10%' },
+        ],
+        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+            if ( aData['status'] == "ENABLED" )
+            {
+                $('td', nRow).addClass('success');
+            }
+            else if( aData['status'] == "REMOVE" )
+            {
+                $('td', nRow).addClass('danger');
+            }
+            else if( aData['status'] == "EXPIRED" )
+            {
+                $('td', nRow).addClass('warning');
+            }
+            else
+            {
+              $('td', nRow).addClass('info');
+            }
+
+        }
+
       });
     });
+
   .col-md-12(style="margin-bottom: 4%")
+    .row.text-center(style='margin-bottom:15px;')
+        i= t('masternodes.info')
     .card.card-default
       .card-header
-        strong #{settings.locale.masternodecount}
+        strong=t('masternodes.masternode')
       table#masternodes-table.table.table-bordered.table-striped
         thead
           tr
-            th #{settings.locale.mn_address}
-            th.text-center #{settings.locale.mn_status}
-            th.text-center #{settings.locale.mn_lastseen}
-            th.text-center #{settings.locale.mn_lastpaid}
+            th.text-center= t('masternodes.rank')
+            th.text-center= t('masternodes.protocol')        
+            th.text-center= t('masternodes.address')
+            th.text-center= t('masternodes.sub_version')
+            th.text-center= t('masternodes.last_seen')
+            th.text-center= t('masternodes.last_paid')
+            th.text-center= t('masternodes.active_since')
+            th.text-center= t('masternodes.status')
         tbody.text-center
     .footer-padding
