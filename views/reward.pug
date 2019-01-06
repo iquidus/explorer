@@ -5,8 +5,7 @@ block content
     .col-xs-12.col-md-10.offset-md-1
       .card.card-default.card-address-summary
         .card-header(style='position:relative;')        
-          strong=t('reward.stats_title')
-
+          strong=t('reward.stats_title', {coin : settings.symbol})
         table.table.table-bordered.table-striped.summary-table 
           thead
             tr
