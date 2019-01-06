@@ -100,9 +100,10 @@ tr {
 	font-size: 20px;
 }
 .connections {
-	position: absolute;
+	position: fixed;
 	bottom: 15px;
 	right: 15px;
+	z-index:2000;
 }
 
 #lblBlockcount {
