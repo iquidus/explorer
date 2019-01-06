@@ -82,11 +82,7 @@ html
     .nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.fixed-top(role='navigation')
       .navbar-header
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-collapse')
-          span.navbar-toggler-icon
-          
-          
-          
-          
+          span.navbar-toggler-icon 
         a.navbar-brand(href='/')=settings.coin
       .collapse.navbar-collapse(id='navbar-collapse')
         ul.navbar-nav.mr-auto
@@ -120,10 +116,13 @@ html
                 span.fa.fa-btc
                 span.menu-text=t('layout.navigation.richlist')
           if settings.display.markets == true
-            li#markets
-              a.nav-link.loading(href='/markets/'+settings.markets.default+'')
+            li#markets.dropdown
+              a.nav-link.dropdown-toggle(data-toggle="dropdown", href="#" role="button" aria-haspopup="true" aria-expanded="false")
                 span.fa.fa-line-chart
                 span.menu-text=t('layout.navigation.markets')
+              div.dropdown-menu
+                each market in settings.markets.enabled
+                  a.dropdown-item.loading(href='/markets/'+market)=t('exchange.'+market)
           if settings.display.api == true
             li#info
               a.nav-link(href='/info')
