@@ -50,24 +50,24 @@ block content
       if error !== null        
         .alert.alert-danger.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×
-          strong=settings.locale.ex_error +' : '+ error
+          strong=t('explorer.error') +' : '+ error
       if warning !== null        
         .alert.alert-warning.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×
-          strong=settings.locale.ex_warning +' warning'
+          strong=t('explorer.warning') +' : ' +warning
   
   .col-md-10.offset-md-1
     .card.card-default
       .card-header
-        strong=settings.locale.ex_latest_transactions
+        strong=t('explorer.latest_transactions')
       table#recent-table.table.table-bordered.table-striped
         thead
           tr
-            th.text-center=settings.locale.ex_block
-            th.hidden-xs.text-center=settings.locale.tx_hash
-            th.hidden-xs.text-center=settings.locale.tx_recipients
-            th.text-center=settings.locale.mkt_amount +'('+ settings.symbol +')'
-            th.text-center=settings.locale.timestamp
+            th.text-center=t('explorer.block')
+            th.hidden-xs.text-center=t('explorer.hash')
+            th.hidden-xs.text-center=('explorer.recipients')
+            th.text-center=('address.amount_coin') +'('+ settings.symbol +')'
+            th.text-center=('explorer.timestamp')
         tbody.text-center
     .footer-padding
       

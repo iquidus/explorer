@@ -53,41 +53,41 @@ block content
       .col-md-4.col-xs-12
         #summary-panel.card.card-default(style='margin-top:47px;')
           .card-header
-            h3.card-title=settings.locale.rl_wealth
+            h3.card-title=t('richlist.wealth_distribution')
           table.table.table-hover.table-bordered
             thead
               tr
                 th
-                th='Amount (' + settings.symbol +')'
+                th=t('richlist.amount_coin',{coin : settings.symbol})
                 th.text-center %
             tbody
               tr
                 th
                   div.pull-left(style='background-color:#d9534f;width:20px;height:20px;margin-right:6px;')
-                  span=settings.locale.rl_top25
+                  span= t('richlist.top',{top : 25})
                 td=parseFloat(dista.total).toFixed(settings.decimal_places)
                 td.text-center=parseFloat(dista.percent).toFixed(2)
               tr
                 th
                   div.pull-left(style='background-color:#5cb85c;width:20px;height:20px;margin-right:6px;')
-                  span=settings.locale.rl_top50
+                  span=t('richlist.top',{top : 50})
                 td=parseFloat(distb.total).toFixed(settings.decimal_places)
                 td.text-center=parseFloat(distb.percent).toFixed(2)
               tr
                 th
                   div.pull-left(style='background-color:#428bca;width:20px;height:20px;margin-right:6px;')
-                  span=settings.locale.rl_top75
+                  span=t('richlist.top',{top : 75})
                 td=parseFloat(distc.total).toFixed(settings.decimal_places)
                 td.text-center=parseFloat(distc.percent).toFixed(2)
               tr
                 th
                   div.pull-left(style='background-color:#222;width:20px;height:20px;margin-right:6px;')
-                  span=settings.locale.rl_top100
+                  span=t('richlist.top',{top : 100})
                 td=parseFloat(distd.total).toFixed(settings.decimal_places)
                 td.text-center=parseFloat(distd.percent).toFixed(2)
               tr
                 th
-                  span=settings.locale.total
+                  span=t('richlist.total')
                 td 
                 td.text-center=(100 - parseFloat(distd.percent)).toFixed(2)
         center

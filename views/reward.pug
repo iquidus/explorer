@@ -5,17 +5,17 @@ block content
     .col-xs-12.col-md-10.offset-md-1
       .card.card-default.card-address-summary
         .card-header(style='position:relative;')        
-          strong=settings.locale.heavy_title+' ('+settings.symbol+')'
+          strong=t('reward.stats_title')
 
         table.table.table-bordered.table-striped.summary-table 
           thead
             tr
-              th=settings.locale.ex_supply+' ('+ settings.symbol+')'
-              th=settings.locale.heavy_cap+' ('+settings.symbol+')'
-              th=settings.locale.heavy_phase
-              th=settings.locale.heavy_maxvote
-              th=settings.locale.heavy_reward 
-              th=settings.locale.heavy_estnext
+              th= t('reward.coin_supply',{coin : settings.symbol})
+              thv
+              th= t('reward.phase')
+              th= t('reward.maxvote')
+              th= t('reward.reward')
+              th= t('reward.reward_estimate')
           tbody             
             tr
               td=heavy.supply
@@ -45,7 +45,7 @@ block content
                     }
                   ]
                   new Chart(ctx).Doughnut(data); 
-              h5=settings.locale.heavy_changein
+              h5=t('reward.reward_change_approx')
               h5
                 =heavy.nextin
            
@@ -54,25 +54,25 @@ block content
                 thead
                   tbody     
                     tr
-                      th=settings.locale.heavy_key
+                      th= t('reward.key')
                       td   
                     tr
-                      th=settings.locale.heavy_vote
+                      th= t('reward.vote')
                       td 
                         div(style="width:20px;height:20px;background-color:#428bca")           
                     tr
-                      th=settings.locale.heavy_current
+                      th= t('reward.current_reward')
                       td 
                         div(style="width:20px;height:20px;background-color:#222")   
                     tr
-                      th=settings.locale.heavy_estnext
+                      th= t('reward.reward_estimate')
                       td
-                        div(style="width:20px;height:20px;background-color:rgba(92,184,92,1.0)") 
+                        div(style="width:20px;height:20px;background-color:rgba(92,184,92,1.0)")  
           
           .col-md-9
             center
               .row
-                strong=settings.locale.heavy_lastxvotes  
+                strong=t('reward.last_n_votes',{votes : 20})
               .row
                 canvas(id="myChart", width="800", height="300", style="margin-left:-30px;margin-top:30px;")
                   script.

@@ -34,15 +34,15 @@ block content
     });
   .col-md-10.offset-md-1(style="margin-bottom: 4%")
     .row.text-center(style='margin-bottom:15px;')
-      i=settings.locale.net_warning
+      i=t('network.info')
     .card.card-default
       .card-header
-        strong=settings.locale.net_connections
+        strong=t('network.latest')
       table#connections-table.table.table-bordered.table-striped
         thead
           tr
-            th.text-center=settings.locale.net_address
-            th.text-center=settings.locale.net_protocol
-            th.text-center=settings.locale.net_subversion
-            th.text-center=settings.locale.net_country
+            th.text-center=t('network.address')
+            th.text-center=t('network.protocol')
+            th.text-center=t('network.sub_version')
+            th.text-center=t('network.country')
         tbody.text-center

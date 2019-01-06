@@ -15,9 +15,9 @@ block market_view
               th= t('market.low')
               th.hidden-xs= t('market.top_bid')
               th.hidden-xs= t('market.top_ask')
-              th.hidden-xs #{settings.locale.mkt_last}
-              th #{settings.locale.mkt_volume} #{marketdata.coin}
-              th #{settings.locale.mkt_volume} #{marketdata.exchange}
+              th.hidden-xs #{t('market.last_price')}
+              th #{t('market.volume')} #{marketdata.coin}
+              th #{t('market.volume')} #{marketdata.exchange}
           tbody
             tr
               td #{marketdata.data.summary.high}
