@@ -9,7 +9,7 @@ var express = require('express')
   , routes = require('./routes/index')
   , lib = require('./lib/explorer')
   , db = require('./lib/database')
-  , locale = require('./lib/locale')
+  //, locale = require('./lib/locale')
   , i18next = require('i18next')
   , i18nextMiddleware = require('i18next-express-middleware')
   , i18Backend = require('i18next-node-fs-backend')
@@ -61,15 +61,6 @@ i18next
     saveMissing: true,
     debug: false
 });
-
-
-
-
-
-
-
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -230,7 +221,7 @@ app.use('/ext/getmasternodes', function(req, res) {
 app.set('title', settings.title);
 app.set('symbol', settings.symbol);
 app.set('coin', settings.coin);
-app.set('locale', locale);
+//app.set('locale', locale);
 app.set('display', settings.display);
 app.set('markets', settings.markets);
 app.set('genesis_block', settings.genesis_block);

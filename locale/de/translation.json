@@ -33,9 +33,6 @@
       "hint": "Bitte geben Sie eine Blockhöhe, Blockhasch, Tx-Hasch oder Adresse ein.",
       "button": "Suche",
       "no_results": "Suche ergab keine Ergebnisse {{query}}"
-    },
-    "footer": {
-      "dst_network": "DSTRA"
     }
   },
   "explorer": {

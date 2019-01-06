@@ -1,7 +1,7 @@
 var express = require('express')
   , router = express.Router()
   , settings = require('../lib/settings')
-  , locale = require('../lib/locale')
+  //, locale = require('../lib/locale')
   , db = require('../lib/database')
   , lib = require('../lib/explorer')
   , qr = require('qr-image')
