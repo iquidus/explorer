@@ -3,8 +3,8 @@ extends menu
 block market_view
   .row
     .col-md-12  
-      .panel.panel-default
-        .panel-heading
+      .card.card-default
+        .card-header
           strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange }) 
           a(href='#')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title= t('market.no_chart')) 
@@ -29,9 +29,9 @@ block market_view
               td #{marketdata.data.summary.volume_btc}
   .row
     .col-md-6.col-xs-12
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title= t('market.buy_orders')
+      .card.card-default
+        .card-header
+          h3.card-title= t('market.buy_orders')
         table.table.table-striped.table-bordered.order-table
           thead
             tr
@@ -48,9 +48,9 @@ block market_view
                 td.hidden-xs
                   =parseFloat(buy.total).toFixed(8)
     .col-md-6.col-xs-12
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title= t('market.sell_orders')
+      .card.card-default
+        .card-header
+          h3.card-title= t('market.sell_orders')
         table.table.table-striped.table-bordered.order-table
           thead
             tr
@@ -68,9 +68,9 @@ block market_view
                   =parseFloat(sell.total).toFixed(8)
   .row   
     .col-md-12
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title= t('market.trade_history')
+      .card.card-default
+        .card-header
+          h3.card-title= t('market.trade_history')
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr

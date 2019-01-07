@@ -3,7 +3,7 @@ extends menu
 block market_view
   script.
     $(document).ready(function(){
-      $('#summary-panel').hide();
+      $('#summary-card').hide();
       var ohlc = !{marketdata.data.chartdata}
       var plot2 = $.jqplot('chart',[ohlc],{
         seriesDefaults:{yaxis:'y2axis'},
@@ -44,15 +44,15 @@ block market_view
     });        
   .row
     .hidden-xs.col-md-12  
-      #chart-panel.panel.panel-default
-        .panel-heading
+      #chart-card.card.card-default
+        .card-header
           strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange })
           a(href='#')
             span.fa.fa-th-list.pull-right.view-summary.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom',  title= t('market.view_summary')) 
-        .panel-body
+        .card-body
           div#chart(style="width:100%;height:300px;")
-      #summary-panel.panel.panel-default
-        .panel-heading
+      #summary-card.card.card-default
+        .card-header
           strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange })
           a(href='#')
             span.fa.fa-line-chart.pull-right.view-chart.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom',  title= t('market.view_chart')) 
@@ -80,8 +80,8 @@ block market_view
               else
                 td.success #{marketdata.data.summary.percentChange} %
     .hidden-md.hidden-lg.col-xs-12
-      .panel.panel-default
-        .panel-heading
+      .card.card-default
+        .card-header
           strong= t('market.market_title',{market : t('exchange.graviex'),coin :  marketdata.coin, exchange : marketdata.exchange })
           a(href='#')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title= t('market.no_chart')) 
@@ -103,9 +103,9 @@ block market_view
                 td.success #{marketdata.data.summary.percentChange} %
   .row
     .col-md-6.col-xs-12
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title= t('market.buy_orders')
+      .card.card-default
+        .card-header
+          h3.card-title= t('market.buy_orders')
         table.table.table-striped.table-bordered.order-table
           thead
             tr
@@ -122,9 +122,9 @@ block market_view
                 td.hidden-xs
                   =parseFloat(buy.total).toFixed(8)
     .col-md-6.col-xs-12
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title= t('market.sell_orders')
+      .card.card-default
+        .card-header
+          h3.card-title= t('market.sell_orders')
         table.table.table-striped.table-bordered.order-table
           thead
             tr
@@ -142,9 +142,9 @@ block market_view
                   =parseFloat(sell.total).toFixed(8)
   .row   
     .col-md-12
-      .panel.panel-default
-        .panel-heading
-          h3.panel-title= t('market.trade_history')
+      .card.card-default
+        .card-header
+          h3.card-title= t('market.trade_history')
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
