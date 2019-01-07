@@ -281,5 +281,13 @@
     "ru": "Pусский",
     "es": "Español",
     "it": "Italiano"
+  },
+  "coininfo": {
+    "title": "Coin Info",
+    "basic_info": "Basic Info",
+    "required_mn": "Required coins",
+    "total_nodes": "Total Nodes",
+    "coin_supply": "Current Coin supply",
+    "coins_locked": "Coins locked ({{perc}}%)"
   }
 }

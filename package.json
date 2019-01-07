@@ -8,11 +8,18 @@
     "test": "node ./node_modules/jasmine/bin/jasmine.js"
   },
   "dependencies": {
+    "big-integer": "^1.6.40",
+    "bignumber": "^1.1.0",
     "bitcoin-node-api": "git+http://git@github.com/uaktags/Bitcoin-Node-Api.git",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "~>4.1.1",
     "express": "^4.16.4",
+    "format-currency": "^1.0.0",
+    "format-num": "^1.0.0",
+    "i18next": "*",
+    "i18next-express-middleware": "1.0.5",
+    "i18next-node-fs-backend": "1.0.0",
     "jsonminify": "0.4.1",
     "markdown-js": "0.0.4",
     "mongodb": "3.1.10",
@@ -22,10 +29,7 @@
     "qr-image": "~3.2.0",
     "request": "^2.88.0",
     "semver-compare": "^1.0.0",
-    "serve-favicon": "~2.5.0",
-    "i18next": "*",
-    "i18next-express-middleware": "1.0.5",
-    "i18next-node-fs-backend": "1.0.0"
+    "serve-favicon": "~2.5.0"
   },
   "devDependencies": {
     "jasmine": "~3.3.1"

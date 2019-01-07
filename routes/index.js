@@ -5,6 +5,10 @@ var express = require('express')
   , db = require('../lib/database')
   , lib = require('../lib/explorer')
   , qr = require('qr-image')
+  , formatCurrency = require('format-currency')
+  , formatNum = require('format-num')
+  , BigNumber = require('bignumber.js')
+  , BigInteger = require('big-integer')
   ;
 
 function route_get_block(res, blockhash) {
@@ -128,6 +132,78 @@ router.get('/', function(req, res) {
 
 router.get('/info', function(req, res) {
   res.render('info', { active: 'info', address: settings.address, hashes: settings.api });
+});
+
+router.get('/coininfo', function(req, res) {
+  db.get_stats(settings.coin, function(stats){
+      lib.get_masternodecount(function(totalMnCount) {
+            var blocksPerDay = (60*60*24)/settings.coininfo.block_time_sec;
+            var totalMnRewardsDay = settings.coininfo.block_reward_mn * blocksPerDay;
+            var mnRewardsPerDay = totalMnRewardsDay / totalMnCount;
+
+            //var priceBtc = (cmc.price_btc) ? cmc.price_btc : stats.last_price;
+            //var priceUsd = cmc.price_usd;
+
+            var calculatedBasedOnRealData = false;
+            
+
+            var mnRewardsPerYear = mnRewardsPerDay * 365;
+            var mnRoi = ((mnRewardsPerYear / settings.coininfo.masternode_required) * 100).toFixed(2);
+            var coinsLocked = totalMnCount.total * settings.coininfo.masternode_required;
+            var coinsLockedPerc = coinsLocked / (stats.supply/100);
+            //var nodeWorthBtc = (settings.coininfo.masternode_required * priceBtc).toFixed(8);
+            //var nodeWorthUsd = (cmc.price_usd) ? (settings.coininfo.masternode_required * cmc.price_usd).toFixed(2) : null;
+
+            /*var dailyCoin = formatNum(mnRewardsPerDay, { maxFraction: 4});
+            var dailyBtc = formatNum(mnRewardsPerDay * priceBtc, { maxFraction: 8 });
+            var dailyUsd = formatCurrency(mnRewardsPerDay * cmc.price_usd, { maxFraction: 2 });
+            var weeklyCoin = formatNum(mnRewardsPerDay * 7, { maxFraction: 4});
+            var weeklyBtc = formatNum(mnRewardsPerDay * priceBtc* 7, { maxFraction: 8 });
+            var weeklyUsd = formatCurrency(mnRewardsPerDay * cmc.price_usd * 7, { maxFraction: 2 });
+            var monthlyCoin = formatNum(mnRewardsPerDay * (365/12), { maxFraction: 4});
+            var monthlyBtc = formatNum(mnRewardsPerDay * priceBtc * (365/12), { maxFraction: 8 });
+            var monthlyUsd = formatCurrency(mnRewardsPerDay * cmc.price_usd * (365/12), { maxFraction: 2 });
+            var yearlyCoin = formatNum(mnRewardsPerDay * 365, { maxFraction: 4});
+            var yearlyBtc = formatNum(mnRewardsPerDay * priceBtc * 365, { maxFraction: 8 });
+            var yearlyUsd = formatCurrency(mnRewardsPerDay * cmc.price_usd * 365, { maxFraction: 2 });
+*/
+            var data = {
+              active: 'coininfo',
+              coininfo: settings.coininfo,
+              //lastPriceBtc: formatCurrency(stats.last_price, { maxFraction: 8 }),
+              //lastPriceUsd: cmc.price_usd ? formatCurrency(cmc.price_usd, { maxFraction: 6 }) : null,
+              //pricePercChange24h: cmc.percent_change_24h,
+              //marketCapUsd: formatCurrency(cmc.market_cap_usd, { maxFraction: 2 }),
+              //cmc: cmc,
+              blockCount24h: -1,
+              avgBlockTime: -1,
+              totalMasternodes: totalMnCount.total,
+              //activeMasternodes: activeMnCount,
+              mnRoi: mnRoi,
+              supply: formatNum(stats.supply, { maxFraction: 4 }),
+              coinsLocked: formatNum(coinsLocked, { maxFraction: 8 }),
+              coinsLockedPerc: formatNum(coinsLockedPerc, { maxFraction: 2 }),
+              mnRequiredCoins: settings.coininfo.masternode_required,
+             /* nodeWorthBtc: formatCurrency(nodeWorthBtc, { maxFraction: 8 }),
+              nodeWorthUsd: nodeWorthUsd ? formatCurrency(nodeWorthUsd, { maxFraction: 2 }) : null,
+              dailyCoin: dailyCoin,
+              dailyBtc: dailyBtc,
+              dailyUsd: dailyUsd,
+              weeklyCoin: weeklyCoin,
+              weeklyBtc: weeklyBtc,
+              weeklyUsd: weeklyUsd,
+              monthlyCoin: monthlyCoin,
+              monthlyBtc: monthlyBtc,
+              monthlyUsd: monthlyUsd,
+              yearlyCoin: yearlyCoin,
+              yearlyBtc: yearlyBtc,
+              yearlyUsd: yearlyUsd,*/
+              calculatedBasedOnRealData: calculatedBasedOnRealData
+            };
+            res.render('coininfo', data);
+      });
+  });
+
 });
 
 router.get('/markets/:market', function(req, res) {

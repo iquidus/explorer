@@ -1,0 +1,43 @@
+extends layout
+
+block content   
+  .col-md-12(style="margin-bottom: 4%")
+    .card.card-primary.coin-info
+      .card-header
+        strong=t('coininfo.title')
+      .card-body
+        .row
+          .col-md-3
+            .card.card-default
+              .card-header
+                strong=t('coininfo.basic_info')
+              .card-body
+                each item in coininfo.basic_info_links
+                  a(href="#{item[1]}", target="_blank") #{item[0]}
+                  <br>
+          .col-md-9
+            .card.card-default
+              .card-body.text-center
+                .row.info-row
+                  .col-md-4
+                    img(src=settings.logo, style='')
+                  .col-md-4
+                    h2 #{settings.coin} &nbsp(#{settings.symbol})
+                .row.info-row
+                  .col-md-4.offset-md-4
+                    h4 #{supply} #{settings.symbol}
+                    h5.sub=t('coininfo.coin_supply')
+                .row.info-row
+                  .col-md-4
+                    h4 #{totalMasternodes}
+                    h5.sub=t('coininfo.total_nodes')
+                  .col-md-4
+                    h4 #{mnRequiredCoins}
+                    h5.sub=t('coininfo.required_mn')
+                  .col-md-4
+                    h4 #{coinsLocked}
+                    h5.sub=t('coininfo.coins_locked', {perc: coinsLockedPerc})
+
+
+
+
