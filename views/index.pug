@@ -38,7 +38,19 @@ block content
         processing: true,
         serverSide: true,
         ajax: '/ext/getlasttxsajax',
-          
+        rowCallback: function(row, data, index) {
+          var blockindex = data[0]; //variables for better readability
+          var blockhash = data[1]; //variables for better readability
+          var txhash = data[2]; //variables for better readability
+          var outputs = data[3]; //variables for better readability
+          var amount = data[4]; //variables for better readability
+          var timestamp = data[5]; //variables for better readability
+          $("td:eq(0)", row).html('<a href="/block/' + blockhash + '">' + blockindex + '</a>');
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
+          $("td:eq(2)", row).html(outputs);
+          $("td:eq(3)", row).html(amount);
+          $("td:eq(4)", row).html(timestamp);          
+        },
       });
       setInterval( function () {
         rtable.api().ajax.reload(null, false);

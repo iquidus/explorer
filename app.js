@@ -136,11 +136,15 @@ app.use('/ext/getdistribution', function(req,res){
 });
 
 app.use('/ext/getlasttxsajax', function(req,res){
+  if(req.query.length > settings.index.last_txs){
+    req.query.length = settings.index.last_txs;
+  }
   db.get_last_txs_ajax(req.query.start, req.query.length,function(txs, count){
     var data = [];
     for(i=0; i<txs.length; i++){
       var row = [];
       row.push(txs[i].blockindex);
+      row.push(txs[i].blockhash);
       row.push(txs[i].txid);
       row.push(txs[i].vout.length);
       row.push((txs[i].total / 100000000).toFixed(settings.decimal_places));
