@@ -77,9 +77,9 @@ block content
           tr
             th.text-center=t('explorer.block')
             th.hidden-xs.text-center=t('explorer.hash')
-            th.hidden-xs.text-center=('explorer.recipients')
-            th.text-center=('address.amount_coin') +'('+ settings.symbol +')'
-            th.text-center=('explorer.timestamp')
+            th.hidden-xs.text-center=t('explorer.recipients')
+            th.text-center=t('address.amount_coin', {coin: settings.symbol})
+            th.text-center=t('explorer.timestamp')
         tbody.text-center
     .footer-padding
       
