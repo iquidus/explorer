@@ -125,6 +125,16 @@ app.use('/ext/getbalance/:hash', function(req,res){
   });
 });
 
+app.use('/ext/get_masternode_rewards/:hash/:since', function(req, res){
+  db.get_masternode_rewards(req.params.since, req.params.hash,function(rewards){
+    if(rewards){
+      res.json(rewards);
+    } else {
+      res.send({error: "something wrong", hash: req.params.hash, since: req.params.since});
+    }
+  })
+})
+
 app.use('/ext/getdistribution', function(req,res){
   db.get_richlist(settings.coin, function(richlist){
     db.get_stats(settings.coin, function(stats){
