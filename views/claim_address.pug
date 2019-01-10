@@ -2,33 +2,33 @@ extends layout
 
 block content
   script.
-    $(document).ready(function(){
-      var historytable = $('#history-table').dataTable( {  
-        autoWidth: true,      
-        searching: false,
-        ordering: false,
-        responsive: true,
-        lengthChange: true,
-        processing: true,
-        serverSide: true,
-        ajax: '/ext/getaddresstransactions/#{address.a_id}',
-        rowCallback: function(row, data, index) {
-          var timestamp = data[0];
-          var hash = data[1];
-          var amount = data[2];
-          data[1] = "<a href='/tx/"+hash +"'>"+ hash +"</a>";
-          $("td:eq(1)", row).html(data[1]);
-          if(amount.charAt(0) == "+"){
-            $("td:eq(2)",row).addClass("table-success");
-          }else{
-            $("td:eq(2)",row).addClass("table-danger");
-          }
-        }
+    $(function () {
+
+        $('form').on('submit', function (e) {
+
+          e.preventDefault();
+          var address;
+          var message;
+          var signature;
+          address = $('input#address').val();
+          message = $('input#message').val();
+          signature = $('input#signature').val();
+          var url = '/api/verifymessage?address='+address+'&signature=' + signature + '&message='+message;
+          console.log(url);
+          $.ajax({
+            type: 'get',
+            url: url,
+            success: function (data) {
+              if(data.message){
+                console.log(data.message);
+              }
+              console.log(data);
+            }
+          });
+
+        });
+
       });
-      setInterval( function () {
-        historytable.api().ajax.reload(null, false);
-      }, 60000 );
-    });
   - var balance = (address.received - address.sent) / 100000000;
   - var sent = address.sent /100000000
   - var received = address.received / 100000000
@@ -69,13 +69,20 @@ block content
               td=balance.toFixed(settings.decimal_places)
     .card.card-default.d-none.d-sm-block
       .card-header
-        strong=t('address.latest_transactions')
-      table#history-table.table.table-bordered.table-striped
-        thead
-          tr
-            th.d-none.d-sm-tabel-cell.d-tabel-cell=t('address.timestamp')
-            th.d-none.d-sm-tabel-cell.d-tabel-cell=t('address.hash')
-            th=t('address.amount_coin', {coin: settings.symbol})
-        tbody.text-center
+        strong Claim this Address
+      form#claimForm
+        .form-group
+          fieldset
+            label.control-label(for='address') Wallet Address
+            input#address.form-control(type='text' value=address.a_id readonly="")
+        .form-group
+          fieldset
+            label(for='message') Username
+            input#message.form-control(type='text' placeholder='User Name')
+        .form-group
+          fieldset
+            label(for='signature') Signature
+            input#signature.form-control(type='text' placeholder='Signature')
+        button.btn.btn-primary(type='submit') Submit
     .footer-padding
             

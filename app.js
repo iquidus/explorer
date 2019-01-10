@@ -218,6 +218,24 @@ app.use('/ext/getlasttxs/:min', function(req,res){
   });
 });
 
+app.post('/address/:hash/claim', function(req, res){
+  var address = req.body[0].address;
+  var signature = req.body[0].signature;
+  var message = req.body[0].message;
+  request({
+      url: 'http://127.0.0.1:' + settings.port + '/api/verifymessage?address='+address+ '&signature='+ signature + '&message=' + message,
+    method: 'GET',
+  }, function(error, response, body){
+    //console.log('error', error);
+    //console.log('response', response);
+    if(body == "false"){
+      //report failed.
+    }else if(body == "true"){
+      //db.update_label
+    }
+  });
+})
+
 app.use('/ext/connections', function(req,res){
   db.get_peers(function(peers){
     res.send({data: peers});

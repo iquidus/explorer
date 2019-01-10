@@ -97,28 +97,20 @@ function route_get_index(res, error) {
   res.render('index', { active: 'home', error: error, warning: null});
 }
 
-function route_get_address(res, hash, count) {
+function route_get_address(res, hash) {
   db.get_address(hash, function(address) {
     if (address) {
-      var txs = [];
-      var hashes = address.txs.reverse();
-      if (address.txs.length < count) {
-        count = address.txs.length;
-      }
-      lib.syncLoop(count, function (loop) {
-        var i = loop.iteration();
-        db.get_tx(hashes[i].addresses, function(tx) {
-          if (tx) {
-            txs.push(tx);
-            loop.next();
-          } else {
-            loop.next();
-          }
-        });
-      }, function(){
+      res.render('address', { active: 'address', address: address});
+    } else {
+      route_get_index(res, hash + ' not found');
+    }
+  });
+}
 
-        res.render('address', { active: 'address', address: address, txs: txs});
-      });
+function route_get_claim_form(res, hash){
+  db.get_address(hash, function(address) {
+    if (address) {
+      res.render("claim_address", { active: "address", address: address});
     } else {
       route_get_index(res, hash + ' not found');
     }
@@ -307,10 +299,6 @@ router.get('/address/:hash', function(req, res) {
   route_get_address(res, req.param('hash'), settings.txcount);
 });
 
-router.get('/address/:hash/:count', function(req, res) {
-  route_get_address(res, req.param('hash'), req.param('count'));
-});
-
 router.post('/search', function(req, res) {
   var query = req.body.search;
   if (query.length == 64) {
@@ -462,5 +450,9 @@ router.get('/ext/masternodes', function(req, res) {
 
     res.send({ data: mnList });
   });
+});
+
+router.get('/address/:hash/claim', function(req,res){
+  route_get_claim_form(res, req.param('hash'));
 });
 module.exports = router;
