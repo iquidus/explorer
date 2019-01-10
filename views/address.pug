@@ -32,20 +32,20 @@ block content
   - var balance = (address.received - address.sent) / 100000000;
   - var sent = address.sent /100000000
   - var received = address.received / 100000000
-    img.qrcode.pull-right.hidden-xs(src='/qr/#{address.a_id}')
-  .col-xs-12.col-md-10.offset-md-1
+    img.qrcode.pull-right.d-none.d-sm-block(src='/qr/#{address.a_id}')
+  .col-xs-12.col-md-12
     .card.card-default.card-address-summary
       .card-header(style='position:relative;')        
         strong=address.a_id
         if settings.labels[address.a_id]
           if settings.labels[address.a_id].type  
-            label(class='label label-#{ settings.labels[address.a_id].type} pull-right hidden-xs', style='margin-left:15px;')
+            label(class='badge label-#{ settings.labels[address.a_id].type} pull-right d-none d-sm-block', style='margin-left:15px;')
               =settings.labels[address.a_id].label
               if settings.labels[address.a_id].url
                 a(href="#{ settings.labels[address.a_id].url}'", target='_blank')
                   span.fa.fa-question-circle(style='margin-left:5px;')
           else
-            label.label.label-default.pull-right.hidden-xs(style='margin-left:15px;') 
+            label.badge.badge-pill.pull-right.d-none.d-sm-block(style='margin-left:15px;') 
               =settings.labels[address.a_id].label
               if settings.labels[address.a_id].url
                 a(href='#{settings.labels[address.a_id].url}', target='_blank')
@@ -67,14 +67,14 @@ block content
               if settings.show_sent_received == true
                 td #{received.toFixed(settings.decimal_places)}
               td #{ balance.toFixed(settings.decimal_places)}
-    .card.card-default.hidden-xs
+    .card.card-default.d-none.d-sm-block
       .card-header
         strong #{ t('address.latest_transactions')}
       table#history-table.table.table-bordered.table-striped
         thead
           tr
-            th.hidden-xs=t('address.timestamp')
-            th.hidden-xs=t('address.hash')
+            th.d-none.d-sm-block=t('address.timestamp')
+            th.d-none.d-sm-block=t('address.hash')
             th=t('address.amount_coin') +' ('+ settings.symbol +')'
         tbody.text-center
     .footer-padding

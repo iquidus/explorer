@@ -2,17 +2,16 @@ extends layout
 
 block content
   - var time = format_unixtime(block.time)
-  .col-xs-12.col-md-10.offset-md-1
-    .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')=block.hash
+  .col-xs-12.col-md-12
     .card.card-default
       .card-header(style='padding-left:25px;padding-right:25px;')       
         .row           
           if block.previousblockhash != null
             a(href='/block/'+ block.previousblockhash)
               span.glyphicon.glyphicon-chevron-left.iquidus.block-last(data-toggle='tooltip', data-placement='top', title=t('block.block_previous'))  
-            strong.hidden-xs #{settings.symbol} block: #{block.hash}
+            strong.d-none.d-sm-block #{settings.symbol} block: #{block.hash}
           else
-            strong.hidden-xs(style='margin-left:10px;')="#{settings.symbol} #{t('explorer.block')}: #{block.hash}"
+            strong.d-none(style='margin-left:10px;')="#{settings.symbol} #{t('explorer.block')}: #{block.hash}"
           if block.nextblockhash != null 
             a(href='/block/'+ block.nextblockhash)
               span.glyphicon.glyphicon-chevron-right.iquidus.pull-right.block-next(data-toggle='tooltip', data-placement='top', title=t('block.block_next'))       
@@ -26,10 +25,10 @@ block content
             th=t('block.confirmations')
             if settings.heavy == true
               th Vote
-            th.hidden-xs=t('block.size_kb')
-            th.hidden-xs=t('block.bits')
-            th.hidden-xs=t('block.nonce')
-            th.hidden-xs=t('explorer.timestamp')
+            th.d-none.d-sm-none.d-lg-table-cell.d-table-cell=t('block.size_kb')
+            th.d-none.d-sm-none.d-lg-table-cell.d-table-cell=t('block.bits')
+            th.d-none.d-sm-none.d-lg-table-cell.d-table-cell=t('block.nonce')
+            th.d-none.d-sm-none.d-lg-table-cell.d-table-cell=t('explorer.timestamp')
         tbody
           if block.confirmations >= confirmations                
             tr.table-success
@@ -39,10 +38,10 @@ block content
               td=block.confirmations
               if settings.heavy == true
                 td=block.vote
-              td.hidden-xs=block_size.toFixed(2)
-              td.hidden-xs=block.bits
-              td.hidden-xs=block.nonce
-              td.hidden-xs=time
+              td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block_size.toFixed(2)
+              td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block.bits
+              td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block.nonce
+              td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=time
           else
             if block.confirmations < (confirmations / 2)
               tr.table-danger
@@ -52,10 +51,10 @@ block content
                 td=block.confirmations
                 if settings.heavy == true
                   td=block.vote
-                td.hidden-xs=block_size.toFixed(2)
-                td.hidden-xs=block.bits
-                td.hidden-xs=block.nonce
-                td.hidden-xs=time
+                td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block_size.toFixed(2)
+                td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block.bits
+                td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block.nonce
+                td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=time
             else
               tr.table-warning
                 - var block_size = block.size/1024
@@ -64,10 +63,10 @@ block content
                 td=block.confirmations
                 if settings.heavy == true
                   td=block.vote
-                td.hidden-xs=block_size.toFixed(2)
-                td.hidden-xs=block.bits
-                td.hidden-xs=block.nonce
-                td.hidden-xs=time
+                td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block_size.toFixed(2)
+                td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block.bits
+                td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=block.nonce
+                td.d-none.d-sm-none.d-lg-table-cell.d-table-cell=time
 
     if block.hash == settings.genesis_block
       .alert.alert-info(role='alert', style='text-align:center;')   
@@ -79,14 +78,14 @@ block content
         table.table.table-bordered.table-striped.summary-table 
           thead
             tr
-              th.hidden-xs=t('explorer.hash')
+              th.d-none.d-sm-none.d-table-cell=t('explorer.hash')
               th=t('tx.recipients_address')
               th=t('address.amount_coin', {coin: settings.symbol})
               th
           tbody
             each txn in txs
               tr
-                td.hidden-xs
+                td.d-none.d-sm-none.d-table-cell
                   a(href='/tx/'+ txn.txid)=txn.txid
                 td=txn.vout.length
                 if txn.vout.length > 0

@@ -2,7 +2,7 @@ extends layout
 
 block content
   .row
-    .col-xs-12.col-md-10.offset-md-1
+    .col-xs-12.col-md-12
       .card.card-default.card-address-summary
         .card-header(style='position:relative;')        
           strong=t('reward.stats_title', {coin : settings.symbol})
@@ -24,7 +24,7 @@ block content
               td=heavy.reward
               td=heavy.estnext 
   .row
-    .col-md-10.offset-md-1 
+    .col-md-12 
       .card.card-defual
         .card-body
           .col-md-3

@@ -2,8 +2,8 @@ extends layout
 
 block content
   - var time = format_unixtime(tx.timestamp)
-  .col-xs-12.col-md-10.offset-md-1
-    .well.well-sm.d-lg-none.d-md-none(style='word-wrap:break-word;')
+  .col-xs-12.col-md-12
+    .card.card-body.d-lg-none.d-md-none(style='word-wrap:break-word;')
       | Viewing TXID: #{tx.txid}
     .card.card-default
       .card-header.d-none.d-md-block

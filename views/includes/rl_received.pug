@@ -7,7 +7,7 @@
         th(style='text-align:center;') 
           span.fa.fa-flag-checkered
         th=t('richlist.address')
-        th.hidden-xs=t('richlist.received_coin',{coin : settings.symbol})
+        th.d-none=t('richlist.received_coin',{coin : settings.symbol})
     tbody
       - var count = 0
       each item in received
@@ -19,5 +19,5 @@
           td
             a(href='/address/'+ item.a_id) =item.a_id
             include ./rl_labels.pug
-          td.hidden-xs
+          td.d-none
             =itemFixed.toFixed(settings.decimal_places)

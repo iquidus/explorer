@@ -14,20 +14,20 @@ block market_view
               th= t('market.high')
               th= t('market.low')
               th= t('market.volume')
-              th.hidden-xs= t('market.top_bid')
-              th.hidden-xs= t('market.top_ask')
-              th.hidden-xs= t('market.yeserday')
-              th.hidden-xs= t('market.last_price')
+              th.d-none= t('market.top_bid')
+              th.d-none= t('market.top_ask')
+              th.d-none= t('market.yeserday')
+              th.d-none= t('market.last_price')
               th= t('market.change')
           tbody
             tr
               td #{parseFloat(marketdata.data.summary.High).toFixed(8)}
               td #{parseFloat(marketdata.data.summary.Low).toFixed(8)}
               td #{parseFloat(marketdata.data.summary.Volume).toFixed(8)}
-              td.hidden-xs #{parseFloat(marketdata.data.summary.Bid).toFixed(8)}
-              td.hidden-xs #{parseFloat(marketdata.data.summary.Ask).toFixed(8)}
-              td.hidden-xs #{parseFloat(marketdata.data.summary.PrevDay).toFixed(8)}
-              td.hidden-xs #{parseFloat(marketdata.data.summary.Last).toFixed(8)}
+              td.d-none #{parseFloat(marketdata.data.summary.Bid).toFixed(8)}
+              td.d-none #{parseFloat(marketdata.data.summary.Ask).toFixed(8)}
+              td.d-none #{parseFloat(marketdata.data.summary.PrevDay).toFixed(8)}
+              td.d-none #{parseFloat(marketdata.data.summary.Last).toFixed(8)}
               - var bleutrade_change = (100 - ((parseFloat(marketdata.data.summary.PrevDay)/parseFloat(marketdata.data.summary.Last))*100)).toFixed(2);
               if bleutrade_change >= 0
                 td.success +#{bleutrade_change} %
@@ -43,7 +43,7 @@ block market_view
             tr
               th= t('market.price_coin',{coin : marketdata.exchange })
               th= t('market.total_coin',{coin : marketdata.coin })
-              th.hidden-xs= t('market.amount_coin',{coin : marketdata.exchange})
+              th.d-none= t('market.amount_coin',{coin : marketdata.exchange})
           tbody
             each buy in marketdata.data.buys
               tr
@@ -51,7 +51,7 @@ block market_view
                   =parseFloat(buy.price).toFixed(8)
                 td
                   =parseFloat(buy.amount).toFixed(8)
-                td.hidden-xs
+                td.d-none
                   =parseFloat(buy.total).toFixed(8)
     .col-md-6.col-xs-12
       .card.card-default
@@ -62,7 +62,7 @@ block market_view
             tr
               th= t('market.price_coin',{coin : marketdata.exchange })
               th= t('market.total_coin',{coin : marketdata.coin })
-              th.hidden-xs= t('market.amount_coin',{coin : marketdata.exchange})
+              th.d-none= t('market.amount_coin',{coin : marketdata.exchange})
           tbody
             each sell in marketdata.data.sells
               tr
@@ -70,7 +70,7 @@ block market_view
                   =parseFloat(sell.price).toFixed(8)
                 td
                   =parseFloat(sell.amount).toFixed(8)
-                td.hidden-xs
+                td.d-none
                   =parseFloat(sell.total).toFixed(8)
   .row   
     .col-md-12
@@ -80,7 +80,7 @@ block market_view
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
-              th.hidden-xs= t('market.order_type')
+              th.d-none= t('market.order_type')
               th= t('market.total_coin',{coin : marketdata.coin })
               th= t('market.price_coin',{coin : marketdata.exchange })
               th= t('market.amount_coin',{coin : marketdata.exchange})
@@ -89,7 +89,7 @@ block market_view
             each order in marketdata.data.history
               if order.OrderType == "BUY"
                 tr.success
-                  td.hidden-xs
+                  td.d-none
                     =order.OrderType
                   td
                     =order.Quantity.toFixed(8)
@@ -97,11 +97,11 @@ block market_view
                     =order.Price.toFixed(8)
                   td
                     =order.Total.toFixed(8)
-                  td.hidden-xs
+                  td.d-none
                     =order.TimeStamp
               else
                 tr.danger 
-                  td.hidden-xs
+                  td.d-none
                     =order.OrderType
                   td
                     =order.Quantity.toFixed(8)
@@ -109,6 +109,6 @@ block market_view
                     =order.Price.toFixed(8)
                   td
                     =order.Total.toFixed(8)
-                  td.hidden-xs
+                  td.d-none
                     =order.TimeStamp
       .footer-padding

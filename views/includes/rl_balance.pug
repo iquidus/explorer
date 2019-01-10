@@ -7,8 +7,8 @@
         th(style='text-align:center;') 
           span.fa.fa-flag-checkered
         th=t('richlist.address')
-        th.hidden-xs=t('richlist.balance_coin',{coin : settings.symbol})
-        th.hidden-xs(style='text-align:center;')=t('richlist.percent_symbol')
+        th.d-none=t('richlist.balance_coin',{coin : settings.symbol})
+        th.d-none(style='text-align:center;')=t('richlist.percent_symbol')
     tbody
       - var count = 0
       each item in balance
@@ -21,7 +21,7 @@
           td 
             a(href='/address/'+ item.a_id)=item.a_id
             include ./rl_labels.pug
-          td.hidden-xs
+          td.d-none
             =itemFixed.toFixed(settings.decimal_places)
-          td.hidden-xs(style='text-align:center;') 
+          td.d-none(style='text-align:center;') 
             =percentage.toFixed(2)

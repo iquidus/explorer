@@ -30,11 +30,11 @@ block content
         ]
       });
       var rtable = $('#recent-table').dataTable( {  
-        autoWidth: true,      
+        autoWidth: false,      
         searching: false,
         ordering: false,
-        responsive: true,
-        lengthChange: true,
+        responsive: false,
+        lengthChange: false,
         processing: true,
         serverSide: true,
         ajax: '/ext/getlasttxsajax',
@@ -46,8 +46,8 @@ block content
           var amount = data[4]; //variables for better readability
           var timestamp = data[5]; //variables for better readability
           $("td:eq(0)", row).html('<a href="/block/' + blockhash + '">' + blockindex + '</a>');
-          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
-          $("td:eq(2)", row).html(outputs);
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>').addClass("d-none d-md-none d-lg-table-cell text-center");
+          $("td:eq(2)", row).html(outputs).addClass("d-none d-md-none d-lg-table-cell text-center");
           $("td:eq(3)", row).html(amount);
           $("td:eq(4)", row).html(timestamp);          
         },
@@ -68,7 +68,7 @@ block content
           button.close(type='button', data-dismiss='alert') ×
           strong=t('explorer.warning') +' : ' +warning
   
-  .col-md-10.offset-md-1
+  .col-md-12
     .card.card-default
       .card-header
         strong=t('explorer.latest_transactions')
@@ -76,8 +76,8 @@ block content
         thead
           tr
             th.text-center=t('explorer.block')
-            th.hidden-xs.text-center=t('explorer.hash')
-            th.hidden-xs.text-center=t('explorer.recipients')
+            th.d-none.d-md-none.d-lg-table-cell.text-center=t('explorer.hash')
+            th.d-none.d-md-none.d-lg-table-cell.text-center=t('explorer.recipients')
             th.text-center=t('address.amount_coin', {coin: settings.symbol})
             th.text-center=t('explorer.timestamp')
         tbody.text-center

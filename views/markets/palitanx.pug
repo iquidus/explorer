@@ -14,17 +14,17 @@ block market_view
               th= t('market.high')
               th= t('market.low')
               th= t('market.volume')
-              th.hidden-xs= t('market.top_bid')
-              th.hidden-xs= t('market.top_ask')
-              th.hidden-xs= t('market.last_price')
+              th.d-none= t('market.top_bid')
+              th.d-none= t('market.top_ask')
+              th.d-none= t('market.last_price')
           tbody
             tr
               td #{marketdata.data.summary.high}
               td #{marketdata.data.summary.low}
               td #{marketdata.data.summary.volume}
-              td.hidden-xs #{marketdata.data.summary.bid}
-              td.hidden-xs #{marketdata.data.summary.ask}
-              td.hidden-xs #{marketdata.data.summary.last}
+              td.d-none #{marketdata.data.summary.bid}
+              td.d-none #{marketdata.data.summary.ask}
+              td.d-none #{marketdata.data.summary.last}
   .row
     .col-md-6.col-xs-12
       .card.card-default
@@ -35,7 +35,7 @@ block market_view
             tr
               th= t('market.price_coin',{coin : marketdata.exchange })
               th= t('market.total_coin',{coin : marketdata.coin })
-              th.hidden-xs= t('market.amount_coin',{coin : marketdata.exchange})
+              th.d-none= t('market.amount_coin',{coin : marketdata.exchange})
           tbody
             each buy in marketdata.data.buys
               tr
@@ -43,7 +43,7 @@ block market_view
                   =parseFloat(buy.price).toFixed(8)
                 td
                   =parseFloat(buy.amount).toFixed(8)
-                td.hidden-xs
+                td.d-none
                   =parseFloat(buy.total).toFixed(8)
     .col-md-6.col-xs-12
       .card.card-default
@@ -54,7 +54,7 @@ block market_view
             tr
               th= t('market.price_coin',{coin : marketdata.exchange })
               th= t('market.total_coin',{coin : marketdata.coin })
-              th.hidden-xs= t('market.amount_coin',{coin : marketdata.exchange})
+              th.d-none= t('market.amount_coin',{coin : marketdata.exchange})
           tbody
             each sell in marketdata.data.sells
               tr
@@ -62,7 +62,7 @@ block market_view
                   =parseFloat(sell.price).toFixed(8)
                 td
                   =parseFloat(sell.amount).toFixed(8)
-                td.hidden-xs
+                td.d-none
                   =parseFloat(sell.total).toFixed(8)
   .row   
     .col-md-12
@@ -72,7 +72,7 @@ block market_view
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
-              th.hidden-xs= t('market.order_type')
+              th.d-none= t('market.order_type')
               th= t('market.total_coin',{coin : marketdata.coin })
               th= t('market.price_coin',{coin : marketdata.exchange })
               th= t('market.amount_coin',{coin : marketdata.exchange})
@@ -80,7 +80,7 @@ block market_view
           tbody
             each order in marketdata.data.history
                 tr
-                  td.hidden-xs
+                  td.d-none
                     if(order.ordertype)
                       =t('market.order.' + order.ordertype.toLowerCase())
                     else 
@@ -91,6 +91,6 @@ block market_view
                     =order.price
                   td
                     =order.total
-                  td.hidden-xs
+                  td.d-none
                     =(new Date(order.timestamp * 1000).toUTCString())
       .footer-padding
