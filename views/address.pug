@@ -32,7 +32,7 @@ block content
   - var balance = (address.received - address.sent) / 100000000;
   - var sent = address.sent /100000000
   - var received = address.received / 100000000
-    img.qrcode.pull-right.d-none.d-sm-block(src='/qr/#{address.a_id}')
+    img.qrcode.pull-right.d-none.d-sm-block(src='/qr/'+address.a_id)
   .col-xs-12.col-md-12
     .card.card-default.card-address-summary
       .card-header(style='position:relative;')        

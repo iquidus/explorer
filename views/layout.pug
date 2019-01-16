@@ -131,7 +131,7 @@ html
     .col-md-12
       .row.text-center.d-flex.justify-content-center
         .col-md-2
-          .card.card-default.d-sm-none.d-none
+          .card.card-default.d-none.d-md-block.d-block
             .card-header
               strong= t('layout.stats.network') + t(['layout.stats.nethash.' + settings.nethash_units, 'layout.stats.nethash.unspecific'])
             .card-body
@@ -144,7 +144,7 @@ html
                 else
                   label#hashrate -
         .col-md-2
-          .card.card-default.d-sm-none.d-none
+          .card.card-default.d-none.d-md-block.d-block
             .card-header
               strong=t('layout.stats.difficulty')
             .card-body
@@ -157,7 +157,7 @@ html
                 else
                   label#difficulty -
         .col-md-2
-         .card.card-default.d-sm-none.d-none
+         .card.card-default.d-none.d-md-block.d-block
             .card-header
               strong=t('layout.stats.masternode',{count: 0 })
             .card-body
@@ -168,7 +168,7 @@ html
                 label#masternodeCountOnline -
                 span.glyphicon.fa.fa-check-circle
         .col-md-2
-          .card.card-default.d-sm-none.d-none
+          .card.card-default.d-none.d-md-block.d-block
             .card-header
               strong=t('layout.stats.coin_supply',{coin : settings.symbol})
             .card-body
@@ -181,7 +181,7 @@ html
                 else
                   label#supply -
         .col-md-2
-          .card.card-default.d-sm-none.d-none
+          .card.card-default.d-none.d-md-block.d-block
             .card-header
               strong=t('layout.stats.coin_price',{exchange : settings.markets.exchange})
             .card-body
