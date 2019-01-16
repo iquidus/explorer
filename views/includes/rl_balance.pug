@@ -19,8 +19,11 @@
           td(style='text-align:center;') 
             =count
           td 
-            a(href='/address/'+ item.a_id)=item.a_id
-            include ./rl_labels.pug
+            a(href='/address/'+ item.a_id)
+              if typeof(item.name) !== "undefined"
+                =item.name
+              else
+                =item.a_id
           td.d-none
             =itemFixed.toFixed(settings.decimal_places)
           td.d-none(style='text-align:center;') 
