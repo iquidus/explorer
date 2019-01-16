@@ -7,7 +7,7 @@
         th(style='text-align:center;') 
           span.fa.fa-flag-checkered
         th=t('richlist.address')
-        th.d-none=t('richlist.received_coin',{coin : settings.symbol})
+        th.d-none.d-md-table-cell.d-table-cell=t('richlist.received_coin',{coin : settings.symbol})
     tbody
       - var count = 0
       each item in received
@@ -18,9 +18,9 @@
             =count
           td
             a(href='/address/'+ item.a_id)
-              if typeof(item.name) !== "undefined"
+              if typeof(item.name) !== "undefined" && item.name !== ""
                 =item.name
               else
                 =item.a_id
-          td.d-none
+          td.d-none.d-md-table-cell.d-table-cell
             =itemFixed.toFixed(settings.decimal_places)
