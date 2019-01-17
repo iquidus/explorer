@@ -13,16 +13,19 @@ block content
           address = $('input#address').val();
           message = $('input#message').val();
           signature = $('input#signature').val();
-          var url = '/api/verifymessage?address='+address+'&signature=' + signature + '&message='+message;
-          console.log(url);
+          var url = '/address/'+address+'/claim';
           $.ajax({
-            type: 'get',
+            type: 'post',
             url: url,
+            data: {
+              'address': address,
+              'message': message,
+              'signature': signature
+            },
             success: function (data) {
-              if(data.message){
-                console.log(data.message);
-              }
-              console.log(data);
+              if(data.status == "success")
+                window.location = "/address/"+address;
+                
             }
           });
 

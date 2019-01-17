@@ -41,7 +41,7 @@ block content
             label.badge.badge-pill.pull-right.d-none.d-sm-block(style='margin-left:15px;') 
               =address.name
           else
-            a(href="/address/"+ address.a_id +"/claim" style="font-size: smaller;")
+            a.badge.badge-pill.pull-right.d-none.d-sm-block(href="/address/"+ address.a_id +"/claim" style="font-size: smaller;")
               =" Is this yours? Claim it now for free!"
       table.table.table-bordered.table-striped.summary-table 
         thead
