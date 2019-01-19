@@ -40,6 +40,8 @@
     "port": 27017
   },
 
+  "decimal_places": 8,
+  
   //update script settings
   "update_timeout": 10,
   "check_timeout": 250,
@@ -48,28 +50,30 @@
   "wallet": {
     "host": "localhost",
     "port": 9332,
-    "user": "darkcoinrpc",
-    "pass": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
+    "username": "darkcoinrpc",
+    "password": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
   },
 
   // confirmations
   "confirmations": 40,
-
-  // language settings
-  "locale": "locale/en.json",
 
   // menu settings
   "display": {
     "api": true,
     "markets": true,
     "richlist": true,
-    "twitter": true,
+    "twitter": false,
     "facebook": false,
     "googleplus": false,
-    "youtube": false,
+    "bitcointalk": false,
+    "website": false,
+    "slack": false,
+    "github": false,
+	"youtube": false,
     "search": true,
     "movement": true,
-    "network": true
+    "network": true,
+	"masternodes": true
   },
 
   // index page (valid options for difficulty are POW, POS or Hybrid)
@@ -77,6 +81,11 @@
     "show_hashrate": true,
     "difficulty": "POW",
     "last_txs": 100
+  },
+  
+  //Peers API key for
+  "peers": {
+    "apikey": "c7fd7d7aa0c63d0fead5fa099079d2a1" 
   },
 
   // ensure links on API page are valid
@@ -98,6 +107,13 @@
     "ccex_key" : "Get-Your-Own-Key",
     "default": "bittrex"
   },
+  
+  //Commands specific for your coin. Please see ./coin_commands/. base.json is mostly Bitcoin Core commands
+  //that most coins are forked/based off of from an API point of view. Add other .json files to this array
+  //to add specific functions
+  "commands_needed": [
+    "base.json"
+  ],
 
   // richlist/top100 settings
   "richlist": {
@@ -116,11 +132,59 @@
   },
 
   // twitter, facebook, googleplus, youtube
-  "twitter": "iquidus",
-  "facebook": "yourfacebookpage",
-  "googleplus": "yourgooglepluspage",
-  "youtube": "youryoutubechannel",
+  "social":{
+    "twitter": {
+      "url":"https://twitter.com/iquidus",
+      "enabled": false,
+      "fontawesome": "fa-twitter"
+    },
+    "facebook": {
+      "url":"yourfacebookpage",
+      "enabled": false,
+      "fontawesome": "fa-facebook"
+    },
+    "googleplus": {
+      "url":"yourgooglepluspage",
+      "enabled": false,
+      "fontawesome": "fa-google-plus"
+    },
+    "youtube": {
+      "url":"youryoutubechannel",
+      "enabled": false,
+      "fontawesome": "fa-youtube"
+    },
+    "bitcointalk": {
+      "url":"yourbitcointalktopicvalue",
+      "enabled": false,
+      "fontawesome": "fa-btc"
+    },
+    "github": {
+      "url":"yourgithubusername/yourgithubrepo",
+      "enabled": false,
+      "fontawesome": "fa-github"
+    },
+    "slack": {
+      "url":"yourfullslackinviteurl",
+      "enabled": false,
+      "fontawesome": "fa-slack"
+    },
+    "website": {
+      "url":"yourfullwebsiteurl",
+      "enabled": false,
+      "fontawesome": "fa-link"
+    }
+  },
 
+  // Coin info page
+  "coininfo": {
+    "basic_info_links": [
+      ["Github", "http://github.com/"]
+    ],
+    "masternode_required": 50000,
+    "block_time_sec": 120,
+    "block_reward_mn": 5
+  },
+  
   //genesis
   "genesis_tx": "65f705d2f385dc85763a317b3ec000063003d6b039546af5d8195a5ec27ae410",
   "genesis_block": "b2926a56ca64e0cd2430347e383f63ad7092f406088b9b86d6d68c2a34baef51",
