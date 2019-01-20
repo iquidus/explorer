@@ -1,5 +1,12 @@
-Iquidus Explorer - 1.7.2
+Iquidus Explorer - 1.7.2 | WIP
 ================
+
+## Due to recent confusion, it's important for me to state that currently this fork is a WORK IN PROGRESS state. 
+### Some things may not be working correctly, some things may be half-built. I'm working towards a stable state where NPM vulnerabilities are resolved, bootstrap is up to date, and features like Masternodes/i18/etc are supported by default. Please keep this in mind before putting into production!
+
+
+
+-----
 
 An open source block explorer written in node.js.
 
