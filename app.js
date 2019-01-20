@@ -269,6 +269,8 @@ app.set('logo', settings.logo);
 app.set('theme', settings.theme);
 app.set('labels', settings.labels);
 app.set('decimal_places', settings.decimal_places);
+app.set('frontpage_layout', settings.frontpage_layout);
+app.set('coininfo', settings.coininfo);
 /*for(i=0;i<Object.keys(settings.social).length; i++)
 {
   app.set(Object.keys(settings.social)[i], Object.values(settings.social)[i]);

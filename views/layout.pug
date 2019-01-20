@@ -90,7 +90,7 @@ html
             a.nav-link(href='/')
               span.fa.fa-search
               span.menu-text=t('layout.navigation.explorer')
-          if settings.heavy == true
+          if settings.display.rewards == true
             li#reward
               a.nav-link(href='/reward')
                 span.fa.fa-star
@@ -126,73 +126,88 @@ html
           if settings.display.api == true
             li#info
               a.nav-link(href='/info')
-                span.glyphicon.glyphicon-info-sign
+                span.fa.fa-info-circle
                 span.menu-text=t('layout.navigation.api')
+          if settings.display.coininfo == true
+            li#coininfo
+              a.nav-link(href="/coininfo")
+                span.fa.fa-info-circle
+                span.menu-text=t('layout.navigation.coin_info')
     .col-md-12
       .row.text-center.d-flex.justify-content-center
-        .col-md-2
-          .card.card-default.d-none.d-md-block.d-block
-            .card-header
-              strong= t('layout.stats.network') + t(['layout.stats.nethash.' + settings.nethash_units, 'layout.stats.nethash.unspecific'])
-            .card-body
-              #hashratecard
-                span.glyphicon.fa.fa-gears
-                if settings.index.difficulty == 'Hybrid'
-                  label#hashrate -
-                  <br>
-                  label#lblX1
-                else
-                  label#hashrate -
-        .col-md-2
-          .card.card-default.d-none.d-md-block.d-block
-            .card-header
-              strong=t('layout.stats.difficulty')
-            .card-body
-              #difficultycard
-                span.glyphicon.fa.fa-sliders
-                if settings.index.difficulty == 'Hybrid'
-                  label#difficulty -
-                  <br>
-                  label#difficultyHybrid -
-                else
-                  label#difficulty -
-        .col-md-2
-         .card.card-default.d-none.d-md-block.d-block
-            .card-header
-              strong=t('layout.stats.masternode',{count: 0 })
-            .card-body
-              #masternodecard
-                span.glyphicon.fa.fa-exclamation-triangle
-                label#masternodeCountOffline -
-                label &nbsp;&#x2F;&nbsp;        
-                label#masternodeCountOnline -
-                span.glyphicon.fa.fa-check-circle
-        .col-md-2
-          .card.card-default.d-none.d-md-block.d-block
-            .card-header
-              strong=t('layout.stats.coin_supply',{coin : settings.symbol})
-            .card-body
-              #supplycard
-                span.glyphicon.fa.fa-pie-chart
-                if settings.index.difficulty == 'Hybrid'
-                  label#supply -
-                  <br>
-                  label#lblX1
-                else
-                  label#supply -
-        .col-md-2
-          .card.card-default.d-none.d-md-block.d-block
-            .card-header
-              strong=t('layout.stats.coin_price',{exchange : settings.markets.exchange})
-            .card-body
-              #pricecard
-                span.glyphicon.fa.fa-rocket
-                if settings.index.difficulty == 'Hybrid'
-                  label#lastPrice -
-                  <br>
-                  label#lblX1
-                else
-                  label#lastPrice -                
+        each val in settings.frontpage_layout
+          case val
+            when "nethash"
+              .col-md-2
+                .card.card-default.d-none.d-md-block.d-block
+                  .card-header
+                    strong= t('layout.stats.network') + t(['layout.stats.nethash.' + settings.nethash_units, 'layout.stats.nethash.unspecific'])
+                  .card-body
+                    #hashratecard
+                      span.glyphicon.fa.fa-gears
+                      if settings.index.difficulty == 'Hybrid'
+                        label#hashrate -
+                        <br>
+                        label#lblX1
+                      else
+                        label#hashrate -
+            when "difficulty"
+              .col-md-2
+                .card.card-default.d-none.d-md-block.d-block
+                  .card-header
+                    strong=t('layout.stats.difficulty')
+                  .card-body
+                    #difficultycard
+                      span.glyphicon.fa.fa-sliders
+                      if settings.index.difficulty == 'Hybrid'
+                        label#difficulty -
+                        <br>
+                        label#difficultyHybrid -
+                      else
+                        label#difficulty -
+            when "masternode"
+              .col-md-2
+               .card.card-default.d-none.d-md-block.d-block
+                  .card-header
+                    strong=t('layout.stats.masternode',{count: 0 })
+                  .card-body
+                    #masternodecard
+                      span.glyphicon.fa.fa-exclamation-triangle
+                      label#masternodeCountOffline -
+                      label &nbsp;&#x2F;&nbsp;        
+                      label#masternodeCountOnline -
+                      span.glyphicon.fa.fa-check-circle
+            when "coinsupply"
+              .col-md-2
+                .card.card-default.d-none.d-md-block.d-block
+                  .card-header
+                    strong=t('layout.stats.coin_supply',{coin : settings.symbol})
+                  .card-body
+                    #supplycard
+                      span.glyphicon.fa.fa-pie-chart
+                      if settings.index.difficulty == 'Hybrid'
+                        label#supply -
+                        <br>
+                        label#lblX1
+                      else
+                        label#supply -
+            when "price"
+              .col-md-2
+                .card.card-default.d-none.d-md-block.d-block
+                  .card-header
+                    strong=t('layout.stats.coin_price',{exchange : settings.markets.exchange})
+                  .card-body
+                    #pricecard
+                      span.glyphicon.fa.fa-rocket
+                      if settings.index.difficulty == 'Hybrid'
+                        label#lastPrice -
+                        <br>
+                        label#lblX1
+                      else
+                        label#lastPrice -
+            when "logo"
+              .col-md-2.col-sm-12
+                img(src=settings.logo, style='margin-top:-15px;height:128px;')
 
       .row.text-center(style='margin-top:10px;margin-bottom:20px;')
         form.form-inline.col-12.d-flex.justify-content-center(method='post', action='/search')

@@ -62,7 +62,8 @@ var removedSettings=[
 ];
 var changedSettings={
     "wallet":{'user':"username", 'pass':"password"},
-    "locale":"language"
+    "locale":"language",
+    "coin_info": {"masternode_required": "masternodes"}
 };
 
 //https://love2dev.com/blog/javascript-remove-from-array/#remove-from-array-splice-value

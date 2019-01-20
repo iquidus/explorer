@@ -10,7 +10,8 @@
             "difficulty": "Difficulté",
             "richlist": "Top 100",
             "markets": "Marchés",
-            "api": "API"
+            "api": "API",
+            "coin_info": "Coin Info"
         },
         "stats": {
             "network": "Réseau",

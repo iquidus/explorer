@@ -28,12 +28,13 @@ block content
                     h4 #{supply} #{settings.symbol}
                     h5.sub=t('coininfo.coin_supply')
                 .row.info-row
-                  .col-md-4
-                    h4 #{totalMasternodes}
-                    h5.sub=t('coininfo.total_nodes')
-                  .col-md-4
-                    h4 #{mnRequiredCoins}
-                    h5.sub=t('coininfo.required_mn')
+                  if settings.coininfo.masternodes.enabled
+                    .col-md-4
+                      h4 #{totalMasternodes}
+                      h5.sub=t('coininfo.total_nodes')
+                    .col-md-4
+                      h4 #{mnRequiredCoins}
+                      h5.sub=t('coininfo.required_mn')
                   .col-md-4
                     h4 #{coinsLocked}
                     h5.sub=t('coininfo.coins_locked', {perc: coinsLockedPerc})

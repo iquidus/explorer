@@ -147,11 +147,23 @@
     "search": true,
     "movement": true,
     "network": true,
-	  "masternodes": true
+	  "masternodes": false,
+    "rewards": false
   },
 
   // New in 1.7.x
   //  
+  // Front Page layout settings for the boxes.
+  // Available options are: 
+  // "nethash" - Shows the Network hashrate
+  // "difficulty" - Shows the current Network difficulty
+  // "masternode" - Shows the masternodes that are online and available (Make sure you have masternodes enabled)
+  // "coinsupply" - Shows the current Coin Supply
+  // "price" - Shows the current price against BTC
+  // "logo" - Shows your logo in a box. Useful for non-Masternode coins
+  "frontpage_layout":[
+    "nethash", "difficulty", "logo", "coinsupply", "price"
+  ],
   // Social Links for the Explorer
   // twitter, facebook, googleplus, youtube
   "social":{
