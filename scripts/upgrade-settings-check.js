@@ -1,7 +1,7 @@
 var fs = require('fs');
 var jsonminify = require('jsonminify');
 // Discover where the settings file lives
-var settingsFilename = "settings.json.template";
+var settingsFilename = "settings.json";
 settingsFilename = "./" + settingsFilename;
 
 var settingsStr;
