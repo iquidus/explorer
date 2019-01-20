@@ -1,4 +1,7 @@
 Note: All updates require the explorer to be restarted
+1.6.1 -> 1.7.x [WIP]
+* Settings.json changes for Display, Social, Coin_Commands, etc. Please see settings.json.template or run scripts/upgrade-settings-check.js
+* remove locale/*.json (if it exists), we now use locale/<country_code>/translation.json 
 
 1.6.0 -> 1.6.1
 * Add new cryptsy_id and hashrate_units settings (see settings.json.template)
