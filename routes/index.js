@@ -1,10 +1,10 @@
 var express = require('express')
-  , router = express.Router()
-  , settings = require('../lib/settings')
-  , locale = require('../lib/locale')
-  , db = require('../lib/database')
-  , lib = require('../lib/explorer')
-  , qr = require('qr-image');
+    , router = express.Router()
+    , settings = require('../lib/settings')
+    , locale = require('../lib/locale')
+    , db = require('../lib/database')
+    , lib = require('../lib/explorer')
+    , qr = require('qr-image');
 
 function route_get_block(res, blockhash) {
   lib.get_block(blockhash, function (block) {
@@ -96,25 +96,7 @@ function route_get_address(res, hash, count) {
   db.get_address(hash, function(address) {
     if (address) {
       var txs = [];
-      var hashes = address.txs.reverse();
-      if (address.txs.length < count) {
-        count = address.txs.length;
-      }
-      lib.syncLoop(count, function (loop) {
-        var i = loop.iteration();
-        db.get_tx(hashes[i].addresses, function(tx) {
-          if (tx) {
-            txs.push(tx);
-            loop.next();
-          } else {
-            loop.next();
-          }
-        });
-      }, function(){
-
-        res.render('address', { active: 'address', address: address, txs: txs});
-      });
-
+      res.render('address', { active: 'address', address: address, txs: txs});
     } else {
       route_get_index(res, hash + ' not found');
     }
@@ -196,22 +178,22 @@ router.get('/network', function(req, res) {
 
 router.get('/reward', function(req, res){
   //db.get_stats(settings.coin, function (stats) {
-    console.log(stats);
-    db.get_heavy(settings.coin, function (heavy) {
-      //heavy = heavy;
-      var votes = heavy.votes;
-      votes.sort(function (a,b) {
-        if (a.count < b.count) {
-          return -1;
-        } else if (a.count > b.count) {
-          return 1;
-        } else {
-         return 0;
-        }
-      });
-
-      res.render('reward', { active: 'reward', stats: stats, heavy: heavy, votes: heavy.votes });
+  console.log(stats);
+  db.get_heavy(settings.coin, function (heavy) {
+    //heavy = heavy;
+    var votes = heavy.votes;
+    votes.sort(function (a,b) {
+      if (a.count < b.count) {
+        return -1;
+      } else if (a.count > b.count) {
+        return 1;
+      } else {
+        return 0;
+      }
     });
+
+    res.render('reward', { active: 'reward', stats: stats, heavy: heavy, votes: heavy.votes });
+  });
   //});
 });
 
@@ -285,12 +267,12 @@ router.get('/ext/summary', function(req, res) {
   lib.get_difficulty(function(difficulty) {
     difficultyHybrid = ''
     if (difficulty['proof-of-work']) {
-            if (settings.index.difficulty == 'Hybrid') {
-              difficultyHybrid = 'POS: ' + difficulty['proof-of-stake'];
-              difficulty = 'POW: ' + difficulty['proof-of-work'];
-            } else if (settings.index.difficulty == 'POW') {
-              difficulty = difficulty['proof-of-work'];
-            } else {
+      if (settings.index.difficulty == 'Hybrid') {
+        difficultyHybrid = 'POS: ' + difficulty['proof-of-stake'];
+        difficulty = 'POW: ' + difficulty['proof-of-work'];
+      } else if (settings.index.difficulty == 'POW') {
+        difficulty = difficulty['proof-of-work'];
+      } else {
         difficulty = difficulty['proof-of-stake'];
       }
     }
@@ -302,14 +284,14 @@ router.get('/ext/summary', function(req, res) {
               hashrate = 0;
             }
             res.send({ data: [{
-              difficulty: difficulty,
-              difficultyHybrid: difficultyHybrid,
-              supply: stats.supply,
-              hashrate: hashrate,
-              lastPrice: stats.last_price,
-              connections: connections,
-              blockcount: blockcount
-            }]});
+                difficulty: difficulty,
+                difficultyHybrid: difficultyHybrid,
+                supply: stats.supply,
+                hashrate: hashrate,
+                lastPrice: stats.last_price,
+                connections: connections,
+                blockcount: blockcount
+              }]});
           });
         });
       });
