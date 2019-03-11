@@ -100,7 +100,8 @@ function route_get_index(res, error) {
 function route_get_address(res, hash) {
   db.get_address(hash, function(address) {
     if (address) {
-      res.render('address', { active: 'address', address: address});
+      var txs = [];
+      res.render('address', { active: 'address', address: address, txs: txs});
     } else {
       route_get_index(res, hash + ' not found');
     }

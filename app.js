@@ -164,6 +164,48 @@ app.use('/ext/getlasttxsajax', function(req,res){
   });
 });
 
+/*
+  pull request 270
+*/
+
+app.use('/ext/getaddresstxsajax', function(req,res){
+  if(req.query.length > settings.txcount){
+      req.query.length = settings.txcount;
+  }
+  db.get_address_txs_ajax(req.query.address, req.query.start, req.query.length,function(txs, count){
+      var data = [];
+      for(i=0; i<txs.length; i++){
+          if(typeof txs[i].txid !== "undefined") {
+              var out = 0
+              var vin = 0
+
+              txs[i].vout.forEach(function (r) {
+                  if (r.addresses == req.query.address) {
+                      out = r.amount;
+                  }
+              });
+
+              txs[i].vin.forEach(function (s) {
+                  if (s.addresses == req.query.address) {
+                      vin = s.amount
+                  }
+              });
+
+              var row = [];
+              row.push(new Date((txs[i].timestamp) * 1000).toUTCString());
+              row.push(txs[i].txid);
+              row.push(out);
+              row.push(vin);
+              data.push(row);
+          }
+      }
+
+      res.json({"data":data, "draw": req.query.draw, "recordsTotal": count, "recordsFiltered": count});
+  });
+});
+
+// End pull request 270
+
 app.use('/ext/getaddresstransactions/:hash', function(req,res){
   db.get_address_ajax(req.params.hash,req.query.start, req.query.length,function(txs){
     var data = [];

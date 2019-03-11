@@ -1,7 +1,8 @@
 var mongoose = require('mongoose')
   , db = require('../lib/database')
   , Tx = require('../models/tx')  
-  , Address = require('../models/address')  
+  , Address = require('../models/address') 
+  , AddressTx = require('../models/addresstx') 
   , Richlist = require('../models/richlist')  
   , Stats = require('../models/stats')  
   , settings = require('../lib/settings')
@@ -23,10 +24,10 @@ function usage() {
   console.log('check        checks index for (and adds) any missing transactions/addresses');
   console.log('reindex      Clears index then resyncs from genesis to current block');
   console.log('');
-  console.log('notes:'); 
+  console.log('notes:');
   console.log('* \'current block\' is the latest created block when script is executed.');
   console.log('* The market database only supports (& defaults to) reindex mode.');
-  console.log('* If check mode finds missing data(ignoring new data since last sync),'); 
+  console.log('* If check mode finds missing data(ignoring new data since last sync),');
   console.log('  index_timeout in settings.json is set too low.')
   console.log('');
   process.exit(0);
@@ -146,23 +147,25 @@ is_locked(function (exists) {
                   if (mode == 'reindex') {
                     Tx.remove({}, function(err) { 
                       Address.remove({}, function(err2) { 
-                        Richlist.update({coin: settings.coin}, {
-                          received: [],
-                          balance: [],
-                        }, function(err3) { 
-                          Stats.update({coin: settings.coin}, { 
-                            last: 0,
-                          }, function() {
-                            console.log('index cleared (reindex)');
-                          }); 
-                          db.update_tx_db(settings.coin, 1, stats.count, settings.update_timeout, function(){
-                            db.update_richlist('received', function(){
-                              db.update_richlist('balance', function(){
-                                db.get_stats(settings.coin, function(nstats){
-                                  console.log('reindex complete (block: %s)', nstats.last);
-                                  db.update_cronjob_run(settings.coin,{list_blockchain_update: Math.floor(new Date() / 1000)}, function(cb) {
-                                    exit();
-                                    });
+                        AddressTx.remove({}, function(err3){
+                          Richlist.update({coin: settings.coin}, {
+                            received: [],
+                            balance: [],
+                          }, function(err3) { 
+                            Stats.update({coin: settings.coin}, { 
+                              last: 0,
+                            }, function() {
+                              console.log('index cleared (reindex)');
+                            }); 
+                            db.update_tx_db(settings.coin, 1, stats.count, settings.update_timeout, function(){
+                              db.update_richlist('received', function(){
+                                db.update_richlist('balance', function(){
+                                  db.get_stats(settings.coin, function(nstats){
+                                    console.log('reindex complete (block: %s)', nstats.last);
+                                    db.update_cronjob_run(settings.coin,{list_blockchain_update: Math.floor(new Date() / 1000)}, function(cb) {
+                                      exit();
+                                      });
+                                  });
                                 });
                               });
                             });

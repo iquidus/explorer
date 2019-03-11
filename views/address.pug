@@ -4,26 +4,50 @@ block content
   script.
     $(document).ready(function(){
       var historytable = $('#history-table').dataTable( {  
-        autoWidth: true,      
+        autoWidth: true,
         searching: false,
         ordering: false,
         responsive: true,
         lengthChange: true,
         processing: true,
         serverSide: true,
-        ajax: '/ext/getaddresstransactions/#{address.a_id}',
-        rowCallback: function(row, data, index) {
-          var timestamp = data[0];
-          var hash = data[1];
-          var amount = data[2];
-          data[1] = "<a href='/tx/"+hash +"'>"+ hash +"</a>";
-          $("td:eq(1)", row).html(data[1]);
-          if(amount.charAt(0) == "+"){
-            $("td:eq(2)",row).addClass("table-success");
-          }else{
-            $("td:eq(2)",row).addClass("table-danger");
+        ajax: {
+          "url": '/ext/getaddresstxsajax',
+          "data": {
+            "address": hashAddress
           }
-        }
+        },
+        rowCallback: function (row, data, index) {
+          var timestamp = data[0]; //variables for better readability
+          var txhash = data[1]; //variables for better readability
+          var out = data[2]; //variables for better readability
+          var vin = data[3]; //variables for better readability
+
+          $("td:eq(0)", row).html(timestamp);
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
+
+          var amount = 0;
+
+          if(out > 0 && vin > 0) {
+            amount = (out - vin) / 100000000
+            if (amount < 0) {
+              amount = amount * -1
+              $("td:eq(2)", row).html("-" + amount.toFixed(8)).addClass("info");
+            } else if (amount > 0) {
+              ammount = amount.toFixed(8);
+              $("td:eq(2)", row).html("+" + amount).addClass("info");
+            } else {
+              $("td:eq(2)", row).html(amount.toFixed(8)).addClass("info");
+            }
+          }else if(out > 0) {
+            amount = out / 100000000;
+            $("td:eq(2)", row).html("+" + amount.toFixed(8)).addClass("success");
+          }else{
+            amount = vin / 100000000;
+            $("td:eq(2)", row).html("-" + amount.toFixed(8)).addClass("danger");
+          }
+
+        },
       });
       setInterval( function () {
         historytable.api().ajax.reload(null, false);
