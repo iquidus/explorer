@@ -3,6 +3,7 @@ extends layout
 block content
   script.
     $(document).ready(function(){
+      var hashAddress = "#{address.a_id}";
       var historytable = $('#history-table').dataTable( {  
         autoWidth: true,
         searching: false,
