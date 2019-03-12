@@ -145,7 +145,7 @@ app.use('/ext/getdistribution', function(req,res){
 });
 
 app.use('/ext/getlasttxsajax', function(req,res){
-  if(req.query.length > settings.index.last_txs || typeof req.query.length === null){
+  if(typeof req.query.length === 'undefined' || req.query.length > settings.index.last_txs){
     req.query.length = settings.index.last_txs;
   }
   db.get_last_txs_ajax(req.query.start, req.query.length,function(txs, count){
@@ -169,10 +169,8 @@ app.use('/ext/getlasttxsajax', function(req,res){
 */
 
 app.use('/ext/getaddresstxsajax', function(req,res){
-  if(typeof req.query.length === null){
+  if(typeof req.query.length === 'undefined' || req.query.length > settings.txcount){
     req.query.length = settings.txcount;
-  } else if(req.query.length > settings.txcount){
-      req.query.length = settings.txcount;
   }
   db.get_address_txs_ajax(req.query.address, req.query.start, req.query.length,function(txs, count){
       var data = [];
