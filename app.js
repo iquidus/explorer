@@ -101,7 +101,7 @@ app.use('/ext/getlasttxs/:min', function(req,res){
 });
 
 app.use('/ext/getaddresstxsajax', function(req,res){
-    if(req.query.length > settings.txcount){
+    if(typeof req.query.length === 'undefined' || req.query.length > settings.txcount){
         req.query.length = settings.txcount;
     }
     db.get_address_txs_ajax(req.query.address, req.query.start, req.query.length,function(txs, count){
