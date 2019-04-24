@@ -8,8 +8,8 @@ block content
     .card.card-default
       .card-header.d-none.d-md-block
         strong=settings.symbol + ' TXid: ' + tx.txid
-        a(href='/api/getrawtransaction?txid=#{tx.txid}&decrypt=1')
-          span.glyphicon.glyphicon-info-sign.iquidus.pull-right
+        a(href=`/api/getrawtransaction?txid=#{tx.txid}&decrypt=1`)
+          span.fa.fa-info-circle.iquidus.pull-right
       div.table-responsive
         table.table.table-bordered.table-striped.summary-table 
           thead
@@ -23,31 +23,31 @@ block content
             if confirms >= confirmations                
               tr.table-success
                   td=confirms
-                  td.d-xs-none 
-                    a(href='/block/#{tx.blockhash}')=tx.blockhash
+                  td.d-xs-none   
+                    a(href=`/block/${tx.blockhash}`)=tx.blockhash
                   td=time
                   td.view_tx  
-                    a(href='/block/#{tx.blockhash}')
-                      span.glyphicon.glyphicon-eye-open 
+                    a(href=`/block/${tx.blockhash}`)
+                      span.fa.fa-eye 
             else
               if confirms < (confirmations / 2)
                 tr.table-danger
                   td=confirms
-                  td.d-xs-none  
-                    a(href='/block/#{tx.blockhash}')=tx.blockhash
+                  td.d-xs-none   
+                    a(href=`/block/${tx.blockhash}`)=tx.blockhash
                   td=time
                   td.view_tx  
-                    a(href='/block/#{tx.blockhash}')
-                      span.glyphicon.glyphicon-eye-open 
+                    a(href=`/block/${tx.blockhash}`)
+                      span.fa.fa-eye 
               else
                 tr.table-warning
                   td=confirms
-                  td.d-xs-none  
-                    a(href='/block/#{tx.blockhash}')=tx.blockhash
+                  td.d-xs-none    
+                    a(href=`/block/${tx.blockhash}`)=tx.blockhash
                   td=time
                   td.view_tx  
-                    a(href='/block/#{tx.blockhash}')
-                      span.glyphicon.glyphicon-eye-open
+                    a(href=`/block/${tx.blockhash}`)
+                      span.fa.fa-eye
     if tx.vout.length < 1
       .alert.alert-info(role='alert', style='text-align:center;')   
         strong=t('tx.tx_nonstandard')
@@ -57,7 +57,7 @@ block content
           .card.card-default
             .card-header
               strong=t('tx.input_adress')
-              span.glyphicon.glyphicon-arrow-right.pull-right.d-xs-none
+              span.fa.fa-arrow-right.pull-right.d-xs-none
             table.table.table-bordered.table-striped.summary-table 
               thead
                 tr
