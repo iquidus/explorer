@@ -144,7 +144,7 @@ html
                     strong= t('layout.stats.network') + t(['layout.stats.nethash.' + settings.nethash_units, 'layout.stats.nethash.unspecific'])
                   .card-body
                     #hashratecard
-                      span.glyphicon.fa.fa-gears
+                      span.fa.fa-gears
                       if settings.index.difficulty == 'Hybrid'
                         label#hashrate -
                         <br>
@@ -158,7 +158,7 @@ html
                     strong=t('layout.stats.difficulty')
                   .card-body
                     #difficultycard
-                      span.glyphicon.fa.fa-sliders
+                      span.fa.fa-sliders
                       if settings.index.difficulty == 'Hybrid'
                         label#difficulty -
                         <br>
@@ -172,11 +172,11 @@ html
                     strong=t('layout.stats.masternode',{count: 0 })
                   .card-body
                     #masternodecard
-                      span.glyphicon.fa.fa-exclamation-triangle
+                      span.fa.fa-exclamation-triangle
                       label#masternodeCountOffline -
                       label &nbsp;&#x2F;&nbsp;        
                       label#masternodeCountOnline -
-                      span.glyphicon.fa.fa-check-circle
+                      span.fa.fa-check-circle
             when "coinsupply"
               .col-md-2
                 .card.card-default.d-none.d-md-block.d-block
@@ -184,7 +184,7 @@ html
                     strong=t('layout.stats.coin_supply',{coin : settings.symbol})
                   .card-body
                     #supplycard
-                      span.glyphicon.fa.fa-pie-chart
+                      span.fa.fa-pie-chart
                       if settings.index.difficulty == 'Hybrid'
                         label#supply -
                         <br>
@@ -198,7 +198,7 @@ html
                     strong=t('layout.stats.coin_price',{exchange : settings.markets.exchange})
                   .card-body
                     #pricecard
-                      span.glyphicon.fa.fa-rocket
+                      span.fa.fa-rocket
                       if settings.index.difficulty == 'Hybrid'
                         label#lastPrice -
                         <br>
@@ -222,7 +222,7 @@ html
             if social.enabled
                 li.pull-left(style="margin-right:1%")
                   a#website-icon(href=social.url)
-                    span(class="glyphicon fa "+ social.fontawesome)
+                    span(class="fa fa "+ social.fontawesome)
       .col-md-4
         ul.nav.justify-content-center
           li.text-center(style='margin-left:80px;margin-right:80px;')

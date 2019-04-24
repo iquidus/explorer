@@ -8,15 +8,15 @@ block content
         .row           
           if block.previousblockhash != null
             a(href='/block/'+ block.previousblockhash)
-              span.glyphicon.glyphicon-chevron-left.iquidus.block-last(data-toggle='tooltip', data-placement='top', title=t('block.block_previous'))  
+              span.fa.fa-chevron-left.iquidus.block-last(data-toggle='tooltip', data-placement='top', title=t('block.block_previous'))  
             strong.d-none.d-sm-block #{settings.symbol} block: #{block.hash}
           else
             strong.d-none(style='margin-left:10px;')="#{settings.symbol} #{t('explorer.block')}: #{block.hash}"
           if block.nextblockhash != null 
             a(href='/block/'+ block.nextblockhash)
-              span.glyphicon.glyphicon-chevron-right.iquidus.pull-right.block-next(data-toggle='tooltip', data-placement='top', title=t('block.block_next'))       
-          a(href='/api/getblock?hash=#{block.hash}')
-            span.glyphicon.glyphicon-info-sign.iquidus.pull-right
+              span.fa.fa-chevron-right.iquidus.pull-right.block-next(data-toggle='tooltip', data-placement='top', title=t('block.block_next'))       
+          a(href=`/api/getblock?hash=#{block.hash}`)
+            span.fa.fa-info-sign.iquidus.pull-right
       table.table.table-bordered.summary-table 
         thead
           tr
@@ -95,5 +95,5 @@ block content
                   td=txn.total.toFixed(settings.decimal_places)
                 td.view_tx 
                   a(href='/tx/'+ txn.txid)
-                    span.glyphicon.glyphicon-eye-open 
+                    span.fa.fa-eye-open 
     .footer-padding  
