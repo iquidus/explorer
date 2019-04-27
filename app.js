@@ -33,7 +33,7 @@ var commands = [];
 
     }
   bitcoinapi.setAccess('only', commands);
-
+console.log(settings.language);
 // Language setup
 i18next
   .use(i18Backend)
@@ -56,7 +56,7 @@ i18next
     },
    
     fallbackLng: settings.language_fallback,
-    preload: settings.language,
+    preload: [settings.language],
     saveMissing: true,
     debug: false
 });
