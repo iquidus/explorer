@@ -33,7 +33,6 @@ var commands = [];
 
     }
   bitcoinapi.setAccess('only', commands);
-console.log(settings.language);
 // Language setup
 i18next
   .use(i18Backend)
