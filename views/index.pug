@@ -62,7 +62,7 @@ block content
       if error !== null        
         .alert.alert-danger.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×
-          strong=t('explorer.error') +' : '+ error
+          strong=t('explorer.error') + t('layout.search.no_results', {query: error.query})
       if warning !== null        
         .alert.alert-warning.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×

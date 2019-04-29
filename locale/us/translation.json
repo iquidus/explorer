@@ -33,7 +33,7 @@
     "search": {
       "hint": "You may enter a block height, block hash, tx-id or address.",
       "button": "Search",
-      "no_results": "Search found no results {{query}}"
+      "no_results": "Search found no results: {{query}}"
     },
     "footer": {
       "dst_network": "DSTRA"

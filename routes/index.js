@@ -289,21 +289,21 @@ router.get('/reward', function(req, res){
 });
 
 router.get('/tx/:txid', function(req, res) {
-  route_get_tx(res, req.param('txid'));
+  route_get_tx(res, req.params.txid);
 });
 
 router.get('/block/:hash', function(req, res) {
-  route_get_block(res, req.param('hash'));
+  route_get_block(res, req.params.hash);
 });
 
 router.get('/address/:hash', function(req, res) {
-  route_get_address(res, req.param('hash'), settings.txcount);
+  route_get_address(res, req.params.hash, settings.txcount);
 });
 
 router.post('/search', function(req, res) {
   var query = req.body.search;
   if (query.length == 64) {
-    if (query == settings.genesis_tx) {
+    if (query == settings.genesis_tx || query == settings.genesis_block) {
       res.redirect('/block/' + settings.genesis_block);
     } else {
       db.get_tx(query, function(tx) {
@@ -314,7 +314,8 @@ router.post('/search', function(req, res) {
             if (block != 'There was an error. Check your console.') {
               res.redirect('/block/' + query);
             } else {
-              route_get_index(res, t('search.no_results',{query:query}));
+              //route_get_index(res, t('search.no_results',{query:query}));
+              route_get_index(res, {query:query});
             }
           });
         }
@@ -325,13 +326,14 @@ router.post('/search', function(req, res) {
       if (address) {
         res.redirect('/address/' + address.a_id);
       } else {
-        lib.get_blockhash(query, function(hash) {
-          if (hash != 'There was an error. Check your console.') {
-            res.redirect('/block/' + hash);
-          } else {
-            route_get_index(res, t('tsearch.no_results',{query:query}));
-          }
-        });
+          lib.get_blockhash(parseInt(query), function(hash) {
+            if (hash.name != 'RpcError')  {
+              res.redirect('/block/' + hash);
+            } else {
+              //route_get_index(res, t('tsearch.no_results',{query:query}));
+              route_get_index(res, {query:query});
+            }
+          });
       }
     });
   }

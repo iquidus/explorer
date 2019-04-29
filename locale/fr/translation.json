@@ -33,7 +33,7 @@
         "search": {
             "hint": "Vous devez saisir un numéro de bloc, un condensat de bloc, un condensat de transaction ou une adresse.",
             "button": "Recherche",
-            "no_results": "Aucun résultat pour la recherche {{query}}"
+            "no_results": "Aucun résultat pour la recherche: {{query}}"
         }
     },
     "explorer": {
