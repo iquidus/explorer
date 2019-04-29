@@ -8,7 +8,7 @@ block content
     .card.card-default
       .card-header.d-none.d-md-block
         strong=settings.symbol + ' TXid: ' + tx.txid
-        a(href=`/api/getrawtransaction?txid=#{tx.txid}&decrypt=1`)
+        a(href=`/api/getrawtransaction?txid=${tx.txid}&decrypt=1`)
           span.fa.fa-info-circle.iquidus.pull-right
       div.table-responsive
         table.table.table-bordered.table-striped.summary-table 
