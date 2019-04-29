@@ -214,10 +214,14 @@
     "basic_info_links": [
       ["Github", "http://github.com/"]
     ],
-    "masternode_required": 50000,
+    "masternodes":{
+      "enabled": true,
+      "deposit_required": 50000
+    },
     "block_time_sec": 120,
     "block_reward_mn": 5
   },
+
 
   //Commands specific for your coin. Please see ./coin_commands/. base.json is mostly Bitcoin Core commands
   //that most coins are forked/based off of from an API point of view. Add other .json files to this array
