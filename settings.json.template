@@ -215,7 +215,7 @@
       ["Github", "http://github.com/"]
     ],
     "masternodes":{
-      "enabled": true,
+      "enabled": false,
       "deposit_required": 50000
     },
     "block_time_sec": 120,
