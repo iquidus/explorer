@@ -30,12 +30,12 @@ block content
         var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;   
         return time;
       }
-      var rtable = $('#alerts-table').dataTable( {  
-        autoWidth: false,      
+      var rtable = $('#movement-table').dataTable( {  
+        autoWidth: true,      
         searching: false,
         ordering: false,
         //responsive: true,
-        lengthChange: false,
+        lengthChange: true,
         //processing: true,
         ajax: {
           url: '/ext/getlasttxs/#{min_amount}',
@@ -65,9 +65,15 @@ block content
         rtable.api().ajax.reload(null, false);
       }, 45000 );
     });
-  .col-xs-12.col-md-12(style="margin-bottom: 5%")
-    table#alerts-table.table.table-striped.table-bordered
-      thead
-        th timestamp
-        th.d-none txid
-        th amount
+  .col-md-12(style="margin-bottom: 4%")
+    .card.card-default
+      .card-header
+        strong=t('movement.latest')
+      table#movement-table.table.table-bordered.table-striped
+        thead
+          tr
+            th=t('movement.timestamp')
+            th=t('movement.txid')
+            th=t('movement.amount_coin', {coin: settings.symbol})
+        tbody.text-center
+    .footer-padding
