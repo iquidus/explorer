@@ -1,0 +1,130 @@
+extends layout
+
+block content
+  .col-md-12.col-xs-12
+    .panel.panel-default
+      .panel-heading
+        strong #{settings.locale.api_title}
+      .panel-body
+        :markdown
+          *#{settings.locale.api_message}*
+          
+          ------
+
+          ### #{settings.locale.api_calls}
+          *Return data from coind*
+
+          *  **getdifficulty**  
+             *#{settings.locale.api_getdifficulty}*  
+             [#{address}/api/getdifficulty](/api/getdifficulty)   
+
+          *  **getconnectioncount**  
+             *#{settings.locale.api_getconnectioncount}*  
+             [#{address}/api/getconnectioncount](/api/getconnectioncount) 
+
+          *  **getblockcount**  
+             *#{settings.locale.api_getblockcount}*  
+             [#{address}/api/getblockcount](/api/getblockcount)
+
+          *  **getblockhash [index]**  
+             *#{settings.locale.api_getblockhash}*  
+             [#{address}/api/getblockhash?index=#{hashes.blockindex}](/api/getblockhash?index=#{hashes.blockindex})
+
+          *  **getblock [hash]**  
+             *#{settings.locale.api_getblock}*  
+             [#{address}/api/getblock?hash=#{hashes.blockhash}](/api/getblock?hash=#{hashes.blockhash})
+
+          *  **getrawtransaction [txid] [decrypt]**  
+             *#{settings.locale.api_getrawtransaction}*  
+             [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0](/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0)  
+             [#{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1](/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1)
+        
+
+        if settings.index.show_hashrate == true
+          :markdown
+            *  **getnetworkhashps**  
+               *#{settings.locale.api_getnetworkhashps}*  
+               [#{address}/api/getnetworkhashps](/api/getnetworkhashps)
+
+
+
+        if settings.heavy == true
+          :markdown
+            *  **getmaxmoney**  
+               *#{settings.locale.api_getmaxmoney}*  
+               [#{address}/api/getmaxmoney](/api/getmaxmoney)
+            
+            *  **getmaxvote**  
+               *#{settings.locale.api_getmaxvote}*  
+               [#{address}/api/getmaxvote](/api/getmaxvote)
+
+            *  **getvote**  
+               *#{settings.locale.api_getvote}*  
+               [#{address}/api/getvote](/api/getvote)
+
+            *  **getphase**  
+               *#{settings.locale.api_getphase}*  
+               [#{address}/api/getphase](/api/getphase)
+
+            *  **getreward**  
+               *#{settings.locale.api_getreward}*  
+               [#{address}/api/getreward](/api/getreward)
+
+            *  **getsupply**  
+               *#{settings.locale.api_getsupply}*  
+               [#{address}/api/getsupply](/api/getsupply)  
+
+            *  **getnextrewardestimate**  
+               *#{settings.locale.api_getnextrewardestimate}*  
+               [#{address}/api/getnextrewardestimate](/api/getnextrewardestimate)
+
+            *  **getnextrewardwhenstr**  
+               *#{settings.locale.api_getnextrewardwhenstr}*  
+               [#{address}/api/getnextrewardwhenstr](/api/getnextrewardwhenstr)                                                       
+
+        :markdown
+          ------
+
+          ### Extended API 
+          *Return data from local indexes*
+
+          *  **getmoneysupply**  
+               *Returns current money supply*  
+               [#{address}/ext/getmoneysupply](/ext/getmoneysupply)
+
+          *  **getdistribution**  
+               *Returns wealth distribution stats*  
+               [#{address}/ext/getdistribution](/ext/getdistribution)               
+
+          *  **getaddress (/ext/getaddress/hash)**  
+               *Returns information for given address*  
+               [#{address}/ext/getaddress/#{hashes.address}](/ext/getaddress/#{hashes.address})
+
+          *  **getbalance (/ext/getbalance/hash)**  
+               *Returns current balance of given address*  
+               [#{address}/ext/getbalance/#{hashes.address}](/ext/getbalance/#{hashes.address})
+
+          *  **getlasttxs (/ext/getlasttxs/count/min)**  
+               *Returns last [count] transactions greater than [min]*  
+               *Note: returned values are in satoshis*  
+               [#{address}/ext/getlasttxs/10/100](/ext/getlasttxs/10/100)
+
+          ------
+
+          ### Linking (GET)
+          *Linking to the block explorer*
+
+          *  **transaction (/tx/txid)**  
+             [#{address}/tx/#{hashes.txhash}](/tx/#{hashes.txhash})
+
+          *  **block (/block/hash)**  
+             [#{address}/block/#{hashes.blockhash}](/block/#{hashes.blockhash})
+    
+          *  **address (/address/hash)**  
+             [#{address}/address/#{hashes.address}](/address/#{hashes.address})
+
+          *  **qrcode (/qr/hash)**  
+             [#{address}/qr/#{hashes.address}](/qr/#{hashes.address})
+
+    .footer-padding
+

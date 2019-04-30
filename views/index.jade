@@ -1,0 +1,92 @@
+extends layout
+
+block content
+  script.
+    $(document).ready(function(){
+      var stable = $('#block-table').dataTable( {  
+        autoWidth: true,      
+        searching: true,
+        ordering: false,
+        responsive: true,
+        lengthChange: false,
+        processing: true,
+        paging: false,
+        info: false,
+        ajax: {
+          url: '/ext/summary',
+          dataSrc: function ( json ) {
+          console.log(json.data);
+            json.data[0]['height'] = "<a href='/block/" + json.data[0]['hash'] + "'>" + json.data[0]['height'] + "</a>";
+            return json.data;
+          }
+        },
+        columns: [
+          //{ data: 'height', width: '8%' },
+          { data: 'difficulty', width: '10%' },
+          //{ data: 'size', width:'10%' },
+          //{ data: 'txs', width: '10%' },
+          { data: 'supply', width: '15%' },
+          //{ data: 'time', width: '20%' },
+        ]
+      });
+      var rtable = $('#recent-table').dataTable( {  
+        autoWidth: true,      
+        searching: false,
+        ordering: false,
+        responsive: true,
+        lengthChange: true,
+        processing: true,
+        ajax: {
+          url: '/ext/getlasttxs/0.00000001',
+          dataSrc: function ( json ) {
+            for ( var i=0;i<json.data.length; i++ ) {
+              json.data[i]['timestamp'] = new Date((json.data[i]['timestamp']) * 1000).toUTCString();
+              json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'>" + json.data[i]['txid'] + "</a>";
+              json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'>" + json.data[i]['blockindex'] + "</a>";
+              var amount = json.data[i]['total'] / 100000000;
+              json.data[i]['total'] = amount.toFixed(8);
+              json.data[i]['recipients'] = json.data[i]['vout'].length;
+            }
+            return json.data;
+          }
+        },
+        columns: [
+          { data: 'blockindex', width: '8%' },
+          { data: 'txid', width: '40%' },
+          { data: 'recipients', width:'5%' },
+          { data: 'total', width: '15%' },
+          { data: 'timestamp', width: '25%' },
+        ]
+      });
+      setInterval( function () {
+        rtable.api().ajax.reload(null, false);
+        stable.api().ajax.reload(null, false);
+      }, 60000 );
+    });
+  .row
+    .col-md-12
+      if error !== null        
+        .alert.alert-danger.alert-dismissable(role='alert')
+          button.close(type='button', data-dismiss='alert') ×
+          strong #{settings.locale.ex_error} : #{error}
+      if warning !== null        
+        .alert.alert-warning.alert-dismissable(role='alert')
+          button.close(type='button', data-dismiss='alert') ×
+          strong #{settings.locale.ex_warning} #{warning}
+  
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        strong #{settings.locale.ex_latest_transactions}
+      table#recent-table.table.table-bordered.table-striped
+        thead
+          tr
+            th.text-center #{settings.locale.ex_block}
+            th.hidden-xs.text-center #{settings.locale.tx_hash}
+            th.hidden-xs.text-center #{settings.locale.tx_recipients}
+            th.text-center #{settings.locale.mkt_amount} (#{settings.symbol})
+            th.text-center #{settings.locale.timestamp}
+        tbody.text-center
+    .footer-padding
+      
+              

@@ -1,0 +1,23 @@
+.panel.panel-default
+  .panel-heading
+    h3.panel-title #{settings.locale.rl_received_coins} 
+  table.table.table-hover.table-bordered(cellspacing="0")
+    thead
+      tr
+        th(style='text-align:center;') 
+          span.fa.fa-flag-checkered
+        th #{settings.locale.tx_address} 
+        th.hidden-xs #{settings.locale.rl_received} (#{settings.symbol})
+    tbody
+      - var count = 0
+      each item in received
+        - count = count + 1
+        - var itemFixed = item.received / 100000000
+        tr
+          td(style='text-align:center;') 
+            =count
+          td
+            a(href='/address/#{item.a_id}') #{item.a_id}
+            include ./rl_labels.jade
+          td.hidden-xs
+            =itemFixed.toFixed(8)

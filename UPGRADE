@@ -1,0 +1,49 @@
+Note: All updates require the explorer to be restarted
+
+1.6.0 -> 1.6.1
+* Add new cryptsy_id and hashrate_units settings (see settings.json.template)
+* remove tmp/market.pid (if it exists)
+
+1.5.2 -> 1.6.0
+* Change market settings to new format (see settings.json.template)
+* Reindex explorerdb (node --stack-size=15000 scripts/sync.js index reindex)
+
+1.5.1 -> 1.5.2
+* nothing required, coinbase balance / wealth distribution will be fixed in next sync.
+  run sync.js index check to force this if required.
+
+1.5.0 -> 1.5.1
+* Optional - Add new labels setting to settings.json (see settings.json.template)
+
+1.4.1 -> 1.5.0
+* New database/reindex
+* Add new settings to settings.json (see settings.json.template)
+  * theme
+  * last_txs
+
+1.4.0 -> 1.4.1
+* New database created with read/write access. See README.
+* Add new settings to settings.json (see settings.json.template)
+  * richlist
+  * logo
+
+1.3.x -> 1.4.0
+* New database
+* Add new settings to settings.json (see settings.json.template)
+  * show_sent_received
+
+* note: mintpal support has been dropped, replaced with poloniex. Make sure market settings reflect this (see settings.json.template)
+
+1.3.3 -> 1.3.4
+* Install new dependency (qr-image)
+npm install
+
+1.3.2 -> 1.3.3
+* Restart explorer
+
+1.3.1 -> 1.3.2 
+* New database
+* Add new settings to settings.json (see settings.json.template)
+  * heavy
+  * supply
+  * txcount

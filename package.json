@@ -1,0 +1,29 @@
+{
+  "name": "explorer",
+  "version": "1.6.1",
+  "private": true,
+  "scripts": {
+    "start": "node --stack-size=10000 ./bin/cluster",
+    "stop": "kill -2 $(cat tmp/cluster.pid)",
+    "test": "node ./node_modules/jasmine/bin/jasmine.js"
+  },
+  "dependencies": {
+    "express": "~4.2.0",
+    "static-favicon": "~1.0.0",
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.0",
+    "debug": "~0.7.4",
+    "jade": "~1.3.0",
+    "bitcoin-node-api": "0.1.0",
+    "request": "2.74.0",
+    "jsonminify": "0.2.3",
+    "mongodb": "2.0.45",
+    "mongoose": "4.1.10",
+    "markdown-js": "0.0.3",
+    "qr-image": "~2.0.0"
+  },
+  "devDependencies": {
+    "jasmine": "~2.1.0"
+  }
+}

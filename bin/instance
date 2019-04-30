@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+var debug = require('debug')('explorer');
+var settings = require('../lib/settings');
+var db = require('../lib/database');
+var app = require('../app');
+
+app.set('port', process.env.PORT || settings.port);
+
+var dbString = 'mongodb://' + settings.dbsettings.user;
+dbString = dbString + ':' + settings.dbsettings.password;
+dbString = dbString + '@' + settings.dbsettings.address;
+dbString = dbString + ':' + settings.dbsettings.port;
+dbString = dbString + '/' + settings.dbsettings.database;
+
+db.connect(dbString, function() {
+  db.check_stats(settings.coin, function(exists) {
+    if (exists == false) {
+      console.log('no stats entry found, creating now..');
+      db.create_stats(settings.coin, function(){
+        //console.log('stats entry created successfully.');
+      });
+    } else {
+      db.get_stats(settings.coin, function (stats) {
+        app.locals.stats = stats;
+      });
+    }
+  });
+  // check markets
+  var markets = settings.markets.enabled;
+  for (var i = 0; i < markets.length; i++) {
+    db.check_market(markets[i], function(market, exists) {
+      if(exists == false) {
+        console.log('no %s entry found, creating now..', market);
+          db.create_market(settings.markets.coin, settings.markets.exchange, market, function(){
+        });
+      }
+    });  
+  } 
+  
+  db.check_richlist(settings.coin, function(exists){
+    if (exists == false) {
+      console.log('no richlist entry found, creating now..');
+      db.create_richlist(settings.coin, function() {
+
+      });
+    }
+  });  
+  if ( settings.heavy == true ) {
+    db.check_heavy(settings.coin, function(exists){
+      if (exists == false) {
+        console.log('no heavy entry found, creating now..');
+        db.create_heavy(settings.coin, function() {
+
+        });
+      }
+    }); 
+  }
+
+  var server = app.listen(app.get('port'), function() {
+    debug('Express server listening on port ' + server.address().port);
+  });
+});

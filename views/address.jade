@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  - var balance = (address.received - address.sent) / 100000000;
+  - var sent = address.sent /100000000
+  - var received = address.received / 100000000
+    img.qrcode.pull-right.hidden-xs(src='/qr/#{address.a_id}')
+  .col-xs-12.col-md-10.col-md-offset-1
+    .panel.panel-default.panel-address-summary
+      .panel-heading(style='position:relative;')        
+        strong #{address.a_id}
+        if settings.labels[address.a_id]
+          if settings.labels[address.a_id].type  
+            label(class='label label-#{settings.labels[address.a_id].type} pull-right hidden-xs', style='margin-left:15px;')
+              =settings.labels[address.a_id].label
+              if settings.labels[address.a_id].url
+                a(href='#{settings.labels[address.a_id].url}', target='_blank')
+                  span.fa.fa-question-circle(style='margin-left:5px;')
+          else
+            label.label.label-default.pull-right.hidden-xs(style='margin-left:15px;') 
+              =settings.labels[address.a_id].label
+              if settings.labels[address.a_id].url
+                a(href='#{settings.labels[address.a_id].url}', target='_blank')
+                  span.fa.fa-question-circle(style='margin-left:5px;')
+      table.table.table-bordered.table-striped.summary-table 
+        thead
+          tr
+            if settings.show_sent_received == true
+              th #{settings.locale.total_sent} (#{settings.symbol})
+            if address.a_id !== 'coinbase'
+              if settings.show_sent_received == true
+                th #{settings.locale.total_received} (#{settings.symbol})
+              th #{settings.locale.rl_balance} (#{settings.symbol})
+        tbody             
+          tr
+            if settings.show_sent_received == true 
+              td #{sent.toFixed(8)}
+            if address.a_id !== 'coinbase'
+              if settings.show_sent_received == true
+                td #{received.toFixed(8)}
+              td #{balance.toFixed(8)}
+    .panel.panel-default.hidden-xs
+      .panel-heading
+        strong #{settings.locale.ex_latest_transactions}
+      table.table.table-bordered.table-striped.history-table
+        include ./includes/address_history.jade  
+    .panel.panel-default.hidden-lg.hidden-md
+      .panel-heading
+        strong #{settings.locale.ex_latest_transactions}
+      table.table.table-bordered.table-striped
+        include ./includes/address_history.jade    
+    .footer-padding
+            

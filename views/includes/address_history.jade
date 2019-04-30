@@ -1,0 +1,39 @@
+thead
+  tr
+    th.hidden-xs #{settings.locale.timestamp}
+    th.hidden-xs #{settings.locale.tx_hash}
+    th #{settings.locale.mkt_amount} (#{settings.symbol})
+tbody
+  each tx in txs
+    - var time = format_unixtime(tx.timestamp)
+    tr
+      td.hidden-xs #{time} 
+      td.hidden-xs
+        a(href='/tx/#{tx.txid}') #{tx.txid}
+      - var done = false
+      - var out = 0
+      - var vin = 0
+      each r in tx.vout 
+        if r.addresses == address.a_id
+          - out = r.amount
+      each s in tx.vin
+        if s.addresses == address.a_id
+          - vin = s.amount
+      if out > 0 && vin > 0
+        td.info
+          - var amount = (out - vin) / 100000000
+          if amount < 0
+            - amount = amount * -1
+            | - #{amount.toFixed(8)}
+          else if amount > 0
+            | + #{amount.toFixed(8)}
+          else
+            | #{amount.toFixed(8)}
+      else if out > 0
+        td.success
+          - var amount = out / 100000000
+          | + #{amount.toFixed(8)}
+      else
+        td.danger
+          - var amount = vin / 100000000
+          | - #{amount.toFixed(8)}
