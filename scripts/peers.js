@@ -19,18 +19,17 @@ dbString = dbString + ':' + settings.dbsettings.port;
 dbString = dbString + '/' + settings.dbsettings.database;
 
 function create_peers(address, protocol, version){
-  request({uri: 'http://api.ipstack.com/' + address + '?access_key=' + settings.peers.apikey, json: true}, function (error, response, geo) {
+  //request({uri: 'http://api.ipstack.com/' + address + '?access_key=' + settings.peers.apikey, json: true}, function (error, response, geo) {
     db.create_peer({
       address: address,
       protocol: protocol,
       version: version,
       //todo
       //semver: semver,
-      country: geo.country_name
+      country: "geo.country_name"
     }, function(){
-
     });
-  });
+  //});
 }
 
 mongoose.connect(dbString, { useCreateIndex: true,
@@ -41,7 +40,7 @@ mongoose.connect(dbString, { useCreateIndex: true,
     console.log('Aborting');
     exit();
   } else {
-    request({uri: 'http://127.0.0.1:' + settings.port + '/api/getpeerinfo', json: true}, function (error, response, body) {
+    request({uri: 'http://'+settings.address +':' + settings.port + '/api/getpeerinfo', json: true}, function (error, response, body) {
       var livepeers = [];
       if(settings.peers.purge_on_run) {
         db.purge_peers();
