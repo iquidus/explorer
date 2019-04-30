@@ -21,7 +21,7 @@ mongoose.connect(dbString, { createIndexes: true, useNewUrlParser: true }, funct
         console.log('Aborting');
         exit();
     } else {
-        request({ uri: 'http://127.0.0.1:' + settings.port + '/api/listmasternodes', json: true }, function (error, response, body) {
+        request({ uri: 'http://'+settings.address+':' + settings.port + '/api/listmasternodes', json: true }, function (error, response, body) {
             if (!body) {  // Error Condition was not successfull
                 console.log('Unable to connect to explorer API');
                 exit();
@@ -30,8 +30,7 @@ mongoose.connect(dbString, { createIndexes: true, useNewUrlParser: true }, funct
                 var i = loop.iteration();
                 db.find_masternode(body[i].txhash, body[i].outidx, function (masternode) {
                     if (masternode) {
-                        console.log('Masternode already exists in DB Update TXID:%s OUTIDX:%s', body[i].txhash, body[i].outidx);
-
+                        console.log('Masternode already exists in DB. Updating TXID:%s OUTIDX:%s', body[i].txhash, body[i].outidx);
                         db.update_masternode({
                             rank: body[i].rank,
                             network: body[i].network,
@@ -47,7 +46,7 @@ mongoose.connect(dbString, { createIndexes: true, useNewUrlParser: true }, funct
                             loop.next();
                         });
                     } else {
-                        console.log('Masternode does not exists in DB ADD TXID:%s OUTIDX:%s', body[i].txhash, body[i].outidx);
+                        console.log('Masternode does not exist in DB. Adding TXID:%s OUTIDX:%s', body[i].txhash, body[i].outidx);
                         db.create_masternode({
                             rank: body[i].rank,
                             network: body[i].network,
