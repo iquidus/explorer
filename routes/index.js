@@ -138,11 +138,10 @@ router.get('/coininfo', function(req, res) {
             //var priceUsd = cmc.price_usd;
 
             var calculatedBasedOnRealData = false;
-            
 
             var mnRewardsPerYear = mnRewardsPerDay * 365;
-            var mnRoi = ((mnRewardsPerYear / settings.coininfo.masternode_required) * 100).toFixed(2);
-            var coinsLocked = totalMnCount.total * settings.coininfo.masternode_required;
+            var mnRoi = ((mnRewardsPerYear / settings.coininfo.masternodes.deposit_required) * 100).toFixed(2);
+            var coinsLocked = totalMnCount.total * settings.coininfo.masternodes.deposit_required;
             var coinsLockedPerc = coinsLocked / (stats.supply/100);
             //var nodeWorthBtc = (settings.coininfo.masternode_required * priceBtc).toFixed(8);
             //var nodeWorthUsd = (cmc.price_usd) ? (settings.coininfo.masternode_required * cmc.price_usd).toFixed(2) : null;
