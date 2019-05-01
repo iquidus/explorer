@@ -232,7 +232,9 @@
 
   //Peers API key for IPStack.com
   "peers": {
-    "apikey": "c7fd7d7aa0c63d0fead5fa099079d2a1" 
+    "apikey": "YourKeyGoesHere",
+    "use_IPStack": true,
+    "purge_on_run": false
   },
 
   // Decimal Places for the front end to display.
