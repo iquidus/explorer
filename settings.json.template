@@ -214,6 +214,19 @@
     "basic_info_links": [
       ["Github", "http://github.com/"]
     ],
+    "use_enhanced_info_links": false,
+    "enhanced_info_links": {
+      "Overview": {
+        "Github":"https://github.com/"
+      },
+      "Exchanges": {
+        "HitBTC": "https://hitbtc.com/",
+        "Binance": "https://www.binance.com/"
+      },
+      "Misc": {
+        "CoinGecko": "https://www.coingecko.com/en/coins/"
+      }
+    },
     "masternodes":{
       "enabled": false,
       "deposit_required": 50000

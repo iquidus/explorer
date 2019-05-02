@@ -8,13 +8,23 @@ block content
       .card-body
         .row
           .col-md-3
-            .card.card-default
-              .card-header
-                strong=t('coininfo.basic_info')
-              .card-body
-                each item in coininfo.basic_info_links
-                  a(href="#{item[1]}", target="_blank") #{item[0]}
-                  <br>
+            if settings.coininfo.use_enhanced_info_links
+              each item, heading in coininfo.enhanced_info_links
+                .card.card-default
+                  .card-header
+                    strong #{heading}
+                  .card-body
+                    each uhref, uname in item
+                      a.list-group-item(href=`${uhref}`, target="_blank", style="border:none") #{uname}
+                <br>
+            else
+              .card.card-default
+                .card-header
+                  strong=t('coininfo.basic_info')
+                .card-body
+                  each item in coininfo.basic_info_links
+                    a(href="#{item[1]}", target="_blank") #{item[0]}
+                    <br>
           .col-md-9
             .card.card-default
               .card-body.text-center
