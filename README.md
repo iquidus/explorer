@@ -15,7 +15,7 @@ This is a community fork to continue development where Iquidus left off. The ult
 Plenty of code was inspired or pulled from various sources in the community including the following:
 *  [Suprnurd's Ciquidus 'Chaincoin Explorer'](https://github.com/suprnurd/ciquidus) 
 *  [DSTRACoin's Diquidus v2 Explorer](https://github.com/DSTRACoin/diquidus)
-*  [SigqoTechnologies' Explorer](https://github.com/SigwoTechnologies/explorer)
+*  [SigwoTechnologies' Explorer](https://github.com/SigwoTechnologies/explorer)
 *  [UAKTags' Explorer](https://github.com/uaktags/explorer)
 
 ### See it in action
