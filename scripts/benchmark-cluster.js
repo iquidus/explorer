@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
   const cluster = require('cluster');
   const numCPUs = require('os').cpus().length;
 
-var COUNT = 100; //number of blocks to index
+var COUNT = 5000; //number of blocks to index
 var MaxWorkers = 4; //not used yet
 
 function exit() {  
@@ -18,7 +18,7 @@ var dbString = 'mongodb://' + settings.dbsettings.user;
 dbString = dbString + ':' + settings.dbsettings.password;
 dbString = dbString + '@' + settings.dbsettings.address;
 dbString = dbString + ':' + settings.dbsettings.port;
-dbString = dbString + "/" + settings.dbsettings.database;
+dbString = dbString + "/IQUIDUS-BENCHMARK";
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
@@ -30,6 +30,11 @@ mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
     var s_timer = new Date().getTime();
     numWorkers = 0;
     if(cluster.isMaster){
+        Tx.deleteMany({}, function(err, txes) { 
+            Address.deleteMany({}, function(err2, addr) { 
+                console.log('deleted %s txes, %s addresses', txes.n, addr.n)
+            });
+        });
         //console.log(`Master ${process.pid} is running`);
         // Fork workers.
         for (let i = 0; i < numCPUs; i++) {
@@ -40,7 +45,7 @@ mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
                 cluster.fork({start:Math.round((COUNT/numCPUs)*i), end: (Math.round((COUNT/numCPUs)*(i+1))), wid:i})
                 numWorkers++;
             }else{
-                cluster.fork({start:Math.round((COUNT/numCPUs)*i), end: (Math.round((COUNT/numCPUs)*(i+1))-1), wid:i})
+                cluster.fork({start:Math.round((COUNT/numCPUs)*i), end: (Math.round((COUNT/numCPUs)*(i+1))), wid:i})
                 numWorkers++;
             }
         }
@@ -50,29 +55,25 @@ mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
                 //console.log(`worker ${worker.process.pid} died`);
                 numWorkers = numWorkers - 1;
                 if(numWorkers == 0){
-                var e_timer = new Date().getTime();
-                Tx.count({}, function(txerr, txcount){
-                    Address.count({}, function(aerr, acount){
-                    var stats = {
-                        tx_count: txcount,
-                        address_count: acount,
-                        seconds: (e_timer - s_timer)/1000,
-                    };
-                    console.log(stats);
-                    exit();
+                    var e_timer = new Date().getTime();
+                    Tx.countDocuments({}, function(txerr, txcount){
+                        Address.countDocuments({}, function(aerr, acount){
+                        var stats = {
+                            tx_count: txcount,
+                            address_count: acount,
+                            seconds: (e_timer - s_timer)/1000,
+                        };
+                        console.log(stats);
+                        exit();
+                        });
                     });
-                });
                 }
             });
         }
     }else{
-        console.log("Worker [%s] %s is starting, start at index %s and end at index %s", cluster.worker.process.env['wid'], cluster.worker.process.pid, cluster.worker.process.env['start'],cluster.worker.process.env['end'])
-        Tx.deleteMany({}, function(err) { 
-            Address.deleteMany({}, function(err2) { 
-            db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function(){
-                process.send({pid: cluster.worker.process.pid, wid: cluster.worker.process.pid, msg: 'done'});
-            });
-            });
+        //console.log("Worker [%s] %s is starting, start at index %s and end at index %s", cluster.worker.process.env['wid'], cluster.worker.process.pid, cluster.worker.process.env['start'],cluster.worker.process.env['end'])
+        db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function(){
+            process.send({pid: cluster.worker.process.pid, wid: cluster.worker.process.pid, msg: 'done'});
         });
     }
 });
