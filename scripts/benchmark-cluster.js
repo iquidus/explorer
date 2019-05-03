@@ -28,7 +28,6 @@ mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
         console.log('Aborting');
         exit();
     }
-    var s_timer = new Date().getTime();
     numWorkers = 0;
     numWorkersNeeded = 0;
     if(cluster.isMaster){
@@ -37,6 +36,7 @@ mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
                 console.log('deleted %s txes, %s addresses', txes.n, addr.n)
             });
         });
+        var s_timer = new Date().getTime();
         db.get_stats(settings.coin, function(stats){
             numWorkersNeeded = Math.round(stats.count / MaxPerWorker);
             //exit();
@@ -89,7 +89,6 @@ mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
     }else{
         console.log("Worker [%s] %s is starting, start at index %s and end at index %s", cluster.worker.process.env['wid'], cluster.worker.process.pid, cluster.worker.process.env['start'],cluster.worker.process.env['end'])
         db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function(){
-            console.log('finished');
             process.send({pid: cluster.worker.process.pid, wid: cluster.worker.process.pid, msg: 'done'});
         });
     }
