@@ -1,6 +1,21 @@
 extends layout
 
-block content   
+block content
+  if GeoInfo
+    script. 
+      var dtbleCols = [
+        { data: 'address', width:  '25%'},
+        { data: 'protocol', width: '25%'},
+        { data: 'version', width: '25%'},
+        { data: 'country', width: '25%'}
+      ] 
+  else
+    script. 
+      var dtbleCols = [
+        { data: 'address', width:  '33%'},
+        { data: 'protocol', width: '33%'},
+        { data: 'version', width: '33%'}
+      ]   
   script.
     $(document).ready(function(){
       var ctable = $('#connections-table').dataTable( {  
@@ -24,12 +39,7 @@ block content
             return json.data;
           }
         },
-        columns: [
-          { data: 'address', width: '25%' },
-          { data: 'protocol', width: '25%' },
-          { data: 'version', width:'25%' },
-          { data: 'country', width: '25%'}
-        ]
+        columns: dtbleCols
       });
     });
   .col-md-10.offset-md-1(style="margin-bottom: 4%")
@@ -44,5 +54,6 @@ block content
             th.text-center=t('network.address')
             th.text-center=t('network.protocol')
             th.text-center=t('network.sub_version')
-            th.text-center=t('network.country')
+            if GeoInfo
+              th.text-center=t('network.country')
         tbody.text-center

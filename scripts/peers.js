@@ -39,7 +39,7 @@ function create_peers(address, protocol, version){
       version: version,
       //todo
       //semver: semver,
-      country: "geo.country_name"
+      country: "Unknown"
     }, function(){
       console.log('added %s to the peers database', address)
     });

@@ -257,7 +257,7 @@ router.get('/movement', function(req, res) {
 });
 
 router.get('/network', function(req, res) {
-  res.render('network', {active: 'network'});
+  res.render('network', {active: 'network', GeoInfo: settings.peers.use_IPStack});
 });
 
 // Masternodelist
