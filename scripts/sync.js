@@ -8,6 +8,10 @@ var mongoose = require('mongoose')
   , settings = require('../lib/settings')
   , fs = require('fs');
 
+  
+  const cluster = require('cluster');
+  const numCPUs = require('os').cpus().length;
+
 var mode = 'update';
 var database = 'index';
 
@@ -120,7 +124,7 @@ dbString = dbString + ':' + settings.dbsettings.port;
 dbString = dbString + '/' + settings.dbsettings.database;
 
 is_locked(function (exists) {
-  if (exists) {
+  if (exists && cluster.isMaster) {
     console.log("Script already running..");
     process.exit(0);
   } else {
@@ -137,17 +141,20 @@ is_locked(function (exists) {
               console.log('Run \'npm start\' to create database structures before running this script.');
               exit();
             } else {
-              db.update_db(settings.coin, function(){
+              if(cluster.isMaster){
+                db.update_db(settings.coin, function(){
+                numWorkers = 0;
                 db.get_stats(settings.coin, function(stats){
                   if (settings.heavy == true) {
                     db.update_heavy(settings.coin, stats.count, 20, function(){
                     
                     });
                   }
-                  if (mode == 'reindex') {
-                    Tx.deleteMany({}, function(err) { 
-                      Address.deleteMany({}, function(err2) { 
-                        AddressTx.deleteMany({}, function(err3){
+
+                  if(mode == 'reindex'){
+                    Address.deleteMany({}, function(err2, res1) { 
+                      AddressTx.deleteMany({}, function(err3, res2){
+                        Tx.deleteMany({}, function(err4, res3){
                           Richlist.updateOne({coin: settings.coin}, {
                             received: [],
                             balance: [],
@@ -157,47 +164,53 @@ is_locked(function (exists) {
                             }, function() {
                               console.log('index cleared (reindex)');
                             }); 
-                            db.update_tx_db(settings.coin, 1, stats.count, settings.update_timeout, function(){
-                              db.update_richlist('received', function(){
-                                db.update_richlist('balance', function(){
-                                  db.get_stats(settings.coin, function(nstats){
-                                    console.log('reindex complete (block: %s)', nstats.last);
-                                    db.update_cronjob_run(settings.coin,{list_blockchain_update: Math.floor(new Date() / 1000)}, function(cb) {
-                                      exit();
-                                      });
-                                  });
-                                });
-                              });
-                            });
-                          });
-                        });
-                      });
-                    });              
-                  } else if (mode == 'check') {
-                    db.update_tx_db(settings.coin, 1, stats.count, settings.check_timeout, function(){
-                      db.get_stats(settings.coin, function(nstats){
-                        console.log('check complete (block: %s)', nstats.last);
-                        db.update_cronjob_run(settings.coin,{list_blockchain_update: Math.floor(new Date() / 1000)}, function(cb) {
-                          exit();
-                          });
-                      });
-                    });
-                  } else if (mode == 'update') {
-                    db.update_tx_db(settings.coin, stats.last, stats.count, settings.update_timeout, function(){
-                      db.update_richlist('received', function(){
-                        db.update_richlist('balance', function(){
-                          db.get_stats(settings.coin, function(nstats){
-                            console.log('update complete (block: %s)', nstats.last);
-                            db.update_cronjob_run(settings.coin,{list_blockchain_update: Math.floor(new Date() / 1000)}, function(cb) {
-                              exit();
-                              });
                           });
                         });
                       });
                     });
                   }
+                  console.log('Each worker is going to get %s blocks to evaluate.', Math.round(stats.count/numCPUs));
+                  //console.log(`Master ${process.pid} is running`);
+                  // Fork workers.
+                  for (let i = 0; i < numCPUs; i++) {
+                      if(i == 0){
+                      cluster.fork({start:1, end: (Math.round((stats.count/numCPUs)*(i+1))-1), wid:i})
+                      numWorkers++;
+                      }else if(i==numCPUs - 1){
+                          cluster.fork({start:Math.round((stats.count/numCPUs)*i), end: (Math.round((stats.count/numCPUs)*(i+1))), wid:i})
+                          numWorkers++;
+                      }else{
+                          cluster.fork({start:Math.round((stats.count/numCPUs)*i), end: (Math.round((stats.count/numCPUs)*(i+1))), wid:i})
+                          numWorkers++;
+                      }
+                  }
+          
+                  for (const id in cluster.workers){
+                      cluster.workers[id].on('message', function(msg){
+                          console.log(`worker ${worker.process.pid} died`);
+                          numWorkers = numWorkers - 1;
+                          if(numWorkers == 0){
+                            db.update_richlist('received', function(){
+                              db.update_richlist('balance', function(){
+                                db.get_stats(settings.coin, function(nstats){
+                                  console.log('reindex complete (block: %s)', nstats.last);
+                                  db.update_cronjob_run(settings.coin,{list_blockchain_update: Math.floor(new Date() / 1000)}, function(cb) {
+                                    exit();
+                                    });
+                                });
+                              });
+                            });
+                          }
+                      });
+                    }
+                  });
                 });
-              });
+              }else{
+                  console.log('Starting worker');
+                  db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function(){
+                    process.send({pid: cluster.worker.process.pid, wid: cluster.worker.process.pid, msg: 'done'});
+                  });
+              }
             }
           });
         } else {
