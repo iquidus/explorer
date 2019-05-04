@@ -172,8 +172,11 @@ is_locked(function(exists) {
 
 											});
 										}
-
+                    var highestBlock = stats.count;
+										var startAtBlock = stats.last;
 										if (mode == 'reindex') {
+                      highestBlock = 0;
+                      startAtBlock = 1;
 											Address.deleteMany({}, function(err2, res1) {
 												AddressTx.deleteMany({}, function(err3, res2) {
 													Tx.deleteMany({}, function(err4, res3) {
@@ -195,76 +198,106 @@ is_locked(function(exists) {
 												});
 											});
 										}
-										var BlocksToGet = Math.round(stats.count - stats.last);
-										if (BlocksToGet < MaxPerWorker) {
-											if (BlocksToGet < numCPUs) {
-												numCPUs = BlocksToGet;
-												numWorkersNeeded = BlocksToGet;
-											} else {
-												numWorkersNeeded = Math.round(BlocksToGet / numCPUs);
-											}
-										} else {
-											numWorkersNeeded = Math.round((stats.count - stats.last) / MaxPerWorker);
-										}
-										//exit();
-										//console.log(`Master ${process.pid} is running`);
-										// Fork workers.
-										var highestBlock = stats.count;
-										var startAtBlock = stats.last;
-										if (numWorkersNeeded < numCPUs) {
-											numCPUs = (highestBlock - startAtBlock);
-										}
-										for (let i = 0; i < numCPUs; i++) {
-											cluster.fork({
-												start: startAtBlock,
-												end: Math.round(startAtBlock + MaxPerWorker) - 1,
-												wid: i
-											})
-											numWorkers++;
-											numWorkersNeeded = numWorkersNeeded - 1;
-											startAtBlock += Math.round(MaxPerWorker);
-											highestBlock = Math.round(startAtBlock + MaxPerWorker) - 1
-										}
+                    var BlocksToGet = Math.round(stats.count - stats.last);
+                    var numThreads = numCPUs;
+                    if(BlocksToGet > 0){
+                      if (BlocksToGet < MaxPerWorker) {
+                        if (BlocksToGet < numThreads) {
+                          numThreads = BlocksToGet;
+                          numWorkersNeeded = BlocksToGet;
+                          MaxPerWorker = 1;
+                        } else {
+                          numWorkersNeeded = Math.round(BlocksToGet / numThreads);
+                          MaxPerWorker = Math.round(BlocksToGet / numThreads);
+                        }
+                      } else {
+                        numWorkersNeeded = Math.round((stats.count - stats.last) / MaxPerWorker);
+                      }
+                      console.log("Workers needed: %s. NumThreads: %s. BlocksToGet %s. Per Worker: %s",numWorkersNeeded, numThreads, BlocksToGet, MaxPerWorker, stats.count, stats.last);
+                      //exit();
+                      //console.log(`Master ${process.pid} is running`);
+                      // Fork workers.;
+                      for (let i = 0; i < numThreads; i++) {
+                        var end = Math.round(startAtBlock + MaxPerWorker) - 1;
+                            if(end > stats.count){
+                              end = stats.count;
+                            }
+                        cluster.fork({
+                          start: startAtBlock,
+                          end: end,
+                          wid: i
+                        })
+                        numWorkers++;
+                        numWorkersNeeded = numWorkersNeeded - 1;
+                        startAtBlock += Math.round(MaxPerWorker);
+                        highestBlock = end;
+                      }
 
 
-										cluster.on('message', function(worker, msg) {
-											console.log(`worker ${worker.id} died`);
-											if (msg.msg == "done") {
-												worker.disconnect();
-												console.log(`worker ${msg.pid} died`);
-												numWorkersNeeded = numWorkersNeeded - 1;
-												console.log("There are %s workers still needed", numWorkersNeeded);
-												if (numWorkersNeeded == 0) {
-													var e_timer = new Date().getTime();
-													Tx.countDocuments({}, function(txerr, txcount) {
-														Address.countDocuments({}, function(aerr, acount) {
-															var stats = {
-																tx_count: txcount,
-																address_count: acount,
-																seconds: (e_timer - s_timer) / 1000,
-															};
-															console.log("Sync had a run time of %s and now has %s transactions and %s acount recorded", stats.seconds.toHHMMSS(), stats.tx_count, stats.address_count);
-															exit();
-														});
-													});
-												} else {
-													cluster.fork({
-														start: startAtBlock,
-														end: Math.round(startAtBlock + MaxPerWorker) - 1,
-														wid: numWorkers
-													})
-													numWorkers++;
-													startAtBlock += Math.round(MaxPerWorker);
-													highestBlock = Math.round(startAtBlock + MaxPerWorker) - 1
-												}
-											} else {
-												console.log('Unknown message:', msg);
-											}
-										});
-									});
+                      cluster.on('message', function(worker, msg) {
+                        console.log(`worker ${worker.id} died`);
+                        if (msg.msg == "done") {
+                          worker.disconnect();
+                          console.log(`worker ${msg.pid} died`);
+                          numWorkersNeeded = numWorkersNeeded - 1;
+                          console.log("There are %s workers still needed", numWorkersNeeded);
+                          if (numWorkersNeeded < 0) {
+                            var e_timer = new Date().getTime();
+                            db.update_richlist('received', function(){
+                              db.update_richlist('balance', function(){
+                                db.get_stats(settings.coin, function(nstats){
+                                  db.update_cronjob_run(settings.coin,{list_blockchain_update: Math.floor(new Date() / 1000)}, function(cb) {
+                                    Tx.countDocuments({}, function(txerr, txcount) {
+                                      Address.countDocuments({}, function(aerr, acount) {
+                                        Stats.updateOne({coin: coin}, {
+                                          last: stats.count
+                                        }, function() {});
+                                        console.log('reindex complete (block: %s)', nstats.last);
+                                        var stats = {
+                                          tx_count: txcount,
+                                          address_count: acount,
+                                          seconds: (e_timer - s_timer) / 1000,
+                                        };
+                                        console.log("Sync had a run time of %s and now has %s transactions and %s acount recorded", stats.seconds.toHHMMSS(), stats.tx_count, stats.address_count);
+                                        exit();
+                                      });
+                                    });
+                                    exit();
+                                    });
+                                });
+                              });
+                            });
+                          } else {
+                            var end = Math.round(startAtBlock + MaxPerWorker) - 1;
+                            if(end > stats.count){
+                              end = stats.count;
+                            }
+                            cluster.fork({
+                              start: startAtBlock,
+                              end: end,
+                              wid: numWorkers
+                            })
+                            numWorkers++;
+                            startAtBlock += Math.round(MaxPerWorker);
+                            highestBlock = Math.round(startAtBlock + MaxPerWorker) - 1
+                          }
+                        } else {
+                          console.log('Unknown message:', msg);
+                        }
+                      });
+                    }else{
+                      console.log(BlocksToGet);
+                      exit();
+                    }
+                  });
 								});
 							} else {
-								console.log("Worker [%s] %s is starting, start at index %s and end at index %s", cluster.worker.process.env['wid'], cluster.worker.process.pid, cluster.worker.process.env['start'], cluster.worker.process.env['end'])
+                console.log("Worker [%s] %s is starting, start at index %s and end at index %s", 
+                  cluster.worker.process.env['wid'], 
+                  cluster.worker.process.pid, 
+                  cluster.worker.process.env['start'], 
+                  cluster.worker.process.env['end']
+                )
 								db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function() {
 									process.send({
 										pid: cluster.worker.process.pid,
