@@ -373,11 +373,16 @@ is_locked(function(exists) {
 														numWorkersNeeded = BlocksToGet;
 														MaxPerWorker = 1;
 													} else {
-														numWorkersNeeded = Math.round(BlocksToGet / numThreads);
-														MaxPerWorker = Math.round(BlocksToGet / numThreads);
+														numWorkersNeeded = numThreads;
+														//if(numWorkersNeeded < numThreads){
+															MaxPerWorker = Math.round(BlocksToGet / numWorkersNeeded);
+														/*}else{
+															MaxPerWorker = Math.round(BlocksToGet / numThreads);
+														}*/
 													}
 												} else {
-													numWorkersNeeded = Math.round((stats.count - stats.last) / MaxPerWorker);
+													numWorkersNeeded = Math.round(BlocksToGet / MaxPerWorker);
+													MaxPerWorker = Math.round(BlocksToGet / numThreads);
 												}
 												console.log("Workers needed: %s. NumThreads: %s. BlocksToGet %s. Per Worker: %s",numWorkersNeeded, numThreads, BlocksToGet, MaxPerWorker, stats.count, stats.last);
 												//exit();
@@ -385,16 +390,17 @@ is_locked(function(exists) {
 												// Fork workers.;
 												for (let i = 0; i < numThreads; i++) {
 													var end = Math.round(startAtBlock + MaxPerWorker) - 1;
-															if(end > stats.count){
-																end = stats.count;
-															}
+													if(end > stats.count){
+														end = stats.count;
+													}
+											
+													numWorkersNeeded = numWorkersNeeded - 1;
 													cluster.fork({
 														start: startAtBlock,
 														end: end,
 														wid: i
 													})
 													numWorkers++;
-													numWorkersNeeded = numWorkersNeeded - 1;
 													startAtBlock += Math.round(MaxPerWorker);
 													highestBlock = end;
 												}
@@ -405,9 +411,7 @@ is_locked(function(exists) {
 													if (msg.msg == "done") {
 														worker.disconnect();
 														console.log(`worker ${msg.pid} died`);
-														numWorkersNeeded = numWorkersNeeded - 1;
-														console.log("There are %s workers still needed", numWorkersNeeded);
-														if (numWorkersNeeded < 0) {
+														if (numWorkersNeeded < 1) {
 															var e_timer = new Date().getTime();
 															db.update_richlist('received', function(){
 																db.update_richlist('balance', function(){
@@ -434,6 +438,8 @@ is_locked(function(exists) {
 																});
 															});
 														} else {
+															numWorkersNeeded = (numWorkersNeeded > 1? numWorkersNeeded - 1: 0);
+															console.log("There are %s workers still needed", numWorkersNeeded);
 															var end = Math.round(startAtBlock + MaxPerWorker) - 1;
 															if(end > stats.count){
 																end = stats.count;
