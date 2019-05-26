@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 	lib = require('../lib/explorer'),
 	fs = require('fs');
 
-var MaxPerWorker = 2000;
+var MaxPerWorker = settings.cluster.maxPerWorker;
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 
@@ -382,7 +382,7 @@ is_locked(function(exists) {
 													}
 												} else {
 													numWorkersNeeded = Math.round(BlocksToGet / MaxPerWorker);
-													MaxPerWorker = Math.round(BlocksToGet / numThreads);
+													//MaxPerWorker = Math.round(BlocksToGet / numThreads);
 												}
 												console.log("Workers needed: %s. NumThreads: %s. BlocksToGet %s. Per Worker: %s",numWorkersNeeded, numThreads, BlocksToGet, MaxPerWorker, stats.count, stats.last);
 												//exit();
@@ -393,7 +393,6 @@ is_locked(function(exists) {
 													if(end > stats.count){
 														end = stats.count;
 													}
-											
 													cluster.fork({
 														start: startAtBlock,
 														end: end,
@@ -411,8 +410,7 @@ is_locked(function(exists) {
 														worker.disconnect();
 														console.log(`worker ${msg.pid} died`);
 														numWorkersNeeded = (numWorkersNeeded > 1? numWorkersNeeded - 1: 0);
-														if (numWorkersNeeded < 1) {
-															console.log(numWorkersNeeded);
+														if (numWorkersNeeded == 0) {
 															var e_timer = new Date().getTime();
 															console.log("Updating Richlist - Recieved");
 															db.update_richlist('received', function(){
