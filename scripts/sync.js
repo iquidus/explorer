@@ -452,16 +452,17 @@ is_locked(function(exists) {
 																	coin: settings.coin
 																}, {
 																	last: 0,
-																}, function() {
+																}, function(stats) {
 																	console.log('index cleared (reindex)');
+																	clusterStart(stats, params);
 																});
 															});
 														});
 													});
 												});
+											}else{
+												clusterStart(stats, params);
 											}
-											//CLUSTER START ///
-											clusterStart(stats, params);
 										});
 									});
 								} else {
