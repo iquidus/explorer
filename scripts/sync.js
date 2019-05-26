@@ -333,11 +333,11 @@ is_locked(function(exists) {
 										numWorkers = 0;
 										numWorkersNeeded = 0;
 										db.get_stats(settings.coin, function(stats) {
-											if (settings.heavy == true) {
+											/*if (settings.heavy == true) {
 												db.update_heavy(settings.coin, stats.count, 20, function() {
 
 												});
-											}
+											}*/
 											var highestBlock = stats.count;
 											var startAtBlock = stats.last;
 											if (mode == 'reindex') {
@@ -394,7 +394,6 @@ is_locked(function(exists) {
 														end = stats.count;
 													}
 											
-													numWorkersNeeded = numWorkersNeeded - 1;
 													cluster.fork({
 														start: startAtBlock,
 														end: end,
@@ -411,18 +410,24 @@ is_locked(function(exists) {
 													if (msg.msg == "done") {
 														worker.disconnect();
 														console.log(`worker ${msg.pid} died`);
+														numWorkersNeeded = (numWorkersNeeded > 1? numWorkersNeeded - 1: 0);
 														if (numWorkersNeeded < 1) {
+															console.log(numWorkersNeeded);
 															var e_timer = new Date().getTime();
+															console.log("Updating Richlist - Recieved");
 															db.update_richlist('received', function(){
+																console.log("Updating Richlist - Balance");
 																db.update_richlist('balance', function(){
+																	console.log("Getting Stats");
 																	db.get_stats(settings.coin, function(nstats){
+																		console.log("Updating CronJob_Run");
 																		db.update_cronjob_run(settings.coin,{list_blockchain_update: Math.floor(new Date() / 1000)}, function(cb) {
 																			Tx.countDocuments({}, function(txerr, txcount) {
 																				Address.countDocuments({}, function(aerr, acount) {
 																					Stats.updateOne({coin: coin}, {
 																						last: stats.count
 																					}, function() {});
-																					console.log('reindex complete (block: %s)', nstats.last);
+																					console.log('%s complete (Last Block: %s)',mode, nstats.last);
 																					var stats = {
 																						tx_count: txcount,
 																						address_count: acount,
@@ -438,7 +443,6 @@ is_locked(function(exists) {
 																});
 															});
 														} else {
-															numWorkersNeeded = (numWorkersNeeded > 1? numWorkersNeeded - 1: 0);
 															console.log("There are %s workers still needed", numWorkersNeeded);
 															var end = Math.round(startAtBlock + MaxPerWorker) - 1;
 															if(end > stats.count){
