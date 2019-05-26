@@ -185,7 +185,7 @@ function clusterStart(stats, params) {
 
         cluster.on('message', function(worker, msg) {
             if (msg.msg == "done") {
-				worker.disconnect();
+				//worker.disconnect();
 				worker.kill();
 				console.log(`worker ${msg.pid} died`);
 				console.log("There are still %s workers", Object.keys(cluster.workers).length);
