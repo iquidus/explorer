@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
     Stats = require('../models/stats'),
     settings = require('../lib/settings'),
     lib = require('../lib/explorer'),
-    fs = require('fs');
+    fs = require('fs'),
+    log4js = require('log4js');
 
 var MaxPerWorker = settings.cluster.maxPerWorker;
 const cluster = require('cluster');
@@ -15,6 +16,25 @@ const numCPUs = require('os').cpus().length;
 
 var mode = 'update';
 var database = 'index';
+
+log4js.configure({
+    appenders:{ 
+      everything: { type: 'file', filename: 'logs/sync.log', maxLogSize: 10485760, backups: 10, compress: true }, 
+      workerLog: { type: 'multiFile', base: 'logs/', property: 'categoryName',maxLogSize: 10485760, backups: 10, compress: true, extension: '.log' }, 
+      console: { type: 'console' }  
+      },
+  
+    categories:{
+      default: { appenders: ['console','everything'], level: 'info'},
+      OnlyShow: { appenders: ['console'], level: 'trace'},
+      Workers: { appenders: ['console','workerLog'], level: 'debug'}            
+      },
+    disableClustering: true
+  });
+  const logger = log4js.getLogger();
+  const onlyConsole = log4js.getLogger('OnlyShow');     
+  const workerLog = log4js.getLogger('Workers.' + (cluster.isWorker? 'Worker-': 'Master-') + process.pid);    
+  
 
 // displays usage and exits
 function usage() {
@@ -72,7 +92,7 @@ function create_lock(cb) {
             var fname = './tmp/' + database + '.pid';
             fs.appendFile(fname, process.pid, function(err) {
                 if (err) {
-                    console.log("Error: unable to create %s", fname);
+                    logger.error("Error: unable to create %s", fname);
                     process.exit(1);
                 } else {
                     return cb();
@@ -91,7 +111,7 @@ function remove_lock(cb) {
         var fname = './tmp/' + database + '.pid';
         fs.unlink(fname, function(err) {
             if (err) {
-                console.log("unable to remove lock: %s", fname);
+                logger.error("unable to remove lock: %s", fname);
                 process.exit(1);
             } else {
                 return cb();
@@ -159,7 +179,7 @@ function clusterStart(stats, params) {
         } else {
             numWorkersNeeded = Math.round(BlocksToGet / MaxPerWorker);
         }
-        console.log("Workers needed: %s. NumThreads: %s. BlocksToGet %s. Per Worker: %s", numWorkersNeeded, numThreads, BlocksToGet, MaxPerWorker, stats.count, stats.last);
+        logger.info("Workers needed: %s. NumThreads: %s. BlocksToGet %s. Per Worker: %s", numWorkersNeeded, numThreads, BlocksToGet, MaxPerWorker, stats.count, stats.last);
         //exit();
         // Fork workers.;
         for (let i = 0; i < numThreads; i++) {
@@ -185,23 +205,23 @@ function clusterStart(stats, params) {
             params.startAtBlock += Math.round(MaxPerWorker);
             params.highestBlock = end;
         }
-		console.log("There are %s workers", Object.keys(cluster.workers).length);
+		logger.info("There are %s workers", Object.keys(cluster.workers).length);
 
         cluster.on('message', function(worker, msg) {
             if (msg.msg == "done") {
 				//worker.disconnect();
 				worker.kill();
-				console.log(`worker ${msg.pid} died`);
-				console.log("There are still %s workers", Object.keys(cluster.workers).length);
+				workerLog.info(`worker ${msg.pid} died`);
+				workerLog.info("There are still %s workers", Object.keys(cluster.workers).length);
                 if (Object.keys(cluster.workers).length < 1) {
                     var e_timer = new Date().getTime();
-                    console.log("Updating Richlist - Recieved");
+                    logger.info("Updating Richlist - Recieved");
                     db.update_richlist('received', function() {
-                        console.log("Updating Richlist - Balance");
+                        logger.info("Updating Richlist - Balance");
                         db.update_richlist('balance', function() {
-                            console.log("Getting Stats");
+                            logger.info("Getting Stats");
                             db.get_stats(settings.coin, function(nstats) {
-                                console.log("Updating CronJob_Run");
+                                logger.info("Updating CronJob_Run");
                                 db.update_cronjob_run(settings.coin, {
                                     list_blockchain_update: Math.floor(new Date() / 1000)
                                 }, function(cb) {
@@ -214,13 +234,13 @@ function clusterStart(stats, params) {
 													last: stats.count
 												}, function() {});
 											}
-                                            console.log('%s complete (Last Block: %s)', mode, nstats.last);
+                                            logger.info('%s complete (Last Block: %s)', mode, nstats.last);
                                             var stats = {
                                                 tx_count: txcount,
                                                 address_count: acount,
                                                 seconds: (e_timer - s_timer) / 1000,
                                             };
-                                            console.log("Sync had a run time of %s and now has %s transactions and %s acount recorded", stats.seconds.toHHMMSS(), stats.tx_count, stats.address_count);
+                                            logger.info("Sync had a run time of %s and now has %s transactions and %s acount recorded", stats.seconds.toHHMMSS(), stats.tx_count, stats.address_count);
                                             exit();
                                         });
                                     });
@@ -230,7 +250,7 @@ function clusterStart(stats, params) {
                         });
                     });
                 } else if(numWorkersNeeded > 1) {
-                    console.log("There are %s workers still needed", numWorkersNeeded);
+                    workerLog.info("There are %s workers still needed", numWorkersNeeded);
                     var end = Math.round(params.startAtBlock + MaxPerWorker) - 1;
                     if (end > stats.count) {
                         end = stats.count;
@@ -248,11 +268,11 @@ function clusterStart(stats, params) {
                     params.highestBlock = Math.round(params.startAtBlock + MaxPerWorker) - 1
                 }
             } else {
-                console.log('Unknown message:', msg);
+                logger.trace('Unknown message:', msg);
             }
         });
     } else {
-        console.log(BlocksToGet);
+        onlyConsole.trace("There were %s blocks to get, which is strange. We're exiting now", BlocksToGet);
         exit();
     }
 }
@@ -270,19 +290,19 @@ if(cluster.isMaster){
             process.exit(0);
         } else {
             create_lock(function() {
-                console.log("script launched with pid: " + process.pid);
+                logger.info("script launched with pid:" + process.pid);
                 mongoose.connect(dbString, {
                     useNewUrlParser: true
                 }, function(err) {
                     if (err) {
-                        console.log('Unable to connect to database: %s', dbString);
-                        console.log('Aborting');
+                        onlyConsole.trace('Unable to connect to database: %s', dbString);
+                        onlyConsole.trace('Aborting');
                         exit();
                     } else if (database == 'index') {
                         if(cluster.isMaster){
                             db.check_stats(settings.coin, function(exists) {
                                 if (exists == false) {
-                                    console.log('Run \'npm start\' to create database structures before running this script.');
+                                    onlyConsole.trace('Run \'npm start\' to create database structures before running this script.');
                                     exit();
                                 }
                             });
@@ -293,16 +313,16 @@ if(cluster.isMaster){
                                 db.get_stats(settings.coin, function(stats) {
                                     var blocks = [];
                                     var intvera;
-                                    console.log("Please wait, generating a list of blocks.");
+                                    logger.info("Please wait, generating a list of blocks.");
                                     for (intvera = 1; intvera < stats.last; intvera++) {
                                         blocks.push(intvera);
                                     }
-                                    console.log("Done, moving on to checking what blocks are in the DB.");
+                                    logger.info("Done, moving on to checking what blocks are in the DB.");
                                     var jsonraw = JSON.parse("[" + blocks + "]");
                                     var distinct = Tx.distinct("blockindex");
                                     var missing = [];
                                     distinct.exec(function(err, res) {
-                                        console.log("There are %s known blocks", res.length);
+                                        logger.info("There are %s known blocks", res.length);
                                         jsonraw.forEach(function(block) {
                                             var found = false;
                                             for (var t = 0; t < res.length; t++) {
@@ -316,7 +336,7 @@ if(cluster.isMaster){
                                         });
                                         //fs.writeFileSync(fname, "[" + missing + "]");
                                         if (JSON.parse(["[" + missing + "]"]).length == 0) {
-                                            console.log('There are no missing blocks.');
+                                            onlyConsole.trace('There are no missing blocks.');
                                             exit();
                                         }
                                         var s_timer = new Date().getTime();
@@ -347,7 +367,7 @@ if(cluster.isMaster){
                                             'startAtBlock': stats.last
                                         };
                                         if (mode == 'reindex') {
-                                            console.log('starting Reindex');
+                                            logger.info('starting Reindex');
                                             params.highestBlock = 0;
                                             params.startAtBlock = 1;
                                             Address.deleteMany({}, function(err2, res1) {
@@ -364,8 +384,8 @@ if(cluster.isMaster){
                                                             }, {
                                                                 last: 0,
                                                             }, function(reste) {
-                                                                console.log(reste);
-                                                                console.log('index cleared (reindex)');
+                                                                logger.info(reste);
+                                                                logger.info('index cleared (reindex)');
                                                                 clusterStart(stats, params);
                                                             });
                                                         });
@@ -388,7 +408,7 @@ if(cluster.isMaster){
                                 if (exists) {
                                     db.update_markets_db(mkt, function(err) {
                                         if (!err) {
-                                            console.log('%s market data updated successfully.', mkt);
+                                            logger.info('%s market data updated successfully.', mkt);
                                             complete++;
                                             if (complete == markets.length) {
                                                 db.update_cronjob_run(settings.coin, {
@@ -398,7 +418,7 @@ if(cluster.isMaster){
                                                 });
                                             }
                                         } else {
-                                            console.log('%s: %s', mkt, err);
+                                            logger.info('%s: %s', mkt, err);
                                             complete++;
                                             if (complete == markets.length) {
                                                 db.update_cronjob_run(settings.coin, {
@@ -410,7 +430,7 @@ if(cluster.isMaster){
                                         }
                                     });
                                 } else {
-                                    console.log('error: entry for %s does not exists in markets db.', mkt);
+                                    onlyConsole.trace('error: entry for %s does not exists in markets db.', mkt);
                                     complete++;
                                     if (complete == markets.length) {
                                         exit();
@@ -428,9 +448,9 @@ if(cluster.isMaster){
         useNewUrlParser: true
     }, function(err) {
         if(err){
-            console.log("Worker could not connect to Mongo.");
+            onlyConsole.trace("Worker could not connect to Mongo.");
         }else{
-            console.log("Worker [%s] %s is starting, start at index %s and end at index %s",
+            workerLog.info("Worker [%s] %s is starting, start at index %s and end at index %s",
                 cluster.worker.process.env['wid'],
                 cluster.worker.process.pid,
                 cluster.worker.process.env['start'],
@@ -442,7 +462,7 @@ if(cluster.isMaster){
                     wid: cluster.worker.process.pid,
                     msg: 'done'
                 });
-                console.log('done');
+                logger.info('Worker %s has finished their update. Killing worker.', cluster.worker.process.pid);
             });
         }
     });
