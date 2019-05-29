@@ -67,17 +67,21 @@ if (process.argv[2] == 'index') {
 }
 
 function create_lock(cb) {
-    if (database == 'index') {
-        var fname = './tmp/' + database + '.pid';
-        fs.appendFile(fname, process.pid, function(err) {
-            if (err) {
-                console.log("Error: unable to create %s", fname);
-                process.exit(1);
-            } else {
-                return cb();
-            }
-        });
-    } else {
+    if(cluster.isMaster){
+        if (database == 'index') {
+            var fname = './tmp/' + database + '.pid';
+            fs.appendFile(fname, process.pid, function(err) {
+                if (err) {
+                    console.log("Error: unable to create %s", fname);
+                    process.exit(1);
+                } else {
+                    return cb();
+                }
+            });
+        } else {
+            return cb();
+        }
+    }else{
         return cb();
     }
 }
@@ -168,7 +172,7 @@ function clusterStart(stats, params) {
 				for (let wt = startAtBlock; wt <= end; wt++) {
 					work.push(missing[wt]);
 				}
-			}
+            }
             cluster.fork({
                 start: params.startAtBlock,
                 end: end,
@@ -259,195 +263,187 @@ dbString = dbString + '@' + settings.dbsettings.address;
 dbString = dbString + ':' + settings.dbsettings.port;
 dbString = dbString + '/' + settings.dbsettings.database;
 
-is_locked(function(exists) {
-    if (exists && cluster.isMaster) {
-        console.log("Script already running..");
-        process.exit(0);
-    } else {
-        create_lock(function() {
-            console.log("script launched with pid: " + process.pid);
-            mongoose.connect(dbString, {
-                useNewUrlParser: true
-            }, function(err) {
-                if (err) {
-                    console.log('Unable to connect to database: %s', dbString);
-                    console.log('Aborting');
-                    exit();
-                } else if (database == 'index') {
-                    db.check_stats(settings.coin, function(exists) {
-                        if (exists == false) {
-                            console.log('Run \'npm start\' to create database structures before running this script.');
-                            exit();
-                        } else {
-                            if (mode == 'checkMissing') {
-
-                            } else if (mode == 'check') {
-                                if (cluster.isMaster) {
-                                    db.get_stats(settings.coin, function(stats) {
-                                        var blocks = [];
-                                        var intvera;
-                                        console.log("Please wait, generating a list of blocks.");
-                                        for (intvera = 1; intvera < stats.last; intvera++) {
-                                            blocks.push(intvera);
-                                        }
-                                        console.log("Done, moving on to checking what blocks are in the DB.");
-                                        //var fname = './tmp/blocks.missing';
-                                        var jsonraw = JSON.parse("[" + blocks + "]");
-                                        var distinct = Tx.distinct("blockindex");
-                                        var missing = [];
-                                        distinct.exec(function(err, res) {
-                                            console.log("There are %s known blocks", res.length);
-                                            jsonraw.forEach(function(block) {
-                                                var found = false;
-                                                for (var t = 0; t < res.length; t++) {
-                                                    if (block == res[t]) {
-                                                        found = true;
-                                                    }
-                                                }
-                                                if (found == false) {
-                                                    missing.push(block);
-                                                }
-                                            });
-                                            //fs.writeFileSync(fname, "[" + missing + "]");
-                                            if (JSON.parse(["[" + missing + "]"]).length == 0) {
-                                                console.log('There are no missing blocks.');
-                                                exit();
-                                            }
-                                            var s_timer = new Date().getTime();
-                                            db.update_db(settings.coin, function() {
-                                                numWorkers = 0;
-                                                numWorkersNeeded = 0;
-												var params = {
-													'highestBlock': stats.count,
-													'startAtBlock': 0
-												};
-												clusterStart(stats, params);
-                                            });
-                                        });
-                                    });
-                                } else {
-                                    console.log("Worker [%s] %s is starting, start at index %s and end at index %s",
-                                        cluster.worker.process.env['wid'],
-                                        cluster.worker.process.pid,
-                                        cluster.worker.process.env['start'],
-                                        cluster.worker.process.env['end']
-                                    )
-                                    db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function() {
-                                        process.send({
-                                            pid: cluster.worker.process.pid,
-                                            wid: cluster.worker.process.pid,
-                                            msg: 'done'
-                                        });
-                                        console.log('done');
-                                    });
+if(cluster.isMaster){
+    is_locked(function(exists) {
+        if (exists && cluster.isMaster) {
+            console.log("Script already running..");
+            process.exit(0);
+        } else {
+            create_lock(function() {
+                console.log("script launched with pid: " + process.pid);
+                mongoose.connect(dbString, {
+                    useNewUrlParser: true
+                }, function(err) {
+                    if (err) {
+                        console.log('Unable to connect to database: %s', dbString);
+                        console.log('Aborting');
+                        exit();
+                    } else if (database == 'index') {
+                        if(cluster.isMaster){
+                            db.check_stats(settings.coin, function(exists) {
+                                if (exists == false) {
+                                    console.log('Run \'npm start\' to create database structures before running this script.');
+                                    exit();
                                 }
-                            } else {
-                                if (cluster.isMaster) {
-                                    var s_timer = new Date().getTime();
-                                    db.update_db(settings.coin, function() {
-                                        numWorkers = 0;
-                                        numWorkersNeeded = 0;
-                                        db.get_stats(settings.coin, function(stats) {
-                                            if (settings.heavy == true) {
-                                                db.update_heavy(settings.coin, stats.count, 20, function() {
-
-                                                });
+                            });
+                        }
+                        if (mode == 'checkMissing') {
+    
+                        } else if (mode == 'check') {
+                                db.get_stats(settings.coin, function(stats) {
+                                    var blocks = [];
+                                    var intvera;
+                                    console.log("Please wait, generating a list of blocks.");
+                                    for (intvera = 1; intvera < stats.last; intvera++) {
+                                        blocks.push(intvera);
+                                    }
+                                    console.log("Done, moving on to checking what blocks are in the DB.");
+                                    var jsonraw = JSON.parse("[" + blocks + "]");
+                                    var distinct = Tx.distinct("blockindex");
+                                    var missing = [];
+                                    distinct.exec(function(err, res) {
+                                        console.log("There are %s known blocks", res.length);
+                                        jsonraw.forEach(function(block) {
+                                            var found = false;
+                                            for (var t = 0; t < res.length; t++) {
+                                                if (block == res[t]) {
+                                                    found = true;
+                                                }
                                             }
+                                            if (found == false) {
+                                                missing.push(block);
+                                            }
+                                        });
+                                        //fs.writeFileSync(fname, "[" + missing + "]");
+                                        if (JSON.parse(["[" + missing + "]"]).length == 0) {
+                                            console.log('There are no missing blocks.');
+                                            exit();
+                                        }
+                                        var s_timer = new Date().getTime();
+                                        db.update_db(settings.coin, function() {
+                                            numWorkers = 0;
+                                            numWorkersNeeded = 0;
                                             var params = {
                                                 'highestBlock': stats.count,
-                                                'startAtBlock': stats.last
+                                                'startAtBlock': 0
                                             };
-                                            if (mode == 'reindex') {
-                                                console.log('starting Reindex');
-                                                params.highestBlock = 0;
-                                                params.startAtBlock = 1;
-                                                Address.deleteMany({}, function(err2, res1) {
-                                                    AddressTx.deleteMany({}, function(err3, res2) {
-                                                        Tx.deleteMany({}, function(err4, res3) {
-                                                            Richlist.updateOne({
+                                            clusterStart(stats, params);
+                                        });
+                                    });
+                                });
+                        } else {
+                                var s_timer = new Date().getTime();
+                                db.update_db(settings.coin, function() {
+                                    numWorkers = 0;
+                                    numWorkersNeeded = 0;
+                                    db.get_stats(settings.coin, function(stats) {
+                                        if (settings.heavy == true) {
+                                            db.update_heavy(settings.coin, stats.count, 20, function() {
+    
+                                            });
+                                        }
+                                        var params = {
+                                            'highestBlock': stats.count,
+                                            'startAtBlock': stats.last
+                                        };
+                                        if (mode == 'reindex') {
+                                            console.log('starting Reindex');
+                                            params.highestBlock = 0;
+                                            params.startAtBlock = 1;
+                                            Address.deleteMany({}, function(err2, res1) {
+                                                AddressTx.deleteMany({}, function(err3, res2) {
+                                                    Tx.deleteMany({}, function(err4, res3) {
+                                                        Richlist.updateOne({
+                                                            coin: settings.coin
+                                                        }, {
+                                                            received: [],
+                                                            balance: [],
+                                                        }, function(err3) {
+                                                            Stats.updateOne({
                                                                 coin: settings.coin
                                                             }, {
-                                                                received: [],
-                                                                balance: [],
-                                                            }, function(err3) {
-                                                                Stats.updateOne({
-                                                                    coin: settings.coin
-                                                                }, {
-                                                                    last: 0,
-                                                                }, function(reste) {
-                                                                    console.log(reste);
-                                                                    console.log('index cleared (reindex)');
-                                                                    clusterStart(stats, params);
-                                                                });
+                                                                last: 0,
+                                                            }, function(reste) {
+                                                                console.log(reste);
+                                                                console.log('index cleared (reindex)');
+                                                                clusterStart(stats, params);
                                                             });
                                                         });
                                                     });
                                                 });
-                                            } else {
-                                                clusterStart(stats, params);
+                                            });
+                                        } else {
+                                            clusterStart(stats, params);
+                                        }
+                                    });
+                                });
+                            }
+                    } else {
+                        //update markets
+                        var markets = settings.markets.enabled;
+                        var complete = 0;
+                        for (var x = 0; x < markets.length; x++) {
+                            var market = markets[x];
+                            db.check_market(market, function(mkt, exists) {
+                                if (exists) {
+                                    db.update_markets_db(mkt, function(err) {
+                                        if (!err) {
+                                            console.log('%s market data updated successfully.', mkt);
+                                            complete++;
+                                            if (complete == markets.length) {
+                                                db.update_cronjob_run(settings.coin, {
+                                                    list_market_update: Math.floor(new Date() / 1000)
+                                                }, function(cb) {
+                                                    exit();
+                                                });
                                             }
-                                        });
+                                        } else {
+                                            console.log('%s: %s', mkt, err);
+                                            complete++;
+                                            if (complete == markets.length) {
+                                                db.update_cronjob_run(settings.coin, {
+                                                    list_market_update: Math.floor(new Date() / 1000)
+                                                }, function(cb) {
+                                                    exit();
+                                                });
+                                            }
+                                        }
                                     });
                                 } else {
-                                    console.log("Worker [%s] %s is starting, start at index %s and end at index %s",
-                                        cluster.worker.process.env['wid'],
-                                        cluster.worker.process.pid,
-                                        cluster.worker.process.env['start'],
-                                        cluster.worker.process.env['end']
-                                    )
-                                    db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function() {
-                                        process.send({
-                                            pid: cluster.worker.process.pid,
-                                            wid: cluster.worker.process.pid,
-                                            msg: 'done'
-                                        });
-                                    });
-                                }
-                            }
-                        }
-                    });
-                } else {
-                    //update markets
-                    var markets = settings.markets.enabled;
-                    var complete = 0;
-                    for (var x = 0; x < markets.length; x++) {
-                        var market = markets[x];
-                        db.check_market(market, function(mkt, exists) {
-                            if (exists) {
-                                db.update_markets_db(mkt, function(err) {
-                                    if (!err) {
-                                        console.log('%s market data updated successfully.', mkt);
-                                        complete++;
-                                        if (complete == markets.length) {
-                                            db.update_cronjob_run(settings.coin, {
-                                                list_market_update: Math.floor(new Date() / 1000)
-                                            }, function(cb) {
-                                                exit();
-                                            });
-                                        }
-                                    } else {
-                                        console.log('%s: %s', mkt, err);
-                                        complete++;
-                                        if (complete == markets.length) {
-                                            db.update_cronjob_run(settings.coin, {
-                                                list_market_update: Math.floor(new Date() / 1000)
-                                            }, function(cb) {
-                                                exit();
-                                            });
-                                        }
+                                    console.log('error: entry for %s does not exists in markets db.', mkt);
+                                    complete++;
+                                    if (complete == markets.length) {
+                                        exit();
                                     }
-                                });
-                            } else {
-                                console.log('error: entry for %s does not exists in markets db.', mkt);
-                                complete++;
-                                if (complete == markets.length) {
-                                    exit();
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
-                }
+                });
             });
-        });
-    }
-});
+        }
+    });
+}else{
+    mongoose.connect(dbString, {
+        useNewUrlParser: true
+    }, function(err) {
+        if(err){
+            console.log("Worker could not connect to Mongo.");
+        }else{
+            console.log("Worker [%s] %s is starting, start at index %s and end at index %s",
+                cluster.worker.process.env['wid'],
+                cluster.worker.process.pid,
+                cluster.worker.process.env['start'],
+                cluster.worker.process.env['end']
+            )
+            db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function() {
+                process.send({
+                    pid: cluster.worker.process.pid,
+                    wid: cluster.worker.process.pid,
+                    msg: 'done'
+                });
+                console.log('done');
+            });
+        }
+    });
+}
