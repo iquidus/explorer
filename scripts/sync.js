@@ -209,27 +209,39 @@ function clusterStart(stats, params) {
             params.highestBlock = end;
         }
 		logger.info("There are %s workers", Object.keys(cluster.workers).length);
-        /*setInterval(function(){
-            console.log(Object.keys(cluster.workers).length);
-            for( var i = 0; i < Object.values(cluster.workers).length; i++){
-                var pid = Object.values(cluster.workers)[i].process.pid;
-                if((Date.now() - workers[pid]) > 50000){
-                    onlyConsole.info('Its been over 3 seconds! %s', Object.keys(workers)[i]);
-                    onlyConsole.info(workers);
-                    exit();
+        setInterval(function(){
+            workerLog.info(workers);
+            for(var i = 0; i < workers.length; i++){
+                workerLog.info(workers[i].lastHeard);
+                if((Date.now() - workers[i].lastHeard) > 10000){
+                    workerLog.info('Its been over 3 seconds since we heard from %s. Killing it now!', workers[i].pid);
+                    workerLog.info('%s has been idle for %s seconds', workers[i].pid,(Date.now() - workers[i].lastHeard)/1000);
+                    workerLog.info(workers);
+                    for(var id in cluster.workers){
+                        workerLog.info('Worker ID %s', cluster.workers[id].process.pid);
+                        if(cluster.workers[id].process.pid == workers[i].pid){
+                            cluster.workers[id].process.kill()
+                            workerLog.trace('It should be killed');
+                        }
+                    }
+                    cluster.fork({
+                        start: workers[i].last,
+                        end: workers[i].end,
+                        wid: i,
+                        type: 'worker',
+                        func: mode,
+                        workload: work
+                    })
+                    workers.splice(i, 1);
+                    workerLog.info(workers);
                 }
-                if((Date.now() - workers[pid]) > 3000){
-                    workers.splice(pid, 1);
-                    onlyConsole.trace("It's been over 10seconds since we heard from ", pid)
-                    //Object.values(cluster.workers)[i].restart();
-                }
-            }
-        }, 5000);*/
+            }    
+        }, 5000);
         cluster.on('message', function(worker, msg) {
-            workers[worker.process.pid] = Date.now();
             /*if(msg.msg == 'timeupdate')
                 console.log('timeupdate received');
-            */if (msg.msg == "done") {
+            */
+            if (msg.msg == "done") {
                 for( var i = 0; i < workers.length; i++){ 
                     if ( Object.keys(workers)[i] === worker.process.pid) {
                        workers.splice(i, 1); 
@@ -293,6 +305,15 @@ function clusterStart(stats, params) {
                     numWorkers++;
                     params.startAtBlock += Math.round(MaxPerWorker);
                     params.highestBlock = Math.round(params.startAtBlock + MaxPerWorker) - 1
+                }
+            } else if (msg.msg == "starting-up"){
+                workers.push({pid: msg.pid, start: msg.start, end: msg.end, last: msg.last, lastHeard: Date.now()})
+            } else if(msg.msg == "blkupdate" ) {
+                for(var i = 0; i < workers.length; i++){
+                    if(workers[i].pid == msg.pid){
+                        workers[i].last = msg.last;
+                        workers[i].lastHeard = Date.now();
+                    }
                 }
             } else {
                 logger.trace('Unknown message:', msg);
@@ -482,6 +503,13 @@ if(cluster.isMaster){
                 cluster.worker.process.env['start'],
                 cluster.worker.process.env['end']
             )
+            process.send({
+                msg: 'starting-up',
+                pid: cluster.worker.process.pid,
+                start: cluster.worker.process.env['start'],
+                last: cluster.worker.process.env['start'],
+                end: cluster.worker.process.env['end']
+            });
             logger.info("Worker [%s] is starting, ensure it finishes", cluster.worker.process.pid);
             db.update_tx_db(settings.coin, Number(cluster.worker.process.env['start']), Number(cluster.worker.process.env['end']), settings.update_timeout, function() {
                 process.send({
