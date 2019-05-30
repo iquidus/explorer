@@ -210,13 +210,11 @@ function clusterStart(stats, params) {
         }
 		logger.info("There are %s workers", Object.keys(cluster.workers).length);
         setInterval(function(){
-            workerLog.info(workers);
             for(var i = 0; i < workers.length; i++){
-                workerLog.info(workers[i].lastHeard);
-                if((Date.now() - workers[i].lastHeard) > 10000){
-                    workerLog.info('Its been over 3 seconds since we heard from %s. Killing it now!', workers[i].pid);
+                workerLog.info("PID: %s was last heard %s seconds ago.",workers[i].pid, (Date.now() - workers[i].lastHeard));
+                if((Date.now() - workers[i].lastHeard) > 15000){
+                    workerLog.info('Its been over 15 seconds since we heard from %s. Killing it now!', workers[i].pid);
                     workerLog.info('%s has been idle for %s seconds', workers[i].pid,(Date.now() - workers[i].lastHeard)/1000);
-                    workerLog.info(workers);
                     for(var id in cluster.workers){
                         workerLog.info('Worker ID %s', cluster.workers[id].process.pid);
                         if(cluster.workers[id].process.pid == workers[i].pid){
@@ -233,10 +231,9 @@ function clusterStart(stats, params) {
                         workload: work
                     })
                     workers.splice(i, 1);
-                    workerLog.info(workers);
                 }
             }    
-        }, 5000);
+        }, 10000);
         cluster.on('message', function(worker, msg) {
             /*if(msg.msg == 'timeupdate')
                 console.log('timeupdate received');
@@ -384,6 +381,8 @@ if(cluster.isMaster){
                                                     onlyConsole.trace('There are no missing blocks.');
                                                     exit();
                                                 }
+                                                console.log("Found %s missing blocks.",JSON.parse(["[" + missing + "]"]).length);
+                                                exit();
                                                 var s_timer = new Date().getTime();
                                                 db.update_db(settings.coin, function() {
                                                     numWorkers = 0;
