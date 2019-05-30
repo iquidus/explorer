@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
 
 var MaxPerWorker = settings.cluster.maxPerWorker;
 const cluster = require('cluster');
-const numCPUs = 5;//require('os').cpus().length;
+const numCPUs = require('os').cpus().length;
 
 var mode = 'update';
 var database = 'index';
