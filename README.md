@@ -106,11 +106,6 @@ Iquidus Explorer is intended to be generic so it can be used with any wallet fol
 
     -daemon -txindex
 
-### Donate
-
-    BTC: 168hdKA3fkccPtkxnX8hBrsxNubvk4udJi
-    JBS: JZp9893FMmrm1681bDuJBU7c6w11kyEY7D
-
 ### Known Issues
 
 **script is already running.**
