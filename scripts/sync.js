@@ -33,7 +33,7 @@ log4js.configure({
   });
   const logger = log4js.getLogger();
   const onlyConsole = log4js.getLogger('OnlyShow');     
-  const workerLog = log4js.getLogger('Workers.' + (cluster.isWorker? 'Worker-': 'Master-') + process.pid);    
+  const workerLog = log4js.getLogger('Workers.' + (settings.cluster.enabled ? (cluster.isWorker? 'Worker-': 'Master-') + process.pid :'Master'));    
   
 
 // displays usage and exits
@@ -169,67 +169,84 @@ function clusterStart(stats, params) {
     var workers = [];
     var numWorkers = 0;
     if (BlocksToGet > 0) {
-        if (BlocksToGet < MaxPerWorker) {
-            if (BlocksToGet < numThreads) {
-                numThreads = BlocksToGet;
-                numWorkersNeeded = BlocksToGet;
-                MaxPerWorker = 1;
+        if(settings.cluster.enabled){
+            if (BlocksToGet < MaxPerWorker) {
+                if (BlocksToGet < numThreads) {
+                    numThreads = BlocksToGet;
+                    numWorkersNeeded = BlocksToGet;
+                    MaxPerWorker = 1;
+                } else {
+                    numWorkersNeeded = numThreads;
+                    MaxPerWorker = Math.round(BlocksToGet / numWorkersNeeded);
+                }
             } else {
-                numWorkersNeeded = numThreads;
-                MaxPerWorker = Math.round(BlocksToGet / numWorkersNeeded);
+                numWorkersNeeded = Math.round(BlocksToGet / MaxPerWorker);
             }
-        } else {
-            numWorkersNeeded = Math.round(BlocksToGet / MaxPerWorker);
+        }else{
+            numWorkersNeeded = 1;
         }
         logger.info("Workers needed: %s. NumThreads: %s. BlocksToGet %s. Per Worker: %s", numWorkersNeeded, numThreads, BlocksToGet, MaxPerWorker, stats.count, stats.last);
         //exit();
         // Fork workers.;
-        for (let i = 0; i < numThreads; i++) {
-            var end = Math.round(params.startAtBlock + MaxPerWorker) - 1;
-            if (end > stats.count) {
-                end = stats.count;
-			}
-			var work = [];
-			if(mode == "check"){
-				for (let wt = startAtBlock; wt <= end; wt++) {
-					work.push(missing[wt]);
-				}
+        var work = [];
+        var end = Math.round(params.startAtBlock + MaxPerWorker) - 1;
+        if (end > stats.count) {
+            end = stats.count;
+        }
+        if(mode == "check"){
+            for (let wt = startAtBlock; wt <= end; wt++) {
+                work.push(missing[wt]);
             }
+        }
+        if(settings.cluster.enabled){
+            for (let i = 0; i < numThreads; i++) {
+                cluster.fork({
+                    start: params.startAtBlock,
+                    end: end,
+                    wid: i,
+                    type: 'worker',
+                    func: mode,
+                    workload: work
+                })
+                numWorkersNeeded = (numWorkersNeeded > 1 ? numWorkersNeeded - 1 : 0);
+                numWorkers++;
+                params.startAtBlock += Math.round(MaxPerWorker);
+                params.highestBlock = end;
+            }
+        }else{
             cluster.fork({
                 start: params.startAtBlock,
-                end: end,
-                wid: i,
+                end: stats.count,
+                wid: 0,
                 type: 'worker',
-				func: mode,
-				workload: work
-			})
-			numWorkersNeeded = (numWorkersNeeded > 1 ? numWorkersNeeded - 1 : 0);
-            numWorkers++;
-            params.startAtBlock += Math.round(MaxPerWorker);
-            params.highestBlock = end;
+                func: mode,
+                workload: work
+            })
         }
 		logger.info("There are %s workers", Object.keys(cluster.workers).length);
         setInterval(function(){
             for(var i = 0; i < workers.length; i++){
-                workerLog.info("PID: %s was last heard %s seconds ago.",workers[i].pid, (Date.now() - workers[i].lastHeard));
-                if((Date.now() - workers[i].lastHeard) > 15000){
+                workerLog.info("PID: %s was last heard %s seconds ago.",workers[i].pid, (Date.now() - workers[i].lastHeard)/1000);
+                if((Date.now() - workers[i].lastHeard)/1000 > 15){
                     workerLog.info('Its been over 15 seconds since we heard from %s. Killing it now!', workers[i].pid);
                     workerLog.info('%s has been idle for %s seconds', workers[i].pid,(Date.now() - workers[i].lastHeard)/1000);
-                    for(var id in cluster.workers){
-                        workerLog.info('Worker ID %s', cluster.workers[id].process.pid);
+                    for(let id = 0; id < Object.keys(cluster.workers).length; id++){
+                        workerLog.info("ID = %s, Cluster.workers[id] = %s", id, cluster.workers[id]);
+                        exit();
+                        //workerLog.info('Worker ID %s and ID = %s', cluster.workers[id].process.pid, id);
                         if(cluster.workers[id].process.pid == workers[i].pid){
                             cluster.workers[id].process.kill()
                             workerLog.trace('It should be killed');
+                            cluster.fork({
+                                start: workers[i].last,
+                                end: workers[i].end,
+                                wid: i,
+                                type: 'worker',
+                                func: mode,
+                                workload: work
+                            })
                         }
                     }
-                    cluster.fork({
-                        start: workers[i].last,
-                        end: workers[i].end,
-                        wid: i,
-                        type: 'worker',
-                        func: mode,
-                        workload: work
-                    })
                     workers.splice(i, 1);
                 }
             }    
@@ -239,13 +256,17 @@ function clusterStart(stats, params) {
                 console.log('timeupdate received');
             */
             if (msg.msg == "done") {
-                for( var i = 0; i < workers.length; i++){ 
+                /*for( var i = 0; i < workers.length; i++){ 
                     if ( Object.keys(workers)[i] === worker.process.pid) {
                        workers.splice(i, 1); 
+                       logger.info("removed %s from the list", worker.process.pid)
                     }
-                 }
+                 }*/ //this doesn't actually work
+
+
+
 				//worker.disconnect();
-				worker.kill();
+				worker.process.kill();
 				workerLog.info(`worker ${msg.pid} died`);
 				workerLog.info("There are still %s workers", Object.keys(cluster.workers).length);
                 if (Object.keys(cluster.workers).length < 1) {
