@@ -216,7 +216,7 @@ function clusterStart(stats, params) {
         }else{
             cluster.fork({
                 start: params.startAtBlock,
-                end: stats.count,
+                end: end,
                 wid: 0,
                 type: 'worker',
                 func: mode,
@@ -252,9 +252,6 @@ function clusterStart(stats, params) {
             }    
         }, 10000);
         cluster.on('message', function(worker, msg) {
-            /*if(msg.msg == 'timeupdate')
-                console.log('timeupdate received');
-            */
             if (msg.msg == "done") {
                 /*for( var i = 0; i < workers.length; i++){ 
                     if ( Object.keys(workers)[i] === worker.process.pid) {
@@ -262,14 +259,11 @@ function clusterStart(stats, params) {
                        logger.info("removed %s from the list", worker.process.pid)
                     }
                  }*/ //this doesn't actually work
-
-
-
 				//worker.disconnect();
 				worker.process.kill();
 				workerLog.info(`worker ${msg.pid} died`);
-				workerLog.info("There are still %s workers", Object.keys(cluster.workers).length);
-                if (Object.keys(cluster.workers).length < 1) {
+				workerLog.info("There are still %s workers", Object.keys(cluster.workers).length - 1);
+                if (Object.keys(cluster.workers).length <= 1) {
                     var e_timer = new Date().getTime();
                     logger.info("Updating Richlist - Recieved");
                     db.update_richlist('received', function() {
@@ -397,7 +391,6 @@ if(cluster.isMaster){
                                                         missing.push(block);
                                                     }
                                                 });
-                                                //fs.writeFileSync(fname, "[" + missing + "]");
                                                 if (JSON.parse(["[" + missing + "]"]).length == 0) {
                                                     onlyConsole.trace('There are no missing blocks.');
                                                     exit();

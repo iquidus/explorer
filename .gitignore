@@ -31,3 +31,5 @@ settings.json
 *.png
 
 package-lock.json
+scripts/master.js
+scripts/worker.js
