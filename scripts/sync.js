@@ -36,7 +36,9 @@ log4js.configure({
   const workerLog = log4js.getLogger('Workers.' + (settings.cluster.enabled ? (cluster.isWorker? 'Worker-': 'Master-') + process.pid :'Master'));    
   
 
-// displays usage and exits
+/**
+ * Displays usage and exits
+ */
 function usage() {
     console.log('Usage: node scripts/sync.js [database] [mode]');
     console.log('');
@@ -86,6 +88,10 @@ if (process.argv[2] == 'index') {
     usage();
 }
 
+/**
+ * Create a pid file to use as a lock
+ * @param {callback} cb 
+ */
 function create_lock(cb) {
     if(cluster.isMaster){
         if (database == 'index') {
@@ -106,6 +112,10 @@ function create_lock(cb) {
     }
 }
 
+/**
+ * Remove the pid file to unlock the process
+ * @param {callback} cb 
+ */
 function remove_lock(cb) {
     if (database == 'index') {
         var fname = './tmp/' + database + '.pid';
@@ -122,6 +132,10 @@ function remove_lock(cb) {
     }
 }
 
+/**
+ * Check if the process already running
+ * @param {callback} cb 
+ */
 function is_locked(cb) {
     if (database == 'index') {
         var fname = './tmp/' + database + '.pid';
@@ -137,6 +151,9 @@ function is_locked(cb) {
     }
 }
 
+/**
+ * Exit, disconnect db, and kill process
+ */
 function exit() {
     remove_lock(function() {
         mongoose.disconnect();
@@ -144,6 +161,10 @@ function exit() {
     });
 }
 
+/**
+ * toHHMMSS convert string to Human-readable format
+ * @returns (string)
+ */
 //https://stackoverflow.com/questions/6312993/javascript-seconds-to-time-string-with-format-hhmmss
 String.prototype.toHHMMSS = function() {
     var sec_num = parseInt(this, 10); // don't forget the second param
@@ -163,6 +184,18 @@ String.prototype.toHHMMSS = function() {
     return hours + ':' + minutes + ':' + seconds;
 }
 
+process.on('uncaughtException', function(err) {
+    var stamp;
+    stamp = new Date();
+    workerLog.error("***************************** Exception Caught, " + stamp);
+    return workerLog.error("Exception is:", err);
+  });
+
+/**
+ * clusterStart
+ * @param {number} stats 
+ * @param {array} params 
+ */
 function clusterStart(stats, params) {
     var BlocksToGet = (mode == "check"? params.missing.length : Math.round(stats.count - stats.last));
     var numThreads = numCPUs;
@@ -227,14 +260,15 @@ function clusterStart(stats, params) {
         setInterval(function(){
             for(var i = 0; i < workers.length; i++){
                 workerLog.info("PID: %s was last heard %s seconds ago.",workers[i].pid, (Date.now() - workers[i].lastHeard)/1000);
-                if((Date.now() - workers[i].lastHeard)/1000 > 15){
-                    workerLog.info('Its been over 15 seconds since we heard from %s. Killing it now!', workers[i].pid);
+                if((Date.now() - workers[i].lastHeard)/1000 > 60){
+                    workerLog.info('Its been over 1 minute since we heard from %s. Killing it now!', workers[i].pid);
                     workerLog.info('%s has been idle for %s seconds', workers[i].pid,(Date.now() - workers[i].lastHeard)/1000);
                     for(let id = 0; id < Object.keys(cluster.workers).length; id++){
-                        workerLog.info("ID = %s, Cluster.workers[id] = %s", id, cluster.workers[id]);
-                        exit();
+                        workerLog.info("ID = %s, Cluster.workers[id] =", id);
+                        workerLog.info( cluster.workers[Object.keys(cluster.workers)[id]]);
                         //workerLog.info('Worker ID %s and ID = %s', cluster.workers[id].process.pid, id);
-                        if(cluster.workers[id].process.pid == workers[i].pid){
+                        exit();
+                        if(cluster.workers[Object.keys(cluster.workers)[id]].process.pid == workers[i].pid){
                             cluster.workers[id].process.kill()
                             workerLog.trace('It should be killed');
                             cluster.fork({
