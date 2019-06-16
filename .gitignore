@@ -33,3 +33,4 @@ settings.json
 package-lock.json
 scripts/master.js
 scripts/worker.js
+scripts/sync.ps1
