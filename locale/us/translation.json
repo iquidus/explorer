@@ -53,6 +53,7 @@
     "total_sent": "Total sent {{coin, uppercase}}",
     "total_received": "Total received {{coin, uppercase}}",
     "balance_coin": "Balance {{coin, uppercase}}",
+    "qr": "QR code",
     "latest_transactions": "Latest transactions",
     "timestamp": "Timestamp",
     "hash": "Hash",

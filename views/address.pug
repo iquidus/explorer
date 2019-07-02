@@ -4,7 +4,7 @@ block content
   script.
     $(document).ready(function(){
       var hashAddress = "#{address.a_id}";
-      var historytable = $('#history-table').dataTable( {  
+      var historytable = $('#history-table').dataTable( {
         autoWidth: true,
         searching: false,
         ordering: false,
@@ -57,18 +57,17 @@ block content
   - var balance = (address.received - address.sent) / 100000000;
   - var sent = address.sent /100000000
   - var received = address.received / 100000000
-    img.qrcode.pull-right.d-none.d-sm-block(src='/qr/'+address.a_id)
   .col-xs-12.col-md-12
     .card.card-default.card-address-summary
-      .card-header(style='position:relative;')        
+      .card-header(style='position:relative;')
         strong=address.a_id
           if address.name !== "" && typeof address.name !== "undefined"
-            label.badge.badge-pill.pull-right.d-none.d-sm-block(style='margin-left:15px;') 
+            label.badge.badge-pill.pull-right.d-none.d-sm-block(style='margin-left:15px;')
               =address.name
           else
             a.badge.badge-pill.pull-right.d-none.d-sm-block(href="/address/"+ address.a_id +"/claim" style="font-size: smaller;")
               =" Is this yours? Claim it now for free!"
-      table.table.table-bordered.table-striped.summary-table 
+      table.table.table-bordered.table-striped.summary-table
         thead
           tr
             if settings.show_sent_received == true
@@ -77,14 +76,17 @@ block content
               if settings.show_sent_received == true
                 th=t('address.total_received',{coin: settings.symbol})
               th=t('address.balance_coin',{coin:settings.symbol})
-        tbody             
+              th=t('address.qr')
+        tbody
           tr
-            if settings.show_sent_received == true 
+            if settings.show_sent_received == true
               td=sent.toFixed(settings.decimal_places)
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
                 td=received.toFixed(settings.decimal_places)
               td=balance.toFixed(settings.decimal_places)
+              td.text-center
+                img(src='/qr/'+ address.a_id style='margin-top:0px; margin-bottom:0px;')
     .card.card-default.d-none.d-sm-block
       .card-header
         strong=t('address.latest_transactions')
@@ -96,4 +98,3 @@ block content
             th=t('address.amount_coin', {coin: settings.symbol})
         tbody.text-center
     .footer-padding
-            
