@@ -12,7 +12,7 @@ dbString = dbString + '@' + settings.dbsettings.address;
 dbString = dbString + ':' + settings.dbsettings.port;
 dbString = dbString + '/' + settings.dbsettings.database;
 
-db.connect(dbString, {createIndexes: true, useNewUrlParser:true}, function() {
+db.connect(dbString, {useCreateIndex: true, useNewUrlParser:true}, function() {
   db.check_stats(settings.coin, function(exists) {
     if (exists == false) {
       console.log('no stats entry found, creating now..');
@@ -56,7 +56,7 @@ db.connect(dbString, {createIndexes: true, useNewUrlParser:true}, function() {
     }); 
   }
 
-  var server = app.listen(app.get('port'), function() {
+  var server = app.listen(app.get('port'), app.get('address'), function() {
     debug('Express server listening on port ' + server.address().port);
   });
 });

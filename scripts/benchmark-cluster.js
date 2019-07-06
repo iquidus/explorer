@@ -22,7 +22,7 @@ dbString = dbString + ':' + settings.dbsettings.port;
 dbString = dbString + "/"+ settings.dbsettings.database;
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(dbString, { createIndexes: true, useNewUrlParser: true }, function(err) {
+mongoose.connect(dbString, { useCreateIndex: true, useNewUrlParser: true }, function(err) {
     if (err) {
         console.log('Unable to connect to database: %s', dbString);
         console.log('Aborting');

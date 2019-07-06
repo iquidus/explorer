@@ -386,7 +386,7 @@ if(cluster.isMaster){
             create_lock(function() {
                 logger.info("script launched with pid:" + process.pid);
                 mongoose.connect(dbString, {
-                    createIndexes: true,
+                    useCreateIndex: true,
                     useNewUrlParser: true
                 }, function(err) {
                     if (err) {
@@ -540,7 +540,7 @@ if(cluster.isMaster){
     });
 }else{
     mongoose.connect(dbString, {
-        createIndexes: true,
+        useCreateIndex: true,
         useNewUrlParser: true
     }, function(err) {
         if(err){
