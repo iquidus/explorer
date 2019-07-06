@@ -55,7 +55,6 @@ db.connect(dbString, {useCreateIndex: true, useNewUrlParser:true}, function() {
       }
     }); 
   }
-  console.log(app.get('address'), "Address from app get")
   var server = app.listen(app.get('port'), app.get('address'), function() {
     debug('Express server listening on port ' + server.address().port);
   });
