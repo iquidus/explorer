@@ -16,7 +16,7 @@ block content
             a(href='/block/'+ block.nextblockhash)
               span.fa.fa-chevron-right.iquidus.pull-right.block-next(data-toggle='tooltip', data-placement='top', title=t('block.block_next'))       
           a(href=`/api/getblock?hash=#{block.hash}`)
-            span.fa.fa-info-sign.iquidus.pull-right
+            span.fa.fa-info-circle.iquidus.pull-right
       table.table.table-bordered.summary-table 
         thead
           tr
@@ -78,14 +78,14 @@ block content
         table.table.table-bordered.table-striped.summary-table 
           thead
             tr
-              th.d-none.d-sm-none.d-table-cell=t('explorer.hash')
+              th.hidden-xs.d-none.d-sm-table-cell=t('explorer.hash')
               th=t('tx.recipients_address')
               th=t('address.amount_coin', {coin: settings.symbol})
               th
           tbody
             each txn in txs
               tr
-                td.d-none.d-sm-none.d-table-cell
+                td.hidden-xs.d-none.d-sm-table-cell
                   a(href='/tx/'+ txn.txid)=txn.txid
                 td=txn.vout.length
                 if txn.vout.length > 0
@@ -95,5 +95,5 @@ block content
                   td=txn.total.toFixed(settings.decimal_places)
                 td.view_tx 
                   a(href='/tx/'+ txn.txid)
-                    span.fa.fa-eye-open 
+                    span.fa.fa-eye
     .footer-padding  
