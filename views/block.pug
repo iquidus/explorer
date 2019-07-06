@@ -15,7 +15,7 @@ block content
           if block.nextblockhash != null 
             a(href='/block/'+ block.nextblockhash)
               span.fa.fa-chevron-right.iquidus.pull-right.block-next(data-toggle='tooltip', data-placement='top', title=t('block.block_next'))       
-          a(href=`/api/getblock?hash=#{block.hash}`)
+          a(href=`/api/getblock?hash=` + block.hash)
             span.fa.fa-info-circle.iquidus.pull-right
       table.table.table-bordered.summary-table 
         thead
