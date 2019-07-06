@@ -18,7 +18,7 @@ dbString = dbString + '@' + settings.dbsettings.address;
 dbString = dbString + ':' + settings.dbsettings.port;
 dbString = dbString + "/IQUIDUS-BENCHMARK";
 
-mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
+mongoose.connect(dbString, { createIndexes: true, useNewUrlParser: true }, function(err) {
   if (err) {
     console.log('Unable to connect to database: %s', dbString);
     console.log('Aborting');
@@ -29,8 +29,8 @@ mongoose.connect(dbString, { useNewUrlParser: true }, function(err) {
       var s_timer = new Date().getTime();
       db.update_tx_db(settings.coin, 1, COUNT, settings.update_timeout, function(){
         var e_timer = new Date().getTime();
-        Tx.count({}, function(txerr, txcount){
-          Address.count({}, function(aerr, acount){
+        Tx.countDocuments({}, function(txerr, txcount){
+          Address.countDocuments({}, function(aerr, acount){
             var stats = {
               tx_count: txcount,
               address_count: acount,

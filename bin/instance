@@ -12,7 +12,7 @@ dbString = dbString + '@' + settings.dbsettings.address;
 dbString = dbString + ':' + settings.dbsettings.port;
 dbString = dbString + '/' + settings.dbsettings.database;
 
-db.connect(dbString, function() {
+db.connect(dbString, {createIndexes: true, useNewUrlParser:true}, function() {
   db.check_stats(settings.coin, function(exists) {
     if (exists == false) {
       console.log('no stats entry found, creating now..');
