@@ -114,7 +114,7 @@ app.set('locale', locale);
 app.set('display', settings.display);
 app.set('markets', settings.markets);
 app.set('twitter', settings.twitter);
-app.set('facebook', settings.youtube);
+app.set('facebook', settings.facebook);
 app.set('googleplus', settings.googleplus);
 app.set('youtube', settings.youtube);
 app.set('genesis_block', settings.genesis_block);
