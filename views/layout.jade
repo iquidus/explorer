@@ -23,11 +23,13 @@ html
     script(src='/javascripts/chart.js')
     // Global site tag (gtag.js) - Google Analytics
     script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-42923639-6')
-      script.
+    script.
+      if (window.location.host === 'explorer.bitflate.org') {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-42923639-6');
+      }
 
     script.
       $(document).ready(function(){
