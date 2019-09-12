@@ -105,6 +105,10 @@ sync.js (located in scripts/) is used for updating the local databases. This scr
 Iquidus Explorer is intended to be generic so it can be used with any wallet following the usual standards. The wallet must be running with atleast the following flags
 
     -daemon -txindex
+    
+### Security
+
+Ensure mongodb is not exposed to the outside world via your mongo config or a firewall to prevent outside tampering of the indexed chain data. 
 
 ### Known Issues
 
