@@ -19,7 +19,7 @@
     "request": "2.74.0",
     "jsonminify": "0.2.3",
     "mongodb": "2.0.45",
-    "mongoose": "4.1.10",
+    "mongoose": "5.7.7",
     "markdown-js": "0.0.3",
     "qr-image": "~2.0.0"
   },
