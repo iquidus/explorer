@@ -28,7 +28,7 @@ block market_view
               td.hidden-xs #{marketdata.data.summary.bid}
               td.hidden-xs #{marketdata.data.summary.ask}
               td.hidden-xs #{marketdata.data.summary.last}
-              - var altmarkets_change = (marketdata.data.summary.change).toFixed(4);
+              - var altmarkets_change = (marketdata.data.summary.change);
               if altmarkets_change >= 0
                 td.success +#{altmarkets_change} %
               else
