@@ -8,7 +8,7 @@
     "test": "node ./node_modules/jasmine/bin/jasmine.js"
   },
   "dependencies": {
-    "express": "~4.2.0",
+    "express": "~4.17.1",
     "static-favicon": "~1.0.0",
     "morgan": "~1.0.0",
     "cookie-parser": "~1.0.1",
