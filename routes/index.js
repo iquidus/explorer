@@ -89,7 +89,13 @@ function route_get_tx(res, txid) {
 }
 
 function route_get_index(res, error) {
-  res.render('index', { active: 'home', error: error, warning: null});
+  db.is_locked(function(locked) {
+    if (locked) {
+      res.render('index', { active: 'home', error: error, warning: locale.initial_index_alert});
+    } else {
+      res.render('index', { active: 'home', error: error, warning: null});
+    }
+  });
 }
 
 function route_get_address(res, hash, count) {

@@ -1,3 +1,6 @@
+1.6.X
+* New setting: lock_during_index
+
 1.6.1
 * fixed last_txs setting
 * added hashrate_units setting

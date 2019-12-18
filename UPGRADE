@@ -1,5 +1,10 @@
 Note: All updates require the explorer to be restarted
 
+1.6.1 -> 1.6.X
+* Fix mismatching balances/sent/received, negative balances etc
+* Add new settings to settings.json (see settings.json.template)
+  * lock_during_index
+
 1.6.0 -> 1.6.1
 * Add new cryptsy_id and hashrate_units settings (see settings.json.template)
 * remove tmp/market.pid (if it exists)

@@ -114,9 +114,10 @@ Ensure mongodb is not exposed to the outside world via your mongo config or a fi
 
 **script is already running.**
 
-If you receive this message when launching the sync script either a) a sync is currently in progress, or b) a previous sync was killed before it completed. If you are certian a sync is not in progress remove the index.pid from the tmp folder in the explorer root directory.
+If you receive this message when launching the sync script either a) a sync is currently in progress, or b) a previous sync was killed before it completed. If you are certian a sync is not in progress remove the index.pid and db_index.pid from the tmp folder in the explorer root directory.
 
     rm tmp/index.pid
+    rm tmp/db_index.pid
 
 **exceeding stack size**
 
