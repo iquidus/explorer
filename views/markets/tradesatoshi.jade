@@ -6,7 +6,7 @@ block market_view
       .panel.panel-default
         .panel-heading
           strong #{settings.locale.tradesatoshi} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
-          a(href='https://coinmarketcap.com/currencies/#{settings.coin}/#charts')
+          a(href='#')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}')
         table.table.table-bordered.summary-table
           thead
