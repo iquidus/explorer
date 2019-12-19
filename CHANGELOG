@@ -1,5 +1,7 @@
-1.6.X
-* New setting: lock_during_index
+1.6.2
+* Fix mismatching balances/sent/received, negative balances etc (requires a reindex if balances are incorrect)
+* Added new file lock during database indexing: tmp/db_index.pid
+* New setting to lock during indexing: lock_during_index
 
 1.6.1
 * fixed last_txs setting
