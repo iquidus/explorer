@@ -13,7 +13,7 @@
     "morgan": "~1.0.0",
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
-    "debug": "~0.7.4",
+    "debug": "~4.1.1",
     "jade": "~1.3.0",
     "bitcoin-node-api": "0.1.0",
     "request": "2.74.0",
