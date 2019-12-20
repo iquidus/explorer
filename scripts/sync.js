@@ -147,13 +147,13 @@ is_locked(function (exists) {
                     });
                   }
                   if (mode == 'reindex') {
-                    Tx.remove({}, function(err) { 
-                      Address.remove({}, function(err2) { 
-                        Richlist.update({coin: settings.coin}, {
+                    Tx.deleteMany({}, function(err) { 
+                      Address.deleteMany({}, function(err2) { 
+                        Richlist.updateOne({coin: settings.coin}, {
                           received: [],
                           balance: [],
                         }, function(err3) { 
-                          Stats.update({coin: settings.coin}, { 
+                          Stats.updateOne({coin: settings.coin}, { 
                             last: 0,
                             count: 0,
                             supply: 0,
