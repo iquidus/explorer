@@ -1,6 +1,7 @@
 1.6.2
 * Indexing is now MUCH faster.
 * Added AddressTX model/collection - REQUIRES REINDEX
+* Added balance history to Address TX History
 * Added support for AJAX loading of Address TX History, using txcount setting for loading
 * Stopped maximum TX count trimming TX's in AddressTX collection
 * Removed tx_array from Address collection -> AddressTX

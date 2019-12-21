@@ -181,6 +181,7 @@ app.use('/ext/getaddresstxsajax/:address', function(req,res){
                 row.push(txs[i].txid);
                 row.push(out);
                 row.push(vin);
+                row.push(txs[i].balance);
                 data.push(row);
             }
         }
