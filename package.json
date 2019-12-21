@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "bitcoin-node-api": "0.1.0",
-    "body-parser": "~1.0.0",
-    "cookie-parser": "~1.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
     "debug": "~4.1.1",
     "express": "~4.17.1",
     "intl": "^1.2.5",
@@ -21,7 +21,7 @@
     "mongoose": "5.7.7",
     "morgan": "~1.9.1",
     "qr-image": "~2.0.0",
-    "request": "2.74.0",
+    "request": "^2.88.0",
     "static-favicon": "~1.0.0"
   },
   "devDependencies": {

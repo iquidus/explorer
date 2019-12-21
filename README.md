@@ -19,7 +19,7 @@ An open source block explorer written in node.js.
 
 ### Requires
 
-*  node.js >= 0.10.28 (6.17.1 is advised for updated dependencies)
+*  node.js >= 0.10.28 (8.17.0 is advised for updated dependencies)
 *  mongodb 2.6.x
 *  *coind
 
