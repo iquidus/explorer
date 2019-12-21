@@ -1,5 +1,12 @@
 script.
   var hashAddress = "#{address.a_id}";
+  var setting_maxTxCount = parseInt("#{settings.txcount}");
+  if (setting_maxTxCount < 100) {
+    var displayLengthMax = setting_maxTxCount;
+  } else {
+    var displayLengthMax = 100;
+  }
+
   $(document).ready(function () {
     var rtable = $('#address-txs').dataTable({
       autoWidth: true,
@@ -9,6 +16,7 @@ script.
       lengthChange: true,
       processing: true,
       serverSide: true,
+      iDisplayLength: displayLengthMax,
       ajax: {
         "url": '/ext/getaddresstxsajax/'+hashAddress
       },

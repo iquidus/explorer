@@ -2,6 +2,12 @@ extends layout
 
 block content
   script.
+    var setting_maxTxCount = parseInt("#{settings.index.last_txs}");
+    if (setting_maxTxCount < 100) {
+      var displayLengthMax = setting_maxTxCount;
+    } else {
+      var displayLengthMax = 100;
+    }
     $(document).ready(function(){
       var stable = $('#block-table').dataTable( {  
         autoWidth: true,      
@@ -36,6 +42,7 @@ block content
         responsive: true,
         lengthChange: true,
         processing: true,
+        iDisplayLength: displayLengthMax,
         ajax: {
           url: '/ext/getlasttxs/0.00000001',
           dataSrc: function ( json ) {
