@@ -10,10 +10,7 @@ script.
       processing: true,
       serverSide: true,
       ajax: {
-        "url": '/ext/getaddresstxsajax',
-        "data": {
-          "address": hashAddress
-        }
+        "url": '/ext/getaddresstxsajax/'+hashAddress
       },
       rowCallback: function (row, data, index) {
         var timestamp = data[0]; //variables for better readability
