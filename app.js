@@ -74,6 +74,56 @@ app.use('/ext/getaddress/:hash', function(req,res){
   });
 });
 
+app.use('/ext/gettx/:txid', function(req, res) {
+  var txid = req.param('txid');
+  db.get_tx(txid, function(tx) {
+    if (tx) {
+      lib.get_blockcount(function(blockcount) {
+        res.send({ active: 'tx', tx: tx, confirmations: settings.confirmations, blockcount: blockcount});
+      });
+    }
+    else {
+      lib.get_rawtransaction(txid, function(rtx) {
+        if (rtx.txid) {
+          lib.prepare_vin(rtx, function(vin) {
+            lib.prepare_vout(rtx.vout, rtx.txid, vin, function(rvout, rvin) {
+              lib.calculate_total(rvout, function(total){
+                if (!rtx.confirmations > 0) {
+                  var utx = {
+                    txid: rtx.txid,
+                    vin: rvin,
+                    vout: rvout,
+                    total: total.toFixed(8),
+                    timestamp: rtx.time,
+                    blockhash: '-',
+                    blockindex: -1,
+                  };
+                  res.send({ active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount:-1});
+                } else {
+                  var utx = {
+                    txid: rtx.txid,
+                    vin: rvin,
+                    vout: rvout,
+                    total: total.toFixed(8),
+                    timestamp: rtx.time,
+                    blockhash: rtx.blockhash,
+                    blockindex: rtx.blockheight,
+                  };
+                  lib.get_blockcount(function(blockcount) {
+                    res.send({ active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount: blockcount});
+                  });
+                }
+              });
+            });
+          });
+        } else {
+          res.send({ error: 'tx not found.', hash: txid});
+        }
+      });
+    }
+  });
+});
+
 app.use('/ext/getbalance/:hash', function(req,res){
   db.get_address(req.param('hash'), function(address){
     if (address) {
