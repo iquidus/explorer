@@ -43,36 +43,31 @@ block content
         ]
       });
       var rtable = $('#recent-table').dataTable( {  
-        autoWidth: true,      
+        autoWidth: false,      
         searching: false,
         ordering: false,
-        responsive: true,
+        responsive: false,
         lengthChange: true,
         processing: true,
+        serverSide: true,
         iDisplayLength: displayLengthMax,
         lengthMenu: lengthMenuOpts,
-        ajax: {
-          url: '/ext/getlasttxs/0.00000001',
-          dataSrc: function ( json ) {
-            for ( var i=0;i<json.data.length; i++ ) {
-              json.data[i]['timestamp'] = new Date((json.data[i]['timestamp']) * 1000).toUTCString();
-              json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'>" + json.data[i]['txid'] + "</a>";
-              json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'>" + json.data[i]['blockindex'] + "</a>";
-              var amount = (json.data[i]['total'] / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
-              var amountParts = amount.split('.');
-              json.data[i]['total'] = amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>';
-              json.data[i]['recipients'] = json.data[i]['vout'].length;
-            }
-            return json.data;
-          }
+        ajax: '/ext/getlasttxsajax',
+        rowCallback: function(row, data, index) {
+          var blockindex = data[0]; //variables for better readability
+          var blockhash = data[1]; //variables for better readability
+          var txhash = data[2]; //variables for better readability
+          var outputs = data[3]; //variables for better readability
+          var amount = (data[4] / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true}); //variables for better readability
+          var amountParts = amount.split('.');
+          var amount = amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>';
+          var timestamp = data[5]; //variables for better readability
+          $("td:eq(0)", row).html('<a href="/block/' + blockhash + '">' + blockindex + '</a>');
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>').addClass("d-none d-md-none d-lg-table-cell text-center");
+          $("td:eq(2)", row).html(outputs).addClass("d-none d-md-none d-lg-table-cell text-center");
+          $("td:eq(3)", row).html(amount);
+          $("td:eq(4)", row).html(timestamp);          
         },
-        columns: [
-          { data: 'blockindex', width: '8%' },
-          { data: 'txid', width: '40%' },
-          { data: 'recipients', width:'5%' },
-          { data: 'total', width: '15%' },
-          { data: 'timestamp', width: '25%' },
-        ]
       });
       setInterval( function () {
         rtable.api().ajax.reload(null, false);
