@@ -37,8 +37,8 @@ script.
 
         var balanceParts = balance.split('.');
 
-        $("td:eq(0)", row).html(timestamp);
-        $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
+        $("td:eq(0)", row).html(timestamp).addClass('hidden-xs');
+        $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>').addClass('hidden-xs');
 
         var amount = 0;
         var updown = "";
