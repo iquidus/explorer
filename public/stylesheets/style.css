@@ -134,7 +134,7 @@ tr {
 	color: #ffffff;
 }
 
-@media(max-width:767px){
+@media(max-width:1096px){
 	body {
 		padding: 0px;
 		padding-top:60px;
@@ -152,6 +152,32 @@ tr {
 	    width: 150px !important;
     }
 }
+
+@media (max-width: 991px) and (min-width: 768px){
+	.hidden-sm {
+	    display: block !important;
+	    font-size: 0.8em;
+	}
+}
+
+@media (min-width: 1096px){
+	.col-md-2 {
+	    width: 16.66666667%;
+	}
+	.col-md-offset-1 {
+		margin-left: 8.33333333%;
+	}
+	.col-md-10 {
+		width: 83.33333333%;
+	}
+}
+
+@media (min-width: 992px) and (max-width: 1096px) {
+	body div.col-md-12 div.col-md-offset-1.col-md-2 {
+	    margin-left: unset;
+	}
+}
+
 .qrcode {
 	position: absolute;
 	top: 65px;
