@@ -35,66 +35,6 @@ function route_get_block(res, blockhash) {
 }
 /* GET functions */
 
-function route_get_tx_details(res, txid) {
-  if (txid == settings.genesis_tx) {
-    route_get_block(res, settings.genesis_block);
-  } else {
-    db.get_tx(txid, function(tx) {
-      if (tx) {
-        lib.get_blockcount(function(blockcount) {
-          res.json({ active: 'tx', tx: tx, confirmations: settings.confirmations, blockcount: blockcount});
-        });
-      }
-      else {
-        lib.get_rawtransaction(txid, function(rtx) {
-          if (rtx.txid) {
-            lib.prepare_vin(rtx, function(vin) {
-              lib.prepare_vout(rtx.vout, rtx.txid, vin, function(rvout, rvin) {
-                lib.calculate_total(rvout, function(total){
-                  if (!rtx.confirmations > 0) {
-                    var utx = {
-                      txid: rtx.txid,
-                      vin: rvin,
-                      vout: rvout,
-                      total: total.toFixed(8),
-                      timestamp: rtx.time,
-                      blockhash: '-',
-                      blockindex: -1,
-                    };
-                    res.json({ active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount:-1});
-                  } else {
-                    var utx = {
-                      txid: rtx.txid,
-                      vin: rvin,
-                      vout: rvout,
-                      total: total.toFixed(8),
-                      timestamp: rtx.time,
-                      blockhash: rtx.blockhash,
-                      blockindex: rtx.blockheight,
-                    };
-                    lib.get_blockcount(function(blockcount) {
-                      res.json({ active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount: blockcount});
-                    });
-                  }
-                });
-              });
-            });
-          } else {
-            route_get_index2(res, null);
-          }
-        });
-      }
-    });
-  }
-}
-
-
-function route_get_index2(res, error) {
-  res.json({ active: 'home', error: error, warning: null});
-}
-
-/* GET functions */
-
 function route_get_tx(res, txid) {
   if (txid == settings.genesis_tx) {
     route_get_block(res, settings.genesis_block);
@@ -273,10 +213,6 @@ router.get('/reward', function(req, res){
       res.render('reward', { active: 'reward', stats: stats, heavy: heavy, votes: heavy.votes });
     });
   //});
-});
-
-router.get('/txDetail/:txid', function(req, res) {
-  route_get_tx_details(res, req.param('txid'));
 });
 
 router.get('/tx/:txid', function(req, res) {
