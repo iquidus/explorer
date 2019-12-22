@@ -3,10 +3,17 @@ extends layout
 block content
   script.
     var setting_maxTxCount = parseInt("#{settings.index.last_txs}");
-    if (setting_maxTxCount < 100) {
+    var lengthMenuOpts = [ 10, 25, 50, 75, 100 ];
+    if (setting_maxTxCount >= 500) {
+      lengthMenuOpts.push(500);
+    }
+    if (setting_maxTxCount >= 1000) {
+      lengthMenuOpts.push(1000);
+    }
+    if (setting_maxTxCount < (lengthMenuOpts[lengthMenuOpts.length-1])) {
       var displayLengthMax = setting_maxTxCount;
     } else {
-      var displayLengthMax = 100;
+      var displayLengthMax = (lengthMenuOpts[lengthMenuOpts.length-1]);
     }
     $(document).ready(function(){
       var stable = $('#block-table').dataTable( {  
@@ -43,6 +50,7 @@ block content
         lengthChange: true,
         processing: true,
         iDisplayLength: displayLengthMax,
+        lengthMenu: lengthMenuOpts,
         ajax: {
           url: '/ext/getlasttxs/0.00000001',
           dataSrc: function ( json ) {
