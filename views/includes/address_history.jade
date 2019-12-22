@@ -2,16 +2,19 @@ script.
   var hashAddress = "#{address.a_id}";
   var setting_maxTxCount = parseInt("#{settings.txcount}");
   var lengthMenuOpts = [ 10, 25, 50, 75, 100 ];
+  if (setting_maxTxCount >= 250) {
+    lengthMenuOpts.push(250);
+  }
   if (setting_maxTxCount >= 500) {
     lengthMenuOpts.push(500);
   }
   if (setting_maxTxCount >= 1000) {
     lengthMenuOpts.push(1000);
   }
-  if (setting_maxTxCount < (lengthMenuOpts[lengthMenuOpts.length-1])) {
+  if (setting_maxTxCount < 50) {
     var displayLengthMax = setting_maxTxCount;
   } else {
-    var displayLengthMax = (lengthMenuOpts[lengthMenuOpts.length-1]);
+    var displayLengthMax = 50;
   }
 
   $(document).ready(function () {
