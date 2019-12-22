@@ -27,31 +27,43 @@ script.
         var vin = data[3]; //variables for better readability
         var balance = (data[4] / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true}); //variables for better readability
 
+        var balanceParts = balance.split('.');
+
         $("td:eq(0)", row).html(timestamp);
         $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
 
         var amount = 0;
+        var updown = "";
+        var rowclass = "info";
 
         if(out > 0 && vin > 0) {
           amount = (out - vin) / 100000000
           if (amount < 0) {
             amount = (amount * -1).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
-            $("td:eq(2)", row).html("-" + amount).addClass("info");
+            updown = "-";
+            //- $("td:eq(2)", row).html("-" + amount).addClass("info");
           } else if (amount > 0) {
             amount = amount.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
-            $("td:eq(2)", row).html("+" + amount).addClass("info");
+            updown = "+";
+            //- $("td:eq(2)", row).html("+" + amount).addClass("info");
           } else {
             amount = amount.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
-            $("td:eq(2)", row).html(amount).addClass("info");
+            //- $("td:eq(2)", row).html(amount).addClass("info");
           }
         } else if (out > 0) {
           amount = (out / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
-          $("td:eq(2)", row).html("+" + amount).addClass("success");
+          updown = "+";
+          rowclass = "success";
+          //- $("td:eq(2)", row).html("+" + amount).addClass("success");
         } else {
           amount = (vin / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
-          $("td:eq(2)", row).html("-" + amount).addClass("danger");
+          updown = "-";
+          rowclass = "danger";
+          //- $("td:eq(2)", row).html("-" + amount).addClass("danger");
         }
-        $("td:eq(3)", row).html(balance);
+        var amountParts = amount.split('.');
+        $("td:eq(2)", row).html(updown + amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>').addClass(rowclass);
+        $("td:eq(3)", row).html(balanceParts[0] + '.<span class="decimal">' + balanceParts[1] + '</span>');
 
       },
     });

@@ -50,8 +50,9 @@ block content
               json.data[i]['timestamp'] = new Date((json.data[i]['timestamp']) * 1000).toUTCString();
               json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'>" + json.data[i]['txid'] + "</a>";
               json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'>" + json.data[i]['blockindex'] + "</a>";
-              var amount = json.data[i]['total'] / 100000000;
-              json.data[i]['total'] = amount.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+              var amount = (json.data[i]['total'] / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+              var amountParts = amount.split('.');
+              json.data[i]['total'] = amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>';
               json.data[i]['recipients'] = json.data[i]['vout'].length;
             }
             return json.data;

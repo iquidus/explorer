@@ -13,9 +13,8 @@
       - var count = 0
       each item in balance
         - count = count + 1
-        - var itemFixed = (parseInt(item.balance) / 100000000);
-        - var itemFixedParts = itemFixed.toFixed(0).toString().split(".");
-        - var itemFixedStr = itemFixedParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (itemFixedParts[1] ? "." + itemFixedParts[1] : "");
+        - var itemFixed = (parseInt(item.balance) / 100000000)
+        - var itemFixedParts = itemFixed.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true}).split(".");
         - var percentage = (itemFixed / stats.supply) * 100;
         tr
           td(style='text-align:center;') 
@@ -23,7 +22,7 @@
           td 
             a(href='/address/#{item.a_id}') #{item.a_id}
             include ./rl_labels.jade
-          td.hidden-xs
-            =itemFixedStr
+          td.hidden-xs #{itemFixedParts[0]}.
+            span.decimal #{itemFixedParts[1]}
           td.hidden-xs(style='text-align:center;') 
             =percentage.toFixed(2)

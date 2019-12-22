@@ -92,10 +92,14 @@ block content
                 td #{txn.vout.length}
                 if txn.vout.length > 0
                   - var total = (txn.total / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
-                  td #{total}
+                  - var totalParts = total.split('.')
+                  td #{totalParts[0]}.
+                    span.decimal #{totalParts[1]}
                 else
                   - var total = (txn.total).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
-                  td #{total}
+                  - var totalParts = total.split('.')
+                  td #{totalParts[0]}.
+                    span.decimal #{totalParts[1]}
                 td.view_tx 
                   a(href='/tx/#{txn.txid}')
                     span.glyphicon.glyphicon-eye-open 
