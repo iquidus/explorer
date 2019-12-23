@@ -9,7 +9,7 @@ block content
         li.active(role='presentation')
           a(href='#connections', aria-controls='connections', role='tab', data-toggle='tab') #{settings.locale.net_connections}
         li(role='presentation')
-          a(href='#addnodes', aria-controls='addnodes', role='tab', data-toggle='tab') Add Nodes
+          a(href='#addnodes', aria-controls='addnodes', role='tab', data-toggle='tab') #{settings.locale.net_addnodes}
     .tab-content
       #connections.tabpanel.tab-pane.active 
         include ./includes/net_list.jade
