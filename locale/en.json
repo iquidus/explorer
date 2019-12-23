@@ -62,6 +62,7 @@
     "a_menu_showing": "Showing last",
     "a_menu_txs": "transactions",
     "a_menu_all": "All",
+    "a_qr": "QR Code",
 
     //richlist
     "rl_received_coins": "Top 100 - Received Coins",

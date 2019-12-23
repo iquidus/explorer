@@ -7,7 +7,6 @@ block content
   - var sentParts = sent.split('.');
   - var received = (address.received / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
   - var receivedParts = received.split('.');
-  img.qrcode.pull-right.hidden-xs(src='/qr/#{address.a_id}')
   .col-xs-12.col-md-10.col-md-offset-1
     .panel.panel-default.panel-address-summary
       .panel-heading(style='position:relative;')
@@ -29,22 +28,25 @@ block content
         thead
           tr
             if settings.show_sent_received == true
-              th #{settings.locale.total_sent} (#{settings.symbol})
+              th.hidden-xs #{settings.locale.total_sent} (#{settings.symbol})
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                th #{settings.locale.total_received} (#{settings.symbol})
+                th.hidden-xs #{settings.locale.total_received} (#{settings.symbol})
               th #{settings.locale.rl_balance} (#{settings.symbol})
+              th #{settings.locale.a_qr}
         tbody
           tr
             if settings.show_sent_received == true
-              td #{sentParts[0]}.
+              td.addr-summary.hidden-xs #{sentParts[0]}.
                 span.decimal #{sentParts[1]} 
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                td #{receivedParts[0]}.
+                td.addr-summary.hidden-xs #{receivedParts[0]}.
                   span.decimal #{receivedParts[1]} 
-              td #{balanceParts[0]}.
+              td.addr-summary #{balanceParts[0]}.
                 span.decimal #{balanceParts[1]} 
+              td.addr-summary
+                img.qrcode(src='/qr/#{address.a_id}') 
     .panel.panel-default
       .panel-heading
         strong #{settings.locale.ex_latest_transactions}
