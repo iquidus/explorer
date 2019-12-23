@@ -18,7 +18,7 @@ var app = express();
 bitcoinapi.setWalletDetails(settings.wallet);
 if (settings.heavy != true) {
   bitcoinapi.setAccess('only', ['getinfo', 'getnetworkhashps', 'getmininginfo','getdifficulty', 'getconnectioncount',
-    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 'getpeerinfo', 'gettxoutsetinfo']);
+    'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction', 'getpeerinfo', 'gettxoutsetinfo', 'verifymessage']);
 } else {
   // enable additional heavy api calls
   /*
@@ -35,7 +35,7 @@ if (settings.heavy != true) {
   bitcoinapi.setAccess('only', ['getinfo', 'getstakinginfo', 'getnetworkhashps', 'getdifficulty', 'getconnectioncount',
     'getblockcount', 'getblockhash', 'getblock', 'getrawtransaction','getmaxmoney', 'getvote',
     'getmaxvote', 'getphase', 'getreward', 'getnextrewardestimate', 'getnextrewardwhenstr',
-    'getnextrewardwhensec', 'getsupply', 'gettxoutsetinfo']);
+    'getnextrewardwhensec', 'getsupply', 'gettxoutsetinfo', 'verifymessage']);
 }
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -211,6 +211,27 @@ app.use('/ext/getaddresstxsajax/:address', function(req,res){
         res.json({"data":data, "draw": req.query.draw, "recordsTotal": count, "recordsFiltered": count});
     });
 });
+
+app.post('/address/:hash/claim', function(req, res){
+  var address = req.body.address;
+  var signature = req.body.signature;
+  var message = req.body.message;
+  request({
+      url: 'http://127.0.0.1:' + settings.port + '/api/verifymessage?address='+address+ '&signature='+ signature + '&message=' + message,
+    method: 'GET',
+  }, function(error, response, body){
+    //console.log('error', error);
+    //console.log('response', response);
+    if(body == "false"){
+      console.log('failed');
+      res.json({"status": "failed", "error":true, "message": error});
+    }else if(body == "true"){
+      db.update_label(address, message, function(){
+        res.json({"status": "success"});
+      })
+    }
+  });
+})
 
 app.use('/ext/connections', function(req,res){
   db.get_peers(function(peers){
