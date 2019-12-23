@@ -6,12 +6,13 @@ An open source block explorer written in node.js.
 ### See it in action
 
 *  [Deutsche eMark](http://b.emark.tk/)
-*  [Sphere](http://sphere.iquidus.io)
 *  [Vertcoin](http://explorer.vertcoin.info/)
-*  [Vivo](http://vivo.explorerz.top:3003)
+*  [TheHolyRogerCoin (ROGER) Explorer](https://explorer.theholyroger.com/)
+*  [CPUChain (CPU) Explorer](https://explorer.cpuchain.org/)
+*  [Omega Blockchain Explorer](http://explorer.omegablockchain.net/)
+*  [Sugarchain Explorer](https://1explorer.sugarchain.org/)
 *  [Florincoin](https://florincoin.info/info)
 *  [Maxcoin Explorer 1](https://explorer.maxcoinproject.net/)
-*  [Maxcoin Explorer 2](https://explorer2.maxcoinproject.net/)
 
 
 *Note: If you would like your instance mentioned here contact me*
