@@ -204,19 +204,19 @@ router.get('/reward', function(req, res){
 });
 
 router.get('/tx/:txid', function(req, res) {
-  route_get_tx(res, req.param('txid'));
+  route_get_tx(res, req.params.txid);
 });
 
 router.get('/block/:hash', function(req, res) {
-  route_get_block(res, req.param('hash'));
+  route_get_block(res, req.params.hash);
 });
 
 router.get('/address/:hash', function(req, res) {
-  route_get_address(res, req.param('hash'), settings.txcount);
+  route_get_address(res, req.params.hash, settings.txcount);
 });
 
 router.get('/address/:hash/:count', function(req, res) {
-  route_get_address(res, req.param('hash'), req.param('count'));
+  route_get_address(res, req.params.hash, req.params.count);
 });
 
 router.post('/search', function(req, res) {
@@ -257,8 +257,8 @@ router.post('/search', function(req, res) {
 });
 
 router.get('/qr/:string', function(req, res) {
-  if (req.param('string')) {
-    var address = qr.image(req.param('string'), {
+  if (req.params.string) {
+    var address = qr.image(req.params.string, {
       type: 'png',
       size: 4,
       margin: 1,
