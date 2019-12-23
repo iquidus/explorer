@@ -3,17 +3,17 @@ extends layout
 block content
   script.
     var setting_maxTxCount = parseInt("#{settings.index.last_txs}");
-    var lengthMenuOpts = [ 10, 25, 50, 75, 100 ];
-    if (setting_maxTxCount >= 500) {
-      lengthMenuOpts.push(500);
+    var lengthMenuOpts = [];
+    var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
+    for (i=0; i < lengthMenuOptsAdd.length; i++) {
+      if (setting_maxTxCount >= lengthMenuOptsAdd[i]) {
+        lengthMenuOpts.push(lengthMenuOptsAdd[i]);
+      }
     }
-    if (setting_maxTxCount >= 1000) {
-      lengthMenuOpts.push(1000);
-    }
-    if (setting_maxTxCount < (lengthMenuOpts[lengthMenuOpts.length-1])) {
+    if (setting_maxTxCount < 10) {
       var displayLengthMax = setting_maxTxCount;
     } else {
-      var displayLengthMax = (lengthMenuOpts[lengthMenuOpts.length-1]);
+      var displayLengthMax = 10;
     }
     $(document).ready(function(){
       var stable = $('#block-table').dataTable( {  

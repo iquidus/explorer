@@ -1,15 +1,12 @@
 script.
   var hashAddress = "#{address.a_id}";
   var setting_maxTxCount = parseInt("#{settings.txcount}");
-  var lengthMenuOpts = [ 10, 25, 50, 75, 100 ];
-  if (setting_maxTxCount >= 250) {
-    lengthMenuOpts.push(250);
-  }
-  if (setting_maxTxCount >= 500) {
-    lengthMenuOpts.push(500);
-  }
-  if (setting_maxTxCount >= 1000) {
-    lengthMenuOpts.push(1000);
+  var lengthMenuOpts = [];
+  var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
+  for (i=0; i < lengthMenuOptsAdd.length; i++) {
+    if (setting_maxTxCount >= lengthMenuOptsAdd[i]) {
+      lengthMenuOpts.push(lengthMenuOptsAdd[i]);
+    }
   }
   if (setting_maxTxCount < 50) {
     var displayLengthMax = setting_maxTxCount;
