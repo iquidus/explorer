@@ -44,7 +44,7 @@ block content
               json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'>" + json.data[i]['txid'] + "</a>";
               json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'>" + json.data[i]['blockindex'] + "</a>";
               var amount = json.data[i]['total'] / 100000000;
-              json.data[i]['total'] = amount.toFixed(8);
+              json.data[i]['total'] = amount.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
               json.data[i]['recipients'] = json.data[i]['vout'].length;
             }
             return json.data;

@@ -13,8 +13,10 @@
       - var count = 0
       each item in balance
         - count = count + 1
-        - var itemFixed = item.balance / 100000000
-        - var percentage = (itemFixed / stats.supply) * 100
+        - var itemFixed = (parseInt(item.balance) / 100000000);
+        - var itemFixedParts = itemFixed.toFixed(0).toString().split(".");
+        - var itemFixedStr = itemFixedParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (itemFixedParts[1] ? "." + itemFixedParts[1] : "");
+        - var percentage = (itemFixed / stats.supply) * 100;
         tr
           td(style='text-align:center;') 
             =count
@@ -22,6 +24,6 @@
             a(href='/address/#{item.a_id}') #{item.a_id}
             include ./rl_labels.jade
           td.hidden-xs
-            =itemFixed.toFixed(8)
+            =itemFixedStr
           td.hidden-xs(style='text-align:center;') 
             =percentage.toFixed(2)

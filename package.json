@@ -8,20 +8,21 @@
     "test": "node ./node_modules/jasmine/bin/jasmine.js"
   },
   "dependencies": {
-    "express": "~4.17.1",
-    "static-favicon": "~1.0.0",
-    "morgan": "~1.9.1",
-    "cookie-parser": "~1.0.1",
-    "body-parser": "~1.0.0",
-    "debug": "~4.1.1",
-    "jade": "~1.3.0",
     "bitcoin-node-api": "0.1.0",
-    "request": "2.74.0",
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "debug": "~4.1.1",
+    "express": "~4.17.1",
+    "intl": "^1.2.5",
+    "jade": "~1.3.0",
     "jsonminify": "0.2.3",
+    "markdown-js": "0.0.3",
     "mongodb": "2.0.45",
     "mongoose": "5.7.7",
-    "markdown-js": "0.0.3",
-    "qr-image": "~2.0.0"
+    "morgan": "~1.9.1",
+    "qr-image": "~2.0.0",
+    "request": "2.74.0",
+    "static-favicon": "~1.0.0"
   },
   "devDependencies": {
     "jasmine": "~2.1.0"

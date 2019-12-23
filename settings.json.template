@@ -128,6 +128,9 @@
   //heavy (enable/disable additional heavy features)
   "heavy": false,
 
+  //disable saving blocks & TXs via API during indexing.
+  "lock_during_index": false,
+
   //amount of txs to index per address (stores latest n txs)
   "txcount": 100,
 

@@ -1,3 +1,13 @@
+1.6.2
+* Indexing is now MUCH faster.
+* Added AddressTX model/collection - REQUIRES REINDEX
+* Added support for AJAX loading of Address TX History, using txcount setting for loading
+* Stopped maximum TX count trimming TX's in AddressTX collection
+* Removed tx_array from Address collection -> AddressTX
+* Fix mismatching balances/sent/received, negative balances etc
+* Added new file lock during database indexing: tmp/db_index.pid
+* New setting to lock during indexing: lock_during_index
+
 1.6.1
 * fixed last_txs setting
 * added hashrate_units setting

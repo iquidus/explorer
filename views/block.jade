@@ -91,10 +91,11 @@ block content
                   a(href='/tx/#{txn.txid}') #{txn.txid}
                 td #{txn.vout.length}
                 if txn.vout.length > 0
-                  - var total = txn.total / 100000000
-                  td #{total.toFixed(8)}
+                  - var total = (txn.total / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+                  td #{total}
                 else
-                  td #{txn.total.toFixed(8)}
+                  - var total = (txn.total).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+                  td #{total}
                 td.view_tx 
                   a(href='/tx/#{txn.txid}')
                     span.glyphicon.glyphicon-eye-open 

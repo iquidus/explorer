@@ -71,14 +71,14 @@ block content
                       tr.info(style='text-align:center')
                         td #{settings.locale.new_coins}
                     else
-                      - var ramount = r.amount / 100000000
+                      - var ramount = (r.amount / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true})
                       tr
                         td 
                           a.loading(href='/address/#{r.addresses}') 
                             =r.addresses
-                        td.danger.hidden-xs #{ramount.toFixed(8)}
+                        td.danger.hidden-xs #{ramount}
                       tr.hidden-lg.hidden-md
-                          td.danger #{ramount.toFixed(8)} #{settings.symbol}
+                          td.danger #{ramount} #{settings.symbol}
                 else
                   tr.info(style='text-align:center')
                     td #{settings.locale.proof_of_stake}
@@ -94,20 +94,21 @@ block content
               tbody
                 each r in tx.vout
                   if tx.vout.length > 0 
-                    - var ramount = r.amount / 100000000  
+                    - var ramount = (r.amount / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true})
                     tr
                       td 
                         a.loading(href='/address/#{r.addresses}') 
                           =r.addresses 
-                      td.success.hidden-xs  #{ramount.toFixed(8)}
+                      td.success.hidden-xs  #{ramount}
                     tr.hidden-lg.hidden-md
-                      td.success #{ramount.toFixed(8)} #{settings.symbol}
+                      td.success #{ramount} #{settings.symbol}
                   else
+                    - var ramount = (r.amount / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true})
                     tr
                       td 
                         a.loading(href='/address/#{r.addresses}') 
                           =r.addresses 
-                      td.success.hidden-xs  #{ramount.toFixed(8)}
+                      td.success.hidden-xs  #{ramount}
                     tr.hidden-lg.hidden-md
-                      td.success #{ramount.toFixed(8)} #{settings.symbol} 
+                      td.success #{ramount} #{settings.symbol} 
     .footer-padding
