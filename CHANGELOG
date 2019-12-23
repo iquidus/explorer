@@ -1,3 +1,6 @@
+1.7.1
+* Added "claim address" system - allows users to label addresses by signing messages
+
 1.7.0
 * Various updated dependencies & node version
 * Switched from Jade to Pug
