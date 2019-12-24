@@ -1,4 +1,4 @@
-Iquidus Explorer - 1.6.2
+Iquidus Explorer - 1.7.0
 ================
 
 An open source block explorer written in node.js.
@@ -19,8 +19,8 @@ An open source block explorer written in node.js.
 
 ### Requires
 
-*  node.js >= 0.10.28 (8.17.0 is advised for updated dependencies)
-*  mongodb 2.6.x
+*  node.js >= 8.17.0 (12.14.0 is advised for updated dependencies)
+*  mongodb 4.2.x
 *  *coind
 
 ### Create database
@@ -37,7 +37,7 @@ Create user with read/write access:
 
     > db.createUser( { user: "iquidus", pwd: "3xp!0reR", roles: [ "readWrite" ] } )
 
-*Note: If you're using mongo shell 2.4.x, use the following to create your user:
+*Note: If you're using mongo shell 4.2.x, use the following to create your user:
 
     > db.addUser( { user: "username", pwd: "password", roles: [ "readWrite"] })
 

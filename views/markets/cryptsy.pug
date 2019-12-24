@@ -5,14 +5,15 @@ block market_view
     .col-md-12  
       .panel.panel-default
         .panel-heading
-          strong #{settings.locale.yobit} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong #{settings.locale.cryptsy} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='#')
-            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
         table.table.table-bordered.summary-table 
           thead
             tr
               th #{settings.locale.mkt_high}
               th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
               th.hidden-xs #{settings.locale.mkt_top_bid}
               th.hidden-xs #{settings.locale.mkt_top_ask}
               th.hidden-xs #{settings.locale.mkt_last}
@@ -20,8 +21,9 @@ block market_view
             tr
               td #{marketdata.data.summary.high}
               td #{marketdata.data.summary.low}
-              td.hidden-xs #{marketdata.data.summary.buy}
-              td.hidden-xs #{marketdata.data.summary.sell}
+              td #{marketdata.data.summary.volume}
+              td.hidden-xs #{marketdata.data.summary.bid}
+              td.hidden-xs #{marketdata.data.summary.ask}
               td.hidden-xs #{marketdata.data.summary.last}
   .row
     .col-md-6.col-xs-12
@@ -38,12 +40,11 @@ block market_view
             each buy in marketdata.data.buys
               tr
                 td
-                  =buy[0].toFixed(8)
+                  =buy.price
                 td
-                  =buy[1].toFixed(8)
+                  =buy.amount.toFixed(8)
                 td.hidden-xs
-                  - var total = buy[0] * buy[1];
-                  =total.toFixed(8)
+                  =buy.total
     .col-md-6.col-xs-12
       .panel.panel-default
         .panel-heading
@@ -58,12 +59,11 @@ block market_view
             each sell in marketdata.data.sells
               tr
                 td
-                  =sell[0].toFixed(8)
+                  =sell.price
                 td
-                  =sell[1].toFixed(8)
+                  =sell.amount.toFixed(8)
                 td.hidden-xs
-                  - var total = sell[0] * sell[1];
-                  =total.toFixed(8)
+                  =sell.total
   .row   
     .col-md-12
       .panel.panel-default
@@ -79,30 +79,28 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
             each order in marketdata.data.history
-              if order.type == 'bid'
+              if order.initiate_ordertype == 'Buy'
                 tr.success
                   td.hidden-xs
-                    =order.type
+                    =order.initiate_ordertype
                   td
-                    =order.amount.toFixed(8)
+                    =order.quantity.toFixed(8)
                   td
-                    =order.price.toFixed(8)
+                    =order.tradeprice.toFixed(8)
                   td
-                    - var total = order.amount * order.price;
-                    =total.toFixed(8)
+                    =order.total.toFixed(8)
                   td.hidden-xs
-                    =format_unixtime(order.timestamp)       
+                    =(new Date(order.timestamp * 1000).toUTCString())
               else
                 tr.danger 
                   td.hidden-xs
-                    =order.type
+                    =order.initiate_ordertype
                   td
-                    =order.amount.toFixed(8)
+                    =order.quantity.toFixed(8)
                   td
-                    =order.price.toFixed(8)
+                    =order.tradeprice.toFixed(8)
                   td
-                    - var total = order.amount * order.price;
-                    =total.toFixed(8)
+                    =order.total.toFixed(8)
                   td.hidden-xs
-                    =format_unixtime(order.timestamp)
+                     =(new Date(order.timestamp * 1000).toUTCString())
       .footer-padding

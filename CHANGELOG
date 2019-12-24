@@ -1,3 +1,8 @@
+1.7.0
+* Various updated dependencies & node version
+* Switched from Jade to Pug
+* Updated required mongo version
+
 1.6.2
 * Indexing is now MUCH faster.
 * Added AddressTX model/collection - REQUIRES REINDEX
