@@ -2,6 +2,19 @@ extends layout
 
 block content
   script.
+    var setting_maxTxCount = parseInt("#{settings.index.last_txs}");
+    var lengthMenuOpts = [];
+    var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
+    for (i=0; i < lengthMenuOptsAdd.length; i++) {
+      if (setting_maxTxCount >= lengthMenuOptsAdd[i]) {
+        lengthMenuOpts.push(lengthMenuOptsAdd[i]);
+      }
+    }
+    if (setting_maxTxCount < 10) {
+      var displayLengthMax = setting_maxTxCount;
+    } else {
+      var displayLengthMax = 10;
+    }
     var rplot;
     var colors = [ "#0071bc" ];
     $(document).ready(function(){
@@ -35,31 +48,33 @@ block content
         searching: false,
         ordering: false,
         //responsive: true,
-        lengthChange: false,
+        lengthChange: true,
+        processing: true,
+        serverSide: true,
+        iDisplayLength: displayLengthMax,
+        lengthMenu: lengthMenuOpts,
         //processing: true,
-        ajax: {
-          url: '/ext/getlasttxs/#{min_amount}',
-          dataSrc: function ( json ) {
-            for ( var i=0;i<json.data.length; i++ ) {
-              json.data[i]['timestamp'] = format_unixtime(json.data[i]['timestamp']);
-              json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "' target='_blank'>" + json.data[i]['txid'] + "</a>"
-              var amount = json.data[i]['total'] / 100000000;
-              if (amount > '#{flagb}') {
-                json .data[i]['total'] = "<label class='label label-danger'>" + amount.toLocaleString('en') + "</label>";
-              } else if (amount > '#{flaga}') {
-                json .data[i]['total'] = "<label class='label label-warning'>" + amount.toLocaleString('en') + "</label>";
-              } else {
-                json .data[i]['total'] = "<label class='label label-success'>" + amount.toLocaleString('en') + "</label>";
-              }
-            }
-            return json.data;
+        ajax: '/ext/getlasttxsajax/#{min_amount}',
+        rowCallback: function(row, data, index) {
+          var blockindex = data[0]; //variables for better readability
+          var blockhash = data[1]; //variables for better readability
+          var txhash = data[2]; //variables for better readability
+          var outputs = data[3]; //variables for better readability
+          var amount = (data[4] / 100000000); //variables for better readability
+          var amountParts = amount.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true}).split('.');
+          var amountStr = amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>';
+          var timestamp = data[5]; //variables for better readability
+          if (amount > '#{flagb}') {
+            var total = "<label class='label label-danger'>" + amountStr + "</label>";
+          } else if (amount > '#{flaga}') {
+            var total = "<label class='label label-warning'>" + amountStr + "</label>";
+          } else {
+            var total = "<label class='label label-success'>" + amountStr + "</label>";
           }
+          $("td:eq(0)", row).html(timestamp);
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
+          $("td:eq(2)", row).html(total);        
         },
-        columns: [
-          { data: 'timestamp', width: '25%' },
-          { data: 'txid', width: '60%' },
-          { data: 'total', width: '15%' },
-        ]
       });
       setInterval( function () {
         rtable.api().ajax.reload(null, false);
