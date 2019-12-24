@@ -75,6 +75,7 @@
     "rl_top100": "Top 76-100",
     "rl_hundredplus": "101+",
 
+    "net_addnodes": "Add Nodes",
     "net_connections": "Connections",
     "net_address": "Address",
     "net_protocol": "Protocol",
