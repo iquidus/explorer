@@ -76,7 +76,8 @@
   "index": {
     "show_hashrate": true,
     "difficulty": "POW",
-    "last_txs": 100
+    "last_txs": 100,
+    "txs_per_page": 10
   },
 
   // ensure links on API page are valid
@@ -133,6 +134,7 @@
 
   //amount of txs to index per address (stores latest n txs)
   "txcount": 100,
+  "txcount_per_page": 50,
 
   //show total sent & received on address page (set false if PoS)
   "show_sent_received": true,

@@ -1,6 +1,7 @@
 script.
   var hashAddress = "#{address.a_id}";
   var setting_maxTxCount = parseInt("#{settings.txcount}");
+  var setting_txPerPage = parseInt("#{settings.txcount_per_page}");
   var lengthMenuOpts = [];
   var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
   for (i=0; i < lengthMenuOptsAdd.length; i++) {
@@ -8,10 +9,10 @@ script.
       lengthMenuOpts.push(lengthMenuOptsAdd[i]);
     }
   }
-  if (setting_maxTxCount < 50) {
+  if (setting_maxTxCount < setting_txPerPage) {
     var displayLengthMax = setting_maxTxCount;
   } else {
-    var displayLengthMax = 50;
+    var displayLengthMax = setting_txPerPage;
   }
 
   $(document).ready(function () {

@@ -234,6 +234,7 @@ app.set('index', settings.index);
 app.set('heavy', settings.heavy);
 app.set('lock_during_index', settings.lock_during_index);
 app.set('txcount', settings.txcount);
+app.set('txcount_per_page', settings.txcount_per_page);
 app.set('nethash', settings.nethash);
 app.set('nethash_units', settings.nethash_units);
 app.set('show_sent_received', settings.show_sent_received);

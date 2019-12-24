@@ -3,6 +3,7 @@ extends layout
 block content
   script.
     var setting_maxTxCount = parseInt("#{settings.index.last_txs}");
+    var setting_txPerPage = parseInt("#{settings.index.txs_per_page}");
     var lengthMenuOpts = [];
     var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
     for (i=0; i < lengthMenuOptsAdd.length; i++) {
@@ -10,10 +11,10 @@ block content
         lengthMenuOpts.push(lengthMenuOptsAdd[i]);
       }
     }
-    if (setting_maxTxCount < 10) {
+    if (setting_maxTxCount < setting_txPerPage) {
       var displayLengthMax = setting_maxTxCount;
     } else {
-      var displayLengthMax = 10;
+      var displayLengthMax = setting_txPerPage;
     }
     $(document).ready(function(){
       var stable = $('#block-table').dataTable( {  
