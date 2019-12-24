@@ -1,15 +1,13 @@
 extends menu
 
 block market_view
-  script.
-    console.log('#{marketdata.data}');
   .row
     .col-md-12  
       .panel.panel-default
         .panel-heading
-          strong #{settings.locale.bittrex} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong #{settings.locale.bleutrade} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='#')
-            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
         table.table.table-bordered.summary-table 
           thead
             tr
@@ -23,18 +21,18 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.data.summary.High.toFixed(8)}
-              td #{marketdata.data.summary.Low.toFixed(8)}
-              td #{marketdata.data.summary.Volume.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.Bid.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.Ask.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.PrevDay.toFixed(8)}
-              td.hidden-xs #{marketdata.data.summary.Last.toFixed(8)}
-              - var bittrex_change = (100 - ((parseFloat(marketdata.data.summary.PrevDay)/parseFloat(marketdata.data.summary.Last))*100)).toFixed(2);
-              if bittrex_change >= 0
-                td.success +#{bittrex_change} %
+              td #{parseFloat(marketdata.data.summary.High).toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.Low).toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.Volume).toFixed(8)}
+              td.hidden-xs #{parseFloat(marketdata.data.summary.Bid).toFixed(8)}
+              td.hidden-xs #{parseFloat(marketdata.data.summary.Ask).toFixed(8)}
+              td.hidden-xs #{parseFloat(marketdata.data.summary.PrevDay).toFixed(8)}
+              td.hidden-xs #{parseFloat(marketdata.data.summary.Last).toFixed(8)}
+              - var bleutrade_change = (100 - ((parseFloat(marketdata.data.summary.PrevDay)/parseFloat(marketdata.data.summary.Last))*100)).toFixed(2);
+              if bleutrade_change >= 0
+                td.success +#{bleutrade_change} %
               else
-                td.danger #{bittrex_change} %
+                td.danger #{bleutrade_change} %
   .row
     .col-md-6.col-xs-12
       .panel.panel-default
@@ -50,11 +48,11 @@ block market_view
             each buy in marketdata.data.buys
               tr
                 td
-                  =buy.price
+                  =parseFloat(buy.price).toFixed(8)
                 td
-                  =buy.amount
+                  =parseFloat(buy.amount).toFixed(8)
                 td.hidden-xs
-                  =buy.total
+                  =parseFloat(buy.total).toFixed(8)
     .col-md-6.col-xs-12
       .panel.panel-default
         .panel-heading
@@ -69,11 +67,11 @@ block market_view
             each sell in marketdata.data.sells
               tr
                 td
-                  =sell.price
+                  =parseFloat(sell.price).toFixed(8)
                 td
-                  =sell.amount
+                  =parseFloat(sell.amount).toFixed(8)
                 td.hidden-xs
-                  =sell.total
+                  =parseFloat(sell.total).toFixed(8)
   .row   
     .col-md-12
       .panel.panel-default
@@ -89,16 +87,16 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
             each order in marketdata.data.history
-              if order.OrderType == 'BUY'
+              if order.OrderType == "BUY"
                 tr.success
                   td.hidden-xs
                     =order.OrderType
                   td
-                    =order.Quantity.toFixed(8)
+                    =order.Quantity
                   td
-                    =order.Price.toFixed(8)
+                    =order.Price
                   td
-                    =order.Total.toFixed(8)
+                    =order.Total
                   td.hidden-xs
                     =order.TimeStamp
               else
@@ -106,11 +104,11 @@ block market_view
                   td.hidden-xs
                     =order.OrderType
                   td
-                    =order.Quantity.toFixed(8)
+                    =order.Quantity
                   td
-                    =order.Price.toFixed(8)
+                    =order.Price
                   td
-                    =order.Total.toFixed(8)
+                    =order.Total
                   td.hidden-xs
                     =order.TimeStamp
       .footer-padding
