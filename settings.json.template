@@ -45,6 +45,8 @@
   "check_timeout": 250,
 
   // wallet settings
+  "use_rpc": false,
+
   "wallet": {
     "host": "localhost",
     "port": 9332,

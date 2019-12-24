@@ -8,6 +8,7 @@
 * Fix mismatching balances/sent/received, negative balances etc
 * Added new file lock during database indexing: tmp/db_index.pid
 * New setting to lock during indexing: lock_during_index
+* Add setting to call bitcoin-core directly or use RPC during indexing
 
 1.6.1
 * fixed last_txs setting
