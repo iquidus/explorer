@@ -30,3 +30,7 @@ settings.json
 *.ico
 *.png
 
+
+.DS_Store
+
+package-lock.json
