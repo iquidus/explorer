@@ -13,16 +13,16 @@ block content
         strong #{address.a_id}
         if settings.labels[address.a_id]
           if settings.labels[address.a_id].type
-            label(class='label label-#{settings.labels[address.a_id].type} pull-right hidden-xs', style='margin-left:15px;')
+            label(class='label label-'+settings.labels[address.a_id].type+' pull-right hidden-xs', style='margin-left:15px;')
               =settings.labels[address.a_id].label
               if settings.labels[address.a_id].url
-                a(href='#{settings.labels[address.a_id].url}', target='_blank')
+                a(href=settings.labels[address.a_id].url, target='_blank')
                   span.fa.fa-question-circle(style='margin-left:5px;')
           else
             label.label.label-default.pull-right.hidden-xs(style='margin-left:15px;')
               =settings.labels[address.a_id].label
               if settings.labels[address.a_id].url
-                a(href='#{settings.labels[address.a_id].url}', target='_blank')
+                a(href=settings.labels[address.a_id].url, target='_blank')
                   span.fa.fa-question-circle(style='margin-left:5px;')
       table.table.table-bordered.table-striped.summary-table
         thead
@@ -46,10 +46,10 @@ block content
               td.addr-summary #{balanceParts[0]}.
                 span.decimal #{balanceParts[1]} 
               td.addr-summary
-                img.qrcode(src='/qr/#{address.a_id}') 
+                img.qrcode(src='/qr/'+address.a_id) 
     .panel.panel-default
       .panel-heading
         strong #{settings.locale.ex_latest_transactions}
       table.table.table-bordered.table-striped
-        include ./includes/address_history.jade
+        include ./includes/address_history.pug
     .footer-padding

@@ -1,14 +1,14 @@
 extends menu
- 
+
 block market_view
   .row
-    .col-md-12  
+    .col-md-12
       .panel.panel-default
         .panel-heading
-          strong #{settings.locale.cryptopia} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong #{settings.locale.tradesatoshi} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='#')
-            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
-        table.table.table-bordered.summary-table 
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart)
+        table.table.table-bordered.summary-table
           thead
             tr
               th #{settings.locale.mkt_high}
@@ -20,23 +20,23 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.data.summary.high}
-              td #{marketdata.data.summary.low}
-              td #{marketdata.data.summary.volume}
-              td.hidden-xs #{marketdata.data.summary.bid}
-              td.hidden-xs #{marketdata.data.summary.ask}
-              td.hidden-xs #{marketdata.data.summary.last}
-              - var cryptopia_change =  (marketdata.data.summary.change).toFixed(4);
-              if cryptopia_change >= 0
-                td.success +#{cryptopia_change} %
+              td #{marketdata.data.summary.high.toFixed(8)}
+              td #{marketdata.data.summary.low.toFixed(8)}
+              td #{marketdata.data.summary.volume.toFixed(2).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")}
+              td.hidden-xs #{marketdata.data.summary.bid.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.ask.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.last.toFixed(8)}
+              - var tradesatoshi_change = parseFloat(marketdata.data.summary.change).toFixed(4).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1");
+              if tradesatoshi_change >= 0
+                td.success +#{tradesatoshi_change} %
               else
-                td.danger #{cryptopia_change} %
+                td.danger #{tradesatoshi_change} %
   .row
     .col-md-6.col-xs-12
       .panel.panel-default
         .panel-heading
           h3.panel-title #{settings.locale.mkt_buy_orders}
-        table.table.table-striped.table-bordered.order-table
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
               th #{settings.locale.mkt_price} (#{marketdata.exchange})
@@ -56,7 +56,7 @@ block market_view
       .panel.panel-default
         .panel-heading
           h3.panel-title #{settings.locale.mkt_sell_orders}
-        table.table.table-striped.table-bordered.order-table
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr
               th #{settings.locale.mkt_price} (#{marketdata.exchange})
@@ -71,7 +71,7 @@ block market_view
                   =sell.amount
                 td.hidden-xs
                   =sell.total
-  .row   
+  .row
     .col-md-12
       .panel.panel-default
         .panel-heading
@@ -85,31 +85,29 @@ block market_view
               th #{settings.locale.mkt_total} (#{marketdata.exchange})
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
-            each order in marketdata.data.history
-              if order.ordertype == 'Buy'
+            each result in marketdata.data.history
+              if result.orderType == 'Sell'
+                tr.danger
+                  td.hidden-xs
+                    =result.orderType
+                  td
+                    =result.quantity.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
+                  td
+                    =result.price.toFixed(8)
+                  td
+                    =result.total.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
+                  td.hidden-xs
+                    =result.timeStamp.substr(0, 19).replace("T", "      ")
+              else
                 tr.success
                   td.hidden-xs
-                    =order.ordertype
+                    =result.orderType
                   td
-                    =order.amount
+                    =result.quantity.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
                   td
-                    =order.price
+                    =result.price.toFixed(8)
                   td
-                    =order.total
+                    =result.total.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
                   td.hidden-xs
-                    =(new Date(order.timestamp * 1000).toUTCString())
-              else
-                tr.danger 
-                  td.hidden-xs
-                    =order.ordertype
-                  td
-                    =order.amount
-                  td
-                    =order.price
-                  td
-                    =order.total
-                  td.hidden-xs
-                     =(new Date(order.timestamp * 1000).toUTCString())
-
+                    =result.timeStamp.substr(0, 19).replace("T", "      ")
       .footer-padding
-

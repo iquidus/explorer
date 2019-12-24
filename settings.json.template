@@ -50,8 +50,8 @@
   "wallet": {
     "host": "localhost",
     "port": 9332,
-    "user": "darkcoinrpc",
-    "pass": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
+    "username": "darkcoinrpc",
+    "password": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
   },
 
   // confirmations

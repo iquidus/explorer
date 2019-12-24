@@ -45,9 +45,9 @@ block content
           a(href='#received', aria-controls='received', role='tab', data-toggle='tab') Received
     .tab-content
       #balance.tabpanel.tab-pane.active 
-        include ./includes/rl_balance.jade
+        include ./includes/rl_balance.pug
       #received.tabpanel.tab-pane
-        include ./includes/rl_received.jade
+        include ./includes/rl_received.pug
   if show_dist == true
     .col-md-4.col-xs-12
       #summary-panel.panel.panel-default(style='margin-top:47px;')
