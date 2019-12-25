@@ -1,3 +1,8 @@
+1.7.2
+* Index blocks in parallel - uses settings for task counts.
+* Indexing is even faster.
+* New settings to adjust parallel task count multipliers: block_task_multiplier, tx_task_multiplier
+
 1.7.1
 * Added "claim address" system - allows users to label addresses by signing messages
 

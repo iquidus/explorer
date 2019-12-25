@@ -43,6 +43,9 @@
   //update script settings
   "update_timeout": 10,
   "check_timeout": 250,
+  // Task multiplier values - higher values = less tasks relative to CPU count.
+  "block_parallel_tasks": 2,
+  "tx_parallel_tasks": 1,
 
   // wallet settings
   "use_rpc": false,
