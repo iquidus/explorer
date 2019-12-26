@@ -140,90 +140,88 @@ is_locked(function (exists) {
               console.log('Run \'npm start\' to create database structures before running this script.');
               exit();
             } else {
-              db.update_db(settings.coin, function(){
-                db.get_stats(settings.coin, function(stats){
-                  if (settings.heavy == true) {
-                    db.update_heavy(settings.coin, stats.count, 20, function(){
+              db.update_db(settings.coin, function(stats){
+                if (settings.heavy == true) {
+                  db.update_heavy(settings.coin, stats.count, 20, function(){
 
-                    });
-                  }
-                  if (mode == 'reindex') {
-                    Tx.deleteMany({}, function(err) { 
-                      Address.deleteMany({}, function(err2) { 
-                        AddressTx.deleteMany({}, function(err3) {
-                          Richlist.updateOne({coin: settings.coin}, {
-                            received: [],
-                            balance: [],
-                          }, function(err3) { 
-                            Stats.updateOne({coin: settings.coin}, { 
-                              last: 0,
-                              count: 0,
-                              supply: 0,
-                            }, function() {
-                              console.log('index cleared (reindex)');
-                            }); 
-                            db.update_tx_db(settings.coin, 1, stats.count, settings.update_timeout, function(){
-                              db.update_richlist('received', function(){
-                                db.update_richlist('balance', function(){
-                                  db.get_stats(settings.coin, function(nstats){
-                                    console.log('reindex complete (block: %s)', nstats.last);
-                                    exit();
-                                  });
-                                });
-                              });
-                            });
-                          });
-                        });
-                      });
-                    });
-                  } else if (mode == 'check') {
-                    db.update_tx_db(settings.coin, 1, stats.count, settings.check_timeout, function(){
-                      db.get_stats(settings.coin, function(nstats){
-                        console.log('check complete (block: %s)', nstats.last);
-                        exit();
-                      });
-                    });
-                  } else if (mode == 'update') {
-                    db.update_tx_db(settings.coin, stats.last, stats.count, settings.update_timeout, function(){
-                      db.update_richlist('received', function(){
-                        db.update_richlist('balance', function(){
-                          db.get_stats(settings.coin, function(nstats){
-                            console.log('update complete (block: %s)', nstats.last);
-                            exit();
-                          });
-                        });
-                      });
-                    });
-                  } else if (mode == 'reindex-rich') {
-                    console.log('update started');
-                    db.update_tx_db(settings.coin, stats.last, stats.count, settings.check_timeout, function(){
-                      console.log('update finished');
-                      db.check_richlist(settings.coin, function(exists){
-                        if (exists == true) {
-                          console.log('richlist entry found, deleting now..');
-                      	}
-                        db.delete_richlist(settings.coin, function(deleted) {
-                          if (deleted == true) {
-                            console.log('richlist entry deleted');
-                          }
-                          db.create_richlist(settings.coin, function() {
-                            console.log('richlist created.');
+                  });
+                }
+                if (mode == 'reindex') {
+                  Tx.deleteMany({}, function(err) { 
+                    Address.deleteMany({}, function(err2) { 
+                      AddressTx.deleteMany({}, function(err3) {
+                        Richlist.updateOne({coin: settings.coin}, {
+                          received: [],
+                          balance: [],
+                        }, function(err3) { 
+                          Stats.updateOne({coin: settings.coin}, { 
+                            last: 0,
+                            count: 0,
+                            supply: 0,
+                          }, function() {
+                            console.log('index cleared (reindex)');
+                          }); 
+                          db.update_tx_db(settings.coin, 1, stats.count, settings.update_timeout, function(){
                             db.update_richlist('received', function(){
-                              console.log('richlist updated received.');
                               db.update_richlist('balance', function(){
-                                console.log('richlist updated balance.');
                                 db.get_stats(settings.coin, function(nstats){
-                                  console.log('update complete (block: %s)', nstats.last);
+                                  console.log('reindex complete (block: %s)', nstats.last);
                                   exit();
                                 });
                               });
                             });
                           });
                         });
-                      }); 
+                      });
                     });
-                  }
-                });
+                  });
+                } else if (mode == 'check') {
+                  db.update_tx_db(settings.coin, 1, stats.count, settings.check_timeout, function(){
+                    db.get_stats(settings.coin, function(nstats){
+                      console.log('check complete (block: %s)', nstats.last);
+                      exit();
+                    });
+                  });
+                } else if (mode == 'update') {
+                  db.update_tx_db(settings.coin, stats.last, stats.count, settings.update_timeout, function(){
+                    db.update_richlist('received', function(){
+                      db.update_richlist('balance', function(){
+                        db.get_stats(settings.coin, function(nstats){
+                          console.log('update complete (block: %s)', nstats.last);
+                          exit();
+                        });
+                      });
+                    });
+                  });
+                } else if (mode == 'reindex-rich') {
+                  console.log('update started');
+                  db.update_tx_db(settings.coin, stats.last, stats.count, settings.check_timeout, function(){
+                    console.log('update finished');
+                    db.check_richlist(settings.coin, function(exists){
+                      if (exists == true) {
+                        console.log('richlist entry found, deleting now..');
+                      }
+                      db.delete_richlist(settings.coin, function(deleted) {
+                        if (deleted == true) {
+                          console.log('richlist entry deleted');
+                        }
+                        db.create_richlist(settings.coin, function() {
+                          console.log('richlist created.');
+                          db.update_richlist('received', function(){
+                            console.log('richlist updated received.');
+                            db.update_richlist('balance', function(){
+                              console.log('richlist updated balance.');
+                              db.get_stats(settings.coin, function(nstats){
+                                console.log('update complete (block: %s)', nstats.last);
+                                exit();
+                              });
+                            });
+                          });
+                        });
+                      });
+                    }); 
+                  });
+                }
               });
             }
           });
