@@ -27,14 +27,22 @@ mongoose.connect(dbString, function(err) {
       lib.syncLoop(body.length, function (loop) {
         var i = loop.iteration();
         var address = body[i].addr.split(':')[0];
+        var port = body[i].addr.split(':')[1];
         db.find_peer(address, function(peer) {
           if (peer) {
+            if (isNaN(peer['port']) || peer['port'].length < 2 || peer['country'].length < 1) {
+              db.drop_peers(function() {
+                console.log('Saved peers missing ports or country, dropping peers. Re-reun this script afterwards.');
+                exit();
+              });
+            }
             // peer already exists
             loop.next();
           } else {
-            request({uri: 'http://freegeoip.net/json/' + address, json: true}, function (error, response, geo) {
+            request({uri: 'https://freegeoip.app/json/' + address, json: true}, function (error, response, geo) {
               db.create_peer({
                 address: address,
+                port: port,
                 protocol: body[i].version,
                 version: body[i].subver.replace('/', '').replace('/', ''),
                 country: geo.country_name

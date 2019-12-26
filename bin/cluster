@@ -11,11 +11,16 @@ if (cluster.isMaster) {
       //ensure workers exit cleanly 
       process.on('SIGINT', function() {
         console.log('Cluster shutting down..');
-        for (var id in cluster.workers) {
-          cluster.workers[id].kill();
-        }
-        // exit the master process
-        process.exit(0);
+        setTimeout(function() {
+          for (var id in cluster.workers) {
+            console.log('Worker shutting down (' + id + ')');
+            cluster.workers[id].kill();
+          }
+          setTimeout(function() {
+            // exit the master process
+            process.exit(0);
+          }, 3000);
+        }, 1000);
       });
 
       // Count the machine's CPUs
@@ -27,8 +32,13 @@ if (cluster.isMaster) {
       }
 
       // Listen for dying workers
-      cluster.on('exit', function () {
-        cluster.fork();
+      cluster.on('exit', function (worker, code, signal) {
+        if (worker['process']['exitCode'] === 0) {
+          console.log('Worker shut down.');
+        } else if ((signal != 'SIGINT') && (worker['process']['exitCode'] !== 0) && (worker.exitedAfterDisconnect !== true)) {
+          console.log('Cluster restarting...');
+          cluster.fork();
+        }
       });
     }
   });

@@ -44,7 +44,7 @@ app.set('view engine', 'jade');
 app.use(favicon(path.join(__dirname, settings.favicon)));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -58,28 +58,77 @@ app.use('/ext/getmoneysupply', function(req,res){
 });
 
 app.use('/ext/getaddress/:hash', function(req,res){
-  db.get_address(req.param('hash'), function(address){
+  db.get_address(req.params.hash, function(address){
     if (address) {
       var a_ext = {
         address: address.a_id,
         sent: (address.sent / 100000000),
         received: (address.received / 100000000),
         balance: (address.balance / 100000000).toString().replace(/(^-+)/mg, ''),
-        last_txs: address.txs,
       };
       res.send(a_ext);
     } else {
-      res.send({ error: 'address not found.', hash: req.param('hash')})
+      res.send({ error: 'address not found.', hash: req.params.hash})
+    }
+  });
+});
+
+app.use('/ext/gettx/:txid', function(req, res) {
+  var txid = req.params.txid;
+  db.get_tx(txid, function(tx) {
+    if (tx) {
+      lib.get_blockcount(function(blockcount) {
+        res.send({ active: 'tx', tx: tx, confirmations: settings.confirmations, blockcount: blockcount});
+      });
+    }
+    else {
+      lib.get_rawtransaction(txid, function(rtx) {
+        if (rtx.txid) {
+          lib.prepare_vin(rtx, function(vin) {
+            lib.prepare_vout(rtx.vout, rtx.txid, vin, function(rvout, rvin) {
+              lib.calculate_total(rvout, function(total){
+                if (!rtx.confirmations > 0) {
+                  var utx = {
+                    txid: rtx.txid,
+                    vin: rvin,
+                    vout: rvout,
+                    total: total.toFixed(8),
+                    timestamp: rtx.time,
+                    blockhash: '-',
+                    blockindex: -1,
+                  };
+                  res.send({ active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount:-1});
+                } else {
+                  var utx = {
+                    txid: rtx.txid,
+                    vin: rvin,
+                    vout: rvout,
+                    total: total.toFixed(8),
+                    timestamp: rtx.time,
+                    blockhash: rtx.blockhash,
+                    blockindex: rtx.blockheight,
+                  };
+                  lib.get_blockcount(function(blockcount) {
+                    res.send({ active: 'tx', tx: utx, confirmations: settings.confirmations, blockcount: blockcount});
+                  });
+                }
+              });
+            });
+          });
+        } else {
+          res.send({ error: 'tx not found.', hash: txid});
+        }
+      });
     }
   });
 });
 
 app.use('/ext/getbalance/:hash', function(req,res){
-  db.get_address(req.param('hash'), function(address){
+  db.get_address(req.params.hash, function(address){
     if (address) {
       res.send((address.balance / 100000000).toString().replace(/(^-+)/mg, ''));
     } else {
-      res.send({ error: 'address not found.', hash: req.param('hash')})
+      res.send({ error: 'address not found.', hash: req.params.hash})
     }
   });
 });
@@ -94,10 +143,73 @@ app.use('/ext/getdistribution', function(req,res){
   });
 });
 
-app.use('/ext/getlasttxs/:min', function(req,res){
-  db.get_last_txs(settings.index.last_txs, (req.params.min * 100000000), function(txs){
-    res.send({data: txs});
+app.use('/ext/getlasttxsajax/:min', function(req,res){
+  if(typeof req.query.length === 'undefined' || isNaN(req.query.length) || req.query.length > settings.index.last_txs){
+    req.query.length = settings.index.last_txs;
+  }
+  if(typeof req.query.start === 'undefined' || isNaN(req.query.start) || req.query.start < 0){
+    req.query.start = 0;
+  }
+  if(typeof req.params.min === 'undefined' || isNaN(req.params.min ) || req.params.min  < 0){
+    req.params.min  = 0;
+  } else {
+    req.params.min  = (req.params.min * 100000000);
+  }
+  db.get_last_txs_ajax(req.query.start, req.query.length, req.params.min,function(txs, count){
+    var data = [];
+    for(i=0; i<txs.length; i++){
+      var row = [];
+      row.push(txs[i].blockindex);
+      row.push(txs[i].blockhash);
+      row.push(txs[i].txid);
+      row.push(txs[i].vout.length);
+      row.push((txs[i].total));
+      row.push(new Date((txs[i].timestamp) * 1000).toUTCString());
+      data.push(row);
+    }
+    res.json({"data":data, "draw": req.query.draw, "recordsTotal": count, "recordsFiltered": count});
   });
+});
+
+app.use('/ext/getaddresstxsajax/:address', function(req,res){
+    req.query.length = parseInt(req.query.length);
+    if(isNaN(req.query.length) || req.query.length > settings.txcount){
+        req.query.length = settings.txcount;
+    }
+    if(isNaN(req.query.start) || req.query.start < 0){
+        req.query.start = 0;
+    }
+    db.get_address_txs_ajax(req.params.address, req.query.start, req.query.length,function(txs, count){
+        var data = [];
+        for(i=0; i<txs.length; i++){
+            if(typeof txs[i].txid !== "undefined") {
+                var out = 0
+                var vin = 0
+
+                txs[i].vout.forEach(function (r) {
+                    if (r.addresses == req.params.address) {
+                        out += r.amount;
+                    }
+                });
+
+                txs[i].vin.forEach(function (s) {
+                    if (s.addresses == req.params.address) {
+                        vin += s.amount
+                    }
+                });
+
+                var row = [];
+                row.push(new Date((txs[i].timestamp) * 1000).toUTCString());
+                row.push(txs[i].txid);
+                row.push(out);
+                row.push(vin);
+                row.push(txs[i].balance);
+                data.push(row);
+            }
+        }
+
+        res.json({"data":data, "draw": req.query.draw, "recordsTotal": count, "recordsFiltered": count});
+    });
 });
 
 app.use('/ext/connections', function(req,res){
@@ -114,13 +226,16 @@ app.set('locale', locale);
 app.set('display', settings.display);
 app.set('markets', settings.markets);
 app.set('twitter', settings.twitter);
-app.set('facebook', settings.youtube);
+app.set('facebook', settings.facebook); 
 app.set('googleplus', settings.googleplus);
 app.set('youtube', settings.youtube);
 app.set('genesis_block', settings.genesis_block);
 app.set('index', settings.index);
+app.set('use_rpc', settings.use_rpc);
 app.set('heavy', settings.heavy);
+app.set('lock_during_index', settings.lock_during_index);
 app.set('txcount', settings.txcount);
+app.set('txcount_per_page', settings.txcount_per_page);
 app.set('nethash', settings.nethash);
 app.set('nethash_units', settings.nethash_units);
 app.set('show_sent_received', settings.show_sent_received);
