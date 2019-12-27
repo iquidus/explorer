@@ -27,10 +27,10 @@ html
         function update_stats(){
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(parseInt(parseFloat(json.data[0].supply).toFixed(0)).toLocaleString('en'));
-            $("#difficulty").text(json.data[0].difficulty.toFixed(2));
+            $("#difficulty").text(parseFloat(json.data[0].difficulty).toFixed(2));
             $("#difficultyHybrid").text(json.data[0].difficultyHybrid);
             $("#hashrate").text(parseFloat(json.data[0].hashrate).toLocaleString('en'));
-            $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
+            $("#lastPrice").text(parseFloat(json.data[0].lastPrice).toFixed(8));
             $("#lblConnections").text(json.data[0].connections + ' connections');
             $("#lblBlockcount").text(json.data[0].blockcount + ' blocks');
             $("#lblX1").text(' ');
