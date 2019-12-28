@@ -1,5 +1,8 @@
 Note: All updates require the explorer to be restarted
 
+1.7.0 -> 1.7.1
+* nothing required
+
 1.6.2 -> 1.7.0
 * Update node (v12 is advised)
 * Update mongodb (4.2.x is advised)
