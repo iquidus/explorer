@@ -148,8 +148,11 @@ is_locked(function (exists) {
                 }
                 if (mode == 'reindex') {
                   Tx.deleteMany({}, function(err) { 
+                    console.log('TXs cleared.');
                     Address.deleteMany({}, function(err2) { 
+                      console.log('Addresses cleared.');
                       AddressTx.deleteMany({}, function(err3) {
+                        console.log('Address TXs cleared.');
                         Richlist.updateOne({coin: settings.coin}, {
                           received: [],
                           balance: [],
