@@ -174,9 +174,14 @@ html
                label#lblX1
               else
                label#supply -
+              if settings.index.show_market_cap == true
+                <br>
+                label (
+                label#marketCap -
+                label )
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
-            if settings.index.show_market_cap == false || settings.index.show_market_cap_over_price != true
+            if settings.index.show_market_cap != true || settings.index.show_market_cap_over_price != true
               .panel-heading
                 strong #{settings.markets.exchange} Price
               .panel-body
@@ -186,7 +191,7 @@ html
                   label#lblX1
                 else
                   label#lastPrice -
-            if settings.index.show_market_cap == true
+            if settings.index.show_market_cap == true && settings.index.show_market_cap_over_price == true
               .panel-heading
                 strong Market Cap
               .panel-body
