@@ -2,6 +2,9 @@ Note: All updates require the explorer to be restarted
 
 1.7.2 -> 1.7.3
 * Reindex explorerdb (node --stack-size=15000 scripts/sync.js index reindex) required for Historical Address Balance
+* Add new settings to settings.json (see settings.json.template)
+  * show_market_cap
+  * show_market_cap_over_price
 
 1.7.1 -> 1.7.2
 * Add new settings to settings.json (see settings.json.template)

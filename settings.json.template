@@ -78,7 +78,9 @@
   // index page (valid options for difficulty are POW, POS or Hybrid)
   "index": {
     "show_hashrate": true,
+    // Show Market Cap in header
     "show_market_cap": false,
+    // Show Market Cap in place of price box
     "show_market_cap_over_price": false,
     "difficulty": "POW",
     "last_txs": 100,

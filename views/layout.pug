@@ -176,7 +176,7 @@ html
                label#supply -
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
-            if settings.index.show_market_cap_over_price != true
+            if settings.index.show_market_cap == false || settings.index.show_market_cap_over_price != true
               .panel-heading
                 strong #{settings.markets.exchange} Price
               .panel-body
