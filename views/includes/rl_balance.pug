@@ -20,8 +20,8 @@
           td(style='text-align:center;') 
             =count
           td 
-            a(href='/address/#{item.a_id}') #{item.a_id}
-            include ./rl_labels.jade
+            a(href='/address/'+item.a_id) #{item.a_id}
+            include ./rl_labels.pug
           td.hidden-xs #{itemFixedParts[0]}.
             span.decimal #{itemFixedParts[1]}
           td.hidden-xs(style='text-align:center;') 

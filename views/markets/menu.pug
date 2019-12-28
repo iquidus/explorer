@@ -33,8 +33,8 @@ block content
             each mkt in settings.markets.enabled
               if market == mkt
                 li.active
-                  a.navbar-link.loading(href='/markets/#{mkt}') #{settings.locale[mkt]}
+                  a.navbar-link.loading(href='/markets/'+mkt) #{settings.locale[mkt]}
               else
                 li
-                  a.navbar-link.loading(href='/markets/#{mkt}') #{settings.locale[mkt]}
+                  a.navbar-link.loading(href='/markets/'+mkt) #{settings.locale[mkt]}
     block market_view

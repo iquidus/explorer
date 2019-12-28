@@ -5,28 +5,32 @@ block market_view
     .col-md-12  
       .panel.panel-default
         .panel-heading
-          strong #{settings.locale.ccex} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          strong #{settings.locale.cryptopia} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='#')
-            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title='#{settings.locale.mkt_no_chart}') 
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
         table.table.table-bordered.summary-table 
           thead
             tr
               th #{settings.locale.mkt_high}
               th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
               th.hidden-xs #{settings.locale.mkt_top_bid}
               th.hidden-xs #{settings.locale.mkt_top_ask}
               th.hidden-xs #{settings.locale.mkt_last}
-              th #{settings.locale.mkt_volume} #{marketdata.coin}
-              th #{settings.locale.mkt_volume} #{marketdata.exchange}
+              th #{settings.locale.mkt_change}
           tbody
             tr
               td #{marketdata.data.summary.high}
               td #{marketdata.data.summary.low}
+              td #{marketdata.data.summary.volume}
               td.hidden-xs #{marketdata.data.summary.bid}
               td.hidden-xs #{marketdata.data.summary.ask}
               td.hidden-xs #{marketdata.data.summary.last}
-              td #{marketdata.data.summary.volume}
-              td #{marketdata.data.summary.volume_btc}
+              - var cryptopia_change =  (marketdata.data.summary.change).toFixed(4);
+              if cryptopia_change >= 0
+                td.success +#{cryptopia_change} %
+              else
+                td.danger #{cryptopia_change} %
   .row
     .col-md-6.col-xs-12
       .panel.panel-default
