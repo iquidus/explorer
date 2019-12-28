@@ -31,7 +31,7 @@ html
             $("#difficultyHybrid").text(json.data[0].difficultyHybrid);
             $("#hashrate").text(parseFloat(json.data[0].hashrate).toLocaleString('en'));
             $("#lastPrice").text(parseFloat(json.data[0].lastPrice).toFixed(8) + ' #{settings.markets.exchange}'.toUpperCase());
-            $("#marketCap").text((parseFloat(json.data[0].lastPrice).toFixed(8) * parseInt(parseFloat(json.data[0].supply).toFixed(0))) + ' #{settings.markets.exchange}'.toUpperCase());
+            $("#marketCap").text((parseFloat(json.data[0].lastPrice).toFixed(8) * parseInt(parseFloat(json.data[0].supply).toFixed(0))).toLocaleString('en') + ' #{settings.markets.exchange}'.toUpperCase());
             $("#lblConnections").text(json.data[0].connections + ' connections');
             $("#lblBlockcount").text(json.data[0].blockcount + ' blocks');
             $("#lblX1").text(' ');
@@ -174,7 +174,7 @@ html
                label#lblX1
               else
                label#supply -
-              if settings.index.show_market_cap == true
+              if settings.index.show_market_cap == true && settings.index.show_market_cap_over_price != true
                 <br>
                 label (
                 label#marketCap -
