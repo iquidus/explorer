@@ -113,6 +113,15 @@ Ensure mongodb is not exposed to the outside world via your mongo config or a fi
 
 ### Known Issues
 
+**Address balance history is out of order.**
+
+1.7.2 brings parallel block indexing (super fast) - but the new addition of Historical Address Balance is currently indexed out of order. Will fix it soon.
+
+Only workaround at the moment is limit parallel block tasks to 1 (disable it)
+
+https://github.com/iquidus/explorer/issues/330
+
+
 **script is already running.**
 
 If you receive this message when launching the sync script either a) a sync is currently in progress, or b) a previous sync was killed before it completed. If you are certian a sync is not in progress remove the index.pid and db_index.pid from the tmp folder in the explorer root directory.
