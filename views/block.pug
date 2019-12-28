@@ -2,6 +2,7 @@ extends layout
 
 block content
   - var time = format_unixtime(block.time)
+  - var block_difficulty = parseFloat(block.difficulty).toFixed(4)
   .col-xs-12.col-md-10.col-md-offset-1
     .well.well-sm.hidden-lg.hidden-md(style='word-wrap:break-word;')
       | #{block.hash}
@@ -34,26 +35,26 @@ block content
         tbody
           if block.confirmations >= confirmations                
             tr.success
-              - var block_size = block.size/1024
+              - var block_size = (block.size/1024).toFixed(2)
               td #{block.height}
-              td #{block.difficulty.toFixed(4)}
+              td #{block_difficulty}
               td #{block.confirmations}
               if settings.heavy == true
                 td  #{block.vote}
-              td.hidden-xs #{block_size.toFixed(2)}
+              td.hidden-xs #{block_size}
               td.hidden-xs #{block.bits}
               td.hidden-xs #{block.nonce}
               td.hidden-xs #{time}
           else
             if block.confirmations < (confirmations / 2)
               tr.danger
-                - var block_size = block.size/1024
+                - var block_size = (block.size/1024).toFixed(2)
                 td #{block.height}
-                td #{block.difficulty.toFixed(4)}
+                td #{block_difficulty}
                 td #{block.confirmations}
                 if settings.heavy == true
                   td  #{block.vote}
-                td.hidden-xs #{block_size.toFixed(2)}
+                td.hidden-xs #{block_size}
                 td.hidden-xs #{block.bits}
                 td.hidden-xs #{block.nonce}
                 td.hidden-xs #{time}
@@ -61,11 +62,11 @@ block content
               tr.warning
                 - var block_size = block.size/1024
                 td #{block.height}
-                td #{block.difficulty.toFixed(4)}
+                td #{block_difficulty}
                 td #{block.confirmations}
                 if settings.heavy == true
                   td  #{block.vote}
-                td.hidden-xs #{block_size.toFixed(2)}
+                td.hidden-xs #{block_size}
                 td.hidden-xs #{block.bits}
                 td.hidden-xs #{block.nonce}
                 td.hidden-xs #{time}
