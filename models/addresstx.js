@@ -6,7 +6,7 @@ var AddressTXSchema = new Schema({
   blockindex: {type: Number, default: 0, index: true},
   txid: { type: String, lowercase: true, index: true},
   // renamed to amount instead of balance for future changes
-  amount: { type: Number, default: 0}
+  amount: { type: Number, default: 0, index: true}
 }, {id: false});
 
 module.exports = mongoose.model('AddressTx', AddressTXSchema);

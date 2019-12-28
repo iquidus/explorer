@@ -1,5 +1,8 @@
 Note: All updates require the explorer to be restarted
 
+1.7.2 -> 1.7.3
+* Reindex explorerdb (node --stack-size=15000 scripts/sync.js index reindex) required for Historical Address Balance
+
 1.7.1 -> 1.7.2
 * Add new settings to settings.json (see settings.json.template)
   * block_parallel_tasks

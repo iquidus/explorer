@@ -1,3 +1,6 @@
+1.7.3
+* Fixes for Historical Address Balance - seems to be fastest method that works along-side parallel indexing
+
 1.7.2
 * Index blocks in parallel - uses settings for task counts.
 * Indexing is much faster (again).
