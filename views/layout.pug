@@ -27,10 +27,11 @@ html
         function update_stats(){
           $.ajax({url: '/ext/summary', success: function(json){
             $("#supply").text(parseInt(parseFloat(json.data[0].supply).toFixed(0)).toLocaleString('en'));
-            $("#difficulty").text(json.data[0].difficulty.toFixed(2));
+            $("#difficulty").text(parseFloat(json.data[0].difficulty).toFixed(2));
             $("#difficultyHybrid").text(json.data[0].difficultyHybrid);
             $("#hashrate").text(parseFloat(json.data[0].hashrate).toLocaleString('en'));
-            $("#lastPrice").text(json.data[0].lastPrice.toFixed(8));
+            $("#lastPrice").text(parseFloat(json.data[0].lastPrice).toFixed(8) + ' #{settings.markets.exchange}'.toUpperCase());
+            $("#marketCap").text((parseFloat(json.data[0].lastPrice).toFixed(8) * parseInt(parseFloat(json.data[0].supply).toFixed(0))).toLocaleString('en') + ' #{settings.markets.exchange}'.toUpperCase());
             $("#lblConnections").text(json.data[0].connections + ' connections');
             $("#lblBlockcount").text(json.data[0].blockcount + ' blocks');
             $("#lblX1").text(' ');
@@ -173,17 +174,28 @@ html
                label#lblX1
               else
                label#supply -
+              if settings.index.show_market_cap == true && settings.index.show_market_cap_over_price != true
+                <br>
+                label (
+                label#marketCap -
+                label )
         .col-md-2
           .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              strong #{settings.markets.exchange} Price
-            .panel-body
-              if settings.index.difficulty == 'Hybrid'
-               label#lastPrice -
-               <br>
-               label#lblX1
-              else
-               label#lastPrice -
+            if settings.index.show_market_cap != true || settings.index.show_market_cap_over_price != true
+              .panel-heading
+                strong #{settings.markets.exchange} Price
+              .panel-body
+                if settings.index.difficulty == 'Hybrid'
+                  label#lastPrice -
+                  <br>
+                  label#lblX1
+                else
+                  label#lastPrice -
+            if settings.index.show_market_cap == true && settings.index.show_market_cap_over_price == true
+              .panel-heading
+                strong Market Cap
+              .panel-body
+                label#marketCap -
 
       .row.text-center(style='margin-top:10px;margin-bottom:20px;')
         form.form-inline(method='post', action='/search')
@@ -217,7 +229,7 @@ html
         ul.nav
           li.text-center(style='margin-left:80px;margin-right:80px;')
             p(style='margin-top:15px;')
-              a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer
+              a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer v#{settings.iquidus_version}
       span.connections
         label#lblBlockcount.label.label-default -
         label#lblConnections.label.label-default -
