@@ -9,6 +9,7 @@ var express = require('express')
   , routes = require('./routes/index')
   , lib = require('./lib/explorer')
   , db = require('./lib/database')
+  , package_metadata = require('./package.json')
   , locale = require('./lib/locale')
   , request = require('request');
 
@@ -220,6 +221,7 @@ app.use('/ext/connections', function(req,res){
 
 // locals
 app.set('title', settings.title);
+app.set('iquidus_version', package_metadata.version);
 app.set('symbol', settings.symbol);
 app.set('coin', settings.coin);
 app.set('locale', locale);
