@@ -1,3 +1,7 @@
+1.7.4
+* Updated themes to Bootstrap 4 by using latest Bootswatch themes
+* Deleted unmaintained themes that were never ported to Bootstrap4
+
 1.7.3
 * Fixes for Historical Address Balance - seems to be fastest method that works along-side parallel indexing
 * New settings to optionally show market cap in header: show_market_cap and show_market_cap_over_price

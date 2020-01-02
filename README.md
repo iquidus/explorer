@@ -1,4 +1,4 @@
-Iquidus Explorer - 1.7.3
+Iquidus Explorer - 1.7.4
 ================
 
 An open source block explorer written in node.js.

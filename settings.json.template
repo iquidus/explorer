@@ -23,8 +23,9 @@
 
   // Uses bootswatch themes (http://bootswatch.com/)
   // Valid options:
-  //     Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Lumen, Paper,
-  //     Readable, Sandstone, Simplex, Slate, Spacelab, Superhero, United, Yeti
+  //     Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, 
+  //     Lux, Materia, Minty, Pulse, Sandstone, Simplex, Sketchy, Slate, 
+  //     Solar, Spacelab, Superhero, United, Yeti
   // theme (see /public/themes for available themes)
   "theme": "Cyborg",
 

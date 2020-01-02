@@ -1,4 +1,6 @@
 Note: All updates require the explorer to be restarted
+1.7.3 -> 1.7.4
+* Ensure that you are not using theme "Paper" or "Readable" as these were not ported by Bootswatch
 
 1.7.2 -> 1.7.3
 * Reindex explorerdb (node --stack-size=15000 scripts/sync.js index reindex) required for Historical Address Balance
