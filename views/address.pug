@@ -7,9 +7,9 @@ block content
   - var sentParts = sent.split('.');
   - var received = (address.received / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
   - var receivedParts = received.split('.');
-  .col-xs-12.col-md-10.col-md-offset-1
-    .panel.panel-default.panel-address-summary
-      .panel-heading(style='position:relative;')
+  .col-xs-12.col-md-12
+    .card.card-default.card-address-summary
+      .card-header(style='position:relative;')
         strong #{address.a_id}
           if settings.labels[address.a_id]
             if settings.labels[address.a_id].type
@@ -26,19 +26,19 @@ block content
                     span.fa.fa-question-circle(style='margin-left:5px;')
           else
             if address.name !== "" && typeof address.name !== "undefined"
-              label(class='label label-default pull-right hidden-xs', style='margin-left:15px;')
+              label.badge.badge-pill.pull-right.d-none.d-sm-block(style='margin-left:15px;')
                 =address.name
             else
-              a.badge.badge-pill.pull-right(href="/address/"+ address.a_id +"/claim" style="font-size: smaller;")
+              a.badge.badge-pill.pull-right.d-none.d-sm-block(href="/address/"+ address.a_id +"/claim" style="font-size: smaller;")
                 =" Is this yours? Claim it now for free!"
       table.table.table-bordered.table-striped.summary-table
         thead
           tr
             if settings.show_sent_received == true
-              th.hidden-xs #{settings.locale.total_sent} (#{settings.symbol})
+              th.d-none.d-sm-block #{settings.locale.total_sent} (#{settings.symbol})
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                th.hidden-xs #{settings.locale.total_received} (#{settings.symbol})
+                th.d-none.d-sm-block #{settings.locale.total_received} (#{settings.symbol})
               th #{settings.locale.rl_balance} (#{settings.symbol})
               th #{settings.locale.a_qr}
         tbody
@@ -54,9 +54,9 @@ block content
                 span.decimal #{balanceParts[1]} 
               td.addr-summary
                 img.qrcode(src='/qr/'+address.a_id) 
-    .panel.panel-default
-      .panel-heading
+    .card.card-default.d-none.d-sm-block
+      .card-header
         strong #{settings.locale.ex_latest_transactions}
-      table.table.table-bordered.table-striped
+      table.table-bordered.table-striped
         include ./includes/address_history.pug
     .footer-padding

@@ -44,8 +44,8 @@ block content
         var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;   
         return time;
       }
-      var rtable = $('#alerts-table').dataTable( {  
-        autoWidth: false,      
+      var rtable = $('#movement-table').dataTable( {  
+        autoWidth: true,      
         searching: false,
         ordering: false,
         //responsive: true,
@@ -72,18 +72,26 @@ block content
           } else {
             var total = "<label class='label label-success'>" + amountStr + "</label>";
           }
-          $("td:eq(0)", row).html(timestamp);
-          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
-          $("td:eq(2)", row).html(total);        
-        },
+        ),
+        columns: [
+          { data: 'timestamp', width: '25%' },
+          { data: 'txid', width: '60%' },
+          { data: 'total', width: '15%' },
+        ]
       });
       setInterval( function () {
         rtable.api().ajax.reload(null, false);
       }, 45000 );
     });
   .col-xs-12.col-md-10.col-md-offset-1(style="margin-bottom: 5%")
-    table#alerts-table.table.table-striped.table-bordered
-      thead
-        th timestamp
-        th.hidden-xs txid
-        th amount
+    .card.card-default
+      .card-header
+        strong="Latest Movement"
+      table#movement-table.table.table-bordered.table-striped
+        thead
+          tr
+            th timestamp
+            th.hidden-xs txid
+            th amount
+        tbody.text-center
+    .footer-padding

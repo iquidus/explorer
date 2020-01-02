@@ -120,7 +120,7 @@ html
                 span.menu-text #{settings.locale.menu_richlist}
           if settings.display.markets == true
             li#markets
-              a.nav-link.loading(href="#")
+              a.nav-link.loading(href='/markets/'+settings.markets.default)
                 span.fa.fa-line-chart
                 span.menu-text #{settings.locale.menu_markets}
           if settings.display.api == true

@@ -5,11 +5,10 @@ block content
     .col-md-12(style='text-align:center;')
       img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
   .row
-    .col-xs-12.col-md-10.col-md-offset-1
-      .panel.panel-default.panel-address-summary
-        .panel-heading(style='position:relative;')        
-          strong #{settings.locale.heavy_title} (#{settings.symbol})
-
+    .col-xs-12.col-md-12
+      .card.card-default.card-address-summary
+        .card-header(style='position:relative;')        
+          strong=t('reward.stats_title', {coin : settings.symbol})
         table.table.table-bordered.table-striped.summary-table 
           thead
             tr
@@ -21,6 +20,7 @@ block content
               th #{settings.locale.heavy_estnext}
           tbody             
             tr
+              tr
               td 
                 =heavy.supply
               td 
@@ -32,11 +32,11 @@ block content
               td 
                 =heavy.reward
               td 
-                =heavy.estnext 
+                =heavy.estnext
   .row
-    .col-md-10.col-md-offset-1 
-      .panel.panel-defual
-        .panel-body
+    .col-md-12 
+      .card.card-defual
+        .card-body
           .col-md-3
             center
               canvas(id="myChart2", width="150", height="150")

@@ -1,11 +1,11 @@
 extends layout
 
 block content
-  .col-md-12.col-xs-12
-    .panel.panel-default
-      .panel-heading
+  .col-md-10.col-xs-12.offset-md-1
+    .card.card-default
+      .card-header
         strong #{settings.locale.api_title}
-      .panel-body
+      .card-body
         p
           em #{settings.locale.api_message}
         hr
@@ -33,7 +33,7 @@ block content
               br
               em #{settings.locale.api_getblockcount}
               br
-              a(href='/api/getblockcount') #{address}/api/getblockcount
+              a(href='/api/getblockcount') #{address}/api/getblockcount   
           li
             p
               strong getblockhash [index]
@@ -214,6 +214,5 @@ block content
               strong qrcode (/qr/hash)
               br
               a(href='/qr/'+hashes.address) #{address}/qr/#{hashes.address}
-
+    
     .footer-padding
-
