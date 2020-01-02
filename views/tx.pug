@@ -100,13 +100,13 @@ block content
                   if tx.vout.length > 0 
                     - var ramount = (r.amount / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true})
                     - var ramountParts = ramount.split('.')
-                    tr
+                    tr.d-sm-block.d-md-none.d-none
                       td 
                         a.loading(href='/address/'+r.addresses) 
                           =r.addresses 
-                      td.success.hidden-xs  #{ramountParts[0]}.
+                      td.success.d-none.d-sm-block  #{ramountParts[0]}.
                         span.decimal #{ramountParts[1]}
-                    tr.hidden-lg.hidden-md
+                    tr.d-sm-block.d-md-none.d-none
                       td.success #{ramountParts[0]}.
                             span.decimal #{ramountParts[1]} #{settings.symbol}
                   else
@@ -118,7 +118,7 @@ block content
                         =r.addresses 
                     td.table-success.d-none.d-md-block  #{ramountParts[0]}.
                         span.decimal #{ramountParts[1]}
-                  tr.d-sm-block.d-md-none
+                  tr.d-sm-block.d-md-none.d-none
                     td.table-success #{ramountParts[0]}.
                             span.decimal #{ramountParts[1]} #{settings.symbol}
     .footer-padding

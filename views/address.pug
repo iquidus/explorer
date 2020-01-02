@@ -38,7 +38,7 @@ block content
               th.d-none.d-sm-block #{settings.locale.total_sent} (#{settings.symbol})
             if address.a_id !== 'coinbase'
               if settings.show_sent_received == true
-                th.d-none.d-sm-block #{settings.locale.total_received} (#{settings.symbol})
+                th #{settings.locale.total_received} (#{settings.symbol})
               th #{settings.locale.rl_balance} (#{settings.symbol})
               th #{settings.locale.a_qr}
         tbody
