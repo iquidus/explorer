@@ -64,8 +64,8 @@ block content
           var amount = amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>';
           var timestamp = data[5]; //variables for better readability
           $("td:eq(0)", row).html('<a href="/block/' + blockhash + '">' + blockindex + '</a>');
-          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>').addClass("d-none d-md-none d-lg-table-cell text-center hidden-xs");
-          $("td:eq(2)", row).html(outputs).addClass("d-none d-md-none d-lg-table-cell text-center hidden-xs");
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>').addClass("d-none d-md-none d-lg-table-cell text-center");
+          $("td:eq(2)", row).html(outputs).addClass("d-none d-md-none d-lg-table-cell text-center");
           $("td:eq(3)", row).html(amount);
           $("td:eq(4)", row).html(timestamp);          
         },
@@ -76,7 +76,7 @@ block content
       }, 60000 );
     });
   .row
-    .col-md-12
+    .col-md-10
       if error !== null        
         .alert.alert-danger.alert-dismissable(role='alert')
           button.close(type='button', data-dismiss='alert') ×
@@ -87,15 +87,15 @@ block content
           strong #{settings.locale.ex_warning} #{warning}
   
   .col-md-12
-    .panel.panel-default
-      .panel-heading
+    .card.card-default
+      .card-header
         strong #{settings.locale.ex_latest_transactions}
       table#recent-table.table.table-bordered.table-striped
         thead
           tr
             th.text-center #{settings.locale.ex_block}
-            th.hidden-xs.text-center #{settings.locale.tx_hash}
-            th.hidden-xs.text-center #{settings.locale.tx_recipients}
+            th.d-none.d-md-none.d-lg-table-cell.text-center #{settings.locale.tx_hash}
+            th.d-none.d-md-none.d-lg-table-cell.text-center #{settings.locale.tx_recipients}
             th.text-center #{settings.locale.mkt_amount} (#{settings.symbol})
             th.text-center #{settings.locale.timestamp}
         tbody.text-center

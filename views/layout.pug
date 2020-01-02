@@ -4,11 +4,13 @@ html
     title= settings.title
     link(rel='stylesheet', href='/themes/' + settings.theme + '/bootstrap.min.css')
     link(rel='stylesheet', href='/vendor/jqplot/jquery.jqplot.css')
-    link(rel='stylesheet', href='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css')
+    link(rel='stylesheet', href='/vendor/flags-css/css/flag-icon.min.css')
+    link(res='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css')
+    link(rel='stylesheet', href='//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
-    script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
+    script(src='//netdna.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js')
     script(src='/vendor/jqplot/jquery.jqplot.min.js')
     script(src='/vendor/jqplot/plugins/jqplot.dateAxisRenderer.min.js')
     script(src='/vendor/jqplot/plugins/jqplot.ohlcRenderer.min.js')
@@ -17,9 +19,9 @@ html
     script(src='/vendor/jqplot/plugins/jqplot.barRenderer.min.js')
     script(src='/vendor/jqplot/plugins/jqplot.categoryAxisRenderer.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js')
-    script(src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')
+    script(src='//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js')
     script(src='//cdn.datatables.net/responsive/1.0.1/js/dataTables.responsive.js')
-    script(src='//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js')
+    script(src='//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js')
     script(src='/javascripts/chart.js')
     script.
       $(document).ready(function(){
@@ -55,6 +57,10 @@ html
         }, 60000);
         update_stats();
       });
+    style(type="text/css").
+      .header-icons {
+        margin: 0 3px;
+      }
   body
     - function format_unixtime(unixtime) {
       - var a = new Date(unixtime*1000);
@@ -81,56 +87,52 @@ html
       - var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
       - return time
     -  };
-    .nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
-      .container-fluid
-        .navbar-header
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-collapse')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(href='/') #{settings.title}
-        .collapse.navbar-collapse(id='navbar-collapse')
-          ul.nav.navbar-nav
-            li#home
-              a.navbar-link(href='/')
-                span.glyphicon.glyphicon-search
-                span.menu-text #{settings.locale.menu_explorer}
-            if settings.heavy == true
-              li#reward
-                a.navbar-link(href='/reward')
-                  span.fa.fa-star
-                  span.menu-text #{settings.locale.menu_reward}
-            if settings.display.movement == true
-              li#movement
-                a.navbar-link.loading(href='/movement')
-                  span.fa.fa-money
-                  span.menu-text #{settings.locale.menu_movement}
-            if settings.display.network == true
-              li#network
-                a.navbar-link(href='/network')
-                  span.fa.fa-share-alt
-                  span.menu-text #{settings.locale.menu_network}
-            if settings.display.richlist == true
-              li#richlist
-                a.navbar-link(href='/richlist')
-                  span.fa.fa-btc
-                  span.menu-text #{settings.locale.menu_richlist}
-            if settings.display.markets == true
-              li#markets
-                a.navbar-link.loading(href='/markets/'+settings.markets.default)
-                  span.fa.fa-line-chart
-                  span.menu-text #{settings.locale.menu_markets}
-            if settings.display.api == true
-              li#info
-                a.navbar-link(href='/info')
-                  span.glyphicon.glyphicon-info-sign
-                  span.menu-text #{settings.locale.menu_api}
+    .nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.fixed-top(role='navigation')
+      .navbar-header
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-collapse')
+          span.navbar-toggler-icon 
+        a.navbar-brand(href='/')=settings.title
+      .collapse.navbar-collapse(id='navbar-collapse')
+        ul.navbar-nav.mr-auto
+          li#home
+            a.nav-link(href='/')
+              span.fa.fa-search
+              span.menu-text #{settings.locale.menu_explorer}
+          if settings.heavy == true
+            li#reward
+              a.nav-link(href='/reward')
+                span.fa.fa-star
+                span.menu-text #{settings.locale.menu_reward}
+          if settings.display.movement == true
+            li#movement
+              a.nav-link.loading(href='/movement')
+                span.fa.fa-money
+                span.menu-text #{settings.locale.menu_movement}
+          if settings.display.network == true
+            li#network
+              a.nav-link(href='/network')
+                span.fa.fa-share-alt
+                span.menu-text #{settings.locale.menu_network}
+          if settings.display.richlist == true
+            li#richlist
+              a.nav-link(href='/richlist')
+                span.fa.fa-btc
+                span.menu-text #{settings.locale.menu_richlist}
+          if settings.display.markets == true
+            li#markets
+              a.nav-link.loading(href="#")
+                span.fa.fa-line-chart
+                span.menu-text #{settings.locale.menu_markets}
+          if settings.display.api == true
+            li#info
+              a.nav-link(href='/info')
+                span.fa.fa-info-circle
+                span.menu-text #{settings.locale.menu_api}
     .col-md-12
-      .row.text-center
-        .col-md-2.col-md-offset-1
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
+      .row.text-center.d-flex.justify-content-center
+        .col-md-2
+          .card.card-default.d-none.d-md-block.d-block
+            .card-header
               if settings.nethash_units == 'K'
                 strong #{settings.locale.network} (KH/s)
               else if settings.nethash_units == 'M'
@@ -143,93 +145,98 @@ html
                 strong #{settings.locale.network} (PH/s)
               else if settings.nethash_units == 'H'
                 strong #{settings.locale.network} (H/s)
-            .panel-body
-              if settings.index.difficulty == 'Hybrid'
-               label#hashrate -
-               <br>
-               label#lblX1
-              else
-               label#hashrate -
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              strong #{settings.locale.difficulty}
-            .panel-body
-              if settings.index.difficulty == 'Hybrid'
-               label#difficulty -
-               <br>
-               label#difficultyHybrid -
-              else
-               label#difficulty -
-        .col-md-2.col-sm-12
-          img(src=settings.logo, style='margin-top:-15px;height:128px;')
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            .panel-heading
-              strong #{settings.locale.ex_supply} (#{settings.symbol})
-            .panel-body
-              if settings.index.difficulty == 'Hybrid'
-               label#supply -
-               <br>
-               label#lblX1
-              else
-               label#supply -
-              if settings.index.show_market_cap == true && settings.index.show_market_cap_over_price != true
-                <br>
-                label (
-                label#marketCap -
-                label )
-        .col-md-2
-          .panel.panel-default.hidden-sm.hidden-xs
-            if settings.index.show_market_cap != true || settings.index.show_market_cap_over_price != true
-              .panel-heading
-                strong #{settings.markets.exchange} Price
-              .panel-body
+            .card-body
+              #hashratecard
+                span.header-icons.fa.fa-gears
                 if settings.index.difficulty == 'Hybrid'
-                  label#lastPrice -
+                  label#hashrate -
                   <br>
                   label#lblX1
                 else
-                  label#lastPrice -
-            if settings.index.show_market_cap == true && settings.index.show_market_cap_over_price == true
-              .panel-heading
-                strong Market Cap
-              .panel-body
-                label#marketCap -
+                  label#hashrate -
+        .col-md-2
+          .card.card-default.d-none.d-md-block.d-block
+            .card-header
+              strong #{settings.locale.difficulty}
+            .card-body
+              #difficultycard
+                span.header-icons.fa.fa-sliders
+                if settings.index.difficulty == 'Hybrid'
+                  label#difficulty -
+                  <br>
+                  label#difficultyHybrid -
+                else
+                  label#difficulty -
+        
+        .col-md-2.col-sm-12
+            img(src=settings.logo, style='margin-top:-15px;height:128px;')
+        .col-md-2
+          .card.card-default.d-none.d-md-block.d-block
+            .card-header
+              strong #{settings.locale.ex_supply} (#{settings.symbol})
+            .card-body
+              #supplycard
+                span.header-icons.fa.fa-pie-chart
+                if settings.index.difficulty == 'Hybrid'
+                  label#supply -
+                  <br>
+                  label#lblX1
+                else
+                  label#supply -
+        .col-md-2
+          .card.card-default.d-none.d-md-block.d-block
+            if settings.index.show_market_cap != true || settings.index.show_market_cap_over_price != true
+              .card-header
+                strong #{settings.markets.exchange} Price
+              .card-body
+                #pricecard
+                  span.header-icons.fa.fa-rocket
+                  if settings.index.difficulty == 'Hybrid'
+                    label#lastPrice -
+                    <br>
+                    label#lblX1
+                  else
+                    label#lastPrice -
+          if settings.index.show_market_cap == true && settings.index.show_market_cap_over_price == true
+            .card-header
+              strong Market Cap
+            .card-body
+              label#marketCap -
 
       .row.text-center(style='margin-top:10px;margin-bottom:20px;')
-        form.form-inline(method='post', action='/search')
-          #index-search.form-group
+        form.form-inline.col-12.d-flex.justify-content-center(method='post', action='/search')
+          #index-search.form-group.d-flex.justify-content-center
             input.form-control(type='text', name='search', placeholder=settings.locale.ex_search_message, style='min-width:80%;margin-right:5px;')
             button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
     block content
-    .navbar.navbar-default.navbar-fixed-bottom.hidden-xs
+    .nav.navbar.navbar-default.fixed-bottom.d-none.d-md-flex.d-flex.bg-primary
       .col-md-4
         if settings.display.twitter
-          ul.nav.navbar-nav
+          ul.nav.justify-content-left
             li.pull-left
               a#twitter-icon(href="https://twitter.com/"+settings.twitter, target='_blank')
                 span.glyphicon.fa.fa-twitter
         if settings.display.facebook
-          ul.nav.navbar-nav
+          ul.nav.justify-content-left
             li.pull-left
               a#facebook-icon(href="https://www.facebook.com/"+settings.facebook, target='_blank')
                 span.glyphicon.fa.fa-facebook
-        if settings.display.googleplus
+        if settings.justify-content-left
           ul.nav.navbar-nav
             li.pull-left
               a#googleplus-icon(href="https://plus.google.com/"+settings.googleplus, target='_blank')
                 span.glyphicon.fa.fa-google-plus
         if settings.display.youtube
-          ul.nav.navbar-nav
+          ul.nav.justify-content-left
             li.pull-left
               a#youtube-icon(href="https://www.youtube.com/channel/"+settings.youtube, target='_blank')
                 span.glyphicon.fa.fa-youtube
       .col-md-4
-        ul.nav
+        ul.nav.justify-content-center
           li.text-center(style='margin-left:80px;margin-right:80px;')
             p(style='margin-top:15px;')
-              a.navbar-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer v#{settings.iquidus_version}
-      span.connections
-        label#lblBlockcount.label.label-default -
-        label#lblConnections.label.label-default -
+              a(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer v#{settings.iquidus_version}
+      .col-md-4
+        ui.nav.justify-content-end
+          label#lblBlockcount.badge.badge-pill
+          label#lblConnections.badge.badge-pill 
