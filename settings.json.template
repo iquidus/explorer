@@ -73,7 +73,9 @@
     "youtube": false,
     "search": true,
     "movement": true,
-    "network": true
+    "network": true,
+    "navbar_dark": false,
+    "navbar_light": false
   },
 
   // index page (valid options for difficulty are POW, POS or Hybrid)

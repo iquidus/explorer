@@ -100,7 +100,25 @@ html
       - var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
       - return time
     -  };
-    .nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.fixed-top(role='navigation')
+    - var navbarClasses = ['nav','navbar','navbar-expand-lg','fixed-top'];
+    - var footerClasses = ['nav','navbar','navbar-default','fixed-bottom','d-none','d-md-flex','d-flex'];
+    if settings.display.navbar_dark == true
+      - navbarClasses.push('bg-dark');
+      - navbarClasses.push('navbar-dark');
+      - footerClasses.push('bg-dark');
+      - footerClasses.push('navbar-dark');
+    else
+      if settings.display.navbar_light == true
+        - navbarClasses.push('bg-light');
+        - navbarClasses.push('navbar-light');
+        - footerClasses.push('bg-light');
+        - footerClasses.push('navbar-light');
+      else
+        - navbarClasses.push('bg-primary');
+        - navbarClasses.push('navbar-dark');
+        - footerClasses.push('bg-primary');
+        - footerClasses.push('navbar-dark');
+    div(class=navbarClasses, role='navigation')
       .navbar-header
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-collapse')
           span.navbar-toggler-icon 
@@ -222,34 +240,32 @@ html
             input.form-control(type='text', name='search', placeholder=settings.locale.ex_search_message, style='min-width:80%;margin-right:5px;')
             button.btn.btn-success(type='submit') #{settings.locale.ex_search_button}
     block content
-    .nav.navbar.navbar-default.fixed-bottom.d-none.d-md-flex.d-flex.bg-primary
-      .col-md-4
-        if settings.display.twitter
+    div(class=footerClasses, role='navigation')
+      .col-md-4.navbar-nav
+        if settings.display.twitter || settings.display.facebook || settings.display.googleplus || settings.display.youtube
           ul.nav.justify-content-left
-            li.pull-left
-              a#twitter-icon(href="https://twitter.com/"+settings.twitter, target='_blank')
-                span.glyphicon.fa.fa-twitter
-        if settings.display.facebook
-          ul.nav.justify-content-left
-            li.pull-left
-              a#facebook-icon(href="https://www.facebook.com/"+settings.facebook, target='_blank')
-                span.glyphicon.fa.fa-facebook
-        if settings.justify-content-left
-          ul.nav.navbar-nav
-            li.pull-left
-              a#googleplus-icon(href="https://plus.google.com/"+settings.googleplus, target='_blank')
-                span.glyphicon.fa.fa-google-plus
-        if settings.display.youtube
-          ul.nav.justify-content-left
-            li.pull-left
-              a#youtube-icon(href="https://www.youtube.com/channel/"+settings.youtube, target='_blank')
-                span.glyphicon.fa.fa-youtube
-      .col-md-4
+            if settings.display.twitter
+              li.pull-left
+                a#twitter-icon.nav-link(href="https://twitter.com/"+settings.twitter, target='_blank')
+                  span.glyphicon.fa.fa-twitter
+            if settings.display.facebook
+              li.pull-left
+                a#facebook-icon.nav-link(href="https://www.facebook.com/"+settings.facebook, target='_blank')
+                  span.glyphicon.fa.fa-facebook
+            if settings.display.googleplus
+              li.pull-left
+                a#googleplus-icon.nav-link(href="https://plus.google.com/"+settings.googleplus, target='_blank')
+                  span.glyphicon.fa.fa-google-plus
+            if settings.display.youtube
+              li.pull-left
+                a#youtube-icon.nav-link(href="https://www.youtube.com/channel/"+settings.youtube, target='_blank')
+                  span.glyphicon.fa.fa-youtube
+      .col-md-4.navbar-nav
         ul.nav.justify-content-center
           li.text-center(style='margin-left:80px;margin-right:80px;')
-            p(style='margin-top:15px;')
-              a(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer v#{settings.iquidus_version}
-      .col-md-4
+            p(style='')
+              a.nav-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer v#{settings.iquidus_version}
+      .col-md-4.navbar-nav
         ui.nav.justify-content-end
-          label#lblBlockcount.badge.badge-pill
-          label#lblConnections.badge.badge-pill 
+          label#lblBlockcount.badge.badge-pill.nav-link
+          label#lblConnections.badge.badge-pill.nav-link

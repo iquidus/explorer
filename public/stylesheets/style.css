@@ -4,6 +4,10 @@ body {
  /* background-image: url('/images/background2.png');*/
 }
 
+.navbar {
+	padding: 0.2rem 0.4rem;
+}
+
 #index-search {
 	width: 80%;
 }
@@ -44,6 +48,11 @@ body {
 
 .panel-address-summary {
  margin-bottom: 5px;
+}
+
+p {
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
 }
 
 /* datatable tweaks */
