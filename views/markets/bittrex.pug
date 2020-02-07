@@ -7,7 +7,7 @@ block market_view
         .card-header
           strong #{settings.locale.bittrex} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='#')
-            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title= t('market.no_chart')) 
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
         table.table.table-bordered.summary-table 
           thead
             tr
@@ -21,13 +21,13 @@ block market_view
               th #{settings.locale.mkt_change}
           tbody
             tr
-              td #{marketdata.data.summary.High.toFixed(8)}
-              td #{marketdata.data.summary.Low.toFixed(8)}
-              td #{marketdata.data.summary.Volume.toFixed(8)}
-              td.d-none.d-sm-block #{marketdata.data.summary.Bid.toFixed(8)}
-              td.d-none.d-sm-block #{marketdata.data.summary.Ask.toFixed(8)}
-              td.d-none.d-sm-block #{marketdata.data.summary.PrevDay.toFixed(8)}
-              td.d-none.d-sm-block #{marketdata.data.summary.Last.toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.High).toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.Low).toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.Volume).toFixed(8)}
+              td.d-none.d-sm-block #{parseFloat(marketdata.data.summary.Bid).toFixed(8)}
+              td.d-none.d-sm-block #{parseFloat(marketdata.data.summary.Ask).toFixed(8)}
+              td.d-none.d-sm-block #{parseFloat(marketdata.data.summary.PrevDay).toFixed(8)}
+              td.d-none.d-sm-block #{parseFloat(marketdata.data.summary.Last).toFixed(8)}
               - var bittrex_change = (100 - ((parseFloat(marketdata.data.summary.PrevDay)/parseFloat(marketdata.data.summary.Last))*100)).toFixed(2);
               if bittrex_change >= 0
                 td.success +#{bittrex_change} %
