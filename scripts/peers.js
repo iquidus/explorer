@@ -25,7 +25,7 @@ mongoose.connect(dbString, function(err) {
   } else {
     var peers = Array();
     var cnt = 0;
-    request({uri: 'http://127.0.0.1:3002/api/getpeerinfo', json: true}, function (error, response, body) {
+    request({uri: 'http://127.0.0.1:' + settings.port + '/api/getpeerinfo', json: true}, function (error, response, body) {
       lib.syncLoop(body.length, function (loop) {
         var i = loop.iteration();
         var address = body[i].addr.split(':')[0];
