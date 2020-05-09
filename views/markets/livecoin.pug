@@ -77,7 +77,7 @@ block market_view
               th #{settings.locale.mkt_time_stamp}
           tbody
             each order in marketdata.data.history
-              if order.ordertype == 'Buy'
+              if order.ordertype == 'BUY'
                 tr.success
                   td.d-none.d-sm-block
                     =order.ordertype
