@@ -156,7 +156,8 @@
 
   // how to acquire network hashrate
   // getnetworkhashps: uses getnetworkhashps api call, returns in GH/s
-  // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s
+  // netmhashps: uses getmininginfo.netmhashpsm returns in MH/s*
+  // nethashrate: uses "getmininginfo.nethashrate (kH/m)" returns in kH/s
   "nethash": "getnetworkhashps",
 
   // nethash unitd: sets nethash API return units
