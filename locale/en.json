@@ -129,6 +129,7 @@
     // Markets
     "poloniex": "Poloniex",
     "bittrex": "Bittrex",
+    "livecoin": "Livecoin",
     "altmarkets": "AltMarkets",
     "bleutrade": "Bleutrade",
     "yobit": "Yobit",
