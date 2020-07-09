@@ -1,0 +1,113 @@
+extends menu
+
+block market_view
+  .row
+    .col-md-12  
+      .panel.panel-default
+        .panel-heading
+          strong #{settings.locale.fides} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th.hidden-xs #{settings.locale.mkt_top_bid}
+              th.hidden-xs #{settings.locale.mkt_top_ask}
+              th.hidden-xs #{settings.locale.mkt_last}
+              th #{settings.locale.mkt_change}
+          tbody
+            tr
+              td #{marketdata.data.summary.high}
+              td #{marketdata.data.summary.low}
+              td #{marketdata.data.summary.volume}
+              td.hidden-xs #{marketdata.data.summary.bid}
+              td.hidden-xs #{marketdata.data.summary.ask}
+              td.hidden-xs #{marketdata.data.summary.last}
+              - var fides_change = parseFloat(marketdata.data.summary.change).toFixed(4).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1");
+              if fides_change >= 0
+                td.success +#{fides_change} %
+              else
+                td.danger #{fides_change} %
+  .row
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_buy_orders}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.coin})
+              th #{settings.locale.mkt_amount} (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.data.buys
+              tr
+                td
+                  =parseFloat(buy.Rate).toFixed(8)
+                td
+                  =parseFloat(buy.Volume).toFixed(8)
+                td.hidden-xs
+                  =parseFloat(buy.Total).toFixed(8)
+
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_sell_orders}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange })
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.coin })
+              th #{settings.locale.mkt_amount} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                td
+                  =parseFloat(sell.Rate).toFixed(8)
+                td
+                  =parseFloat(sell.Volume).toFixed(8)
+                td.hidden-xs
+                  =parseFloat(sell.Total).toFixed(8)
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_trade_history}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.hidden-xs #{settings.locale.mkt_type}
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th.hidden-xs #{settings.locale.mkt_time_stamp}
+          tbody
+            each result in marketdata.data.history
+              if result.Type == 'SELL'
+                tr.danger
+                  td.hidden-xs
+                    =result.Type
+                  td
+                    =result.Volume.toFixed(8)
+                  td
+                    =result.Rate.toFixed(8)
+                  td
+                    =result.Total.toFixed(8)
+                  td.hidden-xs
+                    =result.Date
+              else
+                tr.success
+                  td.hidden-xs
+                    =result.Type
+                  td
+                    =result.Volume.toFixed(8)
+                  td
+                    =result.Rate.toFixed(8)
+                  td
+                    =result.Total.toFixed(8)
+                  td.hidden-xs
+                    =result.Date
+      .footer-padding
