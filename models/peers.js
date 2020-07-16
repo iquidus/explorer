@@ -3,7 +3,7 @@ var mongoose = require('mongoose')
 
 var PeersSchema = new Schema({
   createdAt: { type: Date, expires: 86400, default: Date.now()},
-  address: { type: String, default: "" },
+  address: { type: String, default: "", index: true },
   port: { type: String, default: "" },
   protocol: { type: String, default: "" },
   version: { type: String, default: "" },
