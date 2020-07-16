@@ -5,14 +5,7 @@ An open source block explorer written in node.js.
 
 ### See it in action
 
-*  [Deutsche eMark](http://b.emark.tk/)
-*  [Vertcoin](http://explorer.vertcoin.info/)
-*  [TheHolyRogerCoin (ROGER) Explorer](https://explorer.theholyroger.com/)
-*  [CPUChain (CPU) Explorer](https://explorer.cpuchain.org/)
-*  [Omega Blockchain Explorer](http://explorer.omegablockchain.net/)
-*  [Sugarchain Explorer](https://1explorer.sugarchain.org/)
-*  [Florincoin](https://florincoin.info/info)
-*  [Maxcoin Explorer 1](https://explorer.maxcoinproject.net/)
+*  [List of live explorers running Iquidus](https://github.com/iquidus/explorer/wiki/Live-Explorers)
 
 
 *Note: If you would like your instance mentioned here contact me*
