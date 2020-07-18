@@ -30,9 +30,11 @@ mongoose.connect(dbString, function(err) {
         var port = "";
         if (portSplit < 0) {
           portSplit = body[i].addr.length;
+        } else {
           port = body[i].addr.substring(portSplit+1);
         }
         var address = body[i].addr.substring(0,portSplit);
+        console.log(body[i].addr);
         db.find_peer(address, function(peer) {
           if (peer) {
             if (isNaN(peer['port']) || peer['port'].length < 2 || peer['country'].length < 1) {
