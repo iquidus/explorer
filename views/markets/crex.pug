@@ -82,7 +82,7 @@ block market_view
               if order.ordertype == 'buy'
                 tr.success
                   td.d-none.d-sm-block
-                    =t('market.order.' + order.ordertype.toLowerCase())
+                    =order.ordertype
                   td
                     =order.amount
                   td
@@ -94,7 +94,7 @@ block market_view
               else
                 tr.danger 
                   td.d-none.d-sm-block
-                    =t('market.order.' + order.ordertype.toLowerCase())
+                    =order.ordertype
                   td
                     =order.amount
                   td

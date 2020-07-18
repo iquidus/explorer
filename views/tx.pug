@@ -64,7 +64,7 @@ block content
                   th #{settings.locale.tx_address}
                   if (tx.vin.length > 0)
                     if tx.vin[0].addresses != 'coinbase'
-                      th.d-xs-none=t('address.amount_coin', {coin: settings.symbol})
+                      th.d-xs-none #{settings.locale.mkt_amount} (#{settings.symbol})
               tbody
                 if tx.vin.length > 0
                   each r in tx.vin
