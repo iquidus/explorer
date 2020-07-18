@@ -30,6 +30,7 @@ mongoose.connect(dbString, function(err) {
         var port = "";
         if (portSplit < 0) {
           portSplit = body[i].addr.length;
+        } else {
           port = body[i].addr.substring(portSplit+1);
         }
         var address = body[i].addr.substring(0,portSplit);
