@@ -101,7 +101,7 @@ html
       - return time
     -  };
     - var navbarClasses = ['nav','navbar','navbar-expand-lg','fixed-top'];
-    - var footerClasses = ['nav','navbar','navbar-default','fixed-bottom','d-none','d-md-flex','d-flex'];
+    - var footerClasses = ['nav','navbar','navbar-default','fixed-bottom','d-none','d-md-flex','d-flex','footer'];
     if settings.display.navbar_dark == true
       - navbarClasses.push('bg-dark');
       - navbarClasses.push('navbar-dark');
@@ -250,25 +250,25 @@ html
           ul.nav.justify-content-left
             if settings.display.twitter
               li.pull-left
-                a#twitter-icon.nav-link(href="https://twitter.com/"+settings.twitter, target='_blank')
+                a#twitter-icon.nav-link.social-link(href="https://twitter.com/"+settings.twitter, target='_blank')
                   span.glyphicon.fa.fa-twitter
             if settings.display.facebook
               li.pull-left
-                a#facebook-icon.nav-link(href="https://www.facebook.com/"+settings.facebook, target='_blank')
+                a#facebook-icon.nav-link.social-link(href="https://www.facebook.com/"+settings.facebook, target='_blank')
                   span.glyphicon.fa.fa-facebook
             if settings.display.googleplus
               li.pull-left
-                a#googleplus-icon.nav-link(href="https://plus.google.com/"+settings.googleplus, target='_blank')
+                a#googleplus-icon.nav-link.social-link(href="https://plus.google.com/"+settings.googleplus, target='_blank')
                   span.glyphicon.fa.fa-google-plus
             if settings.display.youtube
               li.pull-left
-                a#youtube-icon.nav-link(href="https://www.youtube.com/channel/"+settings.youtube, target='_blank')
+                a#youtube-icon.nav-link.social-link(href="https://www.youtube.com/channel/"+settings.youtube, target='_blank')
                   span.glyphicon.fa.fa-youtube
       .col-md-4.navbar-nav
         ul.nav.justify-content-center
           li.text-center(style='margin-left:80px;margin-right:80px;')
             p(style='')
-              a.nav-link(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer v#{settings.iquidus_version}
+              a.nav-link.poweredby(href='https://github.com/iquidus/explorer', target='_blank') Powered by Iquidus Explorer v#{settings.iquidus_version}
       .col-md-4.navbar-nav
         ui.nav.justify-content-end
           label#lblBlockcount.badge.badge-pill.nav-link
