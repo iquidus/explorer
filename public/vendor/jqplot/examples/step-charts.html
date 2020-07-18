@@ -3,7 +3,7 @@
 <html>
 <head>
 
-    <title>Line Charts and Options</title>
+    <title>Step Charts</title>
 
     <link class="include" rel="stylesheet" type="text/css" href="../jquery.jqplot.min.css" />
     <link rel="stylesheet" type="text/css" href="examples.min.css" />
@@ -33,38 +33,18 @@
   
 <!-- Example scripts go here -->
 
-<p>The most basic jqPlot chart takes a series of data and plots a line.  No options need to be supplied.  Data is passed in as an array of series.  A series can be either an array of y values or an array of [x,y] data pairs.  If y values only, x values are assigned like 1, 2, 3, ...  Note, for this plot you don't need any plugins.</p>
+<p>The jqPlot step chart is similar to a line chart, except that it shows a "step" to connect to the next data point instead of a direct line to the next data point.  Step charts use the lineRenderer with the "step" option for the series set to "true".</p>
 
 <div id="chart1" style="height:300px; width:500px;"></div>
 
 <pre class="code prettyprint brush: js"></pre>
 
 
-<p>The following plot uses a number of options to set the title, add axis labels, and shows how to use the canvasAxisLabelRenderer plugin to provide rotated axis labels.</p>
-
-<div id="chart2" style="height:300px; width:500px;"></div>
-
-<pre class="code prettyprint brush: js"></pre>
-
-
-<p>There are numerous line style options to control how the lines and markers are displayed.</p>
-
-<div id="chart3" style="height:300px; width:500px;"></div>
-
-<pre class="code prettyprint brush: js"></pre>
-
-  
 <script class="code" type="text/javascript">
 $(document).ready(function(){
-  var plot1 = $.jqplot ('chart1', [[3,7,9,1,5,3,8,2,5]]);
-});
-</script>
-  
-<script class="code" type="text/javascript">
-$(document).ready(function(){
-  var plot2 = $.jqplot ('chart2', [[3,7,9,1,5,3,8,2,5]], {
+  var plot2 = $.jqplot ('chart1', [[3,7,9,1,5,3,8,2,5]], {
       // Give the plot a title.
-      title: 'Plot With Options',
+      title: 'Step Chart',
       // You can specify options for all axes on the plot at once with
       // the axesDefaults object.  Here, we're using a canvas renderer
       // to draw the axis label which allows rotated text.
@@ -75,11 +55,13 @@ $(document).ready(function(){
       // series in a plot.  Options specified in seriesDefaults or
       // axesDefaults can be overridden by individual series or
       // axes options.
-      // Here we turn on smoothing for the line.
+      // Here we set the step chart option
       seriesDefaults: {
           rendererOptions: {
               smooth: true
-          }
+          },
+          step: true,
+          markerOptions: { show: false }
       },
       // An axes object holds options for all axes.
       // Allowable axes are xaxis, x2axis, yaxis, y2axis, y3axis, ...
@@ -101,69 +83,6 @@ $(document).ready(function(){
 });
 </script>
   
-<script class="code" type="text/javascript">
-$(document).ready(function(){
-  // Some simple loops to build up data arrays.
-  var cosPoints = [];
-  for (var i=0; i<2*Math.PI; i+=1){ 
-    cosPoints.push([i, Math.cos(i)]); 
-  }
-   
-  var sinPoints = []; 
-  for (var i=0; i<2*Math.PI; i+=0.4){ 
-     sinPoints.push([i, 2*Math.sin(i-.8)]); 
-  }
-   
-  var powPoints1 = []; 
-  for (var i=0; i<2*Math.PI; i+=1) { 
-      powPoints1.push([i, 2.5 + Math.pow(i/4, 2)]); 
-  }
-   
-  var powPoints2 = []; 
-  for (var i=0; i<2*Math.PI; i+=1) { 
-      powPoints2.push([i, -2.5 - Math.pow(i/4, 2)]); 
-  } 
-
-  var plot3 = $.jqplot('chart3', [cosPoints, sinPoints, powPoints1, powPoints2], 
-    { 
-      title:'Line Style Options', 
-      // Set default options on all series, turn on smoothing.
-      seriesDefaults: {
-          rendererOptions: {
-              smooth: true
-          }
-      },
-      // Series options are specified as an array of objects, one object
-      // for each series.
-      series:[ 
-          {
-            // Change our line width and use a diamond shaped marker.
-            lineWidth:2, 
-            markerOptions: { style:'diamond' }
-          }, 
-          {
-            // Don't show a line, just show markers.
-            // Make the markers 7 pixels with an 'x' style
-            showLine:false, 
-            markerOptions: { size: 7, style:"x" }
-          },
-          { 
-            // Use (open) circlular markers.
-            markerOptions: { style:"circle" }
-          }, 
-          {
-            // Use a thicker, 5 pixel line and 10 pixel
-            // filled square markers.
-            lineWidth:5, 
-            markerOptions: { style:"filledSquare", size:10 }
-          }
-      ]
-    }
-  );
-   
-});
-</script>
-
 
 <!-- End example scripts -->
 
