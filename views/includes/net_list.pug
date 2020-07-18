@@ -10,16 +10,19 @@ script.
       ajax: {
         url: '/ext/connections',
         dataSrc: function ( json ) {
-          /*for ( var i=0;i<json.data.length; i++ ) {
-            json.data[i]['timestamp'] = new Date((json.data[i]['timestamp']) * 1000).toUTCString();
-            json.data[i]['txid'] = "<a href='/tx/" + json.data[i]['txid'] + "'>" + json.data[i]['txid'] + "</a>";
-            json.data[i]['blockindex'] = "<a href='/block/" + json.data[i]['blockhash'] + "'>" + json.data[i]['blockindex'] + "</a>";
-            var amount = json.data[i]['total'] / 100000000;
-            json.data[i]['total'] = amount.toFixed(8);
-            json.data[i]['recipients'] = json.data[i]['vout'].length;
-          }*/
           return json.data;
         }
+      },
+      rowCallback: function (row, data, index) {
+        var flagBlock = '';
+        if (data['country_code'].length > 1) {
+          flagBlock = '&nbsp;<div class="flag-icon flag-icon-'+data['country_code'].toLowerCase()+'"></div>';
+        }
+        $("td:eq(0)", row).html(data['address']);
+        $("td:eq(1)", row).html(data['protocol']);
+        $("td:eq(2)", row).html(data['version']);
+        $("td:eq(3)", row).html(data['country']+flagBlock);
+
       },
       columns: [
         { data: 'address', width: '25%' },
