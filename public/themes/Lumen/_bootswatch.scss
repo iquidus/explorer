@@ -1,10 +1,10 @@
-// Lumen 4.2.1
+// Lumen 4.5.0
 // Bootswatch
 
 
 // Variables ===================================================================
 
-$web-font-path: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic" !default;
+$web-font-path: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic&display=swap" !default;
 @import url($web-font-path);
 
 @mixin shadow($width: 4px){
@@ -35,8 +35,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400
 
 .btn {
   @include shadow();
-  font-size: 12px;
-  font-weight: bold;
   text-transform: uppercase;
 
   &:not(.disabled):hover {
@@ -70,7 +68,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400
 
   &-info {
     border-color: darken($info, 5%);
-    color: $white;
   }
 
   &-danger {
@@ -79,7 +76,6 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400
 
   &-warning {
     border-color: darken($warning, 5%);
-    color: $white;
   }
 
   &-light {
@@ -125,6 +121,17 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400
   &-warning,
   &-danger {
     color: #fff;
+  }
+
+  &-hover tbody {
+    .table-primary:hover,
+    .table-success:hover,
+    .table-info:hover,
+    .table-warning:hover,
+    .table-danger:hover,
+    .table-dark:hover {
+      color: #fff;
+    }
   }
 
   &-primary {
@@ -244,6 +251,15 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400
 
 .form-control {
   box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.075);
+}
+
+.input-group-sm {
+  > .input-group-prepend,
+  > .input-group-append {
+    .btn {
+      font-size: $btn-font-size-sm;
+    }
+  }
 }
 
 // Navs ========================================================================
@@ -452,7 +468,7 @@ a.list-group-item {
     &.active {
       background-color: $warning;
     }
-    
+
     &.active:hover,
     &.active:focus {
       background-color: darken($warning, 5%);
@@ -463,7 +479,7 @@ a.list-group-item {
     &.active {
       background-color: $danger;
     }
-    
+
     &.active:hover,
     &.active:focus {
       background-color: darken($danger, 5%);
@@ -476,7 +492,8 @@ a.list-group-item {
   box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.modal {
+.modal,
+.toast {
 
   .close {
     color: $black;

@@ -1,10 +1,10 @@
-// Yeti 4.2.1
+// Yeti 4.5.0
 // Bootswatch
 
 
 // Variables ===================================================================
 
-$web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700" !default;
+$web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700&display=swap" !default;
 @import url($web-font-path);
 
 // Navbar ======================================================================
@@ -530,4 +530,13 @@ label,
   @include box-shadow(none);
 }
 
+
+// Popovers      ===============================================================
+
+.popover-header {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 // Containers ==================================================================
+

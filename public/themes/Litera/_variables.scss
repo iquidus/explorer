@@ -1,4 +1,4 @@
-// Litera 4.2.1
+// Litera 4.5.0
 // Bootswatch
 
 //
@@ -37,11 +37,15 @@ $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 
+$yiq-contrasted-threshold:  190 !default;
+
 // Body
 
 $body-color:                $gray-800 !default;
 
 // Fonts
+
+$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 
 $font-size-base:              1.063rem !default;
 
@@ -55,6 +59,11 @@ $table-border-color:          rgba(0,0,0,0.1) !default;
 
 $input-btn-padding-y:         0.5rem !default;
 $input-btn-padding-x:         1.1rem !default;
+
+$btn-font-family:             $font-family-sans-serif !default;
+$btn-font-size:               0.875rem !default;
+
+$btn-font-size-sm:            0.688rem !default;
 
 // Forms
 
@@ -70,8 +79,16 @@ $navbar-dark-hover-color:           $white !default;
 $navbar-light-hover-color:          $body-color !default;
 $navbar-light-active-color:         $body-color !default;
 
+// Tooltips
+
+$tooltip-font-size:                 11px !default;
+
 // Badges
 
 $badge-font-weight:                 normal !default;
 $badge-padding-y:                   0.6em !default;
 $badge-padding-x:                   1.2em !default;
+
+// Alerts
+
+$alert-border-width:                0 !default;
