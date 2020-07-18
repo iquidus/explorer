@@ -72,12 +72,10 @@ block content
           } else {
             var total = "<label class='label label-success'>" + amountStr + "</label>";
           }
-        ),
-        columns: [
-          { data: 'timestamp', width: '25%' },
-          { data: 'txid', width: '60%' },
-          { data: 'total', width: '15%' },
-        ]
+          $("td:eq(0)", row).html(timestamp);
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
+          $("td:eq(2)", row).html(total);
+        }
       });
       setInterval( function () {
         rtable.api().ajax.reload(null, false);

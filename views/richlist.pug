@@ -53,7 +53,7 @@ block content
       .col-md-4.col-xs-12
         #summary-panel.card.card-default(style='margin-top:47px;')
           .card-header
-            h3.card-title #{settings.locale.rl_wealth}
+            h5.card-title #{settings.locale.rl_wealth}
           table.table.table-hover.table-bordered
             thead
               tr
@@ -66,8 +66,8 @@ block content
                   div.pull-left(style='background-color:#d9534f;width:20px;height:20px;margin-right:6px;')
                   span #{settings.locale.rl_top25}
                 - var total = parseFloat(dista.total).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true})
-              td #{total}
-              td.text-center #{parseFloat(dista.percent).toFixed(2)}
+                td #{total}
+                td.text-center #{parseFloat(dista.percent).toFixed(2)}
               tr
                 th
                   div.pull-left(style='background-color:#5cb85c;width:20px;height:20px;margin-right:6px;')
