@@ -122,7 +122,11 @@ html
       .navbar-header
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar-collapse')
           span.navbar-toggler-icon 
-        a.navbar-brand(href='/')=settings.title
+        a.navbar-brand(href='/')
+          if typeof settings.headerlogo !== "undefined" && settings.headerlogo && settings.headerlogo.length > 1
+            img(src=settings.headerlogo, style='width:153px;height:45px;')
+          else
+            =settings.title
       .collapse.navbar-collapse(id='navbar-collapse')
         ul.navbar-nav.mr-auto
           li#home
