@@ -5,7 +5,7 @@ block market_view
     .col-md-12  
       .panel.panel-default
         .panel-heading
-          strong #{settings.locale.altmarkets} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          h5 #{settings.locale.altmarkets} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
           a(href='#')
             span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
         table.table.table-bordered.summary-table 
@@ -37,7 +37,7 @@ block market_view
     .col-md-6.col-xs-12
       .panel.panel-default
         .panel-heading
-          h3.panel-title #{settings.locale.mkt_buy_orders}
+          h5.panel-title #{settings.locale.mkt_buy_orders}
         table.table.table-striped.table-bordered.order-table
           thead
             tr
@@ -57,7 +57,7 @@ block market_view
     .col-md-6.col-xs-12
       .panel.panel-default
         .panel-heading
-          h3.panel-title #{settings.locale.mkt_sell_orders}
+          h5.panel-title #{settings.locale.mkt_sell_orders}
         table.table.table-striped.table-bordered.order-table
           thead
             tr
@@ -77,7 +77,7 @@ block market_view
     .col-md-12
       .panel.panel-default
         .panel-heading
-          h3.panel-title #{settings.locale.mkt_trade_history}
+          h5.panel-title #{settings.locale.mkt_trade_history}
         table.table.table-hover.history-table.table-bordered(cellspacing="0")
           thead
             tr

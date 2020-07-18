@@ -6,12 +6,12 @@ block market_view
       .card.card-default
         .card-header
           strong= t('market.market_title',{
-                         market : t('exchange.yobit'),
+                         market : exchange.yobit,
                          coin :  marketdata.coin,
                          exchange : marketdata.exchange  
           }) 
           a(href='#')
-            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=t('market.no_chart')) 
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=market.no_chart) 
         table.table.table-bordered.summary-table 
           thead
             tr
