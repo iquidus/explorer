@@ -127,6 +127,7 @@
     "mkt_time_stamp": "Time Stamp",
 
     // Markets
+    "fides": "Fides-ex",
     "poloniex": "Poloniex",
     "bittrex": "Bittrex",
     "altmarkets": "AltMarkets",
@@ -134,7 +135,6 @@
     "yobit": "Yobit",
     "empoex": "Empoex",
     "cryptsy": "Cryptsy",
-    "cryptopia": "Cryptopia",
     "ccex": "C-Cex",
     "crex": "Crex24",
     "tradesatoshi": "TradeSatoshi",

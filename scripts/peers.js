@@ -26,8 +26,13 @@ mongoose.connect(dbString, function(err) {
     request({uri: 'http://127.0.0.1:' + settings.port + '/api/getpeerinfo', json: true}, function (error, response, body) {
       lib.syncLoop(body.length, function (loop) {
         var i = loop.iteration();
-        var address = body[i].addr.split(':')[0];
-        var port = body[i].addr.split(':')[1];
+        var portSplit = body[i].addr.lastIndexOf(":");
+        var port = "";
+        if (portSplit < 0) {
+          portSplit = body[i].addr.length;
+          port = body[i].addr.substring(portSplit+1);
+        }
+        var address = body[i].addr.substring(0,portSplit);
         db.find_peer(address, function(peer) {
           if (peer) {
             if (isNaN(peer['port']) || peer['port'].length < 2 || peer['country'].length < 1) {
