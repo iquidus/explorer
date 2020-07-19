@@ -26,15 +26,15 @@ block content
       });
     });
   .col-xs-12.col-md-12
-    .hidden-xs.nav.navbar.navbar-default(role='navigation' id='market_menu')
+    .d-none.nav.navbar.navbar-default(role='navigation' id='market_menu')
       .container-fluid
         .collapse.navbar-collapse(id='navbar-collapse')
           ul.nav.navbar-nav
             each mkt in settings.markets.enabled
               if market == mkt
                 li.active
-                  a.navbar-link.loading(href='/markets/'+mkt) #{settings.locale[mkt]}
+                  a.navbar-link.loading(href='/markets/' + mkt) #{settings.locale[mkt]}
               else
                 li
-                  a.navbar-link.loading(href='/markets/'+mkt) #{settings.locale[mkt]}
+                  a.navbar-link.loading(href='/markets/' + mkt) #{settings.locale[mkt]}
     block market_view
