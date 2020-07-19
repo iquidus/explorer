@@ -47,6 +47,7 @@
   "update_timeout": 10,
   "check_timeout": 250,
   "block_parallel_tasks": 1,
+  "rpc_concurrent_tasks": 4,
 
   // wallet settings
   "use_rpc": false,
