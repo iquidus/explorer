@@ -133,11 +133,7 @@
     "altmarkets": "AltMarkets",
     "bleutrade": "Bleutrade",
     "yobit": "Yobit",
-    "empoex": "Empoex",
-    "cryptsy": "Cryptsy",
-    "ccex": "C-Cex",
     "crex": "Crex24",
-    "tradesatoshi": "TradeSatoshi",
 
     // Heavy rewards view
     "heavy_title": "Reward/voting information",
