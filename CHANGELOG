@@ -1,3 +1,6 @@
+1.DEV
+* Added new setting to control minimum amount for txs to be displayed on the front page: index.last_txs_min_amount
+
 1.7.4
 * Updated themes to Bootstrap 4.5 by using latest Bootswatch themes
 * Deleted unmaintained themes that were never ported to Bootstrap4
