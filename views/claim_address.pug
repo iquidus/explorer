@@ -38,7 +38,6 @@ block content
   - var sentParts = sent.split('.');
   - var received = (address.received / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
   - var receivedParts = received.split('.');
-    img.qrcode.pull-right.d-none.d-sm-block(src='/qr/#{address.a_id}')
   .col-xs-12.col-md-12
     .card.card-default.card-address-summary
       .card-header(style='position:relative;')        
