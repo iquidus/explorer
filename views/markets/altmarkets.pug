@@ -63,8 +63,6 @@ block market_view
               th #{settings.locale.mkt_low}
               th #{settings.locale.mkt_volume} (#{marketdata.coin})
               th #{settings.locale.mkt_volume} (#{marketdata.exchange})
-              th.hidden-xs #{settings.locale.mkt_top_bid}
-              th.hidden-xs #{settings.locale.mkt_top_ask}
               th.hidden-xs #{settings.locale.mkt_last}
               th #{settings.locale.mkt_change}
           tbody
@@ -73,14 +71,12 @@ block market_view
               td #{marketdata.data.summary.low}
               td #{marketdata.data.summary.volume}
               td #{marketdata.data.summary.volume_btc}
-              td.hidden-xs #{marketdata.data.summary.bid}
-              td.hidden-xs #{marketdata.data.summary.ask}
               td.hidden-xs #{marketdata.data.summary.last}
               - var altmarkets_change = (marketdata.data.summary.change);
               if altmarkets_change >= 0
-                td.success +#{altmarkets_change} %
+                td.table-success +#{altmarkets_change} %
               else
-                td.danger #{altmarkets_change} %
+                td.table-danger #{altmarkets_change} %
   .row
     .col-md-6.col-xs-12
       .panel.panel-default
@@ -94,7 +90,7 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
             each buy in marketdata.data.buys
-              tr
+              tr.table-success
                 td
                   =buy.price
                 td
@@ -114,7 +110,7 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
           tbody
             each sell in marketdata.data.sells
-              tr
+              tr.table-danger
                 td
                   =sell.price
                 td
@@ -136,30 +132,30 @@ block market_view
               th.hidden-xs #{settings.locale.mkt_time_stamp}
           tbody
             each order in marketdata.data.history
-              if order.side == 'up'
-                tr.success
+              if order.taker_type == 'buy'
+                tr.table-success
                   td.hidden-xs
-                    =order.side
+                    =order.taker_type
                   td
-                    =parseFloat(order.volume).toFixed(8)
+                    =parseFloat(order.amount).toFixed(8)
                   td
                     =parseFloat(order.price).toFixed(8)
                   td
-                    =parseFloat(order.funds).toFixed(8)
+                    =parseFloat(order.total).toFixed(8)
                   td.hidden-xs
-                    =(new Date(order.timestamp * 1000).toUTCString())
+                    =(new Date(order.created_at * 1000).toUTCString())
               else
-                tr.danger 
+                tr.table-danger 
                   td.hidden-xs
-                    =order.side
+                    =order.taker_type
                   td
-                    =parseFloat(order.volume).toFixed(8)
+                    =parseFloat(order.amount).toFixed(8)
                   td
                     =parseFloat(order.price).toFixed(8)
                   td
-                    =parseFloat(order.funds).toFixed(8)
+                    =parseFloat(order.total).toFixed(8)
                   td.hidden-xs
-                    =(new Date(order.timestamp * 1000).toUTCString())
+                    =(new Date(order.created_at * 1000).toUTCString())
 
       .footer-padding
 
