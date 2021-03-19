@@ -1,4 +1,4 @@
-if settings.labels[item.a_id]
+if typeof settings.labels[item.a_id] !== "undefined" && settings.labels[item.a_id]
   if settings.labels[item.a_id].type
     label(class='label label-'+settings.labels[item.a_id].type+' pull-right hidden-xs', style='margin-left:15px;')
       =settings.labels[item.a_id].label
