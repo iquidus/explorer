@@ -121,7 +121,7 @@ Nodes default stack size may be too small to index addresses with many tx's. If 
 
 To determine the default setting run
 
-    node --v8-options | grep -B0 -A1 stack_size
+     node --v8-options | grep -B0 -A1 stack-size
 
 To run sync.js with a larger stack size launch with
 
