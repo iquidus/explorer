@@ -137,7 +137,8 @@
     "cryptsy": "Cryptsy",
     "ccex": "C-Cex",
     "crex": "Crex24",
-    "tradesatoshi": "TradeSatoshi",
+    "southxchange": "SouthXchange",
+    "cpatex": "C-Patex",
 
     // Heavy rewards view
     "heavy_title": "Reward/voting information",

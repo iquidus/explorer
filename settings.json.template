@@ -102,10 +102,11 @@
   },
 
   // market settings
-  //included markets: altmarkets, fides, bittrex, poloniex, yobit, bleutrade
+  //included markets: altmarkets, bittrex, poloniex, yobit, bleutrade, crex, southxchange, cpatex, ccex
   //default market is loaded by default and determines last price in header
+  //coin => base currency, exchange => market pair currency, check needed values (ticker or full coinname) on the exchange api docs
   "markets": {
-    "coin": "JBS",
+    "coin": "JBS", 
     "exchange": "BTC",
     "enabled": ["bittrex"],
     "ccex_key" : "Get-Your-Own-Key",
