@@ -4,6 +4,7 @@ block content
   script.
     var setting_maxTxCount = parseInt("#{settings.index.last_txs}");
     var setting_txPerPage = parseInt("#{settings.index.txs_per_page}");
+    var setting_txMinAmt = parseFloat("#{settings.index.last_txs_min_amount}");
     var lengthMenuOpts = [];
     var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
     for (i=0; i < lengthMenuOptsAdd.length; i++) {
@@ -53,7 +54,7 @@ block content
         serverSide: true,
         iDisplayLength: displayLengthMax,
         lengthMenu: lengthMenuOpts,
-        ajax: '/ext/getlasttxsajax/0',
+        ajax: '/ext/getlasttxsajax/' + setting_txMinAmt,
         rowCallback: function(row, data, index) {
           var blockindex = data[0]; //variables for better readability
           var blockhash = data[1]; //variables for better readability

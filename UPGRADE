@@ -1,4 +1,8 @@
 Note: All updates require the explorer to be restarted
+1.7.4 -> DEV
+* Add new settings to settings.json (see settings.json.template)
+  * index.last_txs_min_amount
+
 1.7.3 -> 1.7.4
 * Ensure that you are not using theme "Paper" or "Readable" as these were not ported by Bootswatch
 * Add new settings to settings.json (see settings.json.template)
