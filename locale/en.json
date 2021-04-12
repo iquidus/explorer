@@ -127,6 +127,7 @@
     "mkt_time_stamp": "Time Stamp",
 
     // Markets
+    "freiexchange": "Freiexchange",
     "poloniex": "Poloniex",
     "bittrex": "Bittrex",
     "altmarkets": "AltMarkets",
