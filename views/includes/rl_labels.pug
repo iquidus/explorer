@@ -1,0 +1,17 @@
+if typeof settings.labels[item.a_id] !== "undefined" && settings.labels[item.a_id]
+  if settings.labels[item.a_id].type
+    label(class='label label-'+settings.labels[item.a_id].type+' pull-right hidden-xs', style='margin-left:15px;')
+      =settings.labels[item.a_id].label
+      if settings.labels[item.a_id].url
+        a(href=settings.labels[item.a_id].url, target='_blank')
+          span.fa.fa-question-circle(style='margin-left:5px;')
+  else
+    label.label.label-default.pull-right.hidden-xs(style='margin-left:15px;')
+      =settings.labels[item.a_id].label
+      if settings.labels[item.a_id].url
+        a(href=settings.labels[item.a_id].url, target='_blank')
+          span.fa.fa-question-circle(style='margin-left:5px;')
+else
+  if item.name !== "" && typeof item.name !== "undefined"
+    label(class='label label-default pull-right hidden-xs', style='margin-left:15px;')
+      =item.name

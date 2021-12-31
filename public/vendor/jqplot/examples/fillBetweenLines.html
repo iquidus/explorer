@@ -18,11 +18,12 @@
 <body>
     <div id="header">
         <div class="nav">
-            <a class="nav" href="../../../index.php"><span>&gt;</span>Home</a>
-            <a class="nav"  href="../../../docs/"><span>&gt;</span>Docs</a>
-            <a class="nav"  href="../../download/"><span>&gt;</span>Download</a>
-            <a class="nav" href="../../../info.php"><span>&gt;</span>Info</a>
-            <a class="nav"  href="../../../donate.php"><span>&gt;</span>Donate</a>
+            <a class="nav" href="/index.html">Home</a>
+            <a class="nav" href="/examples/">Examples</a>
+            <a class="nav" href="/docs/">Docs</a>
+            <a class="nav" href="/download/">Download</a>
+            <a class="nav" href="/info.html">Info</a>
+            <a class="nav" href="/donate.html">Donate</a>
         </div>
     </div>
     <div class="colmask leftmenu">
@@ -62,7 +63,7 @@
         var l2 = [4,   8,  9, 10, 8,   6];
         var l3 = [9,  13, 14, 16, 17, 19];
         var l4 = [15, 17, 16, 18, 13, 11];
-        
+
         var plot1 = $.jqplot("chart1", [l0, l1, l2, l3, l4], {
             title: "Fill between 2 lines",
             axesDefaults: {
@@ -74,16 +75,16 @@
             //////
             fillBetween: {
                 // series1: Required, if missing won't fill.
-                series1: 1,
+                series1: [1, 3],
                 // series2: Required, if  missing won't fill.
-                series2: 3,
+                series2: [2, 4],
                 // color: Optional, defaults to fillColor of series1.
                 color: "rgba(227, 167, 111, 0.7)",
                 // baseSeries:  Optional.  Put fill on a layer below this series
                 // index.  Defaults to 0 (first series).  If an index higher than 0 is
                 // used, fill will hide series below it.
                 baseSeries: 0,
-                // fill:  Optional, defaults to true.  False to turn off fill.  
+                // fill:  Optional, defaults to true.  False to turn off fill.
                 fill: true
             },
             seriesDefaults: {
@@ -101,9 +102,28 @@
         // bind a function to the change button to update the plot's fillBetween series
         // and replot().
         $("button[name=changeFill]").click(function(e) {
-        	plot1.fillBetween.series1 = parseInt($("input[name=series1]").val());
-        	plot1.fillBetween.series2 = parseInt($("input[name=series2]").val());
+
+            var val1 = $("input[name=series1]").val();
+            var val2 = $("input[name=series2]").val();
+
+            val1 = val1.split(",");
+            val2 = val2.split(",");
+
+            val1.map(function(i) { return parseInt(i); });
+            val2.map(function(i) { return parseInt(i); });
+
+            if (val1.length === 1) {
+                val1 = val1[0];
+            }
+
+            if (val2.length === 1) {
+                val2 = val2[0];
+            }
+
+        	plot1.fillBetween.series1 = val1;
+        	plot1.fillBetween.series2 = val2;
         	plot1.replot();
+
         });
     });
     </script>
@@ -164,6 +184,7 @@
            <div class="example-link"><a class="example-link" href="candlestick-charts.html">Open Hi Low Close and Candlestick Charts</a></div>
            <div class="example-link"><a class="example-link" href="pieTest.html">Pie Charts and Options</a></div>
            <div class="example-link"><a class="example-link" href="pieTest4.html">Pie Charts and Options 2</a></div>
+           <div class="example-link"><a class="example-link" href="pieChartsEnhancedLegend.html">Pie Charts with Enhanced Legend Renderer</a></div>
            <div class="example-link"><a class="example-link" href="pie-donut-charts.html">Pie and Donut Charts</a></div>
            <div class="example-link"><a class="example-link" href="selectorSyntax.html">Plot Creation with jQuery Selectors</a></div>
            <div class="example-link"><a class="example-link" href="zooming.html">Plot Zooming and Cursor Control</a></div>
@@ -175,6 +196,7 @@
            <div class="example-link"><a class="example-link" href="resizablePlot.html">Resizable Plots</a></div>
            <div class="example-link"><a class="example-link" href="rotated-tick-labels.html">Rotated Labels and Font Styling</a></div>
            <div class="example-link"><a class="example-link" href="smoothedLine.html">Smoothed Lines</a></div>
+           <div class="example-link"><a class="example-link" href="step-charts.html">Step Charts</a></div>
            <div class="example-link"><a class="example-link" href="bar-charts.html">Vertical and Horizontal Bar Charts</a></div>
            <div class="example-link"><a class="example-link" href="waterfall.html">Waterfall Charts</a></div>
            <div class="example-link"><a class="example-link" href="waterfall2.html">Waterfall Charts 2</a></div>

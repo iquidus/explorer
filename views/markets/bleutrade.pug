@@ -1,0 +1,114 @@
+extends menu
+
+block market_view
+  .row
+    .col-md-12  
+      .card.card-default
+        .card-header
+          strong #{settings.locale.bleutrade} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th.d-none.d-sm-block #{settings.locale.mkt_top_bid}
+              th.d-none.d-sm-block #{settings.locale.mkt_top_ask}
+              th.d-none.d-sm-block #{settings.locale.mkt_yesterday}
+              th.d-none.d-sm-block #{settings.locale.mkt_last}
+              th #{settings.locale.mkt_change}
+          tbody
+            tr
+              td #{parseFloat(marketdata.data.summary.High).toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.Low).toFixed(8)}
+              td #{parseFloat(marketdata.data.summary.Volume).toFixed(8)}
+              td.d-none.d-sm-block #{parseFloat(marketdata.data.summary.Bid).toFixed(8)}
+              td.d-none.d-sm-block #{parseFloat(marketdata.data.summary.Ask).toFixed(8)}
+              td.d-none.d-sm-block #{parseFloat(marketdata.data.summary.PrevDay).toFixed(8)}
+              td.d-none.d-sm-block #{parseFloat(marketdata.data.summary.Last).toFixed(8)}
+              - var bleutrade_change = (100 - ((parseFloat(marketdata.data.summary.PrevDay)/parseFloat(marketdata.data.summary.Last))*100)).toFixed(2);
+              if bleutrade_change >= 0
+                td.success +#{bleutrade_change} %
+              else
+                td.danger #{bleutrade_change} %
+  .row
+    .col-md-6.col-xs-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_buy_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.d-none.d-sm-block #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.data.buys
+              tr
+                td
+                  =parseFloat(buy.price).toFixed(8)
+                td
+                  =parseFloat(buy.amount).toFixed(8)
+                td.d-none.d-sm-block
+                  =parseFloat(buy.total).toFixed(8)
+    .col-md-6.col-xs-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_sell_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.d-none.d-sm-block #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                td
+                  =parseFloat(sell.price).toFixed(8)
+                td
+                  =parseFloat(sell.amount).toFixed(8)
+                td.d-none.d-sm-block
+                  =parseFloat(sell.total).toFixed(8)
+  .row   
+    .col-md-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_trade_history}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.d-none.d-sm-block #{settings.locale.mkt_type}
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th #{settings.locale.mkt_time_stamp}
+          tbody
+            each order in marketdata.data.history
+              if order.OrderType == "BUY"
+                tr.success
+                  td.d-none.d-sm-block
+                    =order.OrderType
+                  td
+                    =order.Quantity.toFixed(8)
+                  td
+                    =order.Price.toFixed(8)
+                  td
+                    =order.Total.toFixed(8)
+                  td.d-none.d-sm-block
+                    =order.TimeStamp
+              else
+                tr.danger 
+                  td.d-none.d-sm-block
+                    =order.OrderType
+                  td
+                    =order.Quantity.toFixed(8)
+                  td
+                    =order.Price.toFixed(8)
+                  td
+                    =order.Total.toFixed(8)
+                  td.d-none.d-sm-block
+                    =order.TimeStamp
+      .footer-padding

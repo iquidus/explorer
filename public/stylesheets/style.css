@@ -4,6 +4,44 @@ body {
  /* background-image: url('/images/background2.png');*/
 }
 
+.navbar {
+	padding: 0.2rem 0.4rem;
+}
+
+.footer p {
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
+}
+
+.footer .nav-link {
+    padding: 0.1rem 0.1rem;
+}
+
+.footer label {
+    margin-bottom: 0.1rem;
+}
+
+.footer .poweredby {
+    margin-right: 0.2rem;
+    font-size: 80%;
+}
+
+.footer .social-link {
+    margin-right: 0.2rem;
+    font-size: 100%;
+}
+
+.footer .social-link img{
+	width: 40px;
+	margin: 5px 5px;
+}
+
+.footer-logo {
+	height: 40px;
+	position: absolute;
+	bottom: 0px;
+}
+
 #index-search {
 	width: 80%;
 }
@@ -44,6 +82,16 @@ body {
 
 .panel-address-summary {
  margin-bottom: 5px;
+}
+
+p {
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	margin-bottom: 0.2rem;
+	margin-top: 0.5rem;
 }
 
 /* datatable tweaks */
@@ -96,9 +144,6 @@ tr {
 	margin-left:5px;
 }
 
-#twitter-icon {
-	font-size: 20px;
-}
 .connections {
 	position: absolute;
 	bottom: 15px;
@@ -107,11 +152,6 @@ tr {
 
 #lblBlockcount {
 	margin-right: 10px;
-}
-
-#twitter-icon img{
-	width: 40px;
-	margin: 5px 5px;
 }
 
 #market_menu {
@@ -152,15 +192,21 @@ tr {
 	    width: 150px !important;
     }
 }
-.qrcode {
-	position: absolute;
-	top: 65px;
-	right: 15px;
+.table>tbody>tr>td.addr-summary {
+	line-height: 7.7;
+	font-size: 1.3em;
+	font-weight: 800;
+	text-align: center;
 }
 
-.footer-logo {
-	height: 40px;
-	position: absolute;
-	bottom: 0px;
+.qrcode {
+	/*position: absolute;
+	top: 65px;
+	right: 15px;*/
+}
+
+
+.decimal {
+	font-size: 0.7em;
 }
 

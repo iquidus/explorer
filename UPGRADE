@@ -1,4 +1,40 @@
 Note: All updates require the explorer to be restarted
+1.7.3 -> 1.7.4
+* Ensure that you are not using theme "Paper" or "Readable" as these were not ported by Bootswatch
+* Add new settings to settings.json (see settings.json.template)
+  * headerlogo
+  * display.navbar_dark
+  * display.navbar_light
+* Run peers script twice after initial upgrade to ensure country codes are added to mongo.
+
+1.7.2 -> 1.7.3
+* Reindex explorerdb (node --stack-size=15000 scripts/sync.js index reindex) required for Historical Address Balance
+* Add new settings to settings.json (see settings.json.template)
+  * show_market_cap
+  * show_market_cap_over_price
+
+1.7.1 -> 1.7.2
+* Add new settings to settings.json (see settings.json.template)
+  * block_parallel_tasks
+
+1.7.0 -> 1.7.1
+* nothing required
+
+1.6.2 -> 1.7.0
+* Update node (v12 is advised)
+* Update mongodb (4.2.x is advised)
+* Change settings in settings.json (see settings.json.template)
+  * wallet.user -> wallet.username
+  * wallet.pass -> wallet.password
+
+1.6.1 -> 1.6.2
+* remove tmp/db_index.pid (if it exists)
+* Add new settings to settings.json (see settings.json.template)
+  * lock_during_index
+  * use_rpc
+  * txcount_per_page
+  * index.txs_per_page
+* Reindex explorerdb (node --stack-size=15000 scripts/sync.js index reindex) to build new address TX collection
 
 1.6.0 -> 1.6.1
 * Add new cryptsy_id and hashrate_units settings (see settings.json.template)

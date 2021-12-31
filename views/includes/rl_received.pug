@@ -1,0 +1,24 @@
+.card.card-default
+  .card-header
+    h5.card-title #{settings.locale.rl_received_coins} 
+  table.table.table-hover.table-bordered(cellspacing="0")
+    thead
+      tr
+        th(style='text-align:center;') 
+          span.fa.fa-flag-checkered
+        th #{settings.locale.tx_address} 
+        th.hidden-xs #{settings.locale.rl_received} (#{settings.symbol})
+    tbody
+      - var count = 0
+      each item in received
+        - count = count + 1;
+        - var itemFixed = (parseInt(item.received) / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true})
+        - var itemFixedParts = itemFixed.split(".");
+        tr
+          td(style='text-align:center;') 
+            =count
+          td
+            a(href='/address/'+item.a_id) #{item.a_id}
+            include ./rl_labels.pug
+          td.hidden-xs #{itemFixedParts[0]}.
+            span.decimal #{itemFixedParts[1]}

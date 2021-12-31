@@ -1,0 +1,71 @@
+script.
+  $(document).ready(function(){
+    var ctable = $('#addnodes-table').dataTable( {  
+      autoWidth: true,      
+      searching: false,
+      ordering: false,
+      responsive: true,
+      lengthChange: true,
+      processing: true,
+      ajax: {
+        url: '/ext/connections',
+        dataSrc: function ( json ) {
+          var rows = []
+          for ( var i=0;i<json.data.length; i++ ) {
+            rows.push({'nodes':'addnode='+json.data[i]['address']+':'+json.data[i]['port']});
+          }
+          return rows;
+        }
+      },
+      columns: [
+        { data: 'nodes', width: '100%' }
+      ],
+      columnDefs: [
+        { targets: '_all', className: 'text-left'}
+      ]
+    });
+    var ctable = $('#addnodes2-table').dataTable( {  
+      autoWidth: true,      
+      searching: false,
+      ordering: false,
+      responsive: true,
+      lengthChange: true,
+      processing: true,
+      ajax: {
+        url: '/ext/connections',
+        dataSrc: function ( json ) {
+          var rows = []
+          for ( var i=0;i<json.data.length; i++ ) {
+            rows.push({'nodes':'addnode '+json.data[i]['address']+':'+json.data[i]['port']+' onetry'});
+          }
+          return rows;
+        }
+      },
+      columns: [
+        { data: 'nodes', width: '100%' }
+      ],
+      columnDefs: [
+        { targets: '_all', className: 'text-left'}
+      ]
+    });
+  });
+.card.card-default
+  .card-body
+    :markdown-it
+      If you have trouble syncing your wallet, add these lines to your coin daemon .conf file and restart the wallet.
+      
+      *Typically you can access the config file through QT-wallet menu, Tools > Open Wallet Configuration File*
+  table#addnodes-table.table.table-bordered.table-striped
+    thead
+      tr
+        th.text-center AddNode Config Lines
+    tbody.text-center
+
+  .card-body
+    :markdown-it
+      Alternatively you can try one of these lines in the coin wallet debug window, or add them with *coindaemon*-cli
+  table#addnodes2-table.table.table-bordered.table-striped
+    thead
+      tr
+        th.text-center OneTry Node Lines
+    tbody.text-center

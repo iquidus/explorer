@@ -1,0 +1,95 @@
+extends layout
+
+block content
+  script.
+    var setting_maxTxCount = parseInt("#{settings.index.last_txs}");
+    var setting_txPerPage = parseInt("#{settings.index.txs_per_page}");
+    var lengthMenuOpts = [];
+    var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
+    for (i=0; i < lengthMenuOptsAdd.length; i++) {
+      if (setting_maxTxCount >= lengthMenuOptsAdd[i]) {
+        lengthMenuOpts.push(lengthMenuOptsAdd[i]);
+      }
+    }
+    if (setting_maxTxCount < setting_txPerPage) {
+      var displayLengthMax = setting_maxTxCount;
+    } else {
+      var displayLengthMax = setting_txPerPage;
+    }
+    var rplot;
+    var colors = [ "#0071bc" ];
+    $(document).ready(function(){
+      function format_unixtime(unixtime) {
+        var a = new Date(unixtime*1000);  
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var suffix = 'th'
+        if (date == 1 || date == 21 || date == 31)
+          suffix = 'st';
+        if (date == 2 || date == 22 || date == 32)
+          suffix = 'nd';
+        if (date == 3 || date == 23)
+          suffix = 'rd';
+        if (hour < 10)
+          hour = '0' + hour;
+        if (min < 10)
+          min = '0' + min;
+        if (sec < 10)
+          sec = '0' + sec;
+        var time = date + suffix + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;   
+        return time;
+      }
+      var rtable = $('#movement-table').dataTable( {  
+        autoWidth: true,      
+        searching: false,
+        ordering: false,
+        //responsive: true,
+        lengthChange: true,
+        processing: true,
+        serverSide: true,
+        iDisplayLength: displayLengthMax,
+        lengthMenu: lengthMenuOpts,
+        //processing: true,
+        ajax: '/ext/getlasttxsajax/#{min_amount}',
+        rowCallback: function(row, data, index) {
+          var blockindex = data[0]; //variables for better readability
+          var blockhash = data[1]; //variables for better readability
+          var txhash = data[2]; //variables for better readability
+          var outputs = data[3]; //variables for better readability
+          var amount = (data[4] / 100000000); //variables for better readability
+          var amountParts = amount.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true}).split('.');
+          var amountStr = amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>';
+          var timestamp = data[5]; //variables for better readability
+          if (amount > '#{flagb}') {
+            var total = "<label class='label label-danger'>" + amountStr + "</label>";
+          } else if (amount > '#{flaga}') {
+            var total = "<label class='label label-warning'>" + amountStr + "</label>";
+          } else {
+            var total = "<label class='label label-success'>" + amountStr + "</label>";
+          }
+          $("td:eq(0)", row).html(timestamp);
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>');
+          $("td:eq(2)", row).html(total);
+        }
+      });
+      setInterval( function () {
+        rtable.api().ajax.reload(null, false);
+      }, 45000 );
+    });
+  .col-md-12(style="margin-bottom: 4%")
+    .card.card-default
+      .card-header
+        strong="Latest Movement"
+      table#movement-table.table.table-bordered.table-striped
+        thead
+          tr
+            th timestamp
+            th.hidden-xs txid
+            th amount
+        tbody.text-center
+    .footer-padding

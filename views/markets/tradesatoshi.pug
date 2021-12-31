@@ -1,0 +1,113 @@
+extends menu
+
+block market_view
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading
+          strong #{settings.locale.tradesatoshi} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart)
+        table.table.table-bordered.summary-table
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th.hidden-xs #{settings.locale.mkt_top_bid}
+              th.hidden-xs #{settings.locale.mkt_top_ask}
+              th.hidden-xs #{settings.locale.mkt_last}
+              th #{settings.locale.mkt_change}
+          tbody
+            tr
+              td #{marketdata.data.summary.high.toFixed(8)}
+              td #{marketdata.data.summary.low.toFixed(8)}
+              td #{marketdata.data.summary.volume.toFixed(2).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")}
+              td.hidden-xs #{marketdata.data.summary.bid.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.ask.toFixed(8)}
+              td.hidden-xs #{marketdata.data.summary.last.toFixed(8)}
+              - var tradesatoshi_change = parseFloat(marketdata.data.summary.change).toFixed(4).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1");
+              if tradesatoshi_change >= 0
+                td.success +#{tradesatoshi_change} %
+              else
+                td.danger #{tradesatoshi_change} %
+  .row
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_buy_orders}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.data.buys
+              tr
+                td
+                  =buy.price
+                td
+                  =buy.amount
+                td.hidden-xs
+                  =buy.total
+
+    .col-md-6.col-xs-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_sell_orders}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.hidden-xs #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                td
+                  =sell.price
+                td
+                  =sell.amount
+                td.hidden-xs
+                  =sell.total
+  .row
+    .col-md-12
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title #{settings.locale.mkt_trade_history}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.hidden-xs #{settings.locale.mkt_type}
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th.hidden-xs #{settings.locale.mkt_time_stamp}
+          tbody
+            each result in marketdata.data.history
+              if result.orderType == 'Sell'
+                tr.danger
+                  td.hidden-xs
+                    =result.orderType
+                  td
+                    =result.quantity.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
+                  td
+                    =result.price.toFixed(8)
+                  td
+                    =result.total.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
+                  td.hidden-xs
+                    =result.timeStamp.substr(0, 19).replace("T", "      ")
+              else
+                tr.success
+                  td.hidden-xs
+                    =result.orderType
+                  td
+                    =result.quantity.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
+                  td
+                    =result.price.toFixed(8)
+                  td
+                    =result.total.toFixed(8).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1")
+                  td.hidden-xs
+                    =result.timeStamp.substr(0, 19).replace("T", "      ")
+      .footer-padding

@@ -1,3 +1,39 @@
+1.7.4
+* Updated themes to Bootstrap 4.5 by using latest Bootswatch themes
+* Deleted unmaintained themes that were never ported to Bootstrap4
+* New setting to optionally show a logo in the navbar header: headerlogo
+* New settings to switch between default, dark and light boostswatch navbars: display.navbar_dark and display.navbar_light
+* Added flag icons to network view.
+
+1.7.3
+* Fixes for Historical Address Balance - seems to be fastest method that works along-side parallel indexing
+* New settings to optionally show market cap in header: show_market_cap and show_market_cap_over_price
+
+1.7.2
+* Index blocks in parallel - uses settings for task counts.
+* Indexing is much faster (again).
+* New settings to adjust parallel task counts: block_parallel_tasks
+
+1.7.1
+* Added "claim address" system - allows users to label addresses by signing messages
+
+1.7.0
+* Various updated dependencies & node version
+* Switched from Jade to Pug
+* Updated required mongo version
+
+1.6.2
+* Indexing is now MUCH faster.
+* Added AddressTX model/collection - REQUIRES REINDEX
+* Added balance history to Address TX History
+* Added support for AJAX loading of Address TX History, using txcount setting for loading
+* Stopped maximum TX count trimming TX's in AddressTX collection
+* Removed tx_array from Address collection -> AddressTX
+* Fix mismatching balances/sent/received, negative balances etc
+* Added new file lock during database indexing: tmp/db_index.pid
+* New setting to lock during indexing: lock_during_index
+* Add setting to call bitcoin-core directly or use RPC during indexing
+
 1.6.1
 * fixed last_txs setting
 * added hashrate_units setting
