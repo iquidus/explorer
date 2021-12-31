@@ -1,0 +1,104 @@
+extends layout
+
+block content
+  script.
+    var setting_maxTxCount = parseInt("#{settings.index.last_txs}");
+    var setting_txPerPage = parseInt("#{settings.index.txs_per_page}");
+    var lengthMenuOpts = [];
+    var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
+    for (i=0; i < lengthMenuOptsAdd.length; i++) {
+      if (setting_maxTxCount >= lengthMenuOptsAdd[i]) {
+        lengthMenuOpts.push(lengthMenuOptsAdd[i]);
+      }
+    }
+    if (setting_maxTxCount < setting_txPerPage) {
+      var displayLengthMax = setting_maxTxCount;
+    } else {
+      var displayLengthMax = setting_txPerPage;
+    }
+    $(document).ready(function(){
+      var stable = $('#block-table').dataTable( {  
+        autoWidth: true,      
+        searching: true,
+        ordering: false,
+        responsive: true,
+        lengthChange: false,
+        processing: true,
+        paging: false,
+        info: false,
+        ajax: {
+          url: '/ext/summary',
+          dataSrc: function ( json ) {
+          console.log(json.data);
+            json.data[0]['height'] = "<a href='/block/" + json.data[0]['hash'] + "'>" + json.data[0]['height'] + "</a>";
+            return json.data;
+          }
+        },
+        columns: [
+          //{ data: 'height', width: '8%' },
+          { data: 'difficulty', width: '10%' },
+          //{ data: 'size', width:'10%' },
+          //{ data: 'txs', width: '10%' },
+          { data: 'supply', width: '15%' },
+          //{ data: 'time', width: '20%' },
+        ]
+      });
+      var rtable = $('#recent-table').dataTable( {  
+        autoWidth: false,      
+        searching: false,
+        ordering: false,
+        responsive: false,
+        lengthChange: true,
+        processing: true,
+        serverSide: true,
+        iDisplayLength: displayLengthMax,
+        lengthMenu: lengthMenuOpts,
+        ajax: '/ext/getlasttxsajax/0',
+        rowCallback: function(row, data, index) {
+          var blockindex = data[0]; //variables for better readability
+          var blockhash = data[1]; //variables for better readability
+          var txhash = data[2]; //variables for better readability
+          var outputs = data[3]; //variables for better readability
+          var amount = (data[4] / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true}); //variables for better readability
+          var amountParts = amount.split('.');
+          var amount = amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>';
+          var timestamp = data[5]; //variables for better readability
+          $("td:eq(0)", row).html('<a href="/block/' + blockhash + '">' + blockindex + '</a>');
+          $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>').addClass("d-none d-md-none d-lg-table-cell text-center");
+          $("td:eq(2)", row).html(outputs).addClass("d-none d-md-none d-lg-table-cell text-center");
+          $("td:eq(3)", row).html(amount);
+          $("td:eq(4)", row).html(timestamp);          
+        },
+      });
+      setInterval( function () {
+        rtable.api().ajax.reload(null, false);
+        stable.api().ajax.reload(null, false);
+      }, 60000 );
+    });
+  .row
+    .col-md-12
+      if error !== null        
+        .alert.alert-danger.alert-dismissable(role='alert')
+          button.close(type='button', data-dismiss='alert') ×
+          strong #{settings.locale.ex_error} : #{error}
+      if warning !== null        
+        .alert.alert-warning.alert-dismissable(role='alert')
+          button.close(type='button', data-dismiss='alert') ×
+          strong #{settings.locale.ex_warning} #{warning}
+  
+  .col-md-12
+    .card.card-default
+      .card-header
+        strong #{settings.locale.ex_latest_transactions}
+      table#recent-table.table.table-bordered.table-striped
+        thead
+          tr
+            th.text-center #{settings.locale.ex_block}
+            th.d-none.d-md-none.d-lg-table-cell.text-center #{settings.locale.tx_hash}
+            th.d-none.d-md-none.d-lg-table-cell.text-center #{settings.locale.tx_recipients}
+            th.text-center #{settings.locale.mkt_amount} (#{settings.symbol})
+            th.text-center #{settings.locale.timestamp}
+        tbody.text-center
+    .footer-padding
+      
+              

@@ -17,14 +17,17 @@
 
   // logo
   "logo": "/images/logo.png",
+  // Optional header logo - change false to e.g. "/images/headerlogo.png"
+  "headerlogo": false,
 
   // favicon
   "favicon": "public/favicon.ico",
 
   // Uses bootswatch themes (http://bootswatch.com/)
   // Valid options:
-  //     Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Lumen, Paper,
-  //     Readable, Sandstone, Simplex, Slate, Spacelab, Superhero, United, Yeti
+  //     Cerulean, Cosmo, Cyborg, Darkly, Flatly, Journal, Litera, Lumen, 
+  //     Lux, Materia, Minty, Pulse, Sandstone, Simplex, Sketchy, Slate, 
+  //     Solar, Spacelab, Superhero, United, Yeti
   // theme (see /public/themes for available themes)
   "theme": "Cyborg",
 
@@ -43,13 +46,16 @@
   //update script settings
   "update_timeout": 10,
   "check_timeout": 250,
+  "block_parallel_tasks": 1,
 
   // wallet settings
+  "use_rpc": true,
+
   "wallet": {
     "host": "localhost",
     "port": 9332,
-    "user": "darkcoinrpc",
-    "pass": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
+    "username": "darkcoinrpc",
+    "password": "123gfjk3R3pCCVjHtbRde2s5kzdf233sa"
   },
 
   // confirmations
@@ -69,14 +75,22 @@
     "youtube": false,
     "search": true,
     "movement": true,
-    "network": true
+    "network": true,
+    // Settings to switch navbar theme, leaving both false will use the 'primary' navbar
+    "navbar_dark": false,
+    "navbar_light": false
   },
 
   // index page (valid options for difficulty are POW, POS or Hybrid)
   "index": {
     "show_hashrate": true,
+    // Show Market Cap in header
+    "show_market_cap": false,
+    // Show Market Cap in place of price box
+    "show_market_cap_over_price": false,
     "difficulty": "POW",
-    "last_txs": 100
+    "last_txs": 100,
+    "txs_per_page": 10
   },
 
   // ensure links on API page are valid
@@ -88,13 +102,12 @@
   },
 
   // market settings
-  //supported markets: bittrex, poloniex, yobit, empoex, bleutrade, cryptopia, ccex
+  //included markets: altmarkets, fides, bittrex, poloniex, yobit, bleutrade
   //default market is loaded by default and determines last price in header
   "markets": {
     "coin": "JBS",
     "exchange": "BTC",
     "enabled": ["bittrex"],
-    "cryptopia_id": "1658",
     "ccex_key" : "Get-Your-Own-Key",
     "default": "bittrex"
   },
@@ -128,8 +141,12 @@
   //heavy (enable/disable additional heavy features)
   "heavy": false,
 
+  //disable saving blocks & TXs via API during indexing.
+  "lock_during_index": false,
+
   //amount of txs to index per address (stores latest n txs)
   "txcount": 100,
+  "txcount_per_page": 50,
 
   //show total sent & received on address page (set false if PoS)
   "show_sent_received": true,

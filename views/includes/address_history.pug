@@ -1,0 +1,89 @@
+script.
+  var hashAddress = "#{address.a_id}";
+  var setting_maxTxCount = parseInt("#{settings.txcount}");
+  var setting_txPerPage = parseInt("#{settings.txcount_per_page}");
+  var lengthMenuOpts = [];
+  var lengthMenuOptsAdd = [ 10, 25, 50, 75, 100, 250, 500, 1000 ];
+  for (i=0; i < lengthMenuOptsAdd.length; i++) {
+    if (setting_maxTxCount >= lengthMenuOptsAdd[i]) {
+      lengthMenuOpts.push(lengthMenuOptsAdd[i]);
+    }
+  }
+  if (setting_maxTxCount < setting_txPerPage) {
+    var displayLengthMax = setting_maxTxCount;
+  } else {
+    var displayLengthMax = setting_txPerPage;
+  }
+
+  $(document).ready(function () {
+    var rtable = $('#address-txs').dataTable({
+      autoWidth: true,
+      searching: false,
+      ordering: false,
+      responsive: true,
+      lengthChange: true,
+      processing: true,
+      serverSide: true,
+      iDisplayLength: displayLengthMax,
+      lengthMenu: lengthMenuOpts,
+      ajax: {
+        "url": '/ext/getaddresstxsajax/'+hashAddress
+      },
+      rowCallback: function (row, data, index) {
+        var timestamp = data[0]; //variables for better readability
+        var txhash = data[1]; //variables for better readability
+        var out = data[2]; //variables for better readability
+        var vin = data[3]; //variables for better readability
+        var balance = (data[4] / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true}); //variables for better readability
+
+        var balanceParts = balance.split('.');
+
+        $("td:eq(0)", row).html(timestamp).addClass('hidden-xs');
+        $("td:eq(1)", row).html('<a href="/tx/' + txhash + '">' + txhash + '</a>').addClass('hidden-xs');
+
+        var amount = 0;
+        var updown = "";
+        var rowclass = "info";
+
+        if(out > 0 && vin > 0) {
+          amount = (out - vin) / 100000000
+          if (amount < 0) {
+            amount = (amount * -1).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+            updown = "-";
+            //- $("td:eq(2)", row).html("-" + amount).addClass("info");
+          } else if (amount > 0) {
+            amount = amount.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+            updown = "+";
+            //- $("td:eq(2)", row).html("+" + amount).addClass("info");
+          } else {
+            amount = amount.toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+            //- $("td:eq(2)", row).html(amount).addClass("info");
+          }
+        } else if (out > 0) {
+          amount = (out / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+          updown = "+";
+          rowclass = "success";
+          //- $("td:eq(2)", row).html("+" + amount).addClass("success");
+        } else {
+          amount = (vin / 100000000).toLocaleString('en',{'minimumFractionDigits':2,'maximumFractionDigits':8,'useGrouping':true});
+          updown = "-";
+          rowclass = "danger";
+          //- $("td:eq(2)", row).html("-" + amount).addClass("danger");
+        }
+        var amountParts = amount.split('.');
+        $("td:eq(2)", row).html(updown + amountParts[0] + '.<span class="decimal">' + amountParts[1] + '</span>').addClass(rowclass);
+        $("td:eq(3)", row).html(balanceParts[0] + '.<span class="decimal">' + balanceParts[1] + '</span>');
+
+      },
+    });
+  });
+table#address-txs.table.table-bordered.table-striped
+  thead
+    tr
+      th.hidden-xs #{settings.locale.timestamp}
+      th.hidden-xs #{settings.locale.tx_hash}
+      th #{settings.locale.mkt_amount} 
+        span.small (#{settings.symbol})
+      th #{settings.locale.rl_balance} 
+        span.small (#{settings.symbol})
+  tbody

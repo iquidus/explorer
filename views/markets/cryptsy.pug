@@ -1,0 +1,106 @@
+extends menu
+
+block market_view
+  .row
+    .col-md-12  
+      .card.card-default
+        .card-header
+          strong #{settings.locale.cryptsy} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th.d-none.d-sm-block #{settings.locale.mkt_top_bid}
+              th.d-none.d-sm-block #{settings.locale.mkt_top_ask}
+              th.d-none.d-sm-block #{settings.locale.mkt_last}
+          tbody
+            tr
+              td #{marketdata.data.summary.high}
+              td #{marketdata.data.summary.low}
+              td #{marketdata.data.summary.volume}
+              td.d-none.d-sm-block #{marketdata.data.summary.bid}
+              td.d-none.d-sm-block #{marketdata.data.summary.ask}
+              td.d-none.d-sm-block #{marketdata.data.summary.last}
+  .row
+    .col-md-6.col-xs-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_buy_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.d-none.d-sm-block #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.data.buys
+              tr
+                td
+                  =parseFloat(buy.price).toFixed(8)
+                td
+                  =parseFloat(buy.amount).toFixed(8)
+                td.d-none.d-sm-block
+                  =parseFloat(buy.total).toFixed(8)
+    .col-md-6.col-xs-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_sell_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.d-none.d-sm-block #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                td
+                  =parseFloat(sell.price).toFixed(8)
+                td
+                  =parseFloat(sell.amount).toFixed(8)
+                td.d-none.d-sm-block
+                  =parseFloat(sell.total).toFixed(8)
+  .row   
+    .col-md-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_trade_history}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.d-none.d-sm-block #{settings.locale.mkt_type}
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})              
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th #{settings.locale.mkt_time_stamp}
+          tbody
+            each order in marketdata.data.history
+              if order.initiate_ordertype == 'Buy'
+                tr.success
+                  td.d-none.d-sm-block
+                    =order.initiate_ordertype
+                  td
+                    =order.quantity.toFixed(8)
+                  td
+                    =order.tradeprice.toFixed(8)
+                  td
+                    =order.total.toFixed(8)
+                  td.d-none.d-sm-block
+                    =(new Date(order.timestamp * 1000).toUTCString())
+              else
+                tr.danger 
+                  td.d-none.d-sm-block
+                    =order.initiate_ordertype
+                  td
+                    =order.quantity.toFixed(8)
+                  td
+                    =order.tradeprice.toFixed(8)
+                  td
+                    =order.total.toFixed(8)
+                  td.d-none.d-sm-block
+                     =(new Date(order.timestamp * 1000).toUTCString())
+      .footer-padding

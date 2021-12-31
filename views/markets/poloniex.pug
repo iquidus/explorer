@@ -1,0 +1,180 @@
+extends menu
+
+block market_view
+  script.
+    $(document).ready(function(){
+      $('#summary-card').hide();
+      var ohlc = !{marketdata.data.chartdata}
+      var plot2 = $.jqplot('chart',[ohlc],{
+        seriesDefaults:{yaxis:'y2axis'},
+        axes: {
+          xaxis: {
+            renderer:$.jqplot.DateAxisRenderer,
+            tickOptions:{formatString:'%R'},
+            tickInterval: "2 hours",
+            
+          },
+          y2axis: {
+            tickOptions:{formatString:'%.8f'},
+          }
+        },
+        // To make a candle stick chart, set the "candleStick" option to true.
+        series: [
+          {
+            renderer:$.jqplot.OHLCRenderer,
+            rendererOptions:{ candleStick:true }
+          }
+        ],
+        highlighter: {
+          show: true,
+          showMarker:false,
+          tooltipAxes: 'xy',
+          yvalues: 4,
+          formatString:'<table class="jqplot-highlighter"> \
+          <tr><td>time:</td><td>%s</td></tr> \
+          <tr><td>open:</td><td>%s</td></tr> \
+          <tr><td>hi:</td><td>%s</td></tr> \
+          <tr><td>low:</td><td>%s</td></tr> \
+          <tr><td>close:</td><td>%s</td></tr></table>'
+        }
+      }); 
+      $(window).resize(function () { 
+        plot2.replot( { resetAxes: false } );
+      });
+    });        
+  .row
+    .d-none.col-md-12  
+      #chart-card.card.card-default
+        .card-header
+          strong #{settings.locale.poloniex} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-th-list.pull-right.view-summary.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom',  title=settings.locale.mkt_view_summary) 
+        .card-body
+          div#chart(style="width:100%;height:300px;")
+      #summary-card.card.card-default
+        .card-header
+          strong #{settings.locale.poloniex} - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom',  title=settings.locale.mkt_view_chart) 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th.d-none.d-sm-block #{settings.locale.mkt_top_bid}
+              th.d-none.d-sm-block #{settings.locale.mkt_top_ask}
+              th.d-none.d-sm-block #{settings.locale.mkt_yesterday}
+              th.d-none.d-sm-block #{settings.locale.mkt_last}
+              th #{settings.locale.mkt_change}
+          tbody
+            tr
+              td #{marketdata.data.summary['high24hr']}
+              td #{marketdata.data.summary['low24hr']}
+              td #{marketdata.data.summary['baseVolume']}
+              td.d-none.d-sm-block #{marketdata.data.summary.highestBid}
+              td.d-none.d-sm-block #{marketdata.data.summary.lowestAsk}
+              td.d-none.d-sm-block #{marketdata.data.summary.last}
+              if marketdata.data.summary.percentChange.substring(0, 1) == '-'
+                td.danger #{marketdata.data.summary.percentChange} %
+              else
+                td.success #{marketdata.data.summary.percentChange} %
+    .d-md-none.d-lg-none.col-xs-12
+      .card.card-default
+        .card-header
+          strong Poloniex - #{marketdata.coin}/#{marketdata.exchange} - #{settings.locale.mkt_hours}
+          a(href='#')
+            span.fa.fa-line-chart.pull-right.view-chart-disabled.iquidus.market-toggle(data-toggle='tooltip', data-placement='bottom', title=settings.locale.mkt_no_chart) 
+        table.table.table-bordered.summary-table 
+          thead
+            tr
+              th #{settings.locale.mkt_high}
+              th #{settings.locale.mkt_low}
+              th #{settings.locale.mkt_volume}
+              th #{settings.locale.mkt_change}
+          tbody
+            tr
+              td #{marketdata.data.summary['high24hr']}
+              td #{marketdata.data.summary['low24hr']}
+              td #{marketdata.data.summary['baseVolume']}
+              if marketdata.data.summary.percentChange.substring(0, 1) == '-'
+                td.danger #{marketdata.data.summary.percentChange} %
+              else
+                td.success #{marketdata.data.summary.percentChange} %
+  .row
+    .col-md-6.col-xs-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_buy_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.d-none.d-sm-block #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each buy in marketdata.data.buys
+              tr
+                td
+                  =parseFloat(buy.price).toFixed(8)
+                td
+                  =parseFloat(buy.amount).toFixed(8)
+                td.d-none.d-sm-block
+                  =parseFloat(buy.total).toFixed(8)
+    .col-md-6.col-xs-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_sell_orders}
+        table.table.table-striped.table-bordered.order-table
+          thead
+            tr
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th.d-none.d-sm-block #{settings.locale.mkt_total} (#{marketdata.exchange})
+          tbody
+            each sell in marketdata.data.sells
+              tr
+                td
+                  =parseFloat(sell.price).toFixed(8)
+                td
+                  =parseFloat(sell.amount).toFixed(8)
+                td.d-none.d-sm-block
+                  =parseFloat(sell.total).toFixed(8)
+  .row   
+    .col-md-12
+      .card.card-default
+        .card-header
+          h3.card-title #{settings.locale.mkt_trade_history}
+        table.table.table-hover.history-table.table-bordered(cellspacing="0")
+          thead
+            tr
+              th.d-none.d-sm-block #{settings.locale.mkt_type}
+              th #{settings.locale.mkt_amount} (#{marketdata.coin})
+              th #{settings.locale.mkt_price} (#{marketdata.exchange})
+              th #{settings.locale.mkt_total} (#{marketdata.exchange})
+              th #{settings.locale.mkt_time_stamp}
+          tbody
+            each trade in marketdata.data.history
+              if trade.type == 'buy'
+                tr.success
+                  td.d-none.d-sm-blockBUY
+                  td
+                    =trade.amount
+                  td
+                    =trade.rate
+                  td.d-none.d-sm-block
+                    =trade.total
+                  td.d-none.d-sm-block
+                    =trade.date
+              else
+                tr.danger 
+                  td.d-none.d-sm-blockSELL
+                  td
+                    =trade.amount
+                  td
+                    =trade.rate
+                  td.d-none.d-sm-block
+                    =trade.total
+                  td.d-none.d-sm-block
+                    =trade.date
+      .footer-padding

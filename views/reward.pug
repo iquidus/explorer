@@ -1,0 +1,119 @@
+extends layout
+
+block content
+  .row(style='margin-top:5px;')
+    .col-md-12(style='text-align:center;')
+      img(src='/images/logo.png' style='width:80px;margin: 0px auto 15px auto;')
+  .row
+    .col-xs-12.col-md-12
+      .card.card-default.card-address-summary
+        .card-header(style='position:relative;')        
+          strong #{settings.locale.heavy_title} (#{settings.symbol})
+        table.table.table-bordered.table-striped.summary-table 
+          thead
+            tr
+              th #{settings.locale.ex_supply} (#{settings.symbol})
+              th #{settings.locale.heavy_cap} (#{settings.symbol})
+              th #{settings.locale.heavy_phase}
+              th #{settings.locale.heavy_maxvote}
+              th #{settings.locale.heavy_reward} 
+              th #{settings.locale.heavy_estnext}
+          tbody             
+            tr
+              tr
+              td 
+                =heavy.supply
+              td 
+                =heavy.cap
+              td 
+                =heavy.phase
+              td 
+                =heavy.maxvote
+              td 
+                =heavy.reward
+              td 
+                =heavy.estnext
+  .row
+    .col-md-12 
+      .card.card-defual
+        .card-body
+          .col-md-3
+            center
+              canvas(id="myChart2", width="150", height="150")
+                script.
+                  var ctx = document.getElementById("myChart2").getContext("2d");
+                  var data = [
+                    {
+                      value: ((#{stats.count}/3600)%1)*100,
+                      //color: "rgba(151,187,205,0.5)"
+                      color: "rgba(92,184,92,1.0)"
+                    },
+                    {
+                      value : (1-((#{stats.count}/3600)%1))*100,
+                      color : "#222"
+                    }
+                  ]
+                  new Chart(ctx).Doughnut(data); 
+              h5 #{settings.locale.heavy_changein}
+              h5
+                =heavy.nextin
+           
+            form
+              table.table
+                thead
+                  tbody     
+                    tr
+                      th #{settings.locale.heavy_key}
+                      td   
+                    tr
+                      th #{settings.locale.heavy_vote}
+                      td 
+                        div(style="width:20px;height:20px;background-color:#428bca")           
+                    tr
+                      th #{settings.locale.heavy_current}
+                      td 
+                        div(style="width:20px;height:20px;background-color:#222")   
+                    tr
+                      th #{settings.locale.heavy_estnext}
+                      td
+                        div(style="width:20px;height:20px;background-color:rgba(92,184,92,1.0)") 
+          
+          .col-md-9
+            center
+              .row
+                strong #{settings.locale.heavy_lastxvotes}  
+              .row
+                canvas(id="myChart", width="800", height="300", style="margin-left:-30px;margin-top:30px;")
+                  script.
+
+                    var ctx = document.getElementById("myChart").getContext("2d");
+                    var options = {
+                      scaleOverride : true,
+                      scaleSteps : 8,
+                      scaleStepWidth : 1,
+                      scaleStartValue : 0,
+                      bezierCurve : false,
+                    }
+                    var data = {
+                      labels : [#{votes[0].count},#{votes[1].count},#{votes[2].count},#{votes[3].count},#{votes[4].count},#{votes[5].count},#{votes[6].count},#{votes[7].count},#{votes[8].count},#{votes[9].count},#{votes[10].count},#{votes[11].count},#{votes[12].count},#{votes[13].count},#{votes[14].count},#{votes[15].count},#{votes[16].count},#{votes[17].count},#{votes[18].count},#{votes[19].count}],
+                      datasets : [
+                        {
+                          fillColor : "rgba(66,139,202,0.5)",
+                          strokeColor : "rgba(66,139,202,0.8)",
+                          pointColor : '#428bca',
+                          pointStrokeColor : "#fff",
+                          data : [#{votes[0].vote},#{votes[1].vote},#{votes[2].vote},#{votes[3].vote},#{votes[4].vote},#{votes[5].vote},#{votes[6].vote},#{votes[7].vote},#{votes[8].vote},#{votes[9].vote},#{votes[10].vote},#{votes[11].vote},#{votes[12].vote},#{votes[13].vote},#{votes[14].vote},#{votes[15].vote},#{votes[16].vote},#{votes[17].vote},#{votes[18].vote},#{votes[19].vote}]
+                        },
+                        {
+                          fillColor : "rgba(151,187,205,0.0)",
+                          strokeColor : '#222',
+                          pointColor : "rgba(0,0,0,0)",
+                          pointStrokeColor : "rgba(0,0,0,0.0)",
+                          data : [#{votes[0].reward},#{votes[1].reward},#{votes[2].reward},#{votes[3].reward},#{votes[4].reward},#{votes[5].reward},#{votes[6].reward},#{votes[7].reward},#{votes[8].reward},#{votes[9].reward},#{votes[10].reward},#{votes[11].reward},#{votes[12].reward},#{votes[13].reward},#{votes[14].reward},#{votes[15].reward},#{votes[16].reward},#{votes[17].reward},#{votes[18].reward},#{votes[19].reward}]
+                        },
+                      ]
+                    }
+                    var myNewChart = new Chart(ctx).Line(data,options);
+         
+        
+        

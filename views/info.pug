@@ -1,0 +1,218 @@
+extends layout
+
+block content
+  .col-md-12(style="margin-bottom: 4%")
+    .card.card-default
+      .card-header
+        strong #{settings.locale.api_title}
+      .card-body
+        p
+          em #{settings.locale.api_message}
+        hr
+        h3 #{settings.locale.api_calls}
+        p
+          em Return data from coind
+        ul
+          li
+            p
+              strong getdifficulty
+              br
+              em #{settings.locale.api_getdifficulty}
+              br
+              a(href='/api/getdifficulty') #{address}/api/getdifficulty
+          li
+            p
+              strong getconnectioncount
+              br
+              em #{settings.locale.api_getconnectioncount}
+              br
+              a(href='/api/getconnectioncount') #{address}/api/getconnectioncount
+          li
+            p
+              strong getblockcount
+              br
+              em #{settings.locale.api_getblockcount}
+              br
+              a(href='/api/getblockcount') #{address}/api/getblockcount   
+          li
+            p
+              strong getblockhash [index]
+              br
+              em #{settings.locale.api_getblockhash}
+              br
+              a(href='/api/getblockhash?index='+hashes.blockindex) #{address}/api/getblockhash?index=#{hashes.blockindex}
+          li
+            p
+              strong getblock [hash]
+              br
+              em #{settings.locale.api_getblock}
+              br
+              a(href='/api/getblock?hash='+hashes.blockhash) #{address}/api/getblock?hash=#{hashes.blockhash}
+          li
+            p
+              strong getrawtransaction [txid] [decrypt]
+              br
+              em #{settings.locale.api_getrawtransaction}
+              br
+              a(href='/api/getrawtransaction?txid='+hashes.txhash+'&decrypt=0') #{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=0
+              br
+              a(href='/api/getrawtransaction?txid='+hashes.txhash+'&decrypt=1') #{address}/api/getrawtransaction?txid=#{hashes.txhash}&decrypt=1
+          if(settings.index.show_hashrate)
+            li
+              p
+                strong getnetworkhashps
+                br
+                em #{settings.locale.api_getnetworkhashps}
+                br
+                a(href='/api/getnetworkhashps') #{address}/api/getnetworkhashps
+
+
+
+          if(settings.heavy)
+            li
+              p
+                strong getmaxmoney
+                br
+                em #{settings.locale.api_getmaxmoney}
+                br
+                a(href='/api/getmaxmoney') #{address}/api/getmaxmoney
+            
+            li
+              p
+                strong getmaxvote
+                br
+                em #{settings.locale.api_getmaxvote}
+                br
+                a(href='/api/getmaxvote') #{address}/api/getmaxvote
+
+            li
+              p
+                strong getvote
+                br
+                em #{settings.locale.api_getvote}
+                br
+                a(href='/api/getvote') #{address}/api/getvote
+
+            li
+              p
+                strong getphase
+                br
+                em #{settings.locale.api_getphase}
+                br
+                a(href='/api/getphase') #{address}/api/getphase
+
+            li
+              p
+                strong getreward
+                br
+                em #{settings.locale.api_getreward}
+                br
+                a(href='/api/getreward') #{address}/api/getreward
+
+            li
+              p
+                strong getsupply
+                br
+                em #{settings.locale.api_getsupply}
+                br
+                a(href='/api/getsupply') #{address}/api/getsupply  
+
+            li
+              p
+                strong getnextrewardestimate
+                br
+                em #{settings.locale.api_getnextrewardestimate}
+                br
+                a(href='/api/getnextrewardestimate') #{address}/api/getnextrewardestimate
+
+            li
+              p
+                strong getnextrewardwhenstr
+                br
+                em #{settings.locale.api_getnextrewardwhenstr}
+                br
+                a(href='/api/getnextrewardwhenstr') #{address}/api/getnextrewardwhenstr                                              
+        hr
+        h3 Extended API
+        p
+          em Return data from local indexes
+        ul
+          li
+            p
+              strong getmoneysupply
+              br
+              em Returns current money supply
+              br
+              a(href='/ext/getmoneysupply') #{address}/ext/getmoneysupply
+
+          li
+            p
+              strong getdistribution
+              br
+              em Returns wealth distribution stats
+              br
+              a(href='/ext/getdistribution') #{address}/ext/getdistribution               
+
+          li
+            p
+              strong getaddress (/ext/getaddress/hash)
+              br
+              em Returns information for given address
+              br
+              a(href='/ext/getaddress/'+hashes.address) #{address}/ext/getaddress/#{hashes.address}
+
+          li
+            p
+              strong gettx (/ext/gettx/hash)
+              br
+              em Returns information for given tx hash
+              br
+              a(href='/ext/gettx/'+hashes.txhash) #{address}/ext/gettx/#{hashes.txhash}
+
+          li
+            p
+              strong getbalance (/ext/getbalance/hash)
+              br
+              em Returns current balance of given address
+              br
+              a(href='/ext/getbalance/'+hashes.address) #{address}/ext/getbalance/#{hashes.address}
+
+          li
+            p
+              strong getlasttxsajax (/ext/getlasttxsajax/min)
+              br
+              em Returns last transactions greater than [min]
+              br
+              em Note: returned values are in satoshis
+              br
+              a(href='/ext/getlasttxsajax/100') #{address}/ext/getlasttxsajax/100                                              
+        hr
+        h3 Linking (GET)
+        p
+          em Linking to the block explorer
+        ul
+          li
+            p
+              strong transaction (/tx/txid)
+              br
+              a(href='/tx/'+hashes.txhash) #{address}/tx/#{hashes.txhash}
+
+          li
+            p
+              strong block (/block/hash)
+              br
+              a(href='/block/'+hashes.blockhash) #{address}/block/#{hashes.blockhash}
+
+          li
+            p
+              strong address (/address/hash)
+              br
+              a(href='/address/'+hashes.address) #{address}/address/#{hashes.address}
+
+          li
+            p
+              strong qrcode (/qr/hash)
+              br
+              a(href='/qr/'+hashes.address) #{address}/qr/#{hashes.address}
+    
+    .footer-padding

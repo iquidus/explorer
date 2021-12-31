@@ -32,7 +32,7 @@ $(document).ready(function(){
                 temp = $(temp.join('\n'));
                 $('div#example-content').append(temp);
                 temp = null;
-            }      
+            }
 
 
             $('script.include').each(function(index) {
@@ -46,7 +46,7 @@ $(document).ready(function(){
                 if (elstr !== '') {
                     elstr += '\n';
                 }
-                elstr += '<link rel="stylesheet" type="text/css" hrf="'+$(this).attr('href')+'" />';
+                elstr += '<link rel="stylesheet" type="text/css" href="'+$(this).attr('href')+'" />';
             })
 
             $('pre.include').text(elstr);
@@ -107,7 +107,7 @@ $(document).ready(function(){
         });
     }
 
-    SyntaxHighlighter.defaults['toolbar'] = true;      
+    SyntaxHighlighter.defaults['toolbar'] = true;
     SyntaxHighlighter.all();
 
     $(document).unload(function() {$('*').unbind(); });

@@ -62,6 +62,7 @@
     "a_menu_showing": "Showing last",
     "a_menu_txs": "transactions",
     "a_menu_all": "All",
+    "a_qr": "QR Code",
 
     //richlist
     "rl_received_coins": "Top 100 - Received Coins",
@@ -75,6 +76,7 @@
     "rl_top100": "Top 76-100",
     "rl_hundredplus": "101+",
 
+    "net_addnodes": "Add Nodes",
     "net_connections": "Connections",
     "net_address": "Address",
     "net_protocol": "Protocol",
@@ -125,14 +127,17 @@
     "mkt_time_stamp": "Time Stamp",
 
     // Markets
+    "fides": "Fides-ex",
     "poloniex": "Poloniex",
     "bittrex": "Bittrex",
+    "altmarkets": "AltMarkets",
     "bleutrade": "Bleutrade",
     "yobit": "Yobit",
     "empoex": "Empoex",
     "cryptsy": "Cryptsy",
-    "cryptopia": "Cryptopia",
     "ccex": "C-Cex",
+    "crex": "Crex24",
+    "tradesatoshi": "TradeSatoshi",
 
     // Heavy rewards view
     "heavy_title": "Reward/voting information",

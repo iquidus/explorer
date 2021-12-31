@@ -1,0 +1,43 @@
+script.
+  $(document).ready(function(){
+    var ctable = $('#connections-table').dataTable( {  
+      autoWidth: true,      
+      searching: false,
+      ordering: false,
+      responsive: true,
+      lengthChange: true,
+      processing: true,
+      ajax: {
+        url: '/ext/connections',
+        dataSrc: function ( json ) {
+          return json.data;
+        }
+      },
+      rowCallback: function (row, data, index) {
+        var flagBlock = '';
+        if (data['country_code'].length > 1) {
+          flagBlock = '&nbsp;<div class="flag-icon flag-icon-'+data['country_code'].toLowerCase()+'"></div>';
+        }
+        $("td:eq(0)", row).html(data['address']);
+        $("td:eq(1)", row).html(data['protocol']);
+        $("td:eq(2)", row).html(data['version']);
+        $("td:eq(3)", row).html(data['country']+flagBlock);
+
+      },
+      columns: [
+        { data: 'address', width: '25%' },
+        { data: 'protocol', width: '25%' },
+        { data: 'version', width:'25%' },
+        { data: 'country', width: '25%'}
+      ]
+    });
+  });
+.card.card-default
+  table#connections-table.table.table-bordered.table-striped
+    thead
+      tr
+        th.text-center #{settings.locale.net_address}
+        th.text-center #{settings.locale.net_protocol}
+        th.text-center #{settings.locale.net_subversion}
+        th.text-center #{settings.locale.net_country}
+    tbody.text-center
