@@ -1,3 +1,6 @@
+X.X.X
+* New setting to adjust concurrent rpc calls: rpc_concurrent_tasks, rpc_task_timeout
+
 1.7.4
 * Updated themes to Bootstrap 4.5 by using latest Bootswatch themes
 * Deleted unmaintained themes that were never ported to Bootstrap4
