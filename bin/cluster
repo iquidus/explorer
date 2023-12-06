@@ -2,7 +2,7 @@ var cluster = require('cluster');
 var fs = require('fs');
 
 if (cluster.isMaster) {
-  fs.writeFile('./tmp/cluster.pid', process.pid, function (err) {
+  fs.writeFile('./tmp/cluster.pid', process.pid.toString(), function (err) {
     if (err) {
       console.log('Error: unable to create cluster.pid');
       process.exit(1);
