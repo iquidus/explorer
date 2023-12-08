@@ -3,7 +3,7 @@
   "version": "1.7.4",
   "private": true,
   "scripts": {
-    "start": "node --stack-size=10000 ./bin/instance",
+    "start": "node --stack-size=10000 ./bin/cluster",
     "stop": "kill -2 $(cat tmp/cluster.pid)",
     "test": "node ./node_modules/jasmine/bin/jasmine.js"
   },
