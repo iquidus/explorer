@@ -2,7 +2,7 @@ var cluster = require('cluster');
 var fs = require('fs');
 
 if (cluster.isMaster) {
-  fs.writeFile('./tmp/cluster.pid', process.pid, function (err) {
+  fs.writeFile('./tmp/cluster.pid', process.pid.toString(), function (err) {
     if (err) {
       console.log('Error: unable to create cluster.pid');
       process.exit(1);
@@ -35,7 +35,7 @@ if (cluster.isMaster) {
       cluster.on('exit', function (worker, code, signal) {
         if (worker['process']['exitCode'] === 0) {
           console.log('Worker shut down.');
-        } else if ((signal != 'SIGINT') && (worker['process']['exitCode'] !== 0) && (worker.exitedAfterDisconnect !== true)) {
+        } else if ((signal !== 'SIGINT') && (worker['process']['exitCode'] !== 0) && (worker.exitedAfterDisconnect !== true)) {
           console.log('Cluster restarting...');
           cluster.fork();
         }

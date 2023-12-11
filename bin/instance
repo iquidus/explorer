@@ -14,7 +14,7 @@ dbString = dbString + '/' + settings.dbsettings.database;
 
 db.connect(dbString, function() {
   db.check_stats(settings.coin, function(exists) {
-    if (exists == false) {
+    if (exists === false) {
       console.log('no stats entry found, creating now..');
       db.create_stats(settings.coin, function(){
         //console.log('stats entry created successfully.');
@@ -29,7 +29,7 @@ db.connect(dbString, function() {
   var markets = settings.markets.enabled;
   for (var i = 0; i < markets.length; i++) {
     db.check_market(markets[i], function(market, exists) {
-      if(exists == false) {
+      if(exists === false) {
         console.log('no %s entry found, creating now..', market);
           db.create_market(settings.markets.coin, settings.markets.exchange, market, function(){
         });
